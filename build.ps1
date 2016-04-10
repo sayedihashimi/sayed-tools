@@ -169,6 +169,8 @@ function CopyStaticFilesToOutputDir{
     param()
     process{
         Get-ChildItem $scriptDir *.nuspec -File | Copy-Item -Destination $outputroot
+        
+        Copy-Item -Path ("$scriptDir\contrib\VisualCoverage") -Destination $outputroot -Recurse
     }
 }
 

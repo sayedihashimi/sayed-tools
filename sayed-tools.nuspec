@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>sayed-tools</id>
-    <version>0.0.2-beta</version>
+    <version>0.0.3-beta</version>
     <authors>Sayed Ibrahim Hashimi</authors>
     <owners>Sayed Ibrahim Hashimi</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
@@ -24,5 +24,9 @@
     <file src="vs\CoverageConverter.pdb" target="tools\CoverageConverter.pdb" />
     <file src="vs\Microsoft.VisualStudio.Coverage.Analysis.dll" target="tools\Microsoft.VisualStudio.Coverage.Analysis.dll" />
     <file src="vs\Microsoft.VisualStudio.Coverage.Interop.dll" target="tools\Microsoft.VisualStudio.Coverage.Interop.dll" />
+
+    <file src="VisualCoverage\VisualCoverage.Core.dll" target="tools\VisualCoverage.Core.dll" />
+    <file src="VisualCoverage\VisualCoverage.exe" target="tools\VisualCoverage.exe" />
+    <file src="VisualCoverage\VisualCoverage.exe.config" target="tools\VisualCoverage.exe.config" />    
   </files>
 </package>
