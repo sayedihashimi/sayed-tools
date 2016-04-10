@@ -2,19 +2,17 @@
 <package>
   <metadata>
     <id>sayed-tools</id>
-    <version>0.0.1-beta</version>
+    <version>0.0.2-beta</version>
     <authors>Sayed Ibrahim Hashimi</authors>
     <owners>Sayed Ibrahim Hashimi</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <projectUrl>https://github.com/sayedihashimi/sayed-tools</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>
-       Forward only stream mutations including replacements and conditionally included regions. 
-       This will process the replacements and conditions in projects in SideWaffle, PecanWaffle and DotNetWaffle.
+    <description>Misc tools created by Sayed Ibrahim Hashimi (@SayedIHashimi)
 
        Commit: https://github.com/sayedihashimi/sayed-tools/commit/$(COMMIT_ID)
     </description>
-    <copyright>Copyright 2016 LigerShark</copyright>
+    <copyright>Copyright 2016 Sayed Ibrahim Hashimi</copyright>
     <!-- This is hack to avoid having content in the package -->
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System"  />
