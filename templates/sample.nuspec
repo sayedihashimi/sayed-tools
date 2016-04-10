@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>sayed-tools</id>
+    <version>0.0.3-beta</version>
+    <authors>Sayed Ibrahim Hashimi</authors>
+    <owners>Sayed Ibrahim Hashimi</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/sayedihashimi/sayed-tools</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Misc tools created by Sayed Ibrahim Hashimi (@SayedIHashimi)
+
+       Commit: https://github.com/sayedihashimi/sayed-tools/commit/$(COMMIT_ID)
+    </description>
+    <copyright>Copyright 2016 Sayed Ibrahim Hashimi</copyright>
+    <!-- This is hack to avoid having content in the package -->
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System"  />
+    </frameworkAssemblies>    
+  </metadata>
+  <files>
+    <file src="vs\CoverageConverter.exe" target="tools\CoverageConverter.exe" />
+    <file src="vs\CoverageConverter.exe.config" target="tools\CoverageConverter.exe.config" />
+    <file src="vs\CoverageConverter.pdb" target="tools\CoverageConverter.pdb" />
+    <file src="vs\Microsoft.VisualStudio.Coverage.Analysis.dll" target="tools\Microsoft.VisualStudio.Coverage.Analysis.dll" />
+    <file src="vs\Microsoft.VisualStudio.Coverage.Interop.dll" target="tools\Microsoft.VisualStudio.Coverage.Interop.dll" />
+
+    <file src="VisualCoverage\VisualCoverage.Core.dll" target="tools\VisualCoverage.Core.dll" />
+    <file src="VisualCoverage\VisualCoverage.exe" target="tools\VisualCoverage.exe" />
+    <file src="VisualCoverage\VisualCoverage.exe.config" target="tools\VisualCoverage.exe.config" />    
+  </files>
+</package>
