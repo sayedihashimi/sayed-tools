@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>sayed-tools</id>
+    <version>0.0.1-beta</version>
+    <authors>Sayed Ibrahim Hashimi</authors>
+    <owners>Sayed Ibrahim Hashimi</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/sayedihashimi/sayed-tools</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+       Forward only stream mutations including replacements and conditionally included regions. 
+       This will process the replacements and conditions in projects in SideWaffle, PecanWaffle and DotNetWaffle.
+
+       Commit: https://github.com/sayedihashimi/sayed-tools/commit/$(COMMIT_ID)
+    </description>
+    <copyright>Copyright 2016 LigerShark</copyright>
+    <!-- This is hack to avoid having content in the package -->
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System"  />
+    </frameworkAssemblies>    
+  </metadata>
+  <files>
+    <file src="vs\CoverageConverter.exe" target="tools\CoverageConverter.exe" />
+    <file src="vs\CoverageConverter.exe.config" target="tools\CoverageConverter.exe.config" />
+    <file src="vs\CoverageConverter.pdb" target="tools\CoverageConverter.pdb" />
+    <file src="vs\Microsoft.VisualStudio.Coverage.Analysis.dll" target="tools\Microsoft.VisualStudio.Coverage.Analysis.dll" />
+    <file src="vs\Microsoft.VisualStudio.Coverage.Interop.dll" target="tools\Microsoft.VisualStudio.Coverage.Interop.dll" />
+  </files>
+</package>
