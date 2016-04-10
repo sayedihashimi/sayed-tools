@@ -380,7 +380,7 @@ function FullBuild{
         Build-NuGetPackage
 
         if($publishToNuget){
-            (Get-ChildItem -Path ($outputPathNuget) 'mutant-*.nupkg').FullName | PublishNuGetPackage -nugetApiKey $nugetApiKey
+            (Get-ChildItem -Path ($outputPathNuget) 'sayed-*.nupkg').FullName | PublishNuGetPackage -nugetApiKey $nugetApiKey
         }
     }
 }
