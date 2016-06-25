@@ -312,7 +312,13 @@ if($cmd -eq $null){
     }
 }
 
-
+function Open-StartupFolder{
+    [cmdletbinding()]
+    param()
+    process{
+        start 'shell:startup'
+    }
+}
 
 <#
 .SYNOPSIS 
