@@ -115,6 +115,34 @@ function Update-FilesWithCommitId{
     }
 }
 
+function Get-VisualStudioGitAttributes{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [System.IO.FileInfo[]]$destination = (join-path $PWD '.gitignore'),
+        $sourceUri = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/.gitattributes'
+        
+    )
+    process{
+        $webresult = (Invoke-WebRequest -Uri $sourceUri).Content
+
+        if(-not [string]::IsNullOrEmpty($destination)){
+            foreach($dest in $destination){
+               $dest = (Get-NormalizedPath -path $dest)
+
+                if(([System.IO.FileInfo]$dest).Attributes -match 'Directory'){
+                    $dest = (Join-Path $dest '.gitattributes')
+                }
+                $webresult | Out-File $dest -Encoding ascii
+            }
+        }
+        else{
+                # return the result as a string
+                $webresult
+        }
+    }    
+}
+
 function Get-VisualStudioGitIgnore{
     [cmdletbinding()]
     param(
