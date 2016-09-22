@@ -119,7 +119,7 @@ function Get-VisualStudioGitAttributes{
     [cmdletbinding()]
     param(
         [Parameter(Position=0)]
-        [System.IO.FileInfo[]]$destination = (join-path $PWD '.gitignore'),
+        [System.IO.FileInfo[]]$destination = (join-path $PWD '.gitattributes'),
         $sourceUri = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/.gitattributes'
         
     )
