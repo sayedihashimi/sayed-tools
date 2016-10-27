@@ -5,12 +5,18 @@ function CloneRepo{
     [cmdletbinding()]
     param(
         [ValidateNotNullOrEmpty()]
+        [Parameter(Position=0)]
         [string]$user,
 
         [ValidateNotNullOrEmpty()]
+        [Parameter(Position=2)]
         [string]$repo,
 
+        [Parameter(Position=3)]
+        [string]$directory,
+
         [ValidateSet('ssh','https')]
+        [Parameter(Position=4)]
         [string]$method = 'ssh'
     )
     process{
@@ -31,10 +37,23 @@ function CloneRepo{
             }
         }
 
-        & cmd.exe /C "git clone $url 2>&1"
+        $expectedPath = (Join-Path $pwd $repo)
+        [string]$extraArgs = ''
+        if(-not ([string]::IsNullOrWhiteSpace($directory))){
+            $extraArgs = ("{0}" -f $directory)
+            $expectedPath = (Join-Path $pwd $directory)
+        }
+
+        & cmd.exe /C "git clone $url $extraArgs 2>&1"
         $gitexitcode = $LASTEXITCODE
         if($LASTEXITCODE -ne 0){
             throw $Error[0]
+        }
+
+        
+        
+        if(Test-Path $expectedPath){
+            Set-Location $expectedPath
         }
     }
 }
