@@ -11,6 +11,7 @@ $global:machinesetupconfig = @{
         '1password',
         'notepadplusplus.install',
         'conemu'
+        '7zip.install '
     )
     BaseRepos = @(
         'git@github.com:sayedihashimi/sayed-tools.git',
@@ -19,18 +20,16 @@ $global:machinesetupconfig = @{
     )
     SecondaryChocoPackages = @(
         'p4merge',
-        'f.lux',
-        '7zip.install ',
-        'paint.net',
-        'pdfcreator',
+        'f.lux',        
+        #'paint.net',
         'sublimetext3',
         'fiddler4',
-        'gimp',
-        'linqpad4',
+        #'gimp',
+        #'linqpad4',
         'kdiff3',
         'balsamiqmockups3',
-        'adobe-creative-cloud',
-        'inkscape',
+        #'adobe-creative-cloud',
+        #'inkscape',
         'visualstudiocode',
         'yeoman',
         'spotify',
@@ -127,7 +126,8 @@ Restarting the script
 ************************************
 '@ | Write-Output
 
-        powershell.exe -ExecutionPolicy RemoteSigned -File $($MyInvocation.ScriptName) -NoExit
+        powershell.exe -NoExit -ExecutionPolicy RemoteSigned -File $($MyInvocation.ScriptName)
+        break
     }
 }
 
@@ -148,9 +148,13 @@ function InstallBaseApps{
     [cmdletbinding()]
     param()
     process{
+        [string]$pkgsbefore = ((choco list --local-only) -join ';')
         $Global:machinesetupconfig.BaseChocoPackages | InstallWithChoco
-        # need to relaunch for Boxstarter
-        RestartThisScript
+        [string]$pkgsafter = ((choco list --local-only) -join ';')
+        
+        if(-not ([string]::Equals($pkgsbefore,$pkgsafter,[System.StringComparison]::OrdinalIgnoreCase)) ){
+            RestartThisScript
+        }
     }
 }
 
@@ -420,7 +424,7 @@ function ConfigureTaskBar{
     }
 }
 
-function ConfigureWindowsExplorer{
+function ConfigureWindows{
     [cmdletbinding()]
     param()
     begin{
@@ -429,6 +433,7 @@ function ConfigureWindowsExplorer{
     process{
         # show file extensions
         Set-WindowsExplorerOptions -EnableShowFileExtensions
+        Enable-RemoteDesktop
 
         # try to update the wallpaper
         try{
@@ -489,7 +494,7 @@ function ConfigureMachine{
 
         InstallBaseApps
         
-        Enable-RemoteDesktop
+        
         EnsurePhotoViewerRegkeyAdded
         ConfigureTaskBar        
 
@@ -501,7 +506,7 @@ function ConfigureMachine{
         LoadModules
         InstallSecondaryApps
 
-        ConfigureWindowsExplorer
+        ConfigureWindows
 
         try{
             #Install-WindowsUpdate
