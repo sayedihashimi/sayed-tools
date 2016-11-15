@@ -230,6 +230,37 @@ function InstallBaseApps{
     }
 }
 
+function ConfigureFirefox{
+    [cmdletbinding()]
+    param(
+        [string]$downloadRootUrl = 'https://dl.dropboxusercontent.com/u/40134810/PcSettings/firefox/',
+        [string]$destFolder = "$env:ProgramFiles\Mozilla Firefox\defaults\pref\"
+    )
+    process{
+        $files = @(
+            @{
+                Filename = 'autoconfig.js'
+                SourceUrl = ('{0}autoconfig.js' -f $downloadRootUrl)
+                DestPath = (join-path $destFolder 'autoconfig.js' )
+            }
+            @{
+                Filename = 'mozilla.cfg'
+                SourceUrl = ('{0}mozilla.cfg' -f $downloadRootUrl)
+                DestPath = (join-path $destFolder 'mozilla.cfg' )
+            }
+        )
+
+        foreach($f in $files){
+            if(-not (test-path $f.DestPath)){
+                $tf = (GetLocalFileFor -downloadUrl ($f.SourceUrl) -filename ($f.Filename))
+                EnsureFolderExists([System.IO.Path]::GetDirectoryName($f.DestPath))
+                Copy-Item -Path $tf -Destination $f.DestPath
+            }
+        }
+
+    }
+}
+
 function InstallSecondaryApps{
     [cmdletbinding()]
     param()
@@ -248,6 +279,14 @@ function InstallSecondaryApps{
         )
         $markdownpadpath = (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder 'markdownpad2-portable\MarkdownPad2.exe')
         Add-Path -pathToAdd $markdownpadpath -envTarget User
+    }
+}
+
+function ConfigureApps{
+    [cmdletbinding()]
+    param()
+    process{
+        ConfigureFirefox
     }
 }
 
@@ -383,6 +422,32 @@ function GetLocalFileFor{
         }
 
         $expectedPath
+    }
+}
+
+function ExtractRemoteZip{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [ValidateNotNullOrEmpty()]
+        [string]$downloadUrl,
+
+        [Parameter(Position=1)]
+        [ValidateNotNullOrEmpty()]
+        [string]$filename
+    )
+    process{
+        $zippath = GetLocalFileFor -downloadUrl $downloadUrl -filename $filename
+        $expectedFolderpath = (join-path -Path ($global:machinesetupconfig.MachineSetupConfigFolder) ('apps\{0}\' -f $filename))
+
+        if(-not (test-path $expectedFolderpath)){
+            EnsureFolderExists -path $expectedFolderpath | Write-Verbose
+            # extract the folder to the directory
+            & (Get7ZipPath) x -y "-o$expectedFolderpath" "$zippath" | Write-Verbose
+        }        
+
+        # return the path to the folder
+        $expectedFolderpath
     }
 }
 
@@ -562,6 +627,7 @@ function ConfigureWindows{
         # show file extensions
         Set-WindowsExplorerOptions -EnableShowFileExtensions
         Enable-RemoteDesktop
+        AddFonts
 
         # try to update the wallpaper
         try{
@@ -575,6 +641,57 @@ function ConfigureWindows{
         # update mouse pointer speed
 
         # update mouse pointer to show when CTRL is clicked
+    }
+}
+
+$global:machinesetupuserconfig = @{
+    AddFontScriptUrl = 'https://dl.dropboxusercontent.com/u/40134810/PcSettings/Add-Font.ps1'
+    Fonts = @(
+        @{
+            Filename = 'source-sans-pro-1.075R-it.zip'
+            DownloadUrl = 'https://github.com/adobe-fonts/source-sans-pro/archive/2.020R-ro/1.075R-it.zip'
+            RelpathToFontsFolder = 'source-sans-pro-2.020R-ro-1.075R-it\TTF'
+        }
+        @{
+            Filename = 'source-code-pro-1.050R-it.zip'
+            DownloadUrl = 'https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip'
+            RelpathToFontsFolder = 'source-sans-pro-2.020R-ro-1.075R-it\TTF'
+        }
+    )
+}
+
+function AddFonts{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=1)]
+        [string]$addFonthasrunpath = (Join-Path $global:machinesetupconfig.MachineSetupConfigFolder 'addfonts.hasrun'),
+
+        [Parameter(Position=2)]
+        [string]$addFontScriptUrl = ($global:machinesetupuserconfig.AddFontScriptUrl)
+    )
+    process{
+        if(-not (test-path -path $addFonthasrunpath)){
+            # get the Add-Font script
+            $addFontScriptPath = (GetLocalFileFor -downloadUrl $addFontScriptUrl -filename 'add-font.ps1')
+
+            foreach($font in $global:machinesetupuserconfig.Fonts){
+                # extract it
+                $extractfolder = ExtractRemoteZip -downloadUrl $font.Downloadurl -filename $font.Filename
+                $pathtofiles = (join-path $extractfolder $font.RelpathToFontsFolder)
+                if(test-path $pathtofiles){
+                    # call the Add-Font script
+                    Invoke-Expression "& `"$addFontScriptPath`" $pathtofiles"
+                }
+                else{
+                    'Font files folder [{0}] found in extracted zip [{1}]' -f $pathtofiles, $extractfolder | Write-Warning
+                }
+            }
+
+            CreateDummyFile -filepath $addFonthasrunpath
+        }
+        else{
+            'Skipping font additions because of file [{0}]' -f $addFonthasrunpath | Write-Verbose 
+        }
     }
 }
 
@@ -635,7 +752,8 @@ function ConfigureMachine{
         InstallSecondaryApps
 
         ConfigureWindows
-
+        ConfigureApps
+        
         try{
             #Install-WindowsUpdate
         }
@@ -657,8 +775,8 @@ if(-not (IsRunningAsAdmin)) {
 Push-Location
 try{
     Set-Location $scriptDir
-    # ConfigureMachine
-    InstallSecondaryApps
+    ConfigureMachine
+    # InstallSecondaryApps
 }
 finally{
     Pop-Location
