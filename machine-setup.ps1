@@ -6,6 +6,7 @@ $global:machinesetupconfig = @{
     MachineSetupAppsFolder = (Join-Path $env:temp 'SayedHaMachineSetup\apps')
     BaseChocoPackages = @(
         'boxstarter',
+        'boxstarter.winconfig'
         'git.install',
         'googlechrome',
         'firefox',
@@ -35,7 +36,7 @@ $global:machinesetupconfig = @{
         # spotify needs to be installed as normal user
         # 'spotify',
         'everything',
-        'markdownpad2',
+        #'markdownpad2',
         'snagit',
         'kindle'
     )
@@ -301,7 +302,7 @@ function EnsureInstalled-MarkdownPad{
         if(-not (test-path $expectedPath)){
             $mkzip = (GetLocalFileFor -downloadUrl $markdownpaddownloadurl -filename 'markdownpad2-portable.zip')
             $installFolder = $Global:machinesetupconfig.MachineSetupAppsFolder
-            & (Get7ZipPath) x -y -o$installFolder $mkzip
+            & (Get7ZipPath) x -y "-o$installFolder" "$mkzip"
             # pin to start menu
             PinToStartmenu -pathtopin $expectedPath
             # add to path
