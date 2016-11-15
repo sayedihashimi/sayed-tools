@@ -3,6 +3,7 @@ param()
 
 $global:machinesetupconfig = @{
     MachineSetupConfigFolder = (Join-Path $env:temp 'SayedHaMachineSetup')
+    MachineSetupAppsFolder = (Join-Path $env:temp 'SayedHaMachineSetup\apps')
     BaseChocoPackages = @(
         'boxstarter',
         'git.install',
@@ -31,8 +32,8 @@ $global:machinesetupconfig = @{
         #'adobe-creative-cloud',
         #'inkscape',
         'visualstudiocode',
-        'yeoman',
-        'spotify',
+        # spotify needs to be installed as normal user
+        # 'spotify',
         'everything',
         'markdownpad2',
         'snagit',
@@ -46,6 +47,36 @@ function InternalGet-ScriptDirectory{
 }
 
 $scriptDir = ((InternalGet-ScriptDirectory) + "\")
+
+<#
+.SYNOPSIS
+    Can be used to convert a relative path (i.e. .\project.proj) to a full path.
+#>
+function Get-Fullpath{
+    [cmdletbinding()]
+    param(
+        [Parameter(
+            Mandatory=$true,
+            ValueFromPipeline = $true)]
+        $path,
+
+        $workingDir = ($pwd)
+    )
+    process{
+        $fullPath = $path
+        $oldPwd = $pwd
+
+        Push-Location
+        Set-Location $workingDir
+        [Environment]::CurrentDirectory = $pwd
+        $fullPath = ([System.IO.Path]::GetFullPath($path))
+        
+        Pop-Location
+        [Environment]::CurrentDirectory = $oldPwd
+
+        return $fullPath
+    }
+}
 
 if([string]::IsNullOrWhiteSpace($Global:dropboxhome)){
     if(-not ([string]::IsNullOrWhiteSpace($env:dropboxhome))){
@@ -62,6 +93,47 @@ if([string]::IsNullOrWhiteSpace($Global:codehome)){
     }
     else{
         $Global:codehome = 'c:\data\mycode'
+    }
+}
+
+# based off of
+function Add-Path{
+    [cmdletbinding()]
+    param(
+        [string[]]$pathToAdd,
+
+        [System.EnvironmentVariableTarget]$envTarget = [System.EnvironmentVariableTarget]::Process
+    )
+    process{
+        [string]$existingPath = ([System.Environment]::GetEnvironmentVariable('path',$envTarget))
+        
+        [string]$existingPathLower = $existingPath.ToLowerInvariant()
+        
+        foreach($path in $pathToAdd){
+            if(-not ([string]::IsNullOrWhiteSpace($path))){
+                [string]$fullpath = (Get-Fullpath -path $path)
+                if(test-path -path $fullpath){
+                    $trimmed = $fullpath.TrimEnd('\')
+                    
+                    # don't add if it's already included
+                    if(-not ($existingPathLower.Contains($trimmed.ToLowerInvariant()))){
+                        $newPath = ('{0};{1}' -f $existingPath,$trimmed)
+                        [System.Environment]::SetEnvironmentVariable('path',$newPath,$envTarget)
+                    }
+                }
+                else{
+                    'Not adding to path because the path was not found [{0}], fullpath=[{1}]' -f $path,$fullpath | Write-Warning
+                }
+            }
+        }
+    }
+}
+
+function Get7ZipPath{
+    [cmdletbinding()]
+    param()
+    process{
+        (join-path $env:ProgramFiles '7-Zip\7z.exe')
     }
 }
 
@@ -163,6 +235,39 @@ function InstallSecondaryApps{
     param()
     process{
         $Global:machinesetupconfig.SecondaryChocoPackages | InstallWithChoco
+
+        EnsureFolderExists ($global:machinesetupconfig.MachineSetupAppsFolder)
+        EnsureInstalled-MarkdownPad
+
+        # Add to path
+        # TODO: Need to find a more generic way of doing this.
+        $pathPartsToAdd = @(
+            "$env:ProgramFiles\Git\bin\git.exe"
+            "${env:ProgramFiles(x86)}\Perforce\p4merge.exe"
+            (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder 'markdownpad2-portable\MarkdownPad2.exe')
+        )
+        $markdownpadpath = (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder 'markdownpad2-portable\MarkdownPad2.exe')
+        Add-Path -pathToAdd $markdownpadpath -envTarget User
+    }
+}
+
+function EnsureInstalled-MarkdownPad{
+    [cmdletbinding()]
+    param(
+        [string]$markdownpaddownloadurl = 'http://markdownpad.com/download/markdownpad2-portable.zip',
+        [string]$exerelpath = 'markdownpad2-portable\MarkdownPad2.exe'
+    )
+    process{
+        $expectedPath = (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder $exerelpath)
+        if(-not (test-path $expectedPath)){
+            $mkzip = (GetLocalFileFor -downloadUrl $markdownpaddownloadurl -filename 'markdownpad2-portable.zip')
+            $installFolder = $Global:machinesetupconfig.MachineSetupAppsFolder
+            & (Get7ZipPath) x -y -o$installFolder $mkzip
+            # pin to start menu
+            PinToStartmenu -pathtopin $expectedPath
+            # add to path
+            Add-Path -pathToAdd $expectedPath
+        }
     }
 }
 
@@ -243,12 +348,12 @@ function ConfigureGit{
             }
 
             $sshzip = (GetLocalFileFor -downloadUrl $sshdownloadurl -filename '.ssh.7z')
-            $7zipexe = (join-path $env:ProgramFiles '7-Zip\7z.exe')
+            $7zipexe = (Get7ZipPath)
             if(-not (Test-Path -Path $7zipexe -PathType Leaf) ){
                 throw ('7zip not found at [{0}]' -f $7zipexe)
             }
             EnsureFolderExists -path $destsshpath
-            & $7zipexe e "-p$machinesetuppwd" "-o$destsshpath" $sshzip
+            & $7zipexe e -y "-p$machinesetuppwd" "-o$destsshpath" $sshzip
         }
     }
 }
@@ -394,7 +499,30 @@ function PinToTaskbar{
         }
 
         foreach($path in $pathtopin){
+            'Pin to taskbar with command: [{0} /pinsm {1}]' -f $pinTov2,$path | Write-Verbose
             & $pinTov2 /pintb $path
+        }
+    }
+}
+
+function PinToStartmenu{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [string[]]$pathtopin,
+
+        [Parameter(Position=0)]
+        [string]$pinTov2 = (GetPinToTaskbarTool)
+    )
+    process{
+        if(-not (Test-Path $pinTov2)){
+            'PinTo10v2.exe not found at [{0}]' -f $pinTov2 | Write-Error
+            break
+        }
+
+        foreach($path in $pathtopin){
+            'Pin to startmenu with command: [{0} /pinsm {1}]' -f $pinTov2,$path | Write-Verbose
+            & $pinTov2 /pinsm $path
         }
     }
 }
@@ -491,9 +619,9 @@ function ConfigureMachine{
         }
 
         EnsureFolderExists $codehome
+        EnsureFolderExists ($global:machinesetupconfig.MachineSetupAppsFolder)
 
         InstallBaseApps
-        
         
         EnsurePhotoViewerRegkeyAdded
         ConfigureTaskBar        
@@ -529,8 +657,14 @@ if(-not (IsRunningAsAdmin)) {
 Push-Location
 try{
     Set-Location $scriptDir
-    ConfigureMachine
+    # ConfigureMachine
+    InstallSecondaryApps
 }
 finally{
     Pop-Location
 }
+
+# TODO:
+# Remove dependency on boxstarter
+# Update firefox to not check default browser
+# Update firefox to set google as default search
