@@ -287,7 +287,6 @@ function ConfigureApps{
     [cmdletbinding()]
     param()
     process{
-        Add-Path -pathToAdd "$env:ProgramFiles\Git\bin" -envTarget User
         ConfigureFirefox
     }
 }
@@ -386,6 +385,7 @@ function ConfigureGit{
         if(-not (Test-Path $destsshpath)){           
             if([string]::IsNullOrWhiteSpace($sshdownloadurl) -or [string]::IsNullOrWhiteSpace($machinesetuppwd)){
                  $msg = 'The .ssh url or the machine setup password is empty. Check 1Password for the values and assign env vars, and restart this script'
+                 throw $msg
             }
 
             $sshzip = (GetLocalFileFor -downloadUrl $sshdownloadurl -filename '.ssh.7z')
@@ -396,6 +396,8 @@ function ConfigureGit{
             EnsureFolderExists -path $destsshpath
             & $7zipexe e -y "-p$machinesetuppwd" "-o$destsshpath" $sshzip
         }
+
+        Add-Path -pathToAdd "$env:ProgramFiles\Git\bin" -envTarget User
     }
 }
 
