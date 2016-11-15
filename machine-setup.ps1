@@ -287,6 +287,7 @@ function ConfigureApps{
     [cmdletbinding()]
     param()
     process{
+        Add-Path -pathToAdd "$env:ProgramFiles\Git\bin" -envTarget User
         ConfigureFirefox
     }
 }
