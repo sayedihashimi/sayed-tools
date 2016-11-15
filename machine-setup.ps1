@@ -103,7 +103,9 @@ function Add-Path{
     param(
         [string[]]$pathToAdd,
 
-        [System.EnvironmentVariableTarget]$envTarget = [System.EnvironmentVariableTarget]::Process
+        [System.EnvironmentVariableTarget]$envTarget = [System.EnvironmentVariableTarget]::Process,
+
+        [bool]$alsoAddToProcess = $true
     )
     process{
         [string]$existingPath = ([System.Environment]::GetEnvironmentVariable('path',$envTarget))
@@ -120,6 +122,15 @@ function Add-Path{
                     if(-not ($existingPathLower.Contains($trimmed.ToLowerInvariant()))){
                         $newPath = ('{0};{1}' -f $existingPath,$trimmed)
                         [System.Environment]::SetEnvironmentVariable('path',$newPath,$envTarget)
+                    }
+
+                    if( ($alsoAddToProcess -eq $true) -and ($envTarget -ne [System.EnvironmentVariableTarget]::Process) ){
+                        [string]$oldprocesspath = [System.Environment]::GetEnvironmentVariable('path',[System.EnvironmentVariableTarget]::Process)
+                        $oldprocesspathlower = $oldprocesspath.ToLowerInvariant()
+                        if(-not $oldprocesspathlower.Contains($trimmed.ToLowerInvariant())){
+                            $newprocesspath = ('{0};{1}' -f $existingPath,$trimmed)
+                            [System.Environment]::SetEnvironmentVariable('path',$newprocesspath,[System.EnvironmentVariableTarget]::Process)
+                        }
                     }
                 }
                 else{
@@ -226,6 +237,7 @@ function InstallBaseApps{
         [string]$pkgsafter = ((choco list --local-only) -join ';')
         
         if(-not ([string]::Equals($pkgsbefore,$pkgsafter,[System.StringComparison]::OrdinalIgnoreCase)) ){
+            Add-Path -pathToAdd "$env:ProgramFiles\Git\bin" -envTarget User
             RestartThisScript
         }
     }
@@ -325,7 +337,7 @@ function EnsureBaseReposCloned{
                     Push-Location
                     try{
                         Set-Location $Global:codehome
-                        git clone $repo
+                        & git.exe clone $repo
                     }
                     finally{
                         Pop-Location
