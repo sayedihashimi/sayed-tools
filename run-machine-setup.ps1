@@ -18,7 +18,8 @@ if(test-path $expectedFilepath -PathType Leaf){
 }
 
 if(-not (Test-Path $expectedFilepath)){
-    New-Item -Path $expectedFilepath -ItemType Directory
+    New-Item -Path ([System.IO.Path]::GetDirectoryName($expectedFilepath)) -ItemType Directory
+    
 }
 
 Invoke-WebRequest -Uri $machineSetupUrl -OutFile $expectedFilepath
