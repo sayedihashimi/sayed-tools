@@ -1,0 +1,5 @@
+// PlacE your settings in this file to overwrite the default settings
+{
+    "editor.fontSize": 18,
+    "editor.fontFamily": "'Source Sans Pro',Consolas, 'Courier New', monospace"
+}
