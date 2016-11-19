@@ -1,6 +1,30 @@
 ﻿[cmdletbinding()]
 param()
 
+
+function New-ObjectFromProperties{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [System.Collections.IDictionary]$properties
+    )
+    process{
+        if($properties -ne $null){
+            # create and return the object
+            New-Object -TypeName psobject -Property $properties
+        }
+    }
+}
+set-alias -Name newobj -Value New-ObjectFromProperties
+
+$foo = @(
+            (newobj @{
+                SSH = 'git@github.com:sayedihashimi/sayed-tools.git'
+                HTTPS = 'https://github.com/sayedihashimi/sayed-tools.git' })
+        )
+        
+$foo    
+
 $global:machinesetupconfig = @{
     MachineSetupConfigFolder = (Join-Path $env:temp 'SayedHaMachineSetup')
     MachineSetupAppsFolder = (Join-Path $env:temp 'SayedHaMachineSetup\apps')
@@ -16,9 +40,17 @@ $global:machinesetupconfig = @{
         '7zip.install '
     )
     BaseRepos = @(
-        'git@github.com:sayedihashimi/sayed-tools.git',
-        'git@github.com:sayedihashimi/pshelpers.git',
-        'git@github.com:dahlbyk/posh-git.git'
+        (newobj @{
+                SSH = 'git@github.com:sayedihashimi/sayed-tools.git'
+                HTTPS = 'https://github.com/sayedihashimi/sayed-tools.git' })
+
+        (newobj @{
+                SSH = 'git@github.com:sayedihashimi/pshelpers.git'
+                HTTPS = 'https://github.com/sayedihashimi/pshelpers.git' }),
+
+        (newobj @{
+                SSH = 'git@github.com:dahlbyk/posh-git.git'
+                HTTPS = 'git@github.com:dahlbyk/posh-git.git' })
     )
     SecondaryChocoPackages = @(
         'p4merge',
@@ -98,10 +130,10 @@ if([string]::IsNullOrWhiteSpace($Global:codehome)){
     }
 }
 
-# based off of
 function Add-Path{
     [cmdletbinding()]
     param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
         [string[]]$pathToAdd,
 
         [System.EnvironmentVariableTarget]$envTarget = [System.EnvironmentVariableTarget]::Process,
@@ -284,15 +316,19 @@ function InstallSecondaryApps{
         EnsureFolderExists ($global:machinesetupconfig.MachineSetupAppsFolder)
         EnsureInstalled-MarkdownPad
 
-        # Add to path
         # TODO: Need to find a more generic way of doing this.
         $pathPartsToAdd = @(
-            "$env:ProgramFiles\Git\bin\git.exe"
-            "${env:ProgramFiles(x86)}\Perforce\p4merge.exe"
-            (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder 'markdownpad2-portable\MarkdownPad2.exe')
+            "$env:ProgramFiles\Git\bin"
+            "${env:ProgramFiles(x86)}\Perforce"
+            (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder 'markdownpad2-portable')
         )
-        $markdownpadpath = (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder 'markdownpad2-portable\MarkdownPad2.exe')
-        Add-Path -pathToAdd $markdownpadpath -envTarget User
+        
+        $pathPartsToAdd | %{
+            $current = $_
+            if(Test-Path $current){
+                add-path -pathToAdd $current -envTarget User
+            }
+        }
     }
 }
 
@@ -329,8 +365,16 @@ function EnsureBaseReposCloned{
     param()
     process{
         foreach($repo in $global:machinesetupconfig.BaseRepos){
-            if(-not [string]::IsNullOrWhiteSpace($repo)){
-                $reponame = $repo.Substring($repo.LastIndexOf('/')+1,($repo.LastIndexOf('.git') - ($repo.LastIndexOf('/')+1)))
+            if(-not ($repo -ne $null)){
+            # if(-not [string]::IsNullOrWhiteSpace($repo)){
+                $sshurl = $repo.SSH
+                $httpsurl = $repo.HTTPS
+
+                if([string]::IsNullOrWhiteSpace($sshurl)){
+                    continue
+                }
+
+                $reponame = $sshurl.Substring($sshurl.LastIndexOf('/')+1,($sshurl.LastIndexOf('.git') - ($sshurl.LastIndexOf('/')+1)))
 
                 # if the folder is not on disk clone the repo
                 $dest = (Join-Path $Global:codehome $reponame)
@@ -338,7 +382,17 @@ function EnsureBaseReposCloned{
                     Push-Location
                     try{
                         Set-Location $Global:codehome
-                        & git.exe clone $repo
+
+                        $sshfolder = (Join-Path $env:USERPROFILE '.ssh')
+                        # clone with ssh if the .ssh folder exists, otherwise with https
+                        if( test-path $sshfolder){
+                            'Cloning repo [{0}] with ssh because the .ssh folder was found at [{1}]' -f $reponame, $sshfolder | Write-Verbose
+                            & git.exe clone $sshurl    
+                        }
+                        else{
+                            'Cloning repo [{0}] with https because the .ssh folder was not found at [{1}]' -f $reponame, $sshfolder | Write-Verbose
+                            & git.exe clone $httpsurl
+                        }
                     }
                     finally{
                         Pop-Location
