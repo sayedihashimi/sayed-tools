@@ -38,7 +38,8 @@ $global:machinesetupconfig = @{
         'everything',
         #'markdownpad2',
         'snagit',
-        'kindle'
+        'kindle',
+        'dropbox'
     )
     WallpaperUrl = 'https://dl.dropboxusercontent.com/u/40134810/wallpaper/checking-out-the-view.jpg'
 }
@@ -671,7 +672,7 @@ $global:machinesetupuserconfig = @{
         @{
             Filename = 'source-code-pro-1.050R-it.zip'
             DownloadUrl = 'https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip'
-            RelpathToFontsFolder = 'source-sans-pro-2.020R-ro-1.075R-it\TTF'
+            RelpathToFontsFolder = 'source-code-pro-2.030R-ro-1.050R-it\TTF'
         }
     )
 }
@@ -792,7 +793,6 @@ Push-Location
 try{
     Set-Location $scriptDir
     ConfigureMachine
-    # InstallSecondaryApps
 }
 finally{
     Pop-Location
