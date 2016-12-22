@@ -15,15 +15,7 @@ function New-ObjectFromProperties{
         }
     }
 }
-set-alias -Name newobj -Value New-ObjectFromProperties
-
-$foo = @(
-            (newobj @{
-                SSH = 'git@github.com:sayedihashimi/sayed-tools.git'
-                HTTPS = 'https://github.com/sayedihashimi/sayed-tools.git' })
-        )
-        
-$foo    
+set-alias -Name newobj -Value New-ObjectFromProperties   
 
 $global:machinesetupconfig = @{
     MachineSetupConfigFolder = (Join-Path $env:temp 'SayedHaMachineSetup')
@@ -348,7 +340,7 @@ function EnsureInstalled-MarkdownPad{
     )
     process{
         $expectedPath = (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder $exerelpath)
-        if(-not (test-path $expectedPath)){
+        if(test-path $expectedPath){
             $mkzip = (GetLocalFileFor -downloadUrl $markdownpaddownloadurl -filename 'markdownpad2-portable.zip')
             $installFolder = $Global:machinesetupconfig.MachineSetupAppsFolder
             & (Get7ZipPath) x -y "-o$installFolder" "$mkzip"
