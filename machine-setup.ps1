@@ -1,6 +1,8 @@
 ﻿[cmdletbinding()]
-param()
-
+param(
+    [Parameter(Position=0)]
+    [bool]$runscript = $true
+)
 
 function New-ObjectFromProperties{
     [cmdletbinding()]
@@ -108,7 +110,8 @@ if([string]::IsNullOrWhiteSpace($Global:dropboxhome)){
     if(-not ([string]::IsNullOrWhiteSpace($env:dropboxhome))){
         $Global:dropboxhome = $env:dropboxhome
     }
-    else{
+
+    if([string]::IsNullOrWhiteSpace($Global:dropboxhome)){
         $Global:dropboxhome = 'c:\data\dropbox'
     }
 }
@@ -117,7 +120,8 @@ if([string]::IsNullOrWhiteSpace($Global:codehome)){
     if(-not ([string]::IsNullOrWhiteSpace($env:codehome))){
         $Global:codehome = $env:codehome
     }
-    else{
+
+    if([string]::IsNullOrWhiteSpace($Global:codehome)){
         $Global:codehome = 'c:\data\mycode'
     }
 }
@@ -329,6 +333,43 @@ function ConfigureApps{
     param()
     process{
         ConfigureFirefox
+    }
+}
+
+function ConfigureVisualStudio{
+    [cmdletbinding()]
+    param()
+    process{
+        # copy snippets
+        CopyVisualStudioSnippets
+    }
+}
+
+function CopyVisualStudioSnippets{
+    [cmdletbinding()]
+    param(
+        $snippetSourcePath = (Join-Path $Global:codehome 'sayed-tools\snippets')
+    )
+    process{        
+        if(test-path -Path $snippetSourcePath -PathType Container){
+            [string[]]$snippetsToCopy = (Get-ChildItem -Path $snippetSourcePath *.snippet -File).FullName
+            [string]$docspath = [Environment]::GetFolderPath("MyDocuments")
+            [string[]]$pathsToCopyTo ="$docspath\Visual Studio 2017\Code Snippets\MyCodeSnippets",
+                                      "$docspath\Visual Studio 2015\Code Snippets\MyCodeSnippets",
+                                      "$docspath\Visual Studio 2013\Code Snippets\MyCodeSnippets"
+            foreach($p in $pathsToCopyTo){
+                EnsureFolderExists -path $p
+                foreach($file in $snippetsToCopy){
+                    [string]$destpath = (Join-Path $p (get-item -Path $file).name)
+                    if(-not (test-path -Path $destpath)){
+                        Copy-Item -LiteralPath $file -Destination $destpath
+                    }
+                }
+            }    
+        }
+        else{
+            'Snippet source dir not found at [{0}]' -f $snippetSourcePath | Write-Warning
+        }
     }
 }
 
@@ -815,6 +856,7 @@ function ConfigureMachine{
         InstallSecondaryApps
 
         ConfigureWindows
+        ConfigureVisualStudio
         ConfigureApps
         
         try{
@@ -838,7 +880,9 @@ if(-not (IsRunningAsAdmin)) {
 Push-Location
 try{
     Set-Location $scriptDir
-    ConfigureMachine
+    if($runscript -eq $true){
+        ConfigureMachine
+    }
 }
 finally{
     Pop-Location
