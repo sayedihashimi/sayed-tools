@@ -742,9 +742,9 @@ function ConfigureWindows{
             $_ | Write-Warning
         }
 
-        # update mouse pointer speed
+        # TODO: update mouse pointer speed
 
-        # update mouse pointer to show when CTRL is clicked
+        # TODO: update mouse pointer to show when CTRL is clicked
     }
 }
 
@@ -824,6 +824,28 @@ function LoadModules{
     }
 }
 
+function RunTask{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [ScriptBlock[]]$task
+    )
+    process{
+        foreach($t in $task){
+            if($t -eq $null){
+                continue
+            }
+
+            try{
+                . $t
+            }
+            catch{
+                'Error in task execution of [{0}]' -f $t | Write-Warning
+            }
+        }
+    }
+}
+
 function ConfigureMachine{
     [cmdletbinding()]
     param(
@@ -844,27 +866,22 @@ function ConfigureMachine{
 
         InstallBaseApps
         
-        EnsurePhotoViewerRegkeyAdded
-        ConfigureTaskBar        
+        RunTask @(
+            {EnsurePhotoViewerRegkeyAdded},
+            {ConfigureTaskBar},
 
-        ConfigureConsole
-        ConfigureGit
-        ConfigurePowershell
+            {ConfigureConsole},
+            {ConfigureGit},
+            {ConfigurePowershell},
 
-        EnsureBaseReposCloned
-        LoadModules
-        InstallSecondaryApps
+            {EnsureBaseReposCloned},
+            {LoadModules},
+            {InstallSecondaryApps},
 
-        ConfigureWindows
-        ConfigureVisualStudio
-        ConfigureApps
-        
-        try{
-            #Install-WindowsUpdate
-        }
-        catch{
-            $_ | Write-Warning
-        }
+            {ConfigureWindows},
+            {ConfigureVisualStudio},
+            {ConfigureApps}
+        )
     }
 }
 
