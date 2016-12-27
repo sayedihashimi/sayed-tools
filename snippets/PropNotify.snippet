@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>PropNotify</Title>
+			<Shortcut>PropNotify</Shortcut>
+			<Description>Code snippet to create a field and property for INotifyProperty changed.</Description>
+			<Author>Sayed Ibrahim Hashimi</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal Editable="true">
+					<ID>VARIABLE1</ID>
+					<ToolTip>Field Name</ToolTip>
+					<Default>fieldName</Default>
+				</Literal>
+				<Literal Editable="true">
+					<ID>VARIABLE2</ID>
+					<ToolTip>Property Name</ToolTip>
+					<Default>PropertyName</Default>
+				</Literal>
+				<Literal Editable="true">
+					<ID>TYPE</ID>
+					<ToolTip>Type</ToolTip>
+					<Default>string</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp">
+				<![CDATA[
+				private $TYPE$ $VARIABLE1$;
+				public $TYPE$ $VARIABLE2$
+				{
+					get { return $VARIABLE1$; }
+					set 
+					{ 
+						if( this.$VARIABLE1$ != null && value == null )
+							return;
+						if(this.$VARIABLE1$ != null && this.$VARIABLE1$ ==value )
+							return;
+						$VARIABLE1$ = value; 
+						string propName = new System.Diagnostics.StackFrame().GetMethod().Name.Replace("set_", "");
+						OnPropertyChanged(propName);
+					}
+				} 
+	$end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

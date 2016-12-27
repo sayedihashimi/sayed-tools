@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>DSConn</Title>
+			<Shortcut>DSConn</Shortcut>
+			<Description>Code snippet for DS Connection generation</Description>
+			<Author>Sayed Ibrahim Hashimi</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal Editable="false">
+					<ID>classname</ID>
+					<ToolTip>Class name</ToolTip>
+					<Function>ClassName()</Function>
+					<Default>ClassNamePlaceholder</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp">
+				
+				<![CDATA[
+	#region constructors
+	public $classname$ (string connectionString)
+		:this()
+	{
+		this.Connection = new System.Data.SqlClient.SqlConnection(connectionString);
+	}
+	public $classname$ (System.Data.SqlClient.SqlConnection con)
+		: this()
+	{
+		this.Connection = con;
+	}
+	#endregion
+	#region connection
+	public System.Data.SqlClient.SqlConnection GetConnection()
+	{ return this.Connection; }
+	public void SetConnection(System.Data.SqlClient.SqlConnection con)
+	{ 
+		this.Connection = con; 
+		this.InitCommandCollection();
+		foreach (System.Data.SqlClient.SqlCommand command in this._commandCollection)
+		{
+			if (command == null)
+				continue;
+			command.Connection = con;
+		}
+		if (this.Adapter != null)
+		{
+			if (this.Adapter.InsertCommand != null)
+				this.Adapter.InsertCommand.Connection = con;
+			if (this.Adapter.UpdateCommand != null)
+				this.Adapter.UpdateCommand.Connection = con;
+			if (this.Adapter.DeleteCommand != null)
+				this.Adapter.DeleteCommand.Connection = con;
+			if (this.Adapter.SelectCommand != null)
+				this.Adapter.SelectCommand.Connection = con;
+		}
+	}
+	
+	public void SetConnectionString(string connectionString)
+	{
+		if (this.Connection != null)
+		{
+			if (this.Connection.State == System.Data.ConnectionState.Open)
+				this.Connection.Close();
+
+			this.Connection.Dispose();
+		}
+		this.SetConnection( new System.Data.SqlClient.SqlConnection(connectionString) ); 
+	}
+	
+	public void SetTransaction(System.Data.SqlClient.SqlTransaction tranz)
+	{
+		if (this._commandCollection != null && this._commandCollection.Length > 0)
+		{
+			foreach (System.Data.SqlClient.SqlCommand cmd in this._commandCollection)
+			{
+				cmd.Transaction = tranz;
+			}
+		}
+	}
+	public void ClearTransaction()
+	{
+		if (this._commandCollection != null && this._commandCollection.Length > 0)
+		{
+			foreach (System.Data.SqlClient.SqlCommand cmd in this._commandCollection)
+			{
+				cmd.Transaction = null;
+			}
+		}
+	}
+	#endregion
+	$end$
+	]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

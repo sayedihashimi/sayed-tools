@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Nunit Test Case</Title>
+			<Shortcut>TestCase</Shortcut>
+			<Description>Code snippet to create a NUnit test case.</Description>
+      <Author>Sayed Ibrahim Hashimi</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal Editable="true">
+					<ID>METHODNAME</ID>
+					<ToolTip>Method Name</ToolTip>
+					<Default>MethodName</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp">
+				<![CDATA[[NUnit.Framework.Test]
+        public void $METHODNAME$()
+        {
+            string methodName = new System.Diagnostics.StackFrame().GetMethod().Name;
+            System.Diagnostics.Debug.WriteLine(string.Format("{1}Starting method: {0} {1}", methodName, new string('-', 15)));
+                          
+            
+            
+            
+            System.Diagnostics.Debug.WriteLine(string.Format("{1}Finished method: {0} {1}", methodName, new string('-', 15)));
+        }$end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

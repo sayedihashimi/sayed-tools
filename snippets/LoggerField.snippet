@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>logger field</Title>
+			<Shortcut>loggerField</Shortcut>
+			<Description>Add log4net logger field</Description>
+			<Author>Sayed Ibrahim Hashimi</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<References>
+				<Reference>
+					<Assembly>log4net.dll</Assembly>
+				</Reference>
+			</References>
+			<Imports>
+				<Import>
+					<Namespace>log4net</Namespace>
+				</Import>
+			</Imports>
+			<Declarations>
+				<Literal Editable="false">
+					<ID>classname</ID>
+					<ToolTip>Class name</ToolTip>
+					<Function>ClassName()</Function>
+					<Default>ClassNamePlaceholder</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp">
+				<![CDATA[private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof($classname$));]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
