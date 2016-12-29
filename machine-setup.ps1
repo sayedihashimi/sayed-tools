@@ -398,7 +398,7 @@ function EnsureBaseReposCloned{
     param()
     process{
         foreach($repo in $global:machinesetupconfig.BaseRepos){
-            if(-not ($repo -ne $null)){
+            if($repo -ne $null){
             # if(-not [string]::IsNullOrWhiteSpace($repo)){
                 $sshurl = $repo.SSH
                 $httpsurl = $repo.HTTPS
