@@ -279,6 +279,7 @@ function ConfigureFirefox{
         [string]$destFolder = "$env:ProgramFiles\Mozilla Firefox\defaults\pref\"
     )
     process{
+        # TODO: Configure google as default search
         $files = @(
             @{
                 Filename = 'autoconfig.js'
@@ -732,6 +733,12 @@ function ConfigureWindows{
         Set-WindowsExplorerOptions -EnableShowFileExtensions
         Enable-RemoteDesktop
         AddFonts
+        try{
+            DisableScreenSaver
+        }
+        catch{
+            $_ | Write-Warning
+        }
 
         # try to update the wallpaper
         try{
@@ -745,6 +752,22 @@ function ConfigureWindows{
         # TODO: update mouse pointer speed
 
         # TODO: update mouse pointer to show when CTRL is clicked
+    }
+}
+
+function DisableScreenSaver(){
+    [cmdletbinding()]
+    param(
+        [string]$screenSaverDownloadUrl = 'https://github.com/sayedihashimi/sayed-tools/raw/master/contrib/ScreenSaverBlocker.exe'
+    )
+    process{
+        'Copying ScreenSaverBlocker.exe to startup folder' | Write-Verbose
+        $localexe = (GetLocalFileFor -downloadUrl $screenSaverDownloadUrl)
+        [string]$destPath = ("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\StartupScreenSaverBlocker.exe")
+        if(-not (test-path $destPath)){
+            EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($destPath))
+            Copy-Item -LiteralPath $localexe -Destination $destPath
+        }
     }
 }
 
@@ -880,7 +903,7 @@ function ConfigureMachine{
 
             {ConfigureWindows},
             {ConfigureVisualStudio},
-            {ConfigureApps}
+            {ConfigureApps}            
         )
     }
 }
