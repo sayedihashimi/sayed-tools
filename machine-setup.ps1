@@ -729,29 +729,43 @@ function ConfigureWindows{
         LoadBoxstarter
     }
     process{
-        # show file extensions
-        Set-WindowsExplorerOptions -EnableShowFileExtensions
-        Enable-RemoteDesktop
-        AddFonts
-        try{
-            DisableScreenSaver
-        }
-        catch{
-            $_ | Write-Warning
-        }
+        RunTask @(
+            {Set-WindowsExplorerOptions -EnableShowFileExtensions},
+            {Enable-RemoteDesktop},
 
-        # try to update the wallpaper
-        try{
-            $wppath = (GetLocalFileFor -downloadUrl $global:machinesetupconfig.WallpaperUrl -filename 'wp-view.jpg')
-            Update-wallpaper -path $wppath -Style 'Fit'
-        }
-        catch{
-            $_ | Write-Warning
-        }
+            {AddFonts},
+            {DisableScreenSaver},
+            {
+                $wppath = (GetLocalFileFor -downloadUrl $global:machinesetupconfig.WallpaperUrl -filename 'wp-view.jpg')
+                Update-wallpaper -path $wppath -Style 'Fit'
+            },
+
+            {InstallPaintDotNet}   
+        )
 
         # TODO: update mouse pointer speed
 
         # TODO: update mouse pointer to show when CTRL is clicked
+    }
+}
+
+# http://www.getpaint.net/doc/latest/UnattendedInstallation.html
+function InstallPaintDotNet(){
+    [cmdletbinding()]
+    param(
+        [string]$downloadUrl = 'http://www.dotpdn.com/files/paint.net.4.0.13.install.zip',
+        [string]$filename = 'paint.net.4.0.13.install.zip',
+        [string]$installerRelPath = 'paint.net.4.0.13.install.exe'
+    )
+    process{        
+        $extractfolder = ExtractRemoteZip -downloadUrl $downloadUrl -filename $filename
+        $foo = 'bar'
+
+        $installerexe = Join-Path $extractfolder $installerRelPath
+
+        & $installerexe /auto DESKTOPSHORTCUT 1
+
+
     }
 }
 
