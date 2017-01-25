@@ -509,7 +509,7 @@ function GetLocalFileFor{
         [ValidateNotNullOrEmpty()]
         [string]$downloadUrl,
 
-        [Parameter(Position=1)]
+        [Parameter(Position=1,Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [string]$filename
     )
@@ -776,11 +776,12 @@ function DisableScreenSaver(){
     )
     process{
         'Copying ScreenSaverBlocker.exe to startup folder' | Write-Verbose
-        $localexe = (GetLocalFileFor -downloadUrl $screenSaverDownloadUrl)
-        [string]$destPath = ("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\StartupScreenSaverBlocker.exe")
+        $localexe = (GetLocalFileFor -downloadUrl $screenSaverDownloadUrl -filename 'ScreenSaverBlocker.exe')
+        [string]$destPath = ("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\ScreenSaverBlocker.exe")
         if(-not (test-path $destPath)){
             EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($destPath))
             Copy-Item -LiteralPath $localexe -Destination $destPath
+            start $localexe
         }
     }
 }
