@@ -415,6 +415,57 @@ Function Update-Wallpaper {
     [Wallpaper.Setter]::SetWallpaper( $Path, $Style )
 }
 
+function New-LoremIpsum{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ParameterSetName='words')]
+        [int]$numWords,
+        [Parameter(Position=0,ParameterSetName='para')]
+        [int]$numParagraphs,
+        [Parameter(Position=0,ParameterSetName='bytes')]
+        [int]$numBytes,
+        [Parameter(Position=0,ParameterSetName='lists')]
+        [int]$numLists
+    )
+    process{
+        # http://www.lipsum.com/feed/xml?amount=1&what=words&start=yes&quot;
+        [string]$baseUrl = 'http://www.lipsum.com/feed/xml?start=yes&quot;'
+        [string]$result = ''
+        [string]$what = ''
+        [string]$count = ''
+        
+        if($numWords -gt 0){
+            $what = 'words'
+            $num = $numWords
+        }
+        elseif($numParagraphs -gt 0){
+            $what = 'paras'
+            $num = $numParagraphs
+        }
+        elseif($numBytes -gt 0){
+            $what = 'bytes'
+            $num = $numBytes
+        }
+        elseif($numLists -gt 0){
+            $what = 'lists'
+            $num = $numLists
+        }
+        else{
+            throw ('numWords, numParagraphs, numBytes or numLists must be greater than 0')
+        }
+
+        $url = ('{0}&what={1}&amount={2}' -f $baseUrl,$what,$num)
+        [xml]$result = Invoke-WebRequest -uri $url
+        $text = $result.feed.lipsum
+        $text |clip
+        $text
+        "`r`n >>>>> generated content is on the clip board" | Write-Output
+
+    }
+}
+
+Set-Alias -Name LoremIpsum -Value New-LoremIpsum
+
 <#
 .SYNOPSIS 
 This will inspect the nuspec file and return the value for the Version element.
