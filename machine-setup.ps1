@@ -63,7 +63,7 @@ $global:machinesetupconfig = @{
         # 'spotify',
         'everything',
         #'markdownpad2',
-        'snagit',
+        #'snagit',
         'kindle',
         'dropbox'
     )
