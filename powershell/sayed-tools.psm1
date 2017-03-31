@@ -130,9 +130,12 @@ function Get-VisualStudioGitAttributes{
             foreach($dest in $destination){
                $dest = (Get-NormalizedPath -path $dest)
 
-                if(([System.IO.FileInfo]$dest).Attributes -match 'Directory'){
-                    $dest = (Join-Path $dest '.gitattributes')
+                if( ((test-path $dest) -eq $true) -and (get-item $dest -ErrorAction SilentlyContinue).PSIsContainer -eq $true ){
+                    $dest = (Join-Path $dest '.gitignore')
                 }
+
+                "dest: [$dest]" | Write-Verbose
+
                 $webresult | Out-File $dest -Encoding ascii
             }
         }
@@ -156,12 +159,15 @@ function Get-VisualStudioGitIgnore{
 
         if(-not [string]::IsNullOrEmpty($destination)){
             foreach($dest in $destination){
-               $dest = (Get-NormalizedPath -path $dest)
+                $dest = (Get-NormalizedPath -path $dest)
 
-                if(([System.IO.FileInfo]$dest).Attributes -match 'Directory'){
+                if( ((test-path $dest) -eq $true) -and (get-item $dest -ErrorAction SilentlyContinue).PSIsContainer -eq $true ){
                     $dest = (Join-Path $dest '.gitignore')
                 }
-                $webresult | Out-File $dest -Encoding ascii
+                
+                "dest: [$dest]" | Write-Verbose
+
+                $webresult | Out-File $dest -Encoding ascii | Write-Verbose
             }
         }
         else{
