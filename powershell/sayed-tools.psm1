@@ -457,10 +457,35 @@ function New-LoremIpsum{
         $url = ('{0}&what={1}&amount={2}' -f $baseUrl,$what,$num)
         [xml]$result = Invoke-WebRequest -uri $url
         $text = $result.feed.lipsum
-        $text |clip
-        $text
-        "`r`n >>>>> generated content is on the clip board" | Write-Output
 
+        $text
+
+        if( (CommandExists clip)){
+            $text | clip
+            "`r`n >>>>> generated content is on the clip board" | Write-Output
+
+        }
+    }
+}
+
+function CommandExists(){
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,Mandatory=$true)]
+        [string]$command
+    )
+    process{
+        [bool]$exists = $false
+        try{
+            if( (get-command $command -ErrorAction SilentlyContinue)) {
+                $exists = $true
+            }
+        }
+        catch{
+            $exists = $false
+        }
+
+        $exists
     }
 }
 
