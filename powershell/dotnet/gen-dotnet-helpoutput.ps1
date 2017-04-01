@@ -39,10 +39,18 @@ function RunDnCommand{
                 
                 if(-not ([string]::IsNullOrWhiteSpace($actualCommand))){
                     $cmdArgs = ($dnCommand.CArgs)
-                    [string]$cmdText = ($actualCommand, ( $cmdArgs -join ' ' ))
+                    #[string]$cmdText = ($actualCommand, ( $cmdArgs -join ' ' ))
+
+
+                    [string]$cmdText = $actualCommand.Trim()
+                    if($cmdArgs -ne $null -and ($cmdArgs.length -gt 0)) {
+                        $cmdText = ($actualCommand, ( $cmdArgs -join ' ' ))
+                    }
+
+
                     [string]$filename = ( "{0}.{1}.cmd.txt" -f $runDnCommandIndex, $cmdText)
                     [string]$destPath = (Join-Path -Path $outputFolder -ChildPath $filename)
-                    'Command: "{0}" dest: "{1}"' -f $cmdText,$destPath | Write-Output
+                    'Command: "{0}" dest: "{1}"' -f $cmdText,$destPath | Write-Verbose
                     & ($actualCommand) ($cmdArgs) *> $destPath
 
                     # Get-Content -Path $destPath | Write-Output
