@@ -79,7 +79,7 @@ function RunDnCommand{
                     }
 
 
-                    [string]$filename = ( "{0}.{1}.cmd.txt" -f $runDnCommandIndex, $cmdText)
+                    [string]$filename = ( "{0:D2}.{1}.cmd.txt" -f $runDnCommandIndex, $cmdText)
                     [string]$destPath = (Join-Path -Path $outputFolder -ChildPath $filename)
                     'Command: "{0}" dest: "{1}"' -f $cmdText,$destPath | Write-Verbose
                     & ($actualCommand) ($cmdArgs) *> $destPath
