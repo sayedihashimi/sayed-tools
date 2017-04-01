@@ -44,7 +44,13 @@ function CloneRepo{
             $expectedPath = (Join-Path $pwd $directory)
         }
 
-        & cmd.exe /C "git clone $url $extraArgs 2>&1"
+        if( (CommandExists 'cmd.exe') ){
+            & cmd.exe /C "git clone $url $extraArgs 2>&1"
+        }
+        else{
+            # likely not running on windows
+            & git clone $url $extraArgs 2>&1
+        }
         $gitexitcode = $LASTEXITCODE
         if($LASTEXITCODE -ne 0){
             throw $Error[0]
@@ -55,5 +61,27 @@ function CloneRepo{
         if(Test-Path $expectedPath){
             Set-Location $expectedPath
         }
+    }
+}
+
+
+function CommandExists(){
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,Mandatory=$true)]
+        [string]$command
+    )
+    process{
+        [bool]$exists = $false
+        try{
+            if( (get-command $command -ErrorAction SilentlyContinue)) {
+                $exists = $true
+            }
+        }
+        catch{
+            $exists = $false
+        }
+
+        $exists
     }
 }
