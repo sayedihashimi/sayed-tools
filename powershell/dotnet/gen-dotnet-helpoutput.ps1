@@ -46,6 +46,13 @@ if([string]::IsNullOrWhiteSpace($outputPath)) {
     @{'command'='dotnet-new3';'CArgs'=@('sln','-h')}
 )
 
+function GetNewTempFile(){
+    [cmdletbinding()]
+    param()
+    process{
+        [System.IO.Path]::GetTempFileName()
+    }
+}
 
 [int]$runDnCommandIndex = 0
 function RunDnCommand{
@@ -82,8 +89,11 @@ function RunDnCommand{
                     [string]$filename = ( "{0:D2}.{1}.cmd.txt" -f $runDnCommandIndex, $cmdText)
                     [string]$destPath = (Join-Path -Path $outputFolder -ChildPath $filename)
                     'Command: "{0}" dest: "{1}"' -f $cmdText,$destPath | Write-Verbose
-                    & ($actualCommand) ($cmdArgs) *> $destPath
+                    [string]$tempFile = (GetNewTempFile)
+                    & ($actualCommand) ($cmdArgs) *> $tempFile
 
+                    Get-Content -Path $tempFile | Out-File $destPath -Encoding ascii
+                    Remove-Item $tempFile 
                     # Get-Content -Path $destPath | Write-Output
                 }
             }
