@@ -70,4 +70,4 @@
 *.ps1xml text  eol=crlf
 *.clixml text  eol=crlf
 *.xml    text  eol=crlf
-*.txt    text  eol=crlf
+*.txt    text  eol=crlf diff=astextplain
