@@ -1,7 +1,7 @@
 [cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [string]$searchTerm = 'template'
+    [string[]]$searchTerm = 'template'
 )
 
 $global:machinesetupconfig = @{
@@ -90,26 +90,30 @@ function ExtractRemoteZip{
 function GetTemplatesToCheck(){
     [cmdletbinding()]
     param(
-        [string]$searchTerm = 'template'
+        [string[]]$searchTerm = 'template'
     )
     process{
-        # $packages = (&(get-nuget) list slowcheetah|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)){@{'Name'=$res[0];'Version'=$res[1]}}})
-        # (&(get-nuget) list slowcheetah|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)){@{'Name'=$res[0];'Version'=$res[1]}}})|%{$_.Name}
+        $allResults = @()
+        foreach($st in $searchTerm){
+        
+            $result = (&(get-nuget) list $st|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
+                    @{
+                        'Name'=$res[0]
+                        'Version'=$res[1]
+                        'DownloadUrl' = ('http://www.nuget.org/api/v2/package/{0}/{1}' -f $res[0],$res[1])
+                    }}})
 
-        $result = (&(get-nuget) list $searchTerm|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
-                @{
-                    'Name'=$res[0]
-                    'Version'=$res[1]
-                    'DownloadUrl' = ('http://www.nuget.org/api/v2/package/{0}/{1}' -f $res[0],$res[1])
-                }}})
+            if($LASTEXITCODE -eq 0){
+                # return the result
+                # $result
+                $allResults += $result
+            }
+            else{
+                throw ('Unknown error: ' + $Error[0])
+            }
+        }
 
-        if($LASTEXITCODE -eq 0){
-            # return the result
-            $result
-        }
-        else{
-            throw ('Unknown error: ' + $Error[0])
-        }
+        $allResults
     }
 }
 
@@ -199,7 +203,7 @@ function Find-PathContainingTemplate(){
 function Get-TemplateReport{
     [cmdletbinding()]
     param(
-        [string]$searchTerm = 'template'       
+        [string[]]$searchTerm = 'template'       
     )
     process{
         # list of templates to check

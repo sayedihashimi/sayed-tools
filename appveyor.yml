@@ -1,16 +1,6 @@
 os: Visual Studio 2015
 
-environment:
-  DeployExtension: false
-  NuGetApiKey:
-    secure: HFUEQanhaxHV/sRQYznQqg7LToxSGeIoSvrmyY29PJ1eDbXxUuYrEQ6MPAsZIQFT
-
 build_script:
   - ps: .\appveyor.ps1
 
 test: off
-
-artifacts:
-  - path: OutputRoot\vs\CoverageConvert**
-  - path: OutputRoot\**\*.nupkg
- 
