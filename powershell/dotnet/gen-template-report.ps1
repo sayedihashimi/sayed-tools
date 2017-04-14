@@ -265,7 +265,7 @@ try{
     $global:foundpackages = @()
     $global:foundpackages += ( Get-TemplateReport )
 
-    $global:foundpackages
+    $global:foundpackages | ft -Wrap
 
 }
 catch{
