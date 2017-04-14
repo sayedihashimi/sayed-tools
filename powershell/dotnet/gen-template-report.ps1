@@ -1,7 +1,7 @@
 [cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [string[]]$searchTerm = 'template'
+    [string[]]$searchTerm = @('template','templates')
 )
 
 $global:machinesetupconfig = @{
@@ -90,7 +90,7 @@ function ExtractRemoteZip{
 function GetTemplatesToCheck(){
     [cmdletbinding()]
     param(
-        [string[]]$searchTerm = 'template'
+        [string[]]$searchTerm =@('template','templates')
     )
     process{
         $allResults = @()
@@ -203,7 +203,7 @@ function Find-PathContainingTemplate(){
 function Get-TemplateReport{
     [cmdletbinding()]
     param(
-        [string[]]$searchTerm = 'template'       
+        [string[]]$searchTerm = @('template','templates')       
     )
     process{
         # list of templates to check
@@ -267,7 +267,7 @@ function Get-Nuget{
 
 try{
     $global:foundpackages = @()
-    $global:foundpackages += ( Get-TemplateReport )
+    $global:foundpackages += ( Get-TemplateReport -searchTerm $searchTerm )
 
     $global:foundpackages | ft -Wrap
 
