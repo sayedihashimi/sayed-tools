@@ -4,6 +4,24 @@ param(
     [string[]]$searchTerm = @('template','templates')
 )
 
+[string[]]$packagesToExclude = @(
+            'Apitron.PDF.Kit',
+            'GroupDocs.Assembly',
+            'Select.Pdf.x64',
+            'Select.Pdf',
+            'Apitron.PDF.Kit.Mobile',
+            'ExpertPdf.PdfCreator',
+            'groupdocs-assembly-dotnet',
+            'JBRipps.NewSite',
+            'Stimulsoft.Reports.Web',
+            'Zurb_Foundation_MVC3_Demo',
+            'NReco.PdfGenerator',
+            'Rodrigo.Web.Template',
+            'AppTemplate',
+            'More.Build.Tasks.NuGet',
+            'LinkOS_Xamarin_SDK'
+)
+
 $global:machinesetupconfig = @{
     MachineSetupConfigFolder = (Join-Path $env:temp 'SayedHaMachineSetup')
     MachineSetupAppsFolder = (Join-Path $env:temp 'SayedHaMachineSetup\apps')
@@ -96,7 +114,7 @@ function GetTemplatesToCheck(){
         $allResults = @()
         foreach($st in $searchTerm){
         
-            $result = (&(get-nuget) list $st|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
+            $result = (&(get-nuget) list -NonInteractive -Prerelease $st|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
                     @{
                         'Name'=$res[0]
                         'Version'=$res[1]
@@ -104,8 +122,6 @@ function GetTemplatesToCheck(){
                     }}})
 
             if($LASTEXITCODE -eq 0){
-                # return the result
-                # $result
                 $allResults += $result
             }
             else{
@@ -113,7 +129,14 @@ function GetTemplatesToCheck(){
             }
         }
 
-        $allResults
+        $filteredResults = @()
+        foreach($pkg in $allResults){
+            if(-not ($packagesToExclude.Contains($pkg.Name) )) {
+                $filteredResults += $pkg
+            }
+        }
+
+        $filteredResults
     }
 }
 
