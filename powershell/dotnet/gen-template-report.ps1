@@ -178,6 +178,22 @@ function Get-PackageDownloadStats(){
     }
 }
 
+function Find-TemplateFilesUnderPath{
+    [cmdletbinding()]
+    param(
+        [string[]]$path
+    )
+    process{
+        foreach($pathToCheck in $path){
+            if( -not ([string]::IsNullOrWhiteSpace($pathToCheck))){
+                [string[]]$templateFiles = (Get-ChildItem $pathToCheck .template.config -Directory -Recurse|%{Get-ChildItem (get-item ($_).fullname) template.json -File}).FullName
+            }
+            # return the result
+            $templateFiles
+        }
+    }
+}
+
 function Test-PathContainsTemplate(){
     [cmdletbinding()]
     param(
@@ -187,9 +203,9 @@ function Test-PathContainsTemplate(){
     process{
         if(test-path $pathToCheck){
             # if the folder contains a template return the path, otherwise return nothing.
-            [string[]]$templateFiles = (Get-ChildItem $pathToCheck .template.config -Directory -Recurse|%{Get-ChildItem (get-item ($_).fullname) template.json -File})
+            #[string[]]$templateFiles = (Get-ChildItem $pathToCheck .template.config -Directory -Recurse|%{Get-ChildItem (get-item ($_).fullname) template.json -File})
+            [string[]]$templateFiles = Find-TemplateFilesUnderPath -path $pathToCheck
             if( ($templateFiles -ne $null) -and ($templateFiles.Length -gt 0)){
-
                 # return the folder path
                 $true
             }
@@ -291,6 +307,26 @@ function Get-Nuget{
     }
 }
 
+function Get-JsonObjectFromTemplateFile{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [string[]]$templateFilePath
+    )
+    process{
+        foreach($path in $templateFilePath){
+            if(test-path -Path $path){
+                try{
+                    ConvertFrom-Json([System.IO.File]::ReadAllText($path))
+                }
+                catch{
+                    'Unable to convert file [{0}] to json object. Error: {1}' -f $path,$_.Exception | Write-Verbose
+                }
+            }
+        }
+    }
+}
+
 try{
     $global:foundpackages = @()
     $global:foundpackages += ( Get-TemplateReport -searchTerm $searchTerm )
@@ -307,6 +343,11 @@ try{
     # not working for some reason
     # " --- overall ---`n" | Write-Output
     # $uResults.DownloadCount|Measure-Object -Sum -Average -Maximum -Minimum
+
+    $extractPath = $global:machinesetupconfig.MachineSetupAppsFolder
+    $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
+
+    $templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author | fl
 }
 catch{
     $_.Exception | Write-Error
