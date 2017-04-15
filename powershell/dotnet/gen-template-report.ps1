@@ -4,23 +4,19 @@ param(
     [string[]]$searchTerm = @('template','templates')
 )
 
-[string[]]$packagesToExclude = @(
-            'Apitron.PDF.Kit',
-            'GroupDocs.Assembly',
-            'Select.Pdf.x64',
-            'Select.Pdf',
-            'Apitron.PDF.Kit.Mobile',
-            'ExpertPdf.PdfCreator',
-            'groupdocs-assembly-dotnet',
-            'JBRipps.NewSite',
-            'Stimulsoft.Reports.Web',
-            'Zurb_Foundation_MVC3_Demo',
-            'NReco.PdfGenerator',
-            'Rodrigo.Web.Template',
-            'AppTemplate',
-            'More.Build.Tasks.NuGet',
-            'LinkOS_Xamarin_SDK'
-)
+function InternalGet-ScriptDirectory{
+    split-path (((Get-Variable MyInvocation -Scope 1).Value).MyCommand.Path)
+}
+
+$scriptDir = ((InternalGet-ScriptDirectory) + "\")
+
+[string]$ignoreFilePath = (join-path $scriptDir 'template.ignore.txt')
+
+if(-not (test-path $ignoreFilePath)){
+    thorw ('template ignore fild not found at: [0]' -f $ignoreFilePath)
+}
+
+[string[]]$packagesToExclude = (Get-Content $ignoreFilePath)
 
 $global:machinesetupconfig = @{
     MachineSetupConfigFolder = (Join-Path $env:temp 'SayedHaMachineSetup')
@@ -238,7 +234,7 @@ function Get-TemplateReport{
         [string[]]$pathsToCheck = @()
         # download packages locally and get path to installed location
         foreach($pkg in $pkgs){
-            $filename = '{0}.{1}.nupkg' -f $pkg.Name,$pkg.Version
+            $filename = '{0}-{1}.nupkg' -f $pkg.Name,$pkg.Version
             $extractpath = ExtractRemoteZip -downloadUrl $pkg.DownloadUrl -filename $filename
             'extractpath: {0}' -f $extractpath | Write-Verbose
             # $pathsToCheck += $extractpath
@@ -286,14 +282,15 @@ function Get-Nuget{
     }
 }
 
-
-
 try{
     $global:foundpackages = @()
     $global:foundpackages += ( Get-TemplateReport -searchTerm $searchTerm )
 
-    $global:foundpackages | ft -Wrap
+    #$global:foundpackages = ($global:foundpackages|Select-Object -Unique)
 
+    $global:foundpackages | Select-Object -Unique -Property Name,DownloadCount|Sort-Object -Property DownloadCount -Descending
+
+    # $global:foundpackages.DownloadCount|Measure-Object -Sum -Average -Maximum -Minimum
 }
 catch{
     $_.Exception | Write-Error
