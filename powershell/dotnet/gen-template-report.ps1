@@ -353,7 +353,7 @@ try{
     if($env:APPVEYOR -eq $true){
         [int]$index = 0
         foreach($tfile in $templateFiles){
-            Push-AppveyorArtifact -path $tfile -DeploymentName ('template-{0}.json',(++$index))
+            Push-AppveyorArtifact -path $tfile -DeploymentName ('template-{0}.json' -f (++$index))
         }    
     }
 }
