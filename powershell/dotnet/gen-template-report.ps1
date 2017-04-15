@@ -348,6 +348,12 @@ try{
     $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
 
     $templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author | fl
+
+    if($env:APPVEYOR -eq $true){
+        foreach($tfile in $templateFiles){
+            Push-AppveyorArtifact -path $tfile
+        }    
+    }
 }
 catch{
     $_.Exception | Write-Error
