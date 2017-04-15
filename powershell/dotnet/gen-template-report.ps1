@@ -347,11 +347,13 @@ try{
     $extractPath = $global:machinesetupconfig.MachineSetupAppsFolder
     $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
 
+' --- template file details ---' | Write-Output
     $templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author | fl
 
     if($env:APPVEYOR -eq $true){
+        [int]$index = 0
         foreach($tfile in $templateFiles){
-            Push-AppveyorArtifact -path $tfile
+            Push-AppveyorArtifact -path $tfile -DeploymentName ('template-{0}.json',(++$index))
         }    
     }
 }
