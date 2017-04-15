@@ -301,8 +301,12 @@ try{
     ' --- template report ---' | Write-Output
     $uResults | Select-Object -Property Name,DownloadCount,@{Name='Percent overall';Expression={'{0:P1}' -f ($_.DownloadCount/$totalDownload)}}
 
-    " --- overall ---`n" | Write-Output
-    $uResults | Measure-Object -Property DownloadCount -Sum -Average -Maximum -Minimum
+    '---------------------------------' | Write-Output
+    "Total downloads: $totalDownload" | Write-Output
+
+    # not working for some reason
+    # " --- overall ---`n" | Write-Output
+    # $uResults.DownloadCount|Measure-Object -Sum -Average -Maximum -Minimum
 }
 catch{
     $_.Exception | Write-Error
