@@ -286,11 +286,14 @@ try{
     $global:foundpackages = @()
     $global:foundpackages += ( Get-TemplateReport -searchTerm $searchTerm )
 
-    #$global:foundpackages = ($global:foundpackages|Select-Object -Unique)
+    $uResults = $Global:foundpackages|Select-Object -Unique -Property Name,DownloadCount|Sort-Object -Property DownloadCount -Descending
+    $totalDownload = ($uResults|Measure-Object -Property DownloadCount -Sum).Sum
+    
+    ' --- template report ---' | Write-Output
+    $uResults | Select-Object -Property Name,DownloadCount,@{Name='Percent overall';Expression={'{0:P1}' -f ($_.DownloadCount/$totalDownload)}}
 
-    $global:foundpackages | Select-Object -Unique -Property Name,DownloadCount|Sort-Object -Property DownloadCount -Descending
-
-    # $global:foundpackages.DownloadCount|Measure-Object -Sum -Average -Maximum -Minimum
+    ' --- overall ---' | Write-Output
+    $uResults|Measure-Object -Property DownloadCount -Sum -Average -Maximum -Minimum
 }
 catch{
     $_.Exception | Write-Error
