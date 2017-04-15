@@ -226,14 +226,23 @@ function Get-TemplateReport{
     )
     process{
         # list of templates to check
-        $pkgs = (GetTemplatesToCheck -searchTerm $searchTerm |
-                    ForEach-Object { 
+        [int]$index = 0
+        $searchResults = GetTemplatesToCheck -searchTerm $searchTerm
+        $pkgs = ($searchResults |
+                    ForEach-Object {
+                        Write-Progress -Activity 'Finding templates' -PercentComplete ( (++$index)/($searchResults.length)*100 ) -Status ('{0} of {1}' -f $index,$searchResults.Length)
                         Get-PackageDownloadStats -package $_ })
         
         [object[]]$foundTemplatePackages = @()
         [string[]]$pathsToCheck = @()
         # download packages locally and get path to installed location
+        $index = 0
+        $totalNum = $pkgs.length
         foreach($pkg in $pkgs){
+            Write-Progress -Activity 'Gathring template data' -PercentComplete ( (++$index)/$totalNum*100  ) -Status ('{0} of {1}' -f $index,$totalNum)
+
+
+
             $filename = '{0}-{1}.nupkg' -f $pkg.Name,$pkg.Version
             $extractpath = ExtractRemoteZip -downloadUrl $pkg.DownloadUrl -filename $filename
             'extractpath: {0}' -f $extractpath | Write-Verbose
@@ -288,7 +297,7 @@ try{
 
     $uResults = $Global:foundpackages|Select-Object -Unique -Property Name,DownloadCount|Sort-Object -Property DownloadCount -Descending
     $totalDownload = ($uResults|Measure-Object -Property DownloadCount -Sum).Sum
-    
+
     ' --- template report ---' | Write-Output
     $uResults | Select-Object -Property Name,DownloadCount,@{Name='Percent overall';Expression={'{0:P1}' -f ($_.DownloadCount/$totalDownload)}}
 
