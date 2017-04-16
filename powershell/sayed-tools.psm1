@@ -225,6 +225,7 @@ function New-SnippetObj{
     }
 }
 
+<#
 $cmd = Get-Command -Name 'Get-IseSnippet' -ErrorAction SilentlyContinue
 if($cmd -eq $null){
     function Get-IseSnippet{
@@ -345,7 +346,7 @@ if($cmd -eq $null){
         }
     }
 }
-
+#>
 function Open-StartupFolder{
     [cmdletbinding()]
     param()

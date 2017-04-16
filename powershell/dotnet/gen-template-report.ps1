@@ -409,10 +409,6 @@ function Run-FullReport{
 
         ' --- template report ---' | Write-Output
         $uResults | Select-Object -Property Name,DownloadCount,@{Name='Percent overall';Expression={'{0:P1}' -f ($_.DownloadCount/$totalDownload)}}
-
-        '---------------------------------' | Write-Output
-        "Total downloads: $totalDownload" | Write-Output
-
         # not working for some reason
         # " --- overall ---`n" | Write-Output
         # $uResults.DownloadCount|Measure-Object -Sum -Average -Maximum -Minimum
@@ -420,8 +416,15 @@ function Run-FullReport{
         $extractPath = $global:machinesetupconfig.MachineSetupAppsFolder
         $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
 
-        ' --- template file details ---' | Write-Output
-        $templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author | fl
+        "`n----------------------------------------------------" | Write-Output
+        'Total downloads:.............. {0}' -f $totalDownload | Write-Output
+        'Number of packages:............{0}' -f ($uResults.Length) | Write-Output
+        'Number of templates:...........{0}' -f ($templateFiles.Length) | Write-Output
+
+        "`n --- template file details ---" | Write-Output
+        $reportData = ($templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author)
+
+        $reportData | Format-List -GroupBy author
 
         if($env:APPVEYOR -eq $true){
             [int]$index = 0
