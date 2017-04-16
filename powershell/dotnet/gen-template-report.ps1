@@ -1,7 +1,11 @@
 [cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [string[]]$searchTerm = @('template','templates')
+    [string[]]$searchTerm = @('template','templates'),
+    
+    [Parameter(Position=1)]
+    [switch]$skipReport
+
 )
 
 function InternalGet-ScriptDirectory{
@@ -267,8 +271,6 @@ function Get-TemplateReport{
                 $pkg
             }
         }
-
-        # $foundTemplatePackages
     } 
 }
 
@@ -327,34 +329,47 @@ function Get-JsonObjectFromTemplateFile{
     }
 }
 
+function Run-FullReport{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [string[]]$searchTerm = @('template','templates')
+    )
+    process{
+        $global:foundpackages = @()
+        $global:foundpackages += ( Get-TemplateReport -searchTerm $searchTerm )
+
+        $uResults = $Global:foundpackages|Select-Object -Unique -Property Name,DownloadCount|Sort-Object -Property DownloadCount -Descending
+        $totalDownload = ($uResults|Measure-Object -Property DownloadCount -Sum).Sum
+
+        ' --- template report ---' | Write-Output
+        $uResults | Select-Object -Property Name,DownloadCount,@{Name='Percent overall';Expression={'{0:P1}' -f ($_.DownloadCount/$totalDownload)}}
+
+        '---------------------------------' | Write-Output
+        "Total downloads: $totalDownload" | Write-Output
+
+        # not working for some reason
+        # " --- overall ---`n" | Write-Output
+        # $uResults.DownloadCount|Measure-Object -Sum -Average -Maximum -Minimum
+
+        $extractPath = $global:machinesetupconfig.MachineSetupAppsFolder
+        $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
+
+        ' --- template file details ---' | Write-Output
+        $templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author | fl
+
+        if($env:APPVEYOR -eq $true){
+            [int]$index = 0
+            foreach($tfile in $templateFiles){
+                Push-AppveyorArtifact -path $tfile -Filename $tfile
+            }    
+        }
+    }
+}
+
 try{
-    $global:foundpackages = @()
-    $global:foundpackages += ( Get-TemplateReport -searchTerm $searchTerm )
-
-    $uResults = $Global:foundpackages|Select-Object -Unique -Property Name,DownloadCount|Sort-Object -Property DownloadCount -Descending
-    $totalDownload = ($uResults|Measure-Object -Property DownloadCount -Sum).Sum
-
-    ' --- template report ---' | Write-Output
-    $uResults | Select-Object -Property Name,DownloadCount,@{Name='Percent overall';Expression={'{0:P1}' -f ($_.DownloadCount/$totalDownload)}}
-
-    '---------------------------------' | Write-Output
-    "Total downloads: $totalDownload" | Write-Output
-
-    # not working for some reason
-    # " --- overall ---`n" | Write-Output
-    # $uResults.DownloadCount|Measure-Object -Sum -Average -Maximum -Minimum
-
-    $extractPath = $global:machinesetupconfig.MachineSetupAppsFolder
-    $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
-
-' --- template file details ---' | Write-Output
-    $templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author | fl
-
-    if($env:APPVEYOR -eq $true){
-        [int]$index = 0
-        foreach($tfile in $templateFiles){
-            Push-AppveyorArtifact -path $tfile -Filename $tfile
-        }    
+    if(-not ($skipReport)){
+        Run-FullReport -searchTerm $searchTerm
     }
 }
 catch{
