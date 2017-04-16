@@ -423,14 +423,27 @@ function Run-FullReport{
 
         ' --- template file details ---' | Write-Output
 
+        $reportData = ($templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author)
+
         'fl' | Write-Host -ForegroundColor Cyan
-        $templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author | fl
+        $reportData | fl
+
+        'fl -GroupBy Author' | Write-Host -ForegroundColor Cyan
+        $reportData | Format-List -GroupBy author
 
         'ft -wrap' | Write-Host -ForegroundColor Cyan
-        $templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author | ft -Wrap
+        $reportData | ft -Wrap
+
+        'ft -wrap -GroupBy author' | Write-Host -ForegroundColor Cyan
+        $reportData | ft -Wrap -GroupBy author
 
         'fw' | Write-Host -ForegroundColor Cyan
-        $templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author |Format-Wide 
+        $reportData |Format-Wide 
+
+        'fw -GroupBy author' | Write-Host -ForegroundColor Cyan
+        $reportData | Format-Wide -GroupBy author
+
+
 
         if($env:APPVEYOR -eq $true){
             [int]$index = 0
