@@ -4,12 +4,38 @@ param(
     [string[]]$searchTerm = @('template','templates'),
     
     [Parameter(Position=1)]
-    [switch]$skipReport
+    [switch]$skipReport,
 
+    [Parameter(Position=2)]
+    [string]$newtonsoftDownloadUrl = 'http://www.nuget.org/api/v2/package/Newtonsoft.Json/10.0.2',
+
+    [Parameter(Position=3)]
+    [string]$newtonsoftFilename = 'Newtonsoft.Json-10.0.2.nupkg'
 )
 
 function InternalGet-ScriptDirectory{
     split-path (((Get-Variable MyInvocation -Scope 1).Value).MyCommand.Path)
+}
+
+function Load-NewtonsoftJson{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=1)]
+        [string]$newtonsoftDownloadUrl = 'http://www.nuget.org/api/v2/package/Newtonsoft.Json/10.0.2',
+
+        [Parameter(Position=2)]
+        [string]$newtonsoftFilename = 'Newtonsoft.Json-10.0.2.nupkg'
+    )
+    process{
+        $extractPath = ExtractRemoteZip -downloadUrl $newtonsoftDownloadUrl -filename $newtonsoftFilename
+        $expectedPath = (join-path $extractPath '\lib\net40\Newtonsoft.Json.dll')
+        if(-not (test-path $expectedPath)){
+            throw ('Unable to load newtonsoft.json from [{0}]' -f $expectedPath)
+        }
+        'Loading newtonsoft.json from file [{0}]' -f $expectedPath | Write-Verbose
+        [Reflection.Assembly]::LoadFile($expectedPath)
+        $global:machinesetupconfig.HasLoadedNetwonsoft = $true
+    }
 }
 
 $scriptDir = ((InternalGet-ScriptDirectory) + "\")
@@ -26,6 +52,7 @@ $global:machinesetupconfig = @{
     MachineSetupConfigFolder = (Join-Path $env:temp 'SayedHaMachineSetup')
     MachineSetupAppsFolder = (Join-Path $env:temp 'SayedHaMachineSetup\apps')
     RemoteFiles = (join-path $env:temp 'SayedHaMachineSetup\remotefiles')
+    HasLoadedNetwonsoft = $false
 }
 
 function Get7ZipPath{
@@ -310,6 +337,44 @@ function Get-Nuget{
 }
 
 function Get-JsonObjectFromTemplateFile{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [string[]]$templateFilePath
+    )
+    process{
+        if(-not ($global:machinesetupconfig.HasLoadedNetwonsoft)){
+            Load-NewtonsoftJson | Write-Verbose            
+        }
+        
+        foreach($filepath in $templateFilePath){
+            if(-not (Test-Path $filepath -PathType Leaf)){
+                continue;
+            }
+
+            try{
+                $json = [System.IO.File]::ReadAllText($filepath)
+                $jObj2 = [Newtonsoft.Json.Linq.JObject]::Parse($json)
+
+                New-Object -TypeName psobject -Property @{ 
+                    author=$jObj2.author.Value
+                    symbols=$jObj2.symbols
+                    classifications=($jObj2.classifications|%{$_.Value})
+                    name=$jObj2.name.Value
+                    identity=$jObj2.identity.Value
+                    groupIdentity=$jObj2.groupIdentity.Value
+                    shortName = $jObj2.shortName.Value
+                    tags = ($jObj2.tags|%{$_.ToString()})
+                }
+            }
+            catch{
+                'Error reading file [{0}]. Error [{1}]' -f $filepath,$_.Exception | Write-Warning
+            }
+        }
+    }
+}
+
+function Get-JsonObjectFromTemplateFileOld{
     [cmdletbinding()]
     param(
         [Parameter(Position=0,ValueFromPipeline=$true)]
