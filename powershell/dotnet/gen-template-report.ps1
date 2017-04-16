@@ -416,12 +416,12 @@ function Run-FullReport{
         $extractPath = $global:machinesetupconfig.MachineSetupAppsFolder
         $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
 
-        '---------------------------------' | Write-Output
-        'Total downloads:     {0}' -f $totalDownload | Write-Output
-        'Number of packages:  {0}' -f ($uResults.Length) | Write-Output
-        'Number of templates: {0}' -f ($templateFiles.Length) | Write-Output
+        "`n----------------------------------------------------" | Write-Output
+        'Total downloads:.............. {0}' -f $totalDownload | Write-Output
+        'Number of packages:............{0}' -f ($uResults.Length) | Write-Output
+        'Number of templates:...........{0}' -f ($templateFiles.Length) | Write-Output
 
-        ' --- template file details ---' | Write-Output
+        "`n --- template file details ---" | Write-Output
 
         $reportData = ($templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author)
 
@@ -430,6 +430,12 @@ function Run-FullReport{
 
         'fl -GroupBy Author' | Write-Host -ForegroundColor Cyan
         $reportData | Format-List -GroupBy author
+
+        'ft' | Write-Host -ForegroundColor Cyan
+        $reportData | ft
+ 
+         'ft -autosize -GroupBy author' | Write-Host -ForegroundColor Cyan
+        $reportData | ft -AutoSize -GroupBy author
 
         'ft -wrap' | Write-Host -ForegroundColor Cyan
         $reportData | ft -Wrap
