@@ -422,34 +422,9 @@ function Run-FullReport{
         'Number of templates:...........{0}' -f ($templateFiles.Length) | Write-Output
 
         "`n --- template file details ---" | Write-Output
-
         $reportData = ($templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author)
 
-        'fl' | Write-Host -ForegroundColor Cyan
-        $reportData | fl
-
-        'fl -GroupBy Author' | Write-Host -ForegroundColor Cyan
         $reportData | Format-List -GroupBy author
-
-        'ft' | Write-Host -ForegroundColor Cyan
-        $reportData | ft
- 
-         'ft -autosize -GroupBy author' | Write-Host -ForegroundColor Cyan
-        $reportData | ft -AutoSize -GroupBy author
-
-        'ft -wrap' | Write-Host -ForegroundColor Cyan
-        $reportData | ft -Wrap
-
-        'ft -wrap -GroupBy author' | Write-Host -ForegroundColor Cyan
-        $reportData | ft -Wrap -GroupBy author
-
-        'fw' | Write-Host -ForegroundColor Cyan
-        $reportData |Format-Wide 
-
-        'fw -GroupBy author' | Write-Host -ForegroundColor Cyan
-        $reportData | Format-Wide -GroupBy author
-
-
 
         if($env:APPVEYOR -eq $true){
             [int]$index = 0
