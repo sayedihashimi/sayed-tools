@@ -1,0 +1,1 @@
+Build status: [![Build status](https://ci.appveyor.com/api/projects/status/0capgsxjwu8g79ba?svg=true)](https://ci.appveyor.com/project/sayedihashimi/sayed-tools)
