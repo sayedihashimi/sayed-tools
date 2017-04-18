@@ -1,21 +1,51 @@
 Template Instantiation Commands for .NET Core CLI
 
-Usage: dotnet new [arguments] [options]
-
-Arguments:
-  template  The template to instantiate.
+Usage: new [options]
 
 Options:
-  -l|--list         Lists templates containing the specified name. If no name is specified, lists all templates.
-  -lang|--language  Specifies the language of the template to create.
-  -n|--name         The name for the output being created. If no name is specified, the name of the current directory is used.
-  -o|--output       Location to place the generated output.
-  -h|--help         Displays help for this command.
-  --type            Shows a subset of the available templates. Valid values are "project", "item" or "other".
-  --force           Forces content to be generated even if it would change existing files.
-  --allow-scripts   Specify if post action scripts should run.
+  -h, --help          Displays help for this command.
+  -l, --list          Lists templates containing the specified name. If no name is specified, lists all templates.
+  -n, --name          The name for the output being created. If no name is specified, the name of the current directory is used.
+  -o, --output        Location to place the generated output.
+  -i, --install       Installs a source or a template pack.
+  -u, --uninstall     Uninstalls a source or a template pack.
+  --type              Shows a subset of the available templates. Valid values are "project", "item" or "other".
+  --force             Forces content to be generated even if it would change existing files.
+  -lang, --language   Specifies the language of the template to create.
 
 
 ASP.NET Core Web API (C#)
 Author: Microsoft
-    (No Parameters)
+This template contains technologies from parties other than Microsoft, see https://github.com/dotnet/templating/blob/rel/vs2017/post-rtw/template_feed/THIRD-PARTY-NOTICES for details.
+Options:                                                                                                                        
+  -au|--auth            The type of authentication to use                                                                       
+                            None         - No authentication                                                                    
+                            SingleOrg    - Organizational authentication for a single tenant                                    
+                            Windows      - Windows authentication                                                               
+                        Default: None                                                                                           
+
+  -s|--aad-instance     The Azure Active Directory instance to connect to (use with Single-org auth).                           
+                        string - Optional                                                                                       
+                        Default: https://login.microsoftonline.com/                                                             
+
+  --client-id           The Client ID for this project (use with Single-org auth).                                              
+                        string - Optional                                                                                       
+                        Default: 11111111-1111-1111-11111111111111111                                                           
+
+  --domain              The domain owning the directory (use with Single-org auth).                                             
+                        string - Optional                                                                                       
+                        Default: qualified.domain.name                                                                          
+
+  --tenant-id           The TenantId ID of the directory to connect to (use with Single-org auth).                              
+                        string - Optional                                                                                       
+                        Default: 22222222-2222-2222-2222-222222222222                                                           
+
+  -r|--org-read-access  Whether or not to allow this application read access to the directory (only applies to Single-org auth).
+                        bool - Optional                                                                                         
+                        Default: false                                                                                          
+
+  --no-restore          If specified, skips the automatic restore of the project on create.                                     
+                        bool - Optional                                                                                         
+                        Default: false                                                                                          
+
+

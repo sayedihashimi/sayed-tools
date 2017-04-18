@@ -1,4 +1,4 @@
-.NET Command Line Tools (2.0.0-preview1-005685)
+.NET Command Line Tools (2.0.0-preview1-005807)
 Usage: dotnet [host-options] [command] [arguments] [common-options]
 
 Arguments:
@@ -9,7 +9,7 @@ Arguments:
 
 Common options:
   -v|--verbose          Enable verbose output
-  -h|--help             Show help 
+  -h|--help             Show help
 
 Host options (passed before the command):
   -d|--diagnostics      Enable diagnostic output
@@ -29,9 +29,9 @@ Commands:
   sln           Modify solution (SLN) files.
 
 Project modification commands:
-  add           Add items to the project
-  remove        Remove items from the project
-  list          List items in the project
+  add           Add items to the project.
+  remove        Remove items from the project.
+  list          List items in the project.
 
 Advanced Commands:
   nuget         Provides additional NuGet commands.

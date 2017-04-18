@@ -1,30 +1,10 @@
-Template Instantiation Commands for .NET Core CLI
+dotnet-new3.exe : Error: assembly specified in the dependencies manifest was not found -- package: 'microsoft.templateengine.abstractions', version: 
+'1.0.0-beta1-20170418-0', path: 'lib/netstandard1.3/Microsoft.TemplateEngine.Abstractions.dll'
+At C:\data\mycode\sayed-tools\powershell\dotnet\gen-dotnet-helpoutput.ps1:93 char:21
++                     & ($actualCommand) ($cmdArgs) *> $tempFile
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: assembly...stractions.dll':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
 
-Usage: dotnet new3 [arguments] [options]
-
-Arguments:
-  template  The template to instantiate.
-
-Options:
-  -l|--list         Lists templates containing the specified name. If no name is specified, lists all templates.
-  -lang|--language  Specifies the language of the template to create.
-  -n|--name         The name for the output being created. If no name is specified, the name of the current directory is used.
-  -o|--output       Location to place the generated output.
-  -h|--help         Displays help for this command.
-  --type            Shows a subset of the available templates. Valid values are "project", "item" or "other".
-  --force           Forces content to be generated even if it would change existing files.
-
-
-Templates                 Short Name       Language      Tags          
------------------------------------------------------------------------
-Console Application       console          [C#], F#      Common/Console
-Class library             classlib         [C#], F#      Common/Library
-Unit Test Project         mstest           [C#], F#      Test/MSTest   
-xUnit Test Project        xunit            [C#], F#      Test/xUnit    
-ASP.NET Core Empty        web              [C#]          Web/Empty     
-ASP.NET Core Web App      mvc              [C#], F#      Web/MVC       
-ASP.NET Core Web API      webapi           [C#]          Web/WebAPI    
-Nuget Config              nugetconfig                    Config        
-Web Config                webconfig                      Config        
-Solution File             sln                            Solution      
 
