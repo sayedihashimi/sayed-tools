@@ -30,4 +30,5 @@ Solution File             sln                            Solution
 
 Examples:
     dotnet new mvc --framework netcoreapp2.0 --auth Individual
+    dotnet new web --framework netcoreapp2.0
     dotnet new --help
