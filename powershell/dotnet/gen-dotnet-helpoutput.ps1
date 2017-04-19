@@ -40,10 +40,15 @@ if([string]::IsNullOrWhiteSpace($outputPath)) {
     @{'command'='dotnet-new3';'CArgs'=@('classlib','-h')}
     @{'command'='dotnet-new3';'CArgs'=@('mstest','-h')}
     @{'command'='dotnet-new3';'CArgs'=@('xunit','-h')}
-    @{'command'='dotnet-new3';'CArgs'=@('web','-h')},
+    @{'command'='dotnet-new3';'CArgs'=@('web','-h')}
     @{'command'='dotnet-new3';'CArgs'=@('mvc','-h')}
     @{'command'='dotnet-new3';'CArgs'=@('webapi','-h')}
     @{'command'='dotnet-new3';'CArgs'=@('sln','-h')}
+    @{'command'='dotnet-new3';'CArgs'=@('we','-l')}
+    @{'command'='dotnet-new3';'CArgs'=@('-l','-lang','F#')}
+    @{'command'='dotnet-new3';'CArgs'=@('-l','-lang','NotExists')}
+    @{'command'='dotnet-new3';'CArgs'=@('NotExists')}
+
 )
 
 function GetNewTempFile(){
