@@ -1,23 +1,17 @@
-Template Instantiation Commands for .NET Core CLI
+.NET Template Generator
 
-Usage: new3 [options]
-
-Options:
-  -h, --help          Displays help for this command.
-  -l, --list          Lists templates containing the specified name. If no name is specified, lists all templates.
-  -n, --name          The name for the output being created. If no name is specified, the name of the current directory is used.
-  -o, --output        Location to place the generated output.
-  -i, --install       Installs a source or a template pack.
-  -u, --uninstall     Uninstalls a source or a template pack.
-  --type              Filters templates based on available types. Predefined values are "project", "item" or "other".
-  --force             Forces content to be generated even if it would change existing files.
-  -lang, --language   Specifies the language of the template to create.
-
-
-ASP.NET Core Web API (C#)
+ASP.NET Core Web API Template
 Author: Microsoft
-This template contains technologies from parties other than Microsoft, see https://github.com/dotnet/templating/blob/rel/vs2017/post-rtw/template_feed/THIRD-PARTY-NOTICES for details.
-Options:                                                                                                                        
+
+Usage: dotnet new webapi [options]
+
+Options:                                                                             
+  -n|--name                       The name for the output being created. If no name is specified, the name of the current directory is used.
+
+  -o|--output                     Location to place the generated output.
+
+  -lang|--language                Specifies the language of the template to create.
+
   -au|--auth            The type of authentication to use                                                                       
                             None         - No authentication                                                                    
                             SingleOrg    - Organizational authentication for a single tenant                                    
