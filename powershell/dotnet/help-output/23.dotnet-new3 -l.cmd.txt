@@ -1,18 +1,6 @@
-Template Instantiation Commands for .NET Core CLI
+.NET Template Generator
 
-Usage: new3 [options]
-
-Options:
-  -h, --help          Displays help for this command.
-  -l, --list          Lists templates containing the specified name. If no name is specified, lists all templates.
-  -n, --name          The name for the output being created. If no name is specified, the name of the current directory is used.
-  -o, --output        Location to place the generated output.
-  -i, --install       Installs a source or a template pack.
-  -u, --uninstall     Uninstalls a source or a template pack.
-  --type              Filters templates based on available types. Predefined values are "project", "item" or "other".
-  --force             Forces content to be generated even if it would change existing files.
-  -lang, --language   Specifies the language of the template to create.
-
+Installed templates
 
 Templates                               Short Name       Language      Tags               
 ------------------------------------------------------------------------------------------
@@ -31,3 +19,7 @@ Razor Page                              page                           Web/ASP.N
 MVC ViewImports                         viewimports                    Web/ASP.NET        
 MVC ViewStart                           viewstart                      Web/ASP.NET        
 
+Examples:
+    dotnet new3 --list
+    dotnet new3 -l web
+    dotnet new -l -lang F#
