@@ -1,6 +1,6 @@
 .NET Template Generator
 
-Usage: new3 [options]
+Usage: dotnet new [options]
 
 Options:
   -h, --help          Displays help for this command.
