@@ -1,7 +1,7 @@
 [cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [string[]]$searchTerm = @('template','templates'),
+    [string[]]$searchTerm = @('template','templates','KenticoCloud.CloudBoilerplateNet'),
     
     [Parameter(Position=1)]
     [switch]$skipReport,
