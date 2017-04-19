@@ -13,9 +13,9 @@ Options:
   -lang|--language   Specifies the language of the template to create.
 
   -f|--framework     The target framework for the project.                              
-                         netcoreapp1.0    - Target netcoreapp1.0                        
-                         netcoreapp1.1    - Target netcoreapp1.1                        
-                         netcoreapp2.0    - Target netcoreapp2.0                        
+                         netcoreapp1.0
+                         netcoreapp1.1
+                         netcoreapp2.0
                      Default: netcoreapp2.0                                             
 
   --no-restore       If specified, skips the automatic restore of the project on create.
