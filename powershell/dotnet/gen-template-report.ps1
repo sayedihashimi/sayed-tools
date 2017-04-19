@@ -1,7 +1,7 @@
 [cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [string[]]$searchTerm = @('template','templates','KenticoCloud.CloudBoilerplateNet'),
+    [string[]]$searchTerm = @('template','templates','KenticoCloud.CloudBoilerplateNet',<# 'ServiceStack.Core.Templates',#> 'BlackFox.DotnetNew.FSharpTemplates'),
     
     [Parameter(Position=1)]
     [switch]$skipReport,
@@ -437,6 +437,7 @@ function Run-FullReport{
 
 try{
     if(-not ($skipReport)){
+        & (get-nuget) update -self
         Run-FullReport -searchTerm $searchTerm
     }
 }
