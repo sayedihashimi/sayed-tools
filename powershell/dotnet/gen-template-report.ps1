@@ -1,7 +1,7 @@
 [cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [string[]]$searchTerm = @('template','templates' <#,'KenticoCloud.CloudBoilerplateNet', 'ServiceStack.Core.Templates', 'BlackFox.DotnetNew.FSharpTemplates'#>),
+    [string[]]$searchTerm = @('template','templates'),
     
     [Parameter(Position=1)]
     [switch]$skipReport,
@@ -141,7 +141,7 @@ function GetTemplatesToCheck(){
         $allResults = @()
         foreach($st in $searchTerm){
         
-            $result = (&(get-nuget) list -NonInteractive -Prerelease $st|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
+            $result = (&(get-nuget) list -Prerelease $st|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
                     @{
                         'Name'=$res[0]
                         'Version'=$res[1]
@@ -437,7 +437,7 @@ function Run-FullReport{
 
 try{
     if(-not ($skipReport)){
-        & (get-nuget) update -self
+        # & (get-nuget) update -self
         Run-FullReport -searchTerm $searchTerm
     }
 }
