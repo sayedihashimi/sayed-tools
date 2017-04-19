@@ -17,5 +17,5 @@ Options:
 Examples:
     dotnet new3 --list
     dotnet new3 mvc --framework netcoreapp1.1 --auth Individual
-    dotnet new3 console --framework netcoreapp2.0
+    dotnet new3 classlib --framework netcoreapp1.1
     dotnet new3 --help
