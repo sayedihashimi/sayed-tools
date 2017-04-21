@@ -90,12 +90,13 @@ function GetLocalFileFor{
         [string]$filename
     )
     process{
+        'GetLocalFileFor: url:[{0}] filename:[{1}]' -f $downloadUrl,$filename | Write-Verbose
         $expectedPath = (Join-Path $global:machinesetupconfig.RemoteFiles $filename)
         
         if(-not (test-path $expectedPath)){
             # download the file
             EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null            
-            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath | out-null
+            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath -ErrorAction SilentlyContinue | Write-Verbose
         }
 
         if(-not (test-path $expectedPath)){
@@ -183,30 +184,39 @@ function Get-PackageDownloadStats(){
             [string]$pkgname = $pkgobj.Name
             [int]$dlcount = -1;
             [string]$packageurl = ($urlformat -f $pkgname)
-            [string]$html = ((Invoke-WebRequest -Uri $packageurl -ErrorAction SilentlyContinue).rawcontent)
-            if(-not([string]::IsNullOrWhiteSpace($html))) {
-                $htmllines = $html.split("`n")
-                $dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
-                if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
-                    $dlcount = ($Matches[1])
-                }
-                $downloadUrl = $pkgobj.DownloadUrl
-                <#    
-                [string]$downloadUrl = $null
-                try{
-                    $downloadUrl = ( $htmllines|Select-String '<a href="([^\"]+)" title=\"Download the raw nupkg file."').Matches.Groups[1].value                    
-                }
-                catch{
-                    $downloadUrl = $null
-                }
-                #>
-            }
 
-            New-Object -TypeName psobject -Property @{
-                'Name'=$pkgname
-                'DownloadCount'=$dlcount
-                'Downloadurl'=$downloadUrl
-                'Version'=$pkgobj.Version
+            try{
+            $response = (Invoke-WebRequest -Uri $packageurl -ErrorAction SilentlyContinue)
+            if($response -ne $null){
+                [string]$html = ($response.rawcontent)
+                if(-not([string]::IsNullOrWhiteSpace($html))) {
+                    $htmllines = $html.split("`n")
+                    $dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
+                    if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
+                        $dlcount = ($Matches[1])
+                    }
+                    $downloadUrl = $pkgobj.DownloadUrl
+                    <#    
+                    [string]$downloadUrl = $null
+                    try{
+                        $downloadUrl = ( $htmllines|Select-String '<a href="([^\"]+)" title=\"Download the raw nupkg file."').Matches.Groups[1].value                    
+                    }
+                    catch{
+                        $downloadUrl = $null
+                    }
+                    #>
+                }
+            
+                New-Object -TypeName psobject -Property @{
+                    'Name'=$pkgname
+                    'DownloadCount'=$dlcount
+                    'Downloadurl'=$downloadUrl
+                    'Version'=$pkgobj.Version
+                }
+            }
+            }
+            catch{
+                $_.Exception | Write-Verbose
             }
         }
     }
