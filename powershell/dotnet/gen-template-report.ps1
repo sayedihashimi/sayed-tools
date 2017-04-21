@@ -1,7 +1,9 @@
 [cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [string[]]$searchTerm = @('template','templates', 'ServiceStack.Core.Templates', 'BlackFox.DotnetNew.FSharpTemplates'),
+    [string[]]$searchTerm = @(
+            'template','templates', 'ServiceStack.Core.Templates', 'BlackFox.DotnetNew.FSharpTemplates','libyear','libyear',
+            'angular-cli.dotnet','Carna.ProjectTemplates','SerialSeb.Templates.ClassLibrary','Pioneer.Console.Boilerplate'),
     
     [Parameter(Position=1)]
     [switch]$skipReport,
