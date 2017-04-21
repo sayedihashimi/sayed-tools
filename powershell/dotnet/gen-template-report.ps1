@@ -1,7 +1,7 @@
 [cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [string[]]$searchTerm = @('template','templates'),
+    [string[]]$searchTerm = @('template','templates', 'ServiceStack.Core.Templates', 'BlackFox.DotnetNew.FSharpTemplates'),
     
     [Parameter(Position=1)]
     [switch]$skipReport,
@@ -139,9 +139,10 @@ function GetTemplatesToCheck(){
     )
     process{
         $allResults = @()
-        foreach($st in $searchTerm){
-        
-            $result = (&(get-nuget) list -Prerelease $st|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
+        foreach($st in $searchTerm){        
+            $cmdToRun = '"{0}" list -Noninteractive -Prerelease {1}' -f (get-nuget),$st
+            'cmdToRun: [{0}]' -f $cmdToRun | Write-Verbose 
+            $result = (Execute-CommandString -command $cmdToRun|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
                     @{
                         'Name'=$res[0]
                         'Version'=$res[1]
@@ -163,6 +164,8 @@ function GetTemplatesToCheck(){
             }
         }
 
+        "filteredResults:`n{0}" -f ($filteredResults|out-string) | Write-Verbose
+        $global:filteredResults = $filteredResults
         $filteredResults
     }
 }
@@ -333,6 +336,44 @@ function Get-Nuget{
 
         # return the path of the file
         (get-item $nugetDestPath).FullName
+    }
+}
+
+function Execute-CommandString{
+    [cmdletbinding()]
+    param(
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)]
+        [string[]]$command,
+        
+        [switch]
+        $useInvokeExpression,
+
+        [switch]
+        $ignoreErrors
+    )
+    process{
+        foreach($cmdToExec in $command){
+            'Executing command [{0}]' -f $cmdToExec | Write-Verbose
+            if($useInvokeExpression){
+                try {
+                    Invoke-Expression -Command $cmdToExec
+                }
+                catch {
+                    if(-not $ignoreErrors){
+                        $msg = ('The command [{0}] exited with exception [{1}]' -f $cmdToExec, $_.ToString())
+                        throw $msg
+                    }
+                }
+            }
+            else {
+                cmd.exe /D /C $cmdToExec
+
+                if(-not $ignoreErrors -and ($LASTEXITCODE -ne 0)){
+                    $msg = ('The command [{0}] exited with code [{1}]' -f $cmdToExec, $LASTEXITCODE)
+                    throw $msg
+                }
+            }
+        }
     }
 }
 
