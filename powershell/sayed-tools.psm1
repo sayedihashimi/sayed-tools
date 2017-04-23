@@ -475,6 +475,14 @@ function New-LoremIpsum{
     }
 }
 
+function Install-PowerShellCookbook{
+    [cmdletbinding()]
+    param()
+    process{
+        Install-Module -Name PowerShellCookbook -Force
+    }
+}
+
 function CommandExists(){
     [cmdletbinding()]
     param(
