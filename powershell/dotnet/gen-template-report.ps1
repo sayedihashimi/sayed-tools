@@ -563,7 +563,7 @@ function Run-FullReport{
 
         $global:pkgReport = Get-PackageTemplateStats -package $uResults
         $reportPath = (join-path $scriptDir 'template-report.json')
-        $global:pkgReport | ConvertTo-Json -Depth 100 | Out-File -FilePath $reportPath
+        $global:pkgReport | ConvertTo-Json -Depth 100 | Out-File -FilePath $reportPath -Encoding ascii
 
         if($env:APPVEYOR -eq $true){
             Push-AppveyorArtifact -path $reportPath -Filename 'tempalte-report.json'
