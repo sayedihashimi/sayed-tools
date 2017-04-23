@@ -410,7 +410,7 @@ function Get-JsonObjectFromTemplateFile{
                 $json = [System.IO.File]::ReadAllText($filepath)
                 $jObj2 = [Newtonsoft.Json.Linq.JObject]::Parse($json)
 
-                New-Object -TypeName psobject -Property @{ 
+                $result = New-Object -TypeName psobject -Property @{ 
                     author=$jObj2.author.Value
                     symbols=$jObj2.symbols
                     classifications=($jObj2.classifications|%{$_.Value})
@@ -418,8 +418,14 @@ function Get-JsonObjectFromTemplateFile{
                     identity=$jObj2.identity.Value
                     groupIdentity=$jObj2.groupIdentity.Value
                     shortName = $jObj2.shortName.Value
-                    tags = ($jObj2.tags|%{$_.ToString()})
+                    tags = @{}
                 }
+
+                $jObj2.tags|%{
+                    $result.tags.Add($_.Name,$_.Value.ToString())
+                }
+
+                $result
             }
             catch{
                 'Error reading file [{0}]. Error [{1}]' -f $filepath,$_.Exception | Write-Warning
@@ -485,9 +491,19 @@ function Get-PackageTemplateStats{
                             identity = $template.identity
                             groupIdentity = $template.groupIdentity
                             shortName = $template.shortName
-                            tags = $tempalte.tags
+                            tags = $template.tags # [string[]]@() #($tempalte.tags|%{$_.ToString()})
                             # parameters = ($template.symbols|%{$_.ToString()})
                         }
+<#
+                        if($template.tags -ne $null){
+                            foreach($tt in $tempalte.tags){
+                                if($tt -ne $null){
+                                    $tobject.tags += $tt.ToString()
+                                }
+                            }
+                        }
+#>
+
                         $result.Templates += $tobject
                         <#
                         author=$jObj2.author.Value

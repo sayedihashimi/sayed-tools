@@ -5,7 +5,10 @@
                           {
                               "author":  "Microsoft",
                               "name":  "MVC ASP.NET Core with Angular",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
@@ -18,7 +21,10 @@
                           {
                               "author":  "Microsoft",
                               "name":  "MVC ASP.NET Core with Aurelia",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
@@ -31,7 +37,10 @@
                           {
                               "author":  "Microsoft",
                               "name":  "MVC ASP.NET Core with Knockout.js",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
@@ -44,7 +53,10 @@
                           {
                               "author":  "Microsoft",
                               "name":  "MVC ASP.NET Core with React.js",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
@@ -57,7 +69,10 @@
                           {
                               "author":  "Microsoft",
                               "name":  "MVC ASP.NET Core with React.js and Redux",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
@@ -70,7 +85,10 @@
                           {
                               "author":  "Microsoft",
                               "name":  "MVC ASP.NET Core with Vue.js",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
@@ -92,7 +110,9 @@
                           {
                               "author":  "Steve Desmond",
                               "name":  "LibYear",
-                              "tags":  null,
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
                               "classifications":  null,
                               "shortName":  "libyear",
                               "groupIdentity":  null,
@@ -101,7 +121,9 @@
                           {
                               "author":  "Steve Desmond",
                               "name":  "LibYear",
-                              "tags":  null,
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
                               "classifications":  null,
                               "shortName":  "libyear",
                               "groupIdentity":  null,
@@ -119,7 +141,10 @@
                           {
                               "author":  "AWS",
                               "name":  "Lambda ASP.NET Core Web API",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -132,7 +157,10 @@
                           {
                               "author":  "AWS",
                               "name":  "Lambda Detect Image Labels",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -145,7 +173,10 @@
                           {
                               "author":  "AWS",
                               "name":  "Lambda DynamoDB Blog API",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -158,7 +189,10 @@
                           {
                               "author":  "AWS",
                               "name":  "Lambda Empty Function",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -171,7 +205,10 @@
                           {
                               "author":  "AWS",
                               "name":  "Lambda Empty Serverless",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -184,7 +221,10 @@
                           {
                               "author":  "AWS",
                               "name":  "Lambda Simple DynamoDB Function",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -197,7 +237,10 @@
                           {
                               "author":  "AWS",
                               "name":  "Lambda Simple Kinesis Function",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -210,7 +253,10 @@
                           {
                               "author":  "AWS",
                               "name":  "Lambda Simple S3 Function",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -232,7 +278,9 @@
                           {
                               "author":  "Dominick Baier",
                               "name":  "IdentityServer4 Basic",
-                              "tags":  null,
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
                               "classifications":  "IdentityServer4",
                               "shortName":  "is4",
                               "groupIdentity":  "IdentityServer4.Basic",
@@ -241,7 +289,9 @@
                           {
                               "author":  "Dominick Baier",
                               "name":  "IdentityServer4 with in-memory stores and test users",
-                              "tags":  null,
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
                               "classifications":  "IdentityServer4",
                               "shortName":  "is4inmem",
                               "groupIdentity":  "IdentityServer4.InMem",
@@ -250,7 +300,9 @@
                           {
                               "author":  "Dominick Baier",
                               "name":  "IdentityServer4 quickstart UI",
-                              "tags":  null,
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
                               "classifications":  "IdentityServer4",
                               "shortName":  "is4ui",
                               "groupIdentity":  "IdentityServer4.UI",
@@ -268,7 +320,10 @@
                           {
                               "author":  "Adam Friedman (tintoy@tintoy.io)",
                               "name":  "Item template",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "Common",
                                                       "Templates",
@@ -281,7 +336,10 @@
                           {
                               "author":  "Adam Friedman (tintoy@tintoy.io)",
                               "name":  "Project template",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "Common",
                                                       "Templates",
@@ -303,7 +361,10 @@
                           {
                               "author":  "Renato Golia",
                               "name":  "Lambda Empty Event Function",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -317,7 +378,10 @@
                           {
                               "author":  "Renato Golia",
                               "name":  "Lambda Empty RequestResponse Function",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -331,7 +395,10 @@
                           {
                               "author":  "Renato Golia",
                               "name":  "Lambda Boilerplate Event Function",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -345,7 +412,10 @@
                           {
                               "author":  "Renato Golia",
                               "name":  "Lambda Boilerplate RequestResponse Function",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
@@ -359,7 +429,10 @@
                           {
                               "author":  "Renato Golia",
                               "name":  "Lambda SNS Event Function",
-                              "tags":  null,
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
