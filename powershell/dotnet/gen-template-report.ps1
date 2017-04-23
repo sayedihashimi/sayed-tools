@@ -19,6 +19,7 @@ function InternalGet-ScriptDirectory{
     split-path (((Get-Variable MyInvocation -Scope 1).Value).MyCommand.Path)
 }
 
+$scriptDir = InternalGet-ScriptDirectory
 function Load-NewtonsoftJson{
     [cmdletbinding()]
     param(
@@ -214,6 +215,7 @@ function Get-PackageDownloadStats(){
                     'DownloadCount'=$dlcount
                     'Downloadurl'=$downloadUrl
                     'Version'=$pkgobj.Version
+                    'ExtractPath'=[string]$null
                 }
             }
             }
@@ -303,13 +305,12 @@ function Get-TemplateReport{
         foreach($pkg in $pkgs){
             Write-Progress -Activity 'Gathring template data' -PercentComplete ( (++$index)/$totalNum*100  ) -Status ('{0} of {1}' -f $index,$totalNum)
 
-
-
             $filename = '{0}-{1}.nupkg' -f $pkg.Name,$pkg.Version
             $extractpath = ExtractRemoteZip -downloadUrl $pkg.DownloadUrl -filename $filename
             'extractpath: {0}' -f $extractpath | Write-Verbose
             # $pathsToCheck += $extractpath
             if( (Test-PathContainsTemplate -pathToCheck $extractpath) -eq $true){
+                $pkg.ExtractPath = $extractpath
                 $pkg
             }
         }
@@ -447,6 +448,84 @@ function Get-JsonObjectFromTemplateFileOld{
     }
 }
 
+function Get-PackageTemplateStats{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [object[]]$package
+    )
+    process{
+        foreach($pkg in $package){
+            if($pkg -eq $null){
+                continue
+            }
+
+            $pkgExtractPath = $pkg.ExtractPath
+
+            if(-not ([string]::IsNullOrWhiteSpace($pkgExtractPath)) -and (test-path $pkgExtractPath)){
+                # find template files under this path
+                $templateFiles = Find-TemplateFilesUnderPath -path $pkgExtractPath
+
+                $templateFileObj = Get-JsonObjectFromTemplateFile -templateFilePath $templateFiles
+                if( ($templateFileObj -ne $null) -and ($templateFileObj.length -gt 0)){
+                    $result = new-object -TypeName psobject -Property @{
+                        Package=$pkg.Name
+                        Version = $pkg.Version
+                        DownloadCount = $pkg.DownloadCount
+                        DownloadUrl = $pkg.DownloadUrl
+                        ExtractPath = $pkg.ExtractPath
+                        Templates = @()
+                    }
+
+                    foreach($template in $templateFileObj){
+                        $tobject = New-Object psobject -Property @{
+                            author = $template.author
+                            classifications = $template.classifications
+                            name = $template.name
+                            identity = $template.identity
+                            groupIdentity = $template.groupIdentity
+                            shortName = $template.shortName
+                            tags = $tempalte.tags
+                            # parameters = ($template.symbols|%{$_.ToString()})
+                        }
+                        $result.Templates += $tobject
+                        <#
+                        author=$jObj2.author.Value
+                    symbols=$jObj2.symbols
+                    classifications=($jObj2.classifications|%{$_.Value})
+                    name=$jObj2.name.Value
+                    identity=$jObj2.identity.Value
+                    groupIdentity=$jObj2.groupIdentity.Value
+                    shortName = $jObj2.shortName.Value
+                    tags = ($jObj2.tags|%{$_.ToString()})
+                        #>
+                    }
+
+                    $result
+                }
+            }
+        }
+    }
+}
+
+function Save-ToFileAsJson{
+    [cmdletbinding()]
+    param(
+        [object]$jobject,
+        [string]$filepath
+    )
+    process{
+        if(test-path $filepath){
+            Remove-Item -Path $filepath
+        }
+        
+        $filestream = [System.IO.File]::CreateText($filepath)
+        $serializer = New-Object -TypeName 'Newtonsoft.Json.JsonSerializer'
+        $serializer.Serialize($filestream,$jobject)
+        $filestream.Dispose()
+    }
+}
+
 function Run-FullReport{
     [cmdletbinding()]
     param(
@@ -457,11 +536,12 @@ function Run-FullReport{
         $global:foundpackages = @()
         $global:foundpackages += ( Get-TemplateReport -searchTerm $searchTerm )
 
-        $uResults = $Global:foundpackages|Select-Object -Unique -Property Name,DownloadCount|Sort-Object -Property DownloadCount -Descending
+        $uResults = $Global:foundpackages|Select-Object -Unique -Property Name,Version,DownloadUrl,DownloadCount,ExtractPath|Sort-Object -Property DownloadCount -Descending
         $totalDownload = ($uResults|Measure-Object -Property DownloadCount -Sum).Sum
 
         ' --- template report ---' | Write-Output
         $uResults | Select-Object -Property Name,DownloadCount,@{Name='Percent overall';Expression={'{0:P1}' -f ($_.DownloadCount/$totalDownload)}}
+        $global:sihuResults = $uResults
         # not working for some reason
         # " --- overall ---`n" | Write-Output
         # $uResults.DownloadCount|Measure-Object -Sum -Average -Maximum -Minimum
@@ -476,14 +556,23 @@ function Run-FullReport{
 
         "`n --- template file details ---" | Write-Output
         $reportData = ($templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author)
-
+        $global:sihReportData = $reportData
         $reportData | Format-List -GroupBy author
 
+        '************************************************************' | Write-Host -ForegroundColor Cyan
+
+        $global:pkgReport = Get-PackageTemplateStats -package $uResults
+        $reportPath = (join-path $scriptDir 'template-report.json')
+        $global:pkgReport | ConvertTo-Json -Depth 100 | Out-File -FilePath $reportPath
+
         if($env:APPVEYOR -eq $true){
+            Push-AppveyorArtifact -path $reportPath -Filename 'tempalte-report.json'
+            <#
             [int]$index = 0
             foreach($tfile in $templateFiles){
                 Push-AppveyorArtifact -path $tfile -Filename $tfile
-            }    
+            } 
+            #>   
         }
     }
 }
