@@ -1,7 +1,9 @@
 [cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [string[]]$searchTerm = @('template','templates'),
+    [string[]]$searchTerm = @(
+            'template','templates', 'ServiceStack.Core.Templates', 'BlackFox.DotnetNew.FSharpTemplates','libyear','libyear',
+            'angular-cli.dotnet','Carna.ProjectTemplates','SerialSeb.Templates.ClassLibrary','Pioneer.Console.Boilerplate'),
     
     [Parameter(Position=1)]
     [switch]$skipReport,
@@ -90,12 +92,13 @@ function GetLocalFileFor{
         [string]$filename
     )
     process{
+        'GetLocalFileFor: url:[{0}] filename:[{1}]' -f $downloadUrl,$filename | Write-Verbose
         $expectedPath = (Join-Path $global:machinesetupconfig.RemoteFiles $filename)
         
         if(-not (test-path $expectedPath)){
             # download the file
             EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null            
-            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath | out-null
+            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath -ErrorAction SilentlyContinue | Write-Verbose
         }
 
         if(-not (test-path $expectedPath)){
@@ -139,9 +142,10 @@ function GetTemplatesToCheck(){
     )
     process{
         $allResults = @()
-        foreach($st in $searchTerm){
-        
-            $result = (&(get-nuget) list -NonInteractive -Prerelease $st|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
+        foreach($st in $searchTerm){        
+            $cmdToRun = '"{0}" list -Noninteractive -Prerelease {1}' -f (get-nuget),$st
+            'cmdToRun: [{0}]' -f $cmdToRun | Write-Verbose 
+            $result = (Execute-CommandString -command $cmdToRun|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
                     @{
                         'Name'=$res[0]
                         'Version'=$res[1]
@@ -163,6 +167,8 @@ function GetTemplatesToCheck(){
             }
         }
 
+        "filteredResults:`n{0}" -f ($filteredResults|out-string) | Write-Verbose
+        $global:filteredResults = $filteredResults
         $filteredResults
     }
 }
@@ -180,30 +186,39 @@ function Get-PackageDownloadStats(){
             [string]$pkgname = $pkgobj.Name
             [int]$dlcount = -1;
             [string]$packageurl = ($urlformat -f $pkgname)
-            [string]$html = ((Invoke-WebRequest -Uri $packageurl -ErrorAction SilentlyContinue).rawcontent)
-            if(-not([string]::IsNullOrWhiteSpace($html))) {
-                $htmllines = $html.split("`n")
-                $dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
-                if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
-                    $dlcount = ($Matches[1])
-                }
-                $downloadUrl = $pkgobj.DownloadUrl
-                <#    
-                [string]$downloadUrl = $null
-                try{
-                    $downloadUrl = ( $htmllines|Select-String '<a href="([^\"]+)" title=\"Download the raw nupkg file."').Matches.Groups[1].value                    
-                }
-                catch{
-                    $downloadUrl = $null
-                }
-                #>
-            }
 
-            New-Object -TypeName psobject -Property @{
-                'Name'=$pkgname
-                'DownloadCount'=$dlcount
-                'Downloadurl'=$downloadUrl
-                'Version'=$pkgobj.Version
+            try{
+            $response = (Invoke-WebRequest -Uri $packageurl -ErrorAction SilentlyContinue)
+            if($response -ne $null){
+                [string]$html = ($response.rawcontent)
+                if(-not([string]::IsNullOrWhiteSpace($html))) {
+                    $htmllines = $html.split("`n")
+                    $dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
+                    if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
+                        $dlcount = ($Matches[1])
+                    }
+                    $downloadUrl = $pkgobj.DownloadUrl
+                    <#    
+                    [string]$downloadUrl = $null
+                    try{
+                        $downloadUrl = ( $htmllines|Select-String '<a href="([^\"]+)" title=\"Download the raw nupkg file."').Matches.Groups[1].value                    
+                    }
+                    catch{
+                        $downloadUrl = $null
+                    }
+                    #>
+                }
+            
+                New-Object -TypeName psobject -Property @{
+                    'Name'=$pkgname
+                    'DownloadCount'=$dlcount
+                    'Downloadurl'=$downloadUrl
+                    'Version'=$pkgobj.Version
+                }
+            }
+            }
+            catch{
+                $_.Exception | Write-Verbose
             }
         }
     }
@@ -336,6 +351,44 @@ function Get-Nuget{
     }
 }
 
+function Execute-CommandString{
+    [cmdletbinding()]
+    param(
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)]
+        [string[]]$command,
+        
+        [switch]
+        $useInvokeExpression,
+
+        [switch]
+        $ignoreErrors
+    )
+    process{
+        foreach($cmdToExec in $command){
+            'Executing command [{0}]' -f $cmdToExec | Write-Verbose
+            if($useInvokeExpression){
+                try {
+                    Invoke-Expression -Command $cmdToExec
+                }
+                catch {
+                    if(-not $ignoreErrors){
+                        $msg = ('The command [{0}] exited with exception [{1}]' -f $cmdToExec, $_.ToString())
+                        throw $msg
+                    }
+                }
+            }
+            else {
+                cmd.exe /D /C $cmdToExec
+
+                if(-not $ignoreErrors -and ($LASTEXITCODE -ne 0)){
+                    $msg = ('The command [{0}] exited with code [{1}]' -f $cmdToExec, $LASTEXITCODE)
+                    throw $msg
+                }
+            }
+        }
+    }
+}
+
 function Get-JsonObjectFromTemplateFile{
     [cmdletbinding()]
     param(
@@ -437,6 +490,7 @@ function Run-FullReport{
 
 try{
     if(-not ($skipReport)){
+        # & (get-nuget) update -self
         Run-FullReport -searchTerm $searchTerm
     }
 }

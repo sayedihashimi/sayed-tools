@@ -1,4 +1,4 @@
-.NET Publisher
+Publisher for the .NET Platform
 
 Usage: dotnet publish [options]
 
@@ -9,6 +9,7 @@ Options:
   -o, --output <OUTPUT_DIR>             Output directory in which to place the published artifacts.
   -c, --configuration <CONFIGURATION>   Configuration to use for building the project.  Default for most projects is  "Debug".
   --version-suffix <VERSION_SUFFIX>     Defines the value for the $(VersionSuffix) property in the project.
-  --filter <profile.xml>                The XML file that contains the list of packages to be excluded from publish step.
+  --manifest <manifest.xml>             The path to a target manifest file that contains the list of packages to be excluded from the publish step.
+  --self-contained                      Publish the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. Defaults to 'true' if a runtime identifier is specified.
   -v, --verbosity                       Set the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
 
