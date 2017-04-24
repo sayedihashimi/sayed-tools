@@ -490,7 +490,7 @@ function Get-PackageTemplateStats{
                             $result.Description = $nuspec.package.metadata.description
                             $result.ProjectUrl = $nuspec.package.metadata.projectUrl
                             $result.LicenseUrl = $nuspec.package.metadata.licenseUrl
-                            $result.Citle = $nuspec.package.metadata.copyright
+                            $result.Copyright = $nuspec.package.metadata.copyright
                             $result.Owners = $nuspec.package.metadata.owners
                             $result.Authors = $nuspec.package.metadata.authors
                             $result.Tags = $nuspec.package.metadata.tags
