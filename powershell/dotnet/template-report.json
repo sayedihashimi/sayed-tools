@@ -1,6 +1,10 @@
 [
     {
+        "Owners":  "Microsoft",
         "Version":  "0.9.0",
+        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.AspNetCore.SpaTemplates-0.9.0.nupkg\\",
+        "DownloadCount":  17617,
+        "Tags":  null,
         "Templates":  [
                           {
                               "author":  "Microsoft",
@@ -100,12 +104,19 @@
                           }
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/Microsoft.AspNetCore.SpaTemplates/0.9.0",
-        "DownloadCount":  17319,
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.AspNetCore.SpaTemplates-0.9.0.nupkg\\",
-        "Package":  "Microsoft.AspNetCore.SpaTemplates"
+        "Description":  "Single Page Application templates for ASP.NET Core",
+        "Authors":  "Microsoft",
+        "LicenseUrl":  "https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm",
+        "ProjectUrl":  "https://github.com/aspnet/javascriptservices",
+        "Package":  "Microsoft.AspNetCore.SpaTemplates",
+        "Title":  null
     },
     {
+        "Owners":  "Steve Desmond",
         "Version":  "1.0.1",
+        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\libyear-1.0.1.nupkg\\",
+        "DownloadCount":  569,
+        "Tags":  null,
         "Templates":  [
                           {
                               "author":  "Steve Desmond",
@@ -131,12 +142,19 @@
                           }
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/libyear/1.0.1",
-        "DownloadCount":  553,
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\libyear-1.0.1.nupkg\\",
-        "Package":  "libyear"
+        "Description":  "Display projects\u0027 dependencies and their outdatedness",
+        "Authors":  "Steve Desmond",
+        "LicenseUrl":  null,
+        "ProjectUrl":  null,
+        "Package":  "libyear",
+        "Title":  null
     },
     {
+        "Owners":  "Amazon Web Services",
         "Version":  "1.0.0",
+        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Amazon.Lambda.Templates-1.0.0.nupkg\\",
+        "DownloadCount":  307,
+        "Tags":  "AWS Amazon Lambda",
         "Templates":  [
                           {
                               "author":  "AWS",
@@ -268,12 +286,19 @@
                           }
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/Amazon.Lambda.Templates/1.0.0",
-        "DownloadCount":  289,
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Amazon.Lambda.Templates-1.0.0.nupkg\\",
-        "Package":  "Amazon.Lambda.Templates"
+        "Description":  "AWS Lambda templates for Microsoft Template Engine accessible with the dotnet CLI\u0027s new command",
+        "Authors":  "Amazon Web Services",
+        "LicenseUrl":  "https://aws.amazon.com/apache-2-0/",
+        "ProjectUrl":  "https://github.com/aws/aws-lambda-dotnet",
+        "Package":  "Amazon.Lambda.Templates",
+        "Title":  null
     },
     {
+        "Owners":  "Brock Allen, Dominick Baier",
         "Version":  "1.0.0",
+        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\IdentityServer4.Templates-1.0.0.nupkg\\",
+        "DownloadCount":  283,
+        "Tags":  null,
         "Templates":  [
                           {
                               "author":  "Dominick Baier",
@@ -310,12 +335,19 @@
                           }
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/IdentityServer4.Templates/1.0.0",
-        "DownloadCount":  263,
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\IdentityServer4.Templates-1.0.0.nupkg\\",
-        "Package":  "IdentityServer4.Templates"
+        "Description":  "IdentityServer4 Templates",
+        "Authors":  "Brock Allen, Dominick Baier",
+        "LicenseUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates/blob/dev/LICENSE",
+        "ProjectUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates",
+        "Package":  "IdentityServer4.Templates",
+        "Title":  null
     },
     {
+        "Owners":  "tintoy",
         "Version":  "0.1.0-alpha4",
+        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.DotNetNew-0.1.0-alpha4.nupkg\\",
+        "DownloadCount":  190,
+        "Tags":  null,
         "Templates":  [
                           {
                               "author":  "Adam Friedman (tintoy@tintoy.io)",
@@ -351,12 +383,19 @@
                           }
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/FiftyProtons.Templates.DotNetNew/0.1.0-alpha4",
-        "DownloadCount":  176,
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.DotNetNew-0.1.0-alpha4.nupkg\\",
-        "Package":  "FiftyProtons.Templates.DotNetNew"
+        "Description":  "Templates for \"dotnet new\" that create new templates.",
+        "Authors":  "tintoy",
+        "LicenseUrl":  "https://raw.githubusercontent.com/tintoy/dotnet-template-templates/master/LICENSE",
+        "ProjectUrl":  "https://github.com/tintoy/dotnet-template-templates",
+        "Package":  "FiftyProtons.Templates.DotNetNew",
+        "Title":  "Template templates for \"dotnet new\""
     },
     {
+        "Owners":  "Kralizek",
         "Version":  "1.1.0",
+        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Kralizek.Lambda.Templates-1.1.0.nupkg\\",
+        "DownloadCount":  186,
+        "Tags":  null,
         "Templates":  [
                           {
                               "author":  "Renato Golia",
@@ -446,8 +485,11 @@
                           }
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/Kralizek.Lambda.Templates/1.1.0",
-        "DownloadCount":  167,
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Kralizek.Lambda.Templates-1.1.0.nupkg\\",
-        "Package":  "Kralizek.Lambda.Templates"
+        "Description":  "Templates for AWS Lambda that use templates available in Kralizek.Lambda.Template",
+        "Authors":  "Kralizek",
+        "LicenseUrl":  "https://raw.githubusercontent.com/Kralizek/AWSLambdaSharpTemplate/master/LICENSE.txt",
+        "ProjectUrl":  "https://github.com/Kralizek/AWSLambdaSharpTemplate",
+        "Package":  "Kralizek.Lambda.Templates",
+        "Title":  null
     }
 ]

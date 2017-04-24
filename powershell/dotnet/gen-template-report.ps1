@@ -199,15 +199,6 @@ function Get-PackageDownloadStats(){
                         $dlcount = ($Matches[1])
                     }
                     $downloadUrl = $pkgobj.DownloadUrl
-                    <#    
-                    [string]$downloadUrl = $null
-                    try{
-                        $downloadUrl = ( $htmllines|Select-String '<a href="([^\"]+)" title=\"Download the raw nupkg file."').Matches.Groups[1].value                    
-                    }
-                    catch{
-                        $downloadUrl = $null
-                    }
-                    #>
                 }
             
                 New-Object -TypeName psobject -Property @{
@@ -216,6 +207,7 @@ function Get-PackageDownloadStats(){
                     'Downloadurl'=$downloadUrl
                     'Version'=$pkgobj.Version
                     'ExtractPath'=[string]$null
+                    'NuspecPath'=[string]$null
                 }
             }
             }
@@ -307,10 +299,12 @@ function Get-TemplateReport{
 
             $filename = '{0}-{1}.nupkg' -f $pkg.Name,$pkg.Version
             $extractpath = ExtractRemoteZip -downloadUrl $pkg.DownloadUrl -filename $filename
+            $nuspecpath = (join-path $extractpath ('{0}.nuspec' -f $pkg.Name))
             'extractpath: {0}' -f $extractpath | Write-Verbose
             # $pathsToCheck += $extractpath
             if( (Test-PathContainsTemplate -pathToCheck $extractpath) -eq $true){
                 $pkg.ExtractPath = $extractpath
+                $pkg.NuspecPath = $nuspecpath
                 $pkg
             }
         }
@@ -480,7 +474,30 @@ function Get-PackageTemplateStats{
                         DownloadCount = $pkg.DownloadCount
                         DownloadUrl = $pkg.DownloadUrl
                         ExtractPath = $pkg.ExtractPath
+                        Description = [string]$null
+                        ProjectUrl = [string]$null
+                        LicenseUrl = [string]$null
+                        Copyright = [string]$null
+                        Owners = [string]$null
+                        Authors = [string]$null
+                        Tags = [string]$null
                         Templates = @()
+                    }
+
+                    if( $pkg.NuspecPath -ne $null -and (-not([string]::IsNullOrWhiteSpace($pkg.NuspecPath))) -and (test-path $pkg.NuspecPath)) {
+                        try{
+                            [xml]$nuspec = (get-content $pkg.NuspecPath)
+                            $result.Description = $nuspec.package.metadata.description
+                            $result.ProjectUrl = $nuspec.package.metadata.projectUrl
+                            $result.LicenseUrl = $nuspec.package.metadata.licenseUrl
+                            $result.Citle = $nuspec.package.metadata.copyright
+                            $result.Owners = $nuspec.package.metadata.owners
+                            $result.Authors = $nuspec.package.metadata.authors
+                            $result.Tags = $nuspec.package.metadata.tags
+                        }
+                        catch{
+                            'Unable to read nuspec at [{0}]. Error: [{1}]' -f $pkg.NuspecPath, $_.Exception | Write-Warning
+                        }
                     }
 
                     foreach($template in $templateFileObj){
@@ -552,7 +569,7 @@ function Run-FullReport{
         $global:foundpackages = @()
         $global:foundpackages += ( Get-TemplateReport -searchTerm $searchTerm )
 
-        $uResults = $Global:foundpackages|Select-Object -Unique -Property Name,Version,DownloadUrl,DownloadCount,ExtractPath|Sort-Object -Property DownloadCount -Descending
+        $uResults = $Global:foundpackages|Select-Object -Unique -Property *|Sort-Object -Property DownloadCount -Descending
         $totalDownload = ($uResults|Measure-Object -Property DownloadCount -Sum).Sum
 
         ' --- template report ---' | Write-Output
