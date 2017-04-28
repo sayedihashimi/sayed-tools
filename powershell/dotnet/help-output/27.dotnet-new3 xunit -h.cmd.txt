@@ -18,10 +18,10 @@ xUnit Test Project (C#)
 Author: Microsoft
 Options:                                                                                    
   -f|--framework    The target framework for the project.                                   
+                        netcoreapp2.0    - Target netcoreapp2.0                             
                         netcoreapp1.0    - Target netcoreapp1.0                             
                         netcoreapp1.1    - Target netcoreapp1.1                             
-                        netcoreapp2.0    - Target netcoreapp2.0                             
-                    Default: netcoreapp1.1                                                  
+                    Default: netcoreapp2.0                                                  
 
   -p|--enable-pack  Whether or not to enable packaging (via ("dotnet pack") for the project.
                     bool - Optional                                                         

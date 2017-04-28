@@ -18,6 +18,8 @@ Class library (C#)
 Author: Microsoft
 Options:                                                                             
   -f|--framework  The target framework for the project.                              
+                      netcoreapp2.0     - Target netcoreapp2.0                       
+                      netstandard2.0    - Target netstandard2.0                      
                       netcoreapp1.0     - Target netcoreapp1.0                       
                       netcoreapp1.1     - Target netcoreapp1.1                       
                       netstandard1.0    - Target netstandard1.0                      
@@ -27,9 +29,7 @@ Options:
                       netstandard1.4    - Target netstandard1.4                      
                       netstandard1.5    - Target netstandard1.5                      
                       netstandard1.6    - Target netstandard1.6                      
-                      netcoreapp2.0     - Target netcoreapp2.0                       
-                      netstandard2.0    - Target netstandard2.0                      
-                  Default: netstandard1.4                                            
+                  Default: netstandard2.0                                            
 
   --no-restore    If specified, skips the automatic restore of the project on create.
                   bool - Optional                                                    

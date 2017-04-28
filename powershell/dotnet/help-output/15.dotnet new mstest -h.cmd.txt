@@ -1,28 +1,25 @@
-Template Instantiation Commands for .NET Core CLI
+Template Instantiation Commands for .NET Core CLI.
 
-Usage: new [options]
+Usage: dotnet new [arguments] [options]
+
+Arguments:
+  template  The template to instantiate.
 
 Options:
-  -h, --help          Displays help for this command.
-  -l, --list          Lists templates containing the specified name. If no name is specified, lists all templates.
-  -n, --name          The name for the output being created. If no name is specified, the name of the current directory is used.
-  -o, --output        Location to place the generated output.
-  -i, --install       Installs a source or a template pack.
-  -u, --uninstall     Uninstalls a source or a template pack.
-  --type              Shows a subset of the available templates. Valid values are "project", "item" or "other".
-  --force             Forces content to be generated even if it would change existing files.
-  -lang, --language   Specifies the language of the template to create.
+  -l|--list         List templates containing the specified name.
+  -lang|--language  Specifies the language of the template to create
+  -n|--name         The name for the output being created. If no name is specified, the name of the current directory is used.
+  -o|--output       Location to place the generated output.
+  -h|--help         Displays help for this command.
+  -all|--show-all   Shows all templates
 
 
 Unit Test Project (C#)
 Author: Microsoft
-Options:                                                                                    
-  -p|--enable-pack  Whether or not to enable packaging (via ("dotnet pack") for the project.
-                    bool - Optional                                                         
-                    Default: false                                                          
-
-  --no-restore      If specified, skips the automatic restore of the project on create.     
-                    bool - Optional                                                         
-                    Default: false                                                          
+Options:                                                     
+  -f|--framework                                             
+                      netcoreapp1.0    - Target netcoreapp1.0
+                      netcoreapp1.1    - Target netcoreapp1.1
+                  Default: netcoreapp1.1                     
 
 

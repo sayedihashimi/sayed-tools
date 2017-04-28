@@ -1,20 +1,46 @@
 
 
-Usage: dotnet [options]
+Microsoft .NET Core Shared Framework Host
 
-Usage: dotnet [path-to-application]
+
+
+  Version  : 1.1.0
+
+  Build    : 928f77c4bc3f49d892459992fb6e1d5542cb5e86
+
+
+
+Usage: dotnet [common-options] [[options] path-to-application]
+
+
+
+Common Options:
+
+  --help                           Display .NET Core Shared Framework Host help.
+
+  --version                        Display .NET Core Shared Framework Host version.
 
 
 
 Options:
 
-  -h|--help            Display help.
+  --fx-version <version>           Version of the installed Shared Framework to use to run the application.
 
-  --version         Display version.
+  --additionalprobingpath <path>   Path containing probing policy and assemblies to probe for.
 
 
 
-path-to-application:
+Path to Application:
 
-  The path to an application .dll file to execute.
+  The path to a .NET Core managed application, dll or exe file to execute.
+
+
+
+If you are debugging the Shared Framework Host, set 'COREHOST_TRACE' to '1' in your environment.
+
+
+
+To get started on developing applications for .NET Core, install the SDK from:
+
+  http://go.microsoft.com/fwlink/?LinkID=798306&clcid=0x409
 

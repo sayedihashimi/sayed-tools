@@ -14,25 +14,25 @@ Options:
   -lang, --language   Specifies the language of the template to create.
 
 
-Templates                               Short Name       Language      Tags               
-------------------------------------------------------------------------------------------
-Console Application                     console          [C#], F#      Common/Console     
-Class library                           classlib         [C#], F#      Common/Library     
-Unit Test Project                       mstest           [C#], F#      Test/MSTest        
-xUnit Test Project                      xunit            [C#], F#      Test/xUnit         
-ASP.NET Core Empty                      web              [C#], F#      Web/Empty          
-ASP.NET Core Web App                    mvc              [C#], F#      Web/MVC            
-ASP.NET Core Web App (Razor Pages)      razor            [C#]          Web/MVC/Razor Pages
-ASP.NET Core Web API                    webapi           [C#]          Web/WebAPI         
-Nuget Config                            nugetconfig                    Config             
-Web Config                              webconfig                      Config             
-Solution File                           sln                            Solution           
-Razor Page                              page                           Web/ASP.NET        
-MVC ViewImports                         viewimports                    Web/ASP.NET        
-MVC ViewStart                           viewstart                      Web/ASP.NET        
+Templates                               Short Name       Language          Tags               
+----------------------------------------------------------------------------------------------
+Console Application                     console          [C#], F#, VB      Common/Console     
+Class library                           classlib         [C#], F#, VB      Common/Library     
+Unit Test Project                       mstest           [C#], F#, VB      Test/MSTest        
+xUnit Test Project                      xunit            [C#], F#, VB      Test/xUnit         
+ASP.NET Core Empty                      web              [C#], F#          Web/Empty          
+ASP.NET Core Web App                    mvc              [C#], F#          Web/MVC            
+ASP.NET Core Web App (Razor Pages)      razor            [C#]              Web/MVC/Razor Pages
+ASP.NET Core Web API                    webapi           [C#]              Web/WebAPI         
+Nuget Config                            nugetconfig                        Config             
+Web Config                              webconfig                          Config             
+Solution File                           sln                                Solution           
+Razor Page                              page                               Web/ASP.NET        
+MVC ViewImports                         viewimports                        Web/ASP.NET        
+MVC ViewStart                           viewstart                          Web/ASP.NET        
 
 
 Examples:
     dotnet new3 mvc --framework netcoreapp1.1 --auth Individual
-    dotnet new3 classlib --framework netcoreapp1.1
+    dotnet new3 xunit --framework netcoreapp2.0
     dotnet new3 --help

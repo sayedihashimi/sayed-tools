@@ -16,13 +16,13 @@ Options:
 
 ASP.NET Core Empty (C#)
 Author: Microsoft
-This template contains technologies from parties other than Microsoft, see https://github.com/dotnet/templating/blob/rel/vs2017/post-rtw/template_feed/THIRD-PARTY-NOTICES for details.
+This template contains technologies from parties other than Microsoft, see https://aka.ms/template-3pn for details.
 Options:                                                                             
   -f|--framework  The target framework for the project.                              
+                      netcoreapp2.0    - Target netcoreapp2.0                        
                       netcoreapp1.0    - Target netcoreapp1.0                        
                       netcoreapp1.1    - Target netcoreapp1.1                        
-                      netcoreapp2.0    - Target netcoreapp2.0                        
-                  Default: netcoreapp1.1                                             
+                  Default: netcoreapp2.0                                             
 
   --no-restore    If specified, skips the automatic restore of the project on create.
                   bool - Optional                                                    
