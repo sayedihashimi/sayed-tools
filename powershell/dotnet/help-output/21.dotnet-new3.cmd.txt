@@ -34,5 +34,4 @@ MVC ViewStart                           viewstart                          Web/A
 
 Examples:
     dotnet new3 mvc --framework netcoreapp1.1 --auth Individual
-    dotnet new3 classlib --framework netcoreapp2.0
     dotnet new3 --help
