@@ -7,4 +7,3 @@ ASP.NET Core Web App                    mvc             [C#], F#      Web/MVC
 ASP.NET Core Web App (Razor Pages)      razor           [C#]          Web/MVC/Razor Pages
 ASP.NET Core Web API                    webapi          [C#]          Web/WebAPI         
 Web Config                              webconfig                     Config             
-

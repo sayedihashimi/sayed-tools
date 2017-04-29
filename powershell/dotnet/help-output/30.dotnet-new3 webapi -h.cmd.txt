@@ -4,11 +4,11 @@ ASP.NET Core Web API
 Author: Microsoft
 
 Options:
-  -h, --help          Displays help for this command.
+  -h, --help          Show help information.
   --force             Forces content to be generated even if it would change existing files.
   -v, --verbosity     Set the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
 
-Template Options:
+Template options:
   -n, --name             The name for the output being created. If no name is specified, the name of the current directory is used.
   -o, --output           Location to place the generated output.
   -lang, --language      Specifies the language of the template to create.

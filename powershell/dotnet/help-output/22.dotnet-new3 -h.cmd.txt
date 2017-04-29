@@ -1,9 +1,7 @@
-Usage: dotnet new [[templatename] [template-options]] [options]
-
-templatename:         Name of the template to create
+Usage: dotnet new [options] [template-name [template-options]]
 
 Options:
-  -h, --help          Displays help for this command.
+  -h, --help          Show help information.
   -l, --list          Lists templates containing the specified name. If no name is specified, lists all templates.
   -i, --install       Installs a source or a template pack.
   -u, --uninstall     Uninstalls a source or a template pack.
@@ -12,13 +10,14 @@ Options:
   -lang, --language   Specifies the language of the template to create.
   -v, --verbosity     Set the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
 
-Template Options:
+Template name:        Name of the template to create.
+
+Template options:
   -n, --name          The name for the output being created. If no name is specified, the name of the current directory is used.
   -o, --output        Location to place the generated output.
 
 Examples:
-    dotnet new3 --help
+    dotnet new --help
     dotnet new --list
     dotnet new mvc -h
-    dotnet new3 mvc --framework netcoreapp1.1 --auth Individual
-    
+    dotnet new mvc --framework netcoreapp1.1 --auth Individual

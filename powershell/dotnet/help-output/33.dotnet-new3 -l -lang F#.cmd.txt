@@ -1,3 +1,5 @@
+Templates found matching lang=F#
+
 Templates                 Short Name      Language      Tags          
 ----------------------------------------------------------------------
 Console Application       console         F#            Common/Console
@@ -6,4 +8,3 @@ Unit Test Project         mstest          F#            Test/MSTest
 xUnit Test Project        xunit           F#            Test/xUnit    
 ASP.NET Core Empty        web             F#            Web/Empty     
 ASP.NET Core Web App      mvc             F#            Web/MVC       
-
