@@ -1,38 +1,26 @@
-Template Instantiation Commands for .NET Core CLI
+Usage: dotnet new classlib [templateoptions] [options]
 
-Usage: new3 [options]
-
+Class library
+Author: Microsoft
 Options:
   -h, --help          Displays help for this command.
-  -l, --list          Lists templates containing the specified name. If no name is specified, lists all templates.
+  --force             Forces content to be generated even if it would change existing files.
+  -v, --verbosity     Set the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+
+Template Options:
   -n, --name          The name for the output being created. If no name is specified, the name of the current directory is used.
   -o, --output        Location to place the generated output.
-  -i, --install       Installs a source or a template pack.
-  -u, --uninstall     Uninstalls a source or a template pack.
-  --type              Filters templates based on available types. Predefined values are "project", "item" or "other".
-  --force             Forces content to be generated even if it would change existing files.
   -lang, --language   Specifies the language of the template to create.
-
-
-Class library (C#)
-Author: Microsoft
-Options:                                                                             
+                          C#
+                          F#
+                          VB
+                      Default: C#
   -f|--framework  The target framework for the project.                              
-                      netcoreapp2.0     - Target netcoreapp2.0                       
-                      netstandard2.0    - Target netstandard2.0                      
-                      netcoreapp1.0     - Target netcoreapp1.0                       
-                      netcoreapp1.1     - Target netcoreapp1.1                       
-                      netstandard1.0    - Target netstandard1.0                      
-                      netstandard1.1    - Target netstandard1.1                      
-                      netstandard1.2    - Target netstandard1.2                      
-                      netstandard1.3    - Target netstandard1.3                      
-                      netstandard1.4    - Target netstandard1.4                      
-                      netstandard1.5    - Target netstandard1.5                      
-                      netstandard1.6    - Target netstandard1.6                      
-                  Default: netstandard2.0                                            
-
-  --no-restore    If specified, skips the automatic restore of the project on create.
-                  bool - Optional                                                    
+                      netcoreapp2.0, netcoreapp1.1, netcoreapp1.0, netstandard2.0, netstandard1.6, netstandard1.5
+                      netstandard1.4, netstandard1.3, netstandard1.2, netstandard1.1, netstandard1.0                         
+                  Default: netstandard2.0
+  --no-restore    If specified, skips the automatic package restore of the project on create.
+                  Type: bool (Optional)                                                    
                   Default: false                                                     
 
 

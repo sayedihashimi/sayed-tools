@@ -1,3 +1,5 @@
+Templates found matching 'we'
+
 Templates                               Short Name      Language      Tags               
 -----------------------------------------------------------------------------------------
 ASP.NET Core Empty                      web             [C#], F#      Web/Empty          

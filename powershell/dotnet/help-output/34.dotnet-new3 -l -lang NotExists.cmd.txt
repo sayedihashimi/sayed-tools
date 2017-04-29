@@ -1,6 +1,4 @@
-Template Instantiation Commands for .NET Core CLI
-
-Usage: new3 [options]
+Usage: dotnet new [options]
 
 Options:
   -h, --help          Displays help for this command.
