@@ -21,3 +21,4 @@ Examples:
     dotnet new --list
     dotnet new mvc -h
     dotnet new mvc --framework netcoreapp1.1 --auth Individual
+    dotnet new --install -h
