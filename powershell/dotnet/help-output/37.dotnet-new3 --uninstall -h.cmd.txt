@@ -7,5 +7,5 @@ Options:
   -h, --help          Show help information.
 
 Examples:
-    dotnet new --uninstall "Microsoft.AspNetCore.SpaTemplates::*"
-    dotnet new --install c:\projcet-templates
+    dotnet new --uninstall Microsoft.AspNetCore.SpaTemplates
+    dotnet new --uninstall c:\projcet-templates
