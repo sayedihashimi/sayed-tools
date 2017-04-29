@@ -48,7 +48,8 @@ if([string]::IsNullOrWhiteSpace($outputPath)) {
     @{'command'='dotnet-new3';'CArgs'=@('-l','-lang','F#')}
     @{'command'='dotnet-new3';'CArgs'=@('-l','-lang','NotExists')}
     @{'command'='dotnet-new3';'CArgs'=@('NotExists')}
-
+    @{'command'='dotnet-new3';'CArgs'=@('--install','-h')}
+    @{'command'='dotnet-new3';'CArgs'=@('--uninstall','h')}
 )
 
 function GetNewTempFile(){

@@ -1,3 +1,4 @@
 No templates found matching 'NotExists'.
 
 To list installed templates: dotnet new -l
+
