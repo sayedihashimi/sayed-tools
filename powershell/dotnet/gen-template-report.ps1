@@ -576,17 +576,22 @@ function Print-Report{
     process{
         $totalDownload = ($reportObj|Measure-Object -Property DownloadCount -Sum).sum
         $overallReportStrFormat = @'
-****************************************
+
+*****************************************************
 Total downloads: {0} 
+Num authors:     {3}
 Num packages:    {1}
 Num templates:   {2}
-Num authors:     {3}
-****************************************
+*****************************************************
 
 '@
         $overallReportStrFormat -f $totalDownload, $reportObj.Length, $reportObj.Templates.Length, ($reportObj.authors|Select-Object -Unique).length
 
-        "***********************`nReport by package:" | Write-Output
+        @"
+`n*****************************************************
+    Package Report
+*****************************************************
+"@ | Write-Output
 
         foreach($pkgR in $reportObj){
             @'
@@ -598,8 +603,12 @@ pkg={0}
             
             "`n" | Write-Output
     }
-
-    "***********************`nReport by package owner:" | Write-Output
+    
+        @"
+`n*****************************************************
+    Package Owner Report
+*****************************************************
+"@ | Write-Output
 
     $reportObj.Owners|Select-Object -Unique| ForEach-Object {
         $cOwner = $_
@@ -661,7 +670,7 @@ function Run-FullReport{
 
         Print-Report -reportObj $global:pkgReport
 
-        '************************************************************' | Write-Host -ForegroundColor Cyan
+        '*****************************************************' | Write-Host -ForegroundColor Cyan
         "`n --- template file details ---" | Write-Output
         $reportData = ($templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property *,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author)
         $global:sihReportData = $reportData
