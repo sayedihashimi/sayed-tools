@@ -455,8 +455,11 @@ function Get-PackageTemplateStats{
         [object[]]$package
     )
     process{
+        'Start Looking at package: {0}' -f $package | Write-Verbose
         foreach($pkg in $package){
+        '   Looking at package: {0}' -f $pkg | Write-Verbose
             if($pkg -eq $null){
+                'skipping becaus package is null' | Write-Verbose
                 continue
             }
 
@@ -464,9 +467,9 @@ function Get-PackageTemplateStats{
 
             if(-not ([string]::IsNullOrWhiteSpace($pkgExtractPath)) -and (test-path $pkgExtractPath)){
                 # find template files under this path
-                $templateFiles = Find-TemplateFilesUnderPath -path $pkgExtractPath
+                [string[]]$templateFiles = Find-TemplateFilesUnderPath -path $pkgExtractPath
 
-                $templateFileObj = Get-JsonObjectFromTemplateFile -templateFilePath $templateFiles
+                [object[]]$templateFileObj = Get-JsonObjectFromTemplateFile -templateFilePath $templateFiles
                 if( ($templateFileObj -ne $null) -and ($templateFileObj.length -gt 0)){
                     $result = new-object -TypeName psobject -Property @{
                         Package=$pkg.Name
@@ -498,6 +501,9 @@ function Get-PackageTemplateStats{
                         catch{
                             'Unable to read nuspec at [{0}]. Error: [{1}]' -f $pkg.NuspecPath, $_.Exception | Write-Warning
                         }
+                    }
+                    else{
+                        '*** nuspec not found or empty [{0}]' -f $pkg.NuspecPath | Write-Verbose
                     }
 
                     foreach($template in $templateFileObj){
@@ -537,6 +543,9 @@ function Get-PackageTemplateStats{
                     $result
                 }
             }
+            else{
+                'Skipping because pkgExtractPath is empty' | Write-Verbose
+            }
         }
     }
 }
@@ -556,6 +565,63 @@ function Save-ToFileAsJson{
         $serializer = New-Object -TypeName 'Newtonsoft.Json.JsonSerializer'
         $serializer.Serialize($filestream,$jobject)
         $filestream.Dispose()
+    }
+}
+
+function Print-Report{
+    [cmdletbinding()]
+    param(
+        [object[]]$reportObj
+    )
+    process{
+        $totalDownload = ($reportObj|Measure-Object -Property DownloadCount -Sum).sum
+        $overallReportStrFormat = @'
+Total downloads: {0} 
+Num packages:    {1}
+Num templates:   {2}
+Num authors:     {3}
+'@
+        $overallReportStrFormat -f $totalDownload, $reportObj.Length, $reportObj.Templates.Length, ($reportObj.authors|Select-Object -Unique).length
+
+        "***********************`nReport by package:" | Write-Output
+
+        foreach($pkgR in $reportObj){
+            @'
+pkg={0} 
+    Downloads: {1}
+    Templates: {3}
+'@ -f $pkgR.Package, $pkgR.DownloadCount, $pkgR.Templates.Length,(($pkgR.Templates|%{'{0} (author={1})' -f $_.Name,$_.author}) -join "`n               ") | Write-Host -NoNewline
+            
+            
+            "`n" | Write-Output
+    }
+<#
+Report by package owner:
+<owner name>
+Total download count: <val>
+  Packages (num):
+    <package name>
+  Templates (num):
+    <template name>
+    <template name>
+#>
+
+    "***********************`nReport by package owner:" | Write-Output
+
+    $reportObj.Owners|Select-Object -Unique| ForEach-Object {
+        $cOwner = $_
+        $items = $reportObj|Where-Object {$_.Owners -eq $cOwner}
+        @'
+owner={0}
+  Downloads: {1}
+  Packages:  {2}
+  Templates: {4}
+'@      -f $cOwner, ($items|Measure-Object -Property DownloadCount -Sum).Sum, (($items.Package|%{"$_"}) -join "`n             " ), $items.Templates.Count, (($items.Templates.name|%{"$_"}) -join "`n             " )  | Write-Output
+
+        " " | Write-Output   
+    }
+
+    
     }
 }
 
@@ -579,33 +645,43 @@ function Run-FullReport{
         # " --- overall ---`n" | Write-Output
         # $uResults.DownloadCount|Measure-Object -Sum -Average -Maximum -Minimum
 
-        $extractPath = $global:machinesetupconfig.MachineSetupAppsFolder
-        $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
+        [string[]]$templateFiles=@()
+        $uResults.ExtractPath | ForEach-Object{
+            $cpath = $_
+            if(test-path $cpath){
+                $templateFiles += (Find-TemplateFilesUnderPath -path $cpath)
+            }
+        }
+        $global:sihtemplatefiles = $templateFiles
+        "Found template files: [`n{0}]" -f ($templateFiles -join '`n') | Write-Verbose
+
+        # $extractPath = $global:machinesetupconfig.MachineSetupAppsFolder
+        # $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
 
         "`n----------------------------------------------------" | Write-Output
         'Total downloads:.............. {0}' -f $totalDownload | Write-Output
         'Number of packages:............{0}' -f ($uResults.Length) | Write-Output
         'Number of templates:...........{0}' -f ($templateFiles.Length) | Write-Output
 
-        "`n --- template file details ---" | Write-Output
-        $reportData = ($templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property author,name,identity,classifications,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author)
-        $global:sihReportData = $reportData
-        $reportData | Format-List -GroupBy author
-
-        '************************************************************' | Write-Host -ForegroundColor Cyan
-
         $global:pkgReport = Get-PackageTemplateStats -package $uResults
         $reportPath = (join-path $scriptDir 'template-report.json')
         $global:pkgReport | ConvertTo-Json -Depth 100 | Out-File -FilePath $reportPath -Encoding ascii
 
+
+
+
+
+
+        '************************************************************' | Write-Host -ForegroundColor Cyan
+        "`n --- template file details ---" | Write-Output
+        $reportData = ($templateFiles | Get-JsonObjectFromTemplateFile | Select-Object -Property *,@{Name='Parameters';Expression={$_.symbols}} | Sort-Object -Property author)
+        $global:sihReportData = $reportData
+        $reportData | Format-List -GroupBy author
+
+
+
         if($env:APPVEYOR -eq $true){
             Push-AppveyorArtifact -path $reportPath -Filename 'tempalte-report.json'
-            <#
-            [int]$index = 0
-            foreach($tfile in $templateFiles){
-                Push-AppveyorArtifact -path $tfile -Filename $tfile
-            } 
-            #>   
         }
     }
 }
