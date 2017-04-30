@@ -598,7 +598,7 @@ Num templates:   {2}
 pkg={0} 
     Downloads: {1}
     Templates: {3}
-'@ -f $pkgR.Package, $pkgR.DownloadCount, $pkgR.Templates.Length,(($pkgR.Templates|%{'{0} (author={1})' -f $_.Name,$_.author}) -join "`n               ") | Write-Host -NoNewline
+'@ -f $pkgR.Package, $pkgR.DownloadCount, $pkgR.Templates.Length,(($pkgR.Templates|%{'{0}' -f $_.Name}) -join "`n               ") | Write-Host -NoNewline
             
             
             "`n" | Write-Output
