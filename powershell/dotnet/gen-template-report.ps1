@@ -595,16 +595,6 @@ pkg={0}
             
             "`n" | Write-Output
     }
-<#
-Report by package owner:
-<owner name>
-Total download count: <val>
-  Packages (num):
-    <package name>
-  Templates (num):
-    <template name>
-    <template name>
-#>
 
     "***********************`nReport by package owner:" | Write-Output
 
@@ -620,8 +610,6 @@ owner={0}
 
         " " | Write-Output   
     }
-
-    
     }
 }
 
@@ -657,20 +645,18 @@ function Run-FullReport{
 
         # $extractPath = $global:machinesetupconfig.MachineSetupAppsFolder
         # $templateFiles = Find-TemplateFilesUnderPath -path $extractPath
-
+        <#
         "`n----------------------------------------------------" | Write-Output
         'Total downloads:.............. {0}' -f $totalDownload | Write-Output
         'Number of packages:............{0}' -f ($uResults.Length) | Write-Output
         'Number of templates:...........{0}' -f ($templateFiles.Length) | Write-Output
+        #>
 
         $global:pkgReport = Get-PackageTemplateStats -package $uResults
         $reportPath = (join-path $scriptDir 'template-report.json')
         $global:pkgReport | ConvertTo-Json -Depth 100 | Out-File -FilePath $reportPath -Encoding ascii
 
-
-
-
-
+        Print-Report -reportObj $global:pkgReport
 
         '************************************************************' | Write-Host -ForegroundColor Cyan
         "`n --- template file details ---" | Write-Output
