@@ -576,10 +576,13 @@ function Print-Report{
     process{
         $totalDownload = ($reportObj|Measure-Object -Property DownloadCount -Sum).sum
         $overallReportStrFormat = @'
+****************************************
 Total downloads: {0} 
 Num packages:    {1}
 Num templates:   {2}
 Num authors:     {3}
+****************************************
+
 '@
         $overallReportStrFormat -f $totalDownload, $reportObj.Length, $reportObj.Templates.Length, ($reportObj.authors|Select-Object -Unique).length
 
