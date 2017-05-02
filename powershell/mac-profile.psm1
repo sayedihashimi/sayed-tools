@@ -83,9 +83,6 @@ function Ensure-GitConfigExists{
         if(-not ([string]::IsNullOrWhiteSpace($gitconfigpath)) -and (-not (test-path $gitconfigpath))) {
             Sayed-ConfigureGit
         }
-        else{
-            'inside else1: [{0}]' -f $gitconfigpath | Write-Error
-        }
     } 
 }
 
