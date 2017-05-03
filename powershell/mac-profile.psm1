@@ -65,11 +65,17 @@ function clip{
     [cmdletbinding()]
     param(
         [Parameter(Position=0,ValueFromPipeline=$true)]
-        [object]$inObj
+        [object[]]$inObj
     )
+    begin{
+        [object[]]$toProcess = @()
+    }
     process{
-        if($inObj -ne $null){
-            $inObj | pbcopy
+        $toProcess += $_
+    }
+    end{
+        if($toProcess -ne $null){
+            $toProcess | Out-String | pbcopy
         }
     }
 }
