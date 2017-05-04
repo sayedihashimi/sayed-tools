@@ -8,7 +8,7 @@ Options:
   --type              Filters templates based on available types. Predefined values are "project", "item" or "other".
   --force             Forces content to be generated even if it would change existing files.
   -lang, --language   Specifies the language of the template to create.
-  -v, --verbosity     Set the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+  -v, --verbosity     Enable verbose output.
 
 Template name:        Name of the template to create.
 
