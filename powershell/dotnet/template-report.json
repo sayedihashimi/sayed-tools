@@ -2,8 +2,8 @@
     {
         "Owners":  "Microsoft",
         "Version":  "0.9.0",
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.AspNetCore.SpaTemplates-0.9.0.nupkg\\",
-        "DownloadCount":  17617,
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.AspNetCore.SpaTemplates-0.9.0.nupkg\\",
+        "DownloadCount":  19475,
         "Tags":  null,
         "Templates":  [
                           {
@@ -105,17 +105,50 @@
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/Microsoft.AspNetCore.SpaTemplates/0.9.0",
         "Description":  "Single Page Application templates for ASP.NET Core",
+        "Copyright":  "Copyright ? Microsoft Corporation",
         "Authors":  "Microsoft",
         "LicenseUrl":  "https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm",
         "ProjectUrl":  "https://github.com/aspnet/javascriptservices",
-        "Package":  "Microsoft.AspNetCore.SpaTemplates",
-        "Title":  null
+        "Package":  "Microsoft.AspNetCore.SpaTemplates"
+    },
+    {
+        "Owners":  "Muhammad Rehan Saeed (RehanSaeed.com)",
+        "Version":  "1.5.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Boilerplate.Templates-1.5.0.nupkg\\",
+        "DownloadCount":  718,
+        "Tags":  "ASP.NET Core MVC 6 Boilerplate Muhammad Rehan Saeed Framework",
+        "Templates":  [
+                          {
+                              "author":  "Muhammad Rehan Saeed (RehanSaeed.com)",
+                              "name":  "ASP.NET Core 1.1.1 MVC 6 Boilerplate API",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Web",
+                                                      "WebAPI",
+                                                      "Boilerplate",
+                                                      "MVC",
+                                                      "API"
+                                                  ],
+                              "shortName":  "bapi",
+                              "groupIdentity":  "Boilerplate",
+                              "identity":  "Boilerplate.AspNetCore.Api.CSharp"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/Boilerplate.Templates/1.5.0",
+        "Description":  "Project and item templates containing common boilerplate code so you don\u0027t have to write it yourself. Includes special security, performance and best practice features.",
+        "Copyright":  "Copyright ? Muhammad Rehan Saeed. All rights Reserved",
+        "Authors":  "Muhammad Rehan Saeed (RehanSaeed.com)",
+        "LicenseUrl":  "https://github.com/ASP-NET-MVC-Boilerplate/Templates/blob/master/LICENSE",
+        "ProjectUrl":  "https://github.com/ASP-NET-MVC-Boilerplate/Templates",
+        "Package":  "Boilerplate.Templates"
     },
     {
         "Owners":  "Steve Desmond",
         "Version":  "1.0.1",
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\libyear-1.0.1.nupkg\\",
-        "DownloadCount":  569,
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\libyear-1.0.1.nupkg\\",
+        "DownloadCount":  692,
         "Tags":  null,
         "Templates":  [
                           {
@@ -143,17 +176,17 @@
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/libyear/1.0.1",
         "Description":  "Display projects\u0027 dependencies and their outdatedness",
+        "Copyright":  null,
         "Authors":  "Steve Desmond",
         "LicenseUrl":  null,
         "ProjectUrl":  null,
-        "Package":  "libyear",
-        "Title":  null
+        "Package":  "libyear"
     },
     {
         "Owners":  "Amazon Web Services",
-        "Version":  "1.0.0",
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Amazon.Lambda.Templates-1.0.0.nupkg\\",
-        "DownloadCount":  307,
+        "Version":  "1.2.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Amazon.Lambda.Templates-1.2.1.nupkg\\",
+        "DownloadCount":  432,
         "Tags":  "AWS Amazon Lambda",
         "Templates":  [
                           {
@@ -238,6 +271,22 @@
                           },
                           {
                               "author":  "AWS",
+                              "name":  "Lex Book Trip Sample",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "AWS",
+                                                      "Lambda",
+                                                      "Function"
+                                                  ],
+                              "shortName":  "lambda.LexBookTripSample",
+                              "groupIdentity":  "AWS.Lambda.Function.LexBookTripSample",
+                              "identity":  "AWS.Lambda.Function.LexBookTripSample.CSharp"
+                          },
+                          {
+                              "author":  "AWS",
                               "name":  "Lambda Simple DynamoDB Function",
                               "tags":  {
                                            "type":  "project",
@@ -251,6 +300,22 @@
                               "shortName":  "lambda.DynamoDB",
                               "groupIdentity":  "AWS.Lambda.Simple.DynamoDB",
                               "identity":  "AWS.Lambda.Simple.DynamoDB.CSharp"
+                          },
+                          {
+                              "author":  "AWS",
+                              "name":  "Lambda Simple Kinesis Firehose Function",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "AWS",
+                                                      "Lambda",
+                                                      "Function"
+                                                  ],
+                              "shortName":  "lambda.KinesisFirehose",
+                              "groupIdentity":  "AWS.Lambda.Simple.KinesisFirehose",
+                              "identity":  "AWS.Lambda.Simple.KinesisFirehose.CSharp"
                           },
                           {
                               "author":  "AWS",
@@ -285,19 +350,19 @@
                               "identity":  "AWS.Lambda.Simple.S3.CSharp"
                           }
                       ],
-        "DownloadUrl":  "http://www.nuget.org/api/v2/package/Amazon.Lambda.Templates/1.0.0",
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/Amazon.Lambda.Templates/1.2.1",
         "Description":  "AWS Lambda templates for Microsoft Template Engine accessible with the dotnet CLI\u0027s new command",
+        "Copyright":  null,
         "Authors":  "Amazon Web Services",
         "LicenseUrl":  "https://aws.amazon.com/apache-2-0/",
         "ProjectUrl":  "https://github.com/aws/aws-lambda-dotnet",
-        "Package":  "Amazon.Lambda.Templates",
-        "Title":  null
+        "Package":  "Amazon.Lambda.Templates"
     },
     {
         "Owners":  "Brock Allen, Dominick Baier",
         "Version":  "1.0.0",
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\IdentityServer4.Templates-1.0.0.nupkg\\",
-        "DownloadCount":  283,
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\IdentityServer4.Templates-1.0.0.nupkg\\",
+        "DownloadCount":  375,
         "Tags":  null,
         "Templates":  [
                           {
@@ -336,17 +401,226 @@
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/IdentityServer4.Templates/1.0.0",
         "Description":  "IdentityServer4 Templates",
+        "Copyright":  null,
         "Authors":  "Brock Allen, Dominick Baier",
         "LicenseUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates/blob/dev/LICENSE",
         "ProjectUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates",
-        "Package":  "IdentityServer4.Templates",
-        "Title":  null
+        "Package":  "IdentityServer4.Templates"
+    },
+    {
+        "Owners":  "kiootic",
+        "Version":  "3.5.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MonoGame.Template.NETCore-3.5.1.nupkg\\",
+        "DownloadCount":  369,
+        "Tags":  "MonoGame Game Core VSCode",
+        "Templates":  [
+                          {
+                              "author":  "kiootic",
+                              "name":  "MonoGame DesktopGL Project",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Game",
+                                                      "MonoGame"
+                                                  ],
+                              "shortName":  "monogamegl",
+                              "groupIdentity":  null,
+                              "identity":  "MonoGame.DesktopGL.CSharp"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/MonoGame.Template.NETCore/3.5.1",
+        "Description":  "Template of MonoGame DesktopGL project for VS Code + .NET Core tooling",
+        "Copyright":  null,
+        "Authors":  "kiootic",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/kiootic/MonoGame-core-template",
+        "Package":  "MonoGame.Template.NETCore"
+    },
+    {
+        "Owners":  "Chad Ramos (pioneercode.com)",
+        "Version":  "1.0.5",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Pioneer.Console.Boilerplate-1.0.5.nupkg\\",
+        "DownloadCount":  359,
+        "Tags":  "Pioneer Code Boilerplate .NET Core Console Dependecy Injection Logging Configuration Chad Ramos",
+        "Templates":  [
+                          {
+                              "author":  "Chad Ramos \u003cchad@pioneercode.com\u003e",
+                              "name":  "Pioneer Code: Console Application with dependecy injection, logging \u0026 configuration.",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Console",
+                                                      "Boilerplate",
+                                                      "Dependecy Injection",
+                                                      "Logging",
+                                                      "Configuration"
+                                                  ],
+                              "shortName":  "pioneer-console",
+                              "groupIdentity":  null,
+                              "identity":  "Pioneer.Console.Boilerplate"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/Pioneer.Console.Boilerplate/1.0.5",
+        "Description":  "Pioneer Code: .NET Core Console Application with dependecy injection, logging \u0026 configuration",
+        "Copyright":  "Copyright 2017: Chad Ramos - Pioneer Code. All right Reserved.",
+        "Authors":  "Chad Ramos (pioneercode.com)",
+        "LicenseUrl":  "https://github.com/PioneerCode/pioneer-console-boilerplate/blob/master/LICENSE",
+        "ProjectUrl":  "https://github.com/PioneerCode/pioneer-console-boilerplate",
+        "Package":  "Pioneer.Console.Boilerplate"
+    },
+    {
+        "Owners":  "Olivier Lefebvre",
+        "Version":  "0.1.2",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\angular-cli.dotnet-0.1.2.nupkg\\",
+        "DownloadCount":  330,
+        "Tags":  "angular-cli dotnet",
+        "Templates":  [
+                          {
+                              "author":  "Olivier Lefebvre",
+                              "name":  "Angular-cli + Asp.Net Core",
+                              "tags":  {
+                                           "language":  "C#, TypeScript"
+                                       },
+                              "classifications":  "Angular-cli/Asp.Net Core",
+                              "shortName":  "angular-cli.dotnet",
+                              "groupIdentity":  null,
+                              "identity":  "angular-cli.dotnet"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/angular-cli.dotnet/0.1.2",
+        "Description":  "dotnet new template for angular-cli and ASP.Net core\nVisit https://github.com/aguacongas/angular-cli.dotnet for install instruction and usage\nTo install it, use the download link to download the package and\nfrom the downloaded location run :\ndotnet new -i angular-cli.dotnet.0.1.2.nupkg",
+        "Copyright":  "Copyright 2017",
+        "Authors":  "Olivier Lefebvre",
+        "LicenseUrl":  "https://opensource.org/licenses/MIT",
+        "ProjectUrl":  "https://github.com/aguacongas/angular-cli.dotnet",
+        "Package":  "angular-cli.dotnet"
+    },
+    {
+        "Owners":  "Dustin Moris Gorski",
+        "Version":  "0.1.2",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\giraffe-template-0.1.2.nupkg\\",
+        "DownloadCount":  328,
+        "Tags":  "giraffe web app razor pages micro service dotnet new template",
+        "Templates":  [
+                          {
+                              "author":  "David Sinclair and contributors",
+                              "name":  "Giraffe Web App",
+                              "tags":  {
+                                           "language":  "F#"
+                                       },
+                              "classifications":  [
+                                                      "Web",
+                                                      "Giraffe"
+                                                  ],
+                              "shortName":  "giraffe",
+                              "groupIdentity":  null,
+                              "identity":  "Giraffe.Template"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/giraffe-template/0.1.2",
+        "Description":  "A dotnet-new template for Giraffe web applications.",
+        "Copyright":  null,
+        "Authors":  "David Sinclair",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/dustinmoris/Giraffe",
+        "Package":  "giraffe-template"
+    },
+    {
+        "Owners":  "Jimmy Byrd",
+        "Version":  "0.2.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MiniScaffold-0.2.0.nupkg\\",
+        "DownloadCount":  320,
+        "Tags":  "class library template fsharp",
+        "Templates":  [
+                          {
+                              "author":  "Jimmy Byrd",
+                              "name":  "MiniScaffold",
+                              "tags":  {
+                                           "language":  "F#"
+                                       },
+                              "classifications":  "Scaffold",
+                              "shortName":  "mini-scaffold",
+                              "groupIdentity":  null,
+                              "identity":  "MiniScaffold"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/MiniScaffold/0.2.0",
+        "Description":  "Simple F# Class Lib Project",
+        "Copyright":  null,
+        "Authors":  "Jimmy Byrd",
+        "LicenseUrl":  "https://github.com/TheAngryByrd/MiniScaffold/blob/master/LICENSE.md",
+        "ProjectUrl":  "https://github.com/TheAngryByrd/MiniScaffold",
+        "Package":  "MiniScaffold"
+    },
+    {
+        "Owners":  "BrainCrumbz",
+        "Version":  "1.0.2",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\dotnet-new-nspec-1.0.2.nupkg\\",
+        "DownloadCount":  308,
+        "Tags":  "testing bdd tdd rspec mocha dotnet core test template",
+        "Templates":  [
+                          {
+                              "author":  "BrainCrumbz",
+                              "name":  "NSpec .NET Core C# Test Project",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Test",
+                                                      "NSpec"
+                                                  ],
+                              "shortName":  "nspectest",
+                              "groupIdentity":  "NSpec",
+                              "identity":  "NSpec.CSharp.TestLibrary"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/dotnet-new-nspec/1.0.2",
+        "Description":  "It installs Visual Studio project templates to be used when creating projects from .NET Core \u0027dotnet new\u0027 command line interface.\nCurrently, it contains a project template for a NSpec test library targeting both .NET Core and .NET Frameowrk.\n\nNOTE:\n\nEven if template currently creates a project supporting .NET Core Tools Preview 2 (the one based on project.json),\nin order to install custom CLI templates like this you need to have at least .NET Core Tools RC4 on your development machine.",
+        "Copyright":  null,
+        "Authors":  "BrainCrumbz",
+        "LicenseUrl":  "https://github.com/nspec/DotNetNewNSpec/blob/master/license.txt",
+        "ProjectUrl":  "https://github.com/nspec/DotNetNewNSpec",
+        "Package":  "dotnet-new-nspec"
+    },
+    {
+        "Owners":  "RIGANTI",
+        "Version":  "1.1.0.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\DotVVM.Templates-1.1.0.1.nupkg\\",
+        "DownloadCount":  273,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "author":  "RIGANTI",
+                              "name":  "DotVVM Web Application",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Web",
+                                                      "DotVVM"
+                                                  ],
+                              "shortName":  "dotvvm",
+                              "groupIdentity":  "DotVVM.Templates",
+                              "identity":  "DotVVM.Templates.EmptyWeb"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/DotVVM.Templates/1.1.0.1",
+        "Description":  "DotVVM Project Templates",
+        "Copyright":  null,
+        "Authors":  "RIGANTI",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/riganti/dotvvm",
+        "Package":  "DotVVM.Templates"
     },
     {
         "Owners":  "tintoy",
         "Version":  "0.1.0-alpha4",
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.DotNetNew-0.1.0-alpha4.nupkg\\",
-        "DownloadCount":  190,
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.DotNetNew-0.1.0-alpha4.nupkg\\",
+        "DownloadCount":  240,
         "Tags":  null,
         "Templates":  [
                           {
@@ -384,17 +658,17 @@
                       ],
         "DownloadUrl":  "http://www.nuget.org/api/v2/package/FiftyProtons.Templates.DotNetNew/0.1.0-alpha4",
         "Description":  "Templates for \"dotnet new\" that create new templates.",
+        "Copyright":  null,
         "Authors":  "tintoy",
         "LicenseUrl":  "https://raw.githubusercontent.com/tintoy/dotnet-template-templates/master/LICENSE",
         "ProjectUrl":  "https://github.com/tintoy/dotnet-template-templates",
-        "Package":  "FiftyProtons.Templates.DotNetNew",
-        "Title":  "Template templates for \"dotnet new\""
+        "Package":  "FiftyProtons.Templates.DotNetNew"
     },
     {
         "Owners":  "Kralizek",
-        "Version":  "1.1.0",
-        "ExtractPath":  "C:\\Users\\sayed\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Kralizek.Lambda.Templates-1.1.0.nupkg\\",
-        "DownloadCount":  186,
+        "Version":  "1.1.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Kralizek.Lambda.Templates-1.1.1.nupkg\\",
+        "DownloadCount":  237,
         "Tags":  null,
         "Templates":  [
                           {
@@ -484,12 +758,321 @@
                               "identity":  "Kralizek.Lambda.Template.EventFunction.SNS"
                           }
                       ],
-        "DownloadUrl":  "http://www.nuget.org/api/v2/package/Kralizek.Lambda.Templates/1.1.0",
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/Kralizek.Lambda.Templates/1.1.1",
         "Description":  "Templates for AWS Lambda that use templates available in Kralizek.Lambda.Template",
+        "Copyright":  null,
         "Authors":  "Kralizek",
         "LicenseUrl":  "https://raw.githubusercontent.com/Kralizek/AWSLambdaSharpTemplate/master/LICENSE.txt",
         "ProjectUrl":  "https://github.com/Kralizek/AWSLambdaSharpTemplate",
-        "Package":  "Kralizek.Lambda.Templates",
-        "Title":  null
+        "Package":  "Kralizek.Lambda.Templates"
+    },
+    {
+        "Owners":  "tintoy",
+        "Version":  "0.1.0-alpha2",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.PSCore-0.1.0-alpha2.nupkg\\",
+        "DownloadCount":  235,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "author":  "Adam Friedman (tintoy@tintoy.io)",
+                              "name":  "PowerShell Core module",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Common",
+                                                      "PowerShell"
+                                                  ],
+                              "shortName":  "ps-core-module",
+                              "groupIdentity":  null,
+                              "identity":  "tintoy.powershell.core.module"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/FiftyProtons.Templates.PSCore/0.1.0-alpha2",
+        "Description":  "PowerShell Core templates for \"dotnet new\".",
+        "Copyright":  null,
+        "Authors":  "tintoy",
+        "LicenseUrl":  "https://raw.githubusercontent.com/tintoy/ps-core-module-template/master/LICENSE",
+        "ProjectUrl":  "https://github.com/tintoy/ps-core-module-template",
+        "Package":  "FiftyProtons.Templates.PSCore"
+    },
+    {
+        "Owners":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
+        "Version":  "0.1.0-alpha0058",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Cake.Frosting.Template-0.1.0-alpha0058.nupkg\\",
+        "DownloadCount":  216,
+        "Tags":  "Cake Script Build",
+        "Templates":  [
+                          {
+                              "author":  "Patrik Svensson (patrik@patriksvensson.se)",
+                              "name":  "Cake Frosting Build Script",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Cake",
+                                                      "Frosting"
+                                                  ],
+                              "shortName":  "cakefrosting",
+                              "groupIdentity":  null,
+                              "identity":  "Cake.Frosting"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/Cake.Frosting.Template/0.1.0-alpha0058",
+        "Description":  "Cake.Frosting templates for the .NET SDK.",
+        "Copyright":  "Copyright (c) .NET Foundation and contributors",
+        "Authors":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
+        "LicenseUrl":  "https://github.com/cake-build/frosting/blob/develop/LICENSE",
+        "ProjectUrl":  "https://github.com/cake-build/frosting",
+        "Package":  "Cake.Frosting.Template"
+    },
+    {
+        "Owners":  "Micha? Niegrzybowski",
+        "Version":  "1.1.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\WebAPI.FSharp.Template-1.1.0.nupkg\\",
+        "DownloadCount":  192,
+        "Tags":  ".net core Web API F# template",
+        "Templates":  [
+                          {
+                              "author":  "Micha? Niegrzybowski",
+                              "name":  "F# ASP.NET Core Web Api",
+                              "tags":  {
+                                           "language":  "F#"
+                                       },
+                              "classifications":  [
+                                                      "Web",
+                                                      "WebAPI"
+                                                  ],
+                              "shortName":  "webapi",
+                              "groupIdentity":  null,
+                              "identity":  "WebApi.FSharp"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/WebAPI.FSharp.Template/1.1.0",
+        "Description":  "F# .net core Web API Template",
+        "Copyright":  "Copyright 2017",
+        "Authors":  "Micha? Niegrzybowski",
+        "LicenseUrl":  "https://github.com/MNie/FSharpNetCoreWebApiTemplate/blob/master/LICENSE",
+        "ProjectUrl":  "https://github.com/MNie/FSharpNetCoreWebApiTemplate",
+        "Package":  "WebAPI.FSharp.Template"
+    },
+    {
+        "Owners":  "Micha? Niegrzybowski",
+        "Version":  "5.0.0-beta1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Expecto.Template-5.0.0-beta1.nupkg\\",
+        "DownloadCount":  172,
+        "Tags":  ".net core Expecto template",
+        "Templates":  [
+                          {
+                              "author":  "Micha? Niegrzybowski",
+                              "name":  "Expecto .net core Template",
+                              "tags":  {
+                                           "language":  "F#"
+                                       },
+                              "classifications":  "Test",
+                              "shortName":  "expecto",
+                              "groupIdentity":  null,
+                              "identity":  "Expecto.Template"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/Expecto.Template/5.0.0-beta1",
+        "Description":  "Expecto .net core Template",
+        "Copyright":  "Copyright 2017",
+        "Authors":  "Micha? Niegrzybowski",
+        "LicenseUrl":  "https://github.com/MNie/Expecto.Template/blob/master/LICENSE",
+        "ProjectUrl":  "https://github.com/MNie/Expecto.Template",
+        "Package":  "Expecto.Template"
+    },
+    {
+        "Owners":  "Andrew Lock",
+        "Version":  "1.0.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NetEscapades.Templates-1.0.1.nupkg\\",
+        "DownloadCount":  170,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "author":  "Andrew Lock",
+                              "name":  "Basic ASP.NET Core Web API",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "WebAPI",
+                                                      "Web API"
+                                                  ],
+                              "shortName":  "basicwebapi",
+                              "groupIdentity":  null,
+                              "identity":  "NetEscapades.Templates.BasicWebApi"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/NetEscapades.Templates/1.0.1",
+        "Description":  ".NET templates, predominantly for ASP.NET Core",
+        "Copyright":  null,
+        "Authors":  "Andrew Lock",
+        "LicenseUrl":  null,
+        "ProjectUrl":  null,
+        "Package":  "NetEscapades.Templates"
+    },
+    {
+        "Owners":  "Mads Kristensen",
+        "Version":  "1.0.5",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\LibraryInstallerExtensionTemplate-1.0.5.nupkg\\",
+        "DownloadCount":  129,
+        "Tags":  "extensibility vssdk vsix",
+        "Templates":  [
+                          {
+                              "author":  "Mads Kristensen",
+                              "name":  "Library Installer Extension",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Extensibility",
+                                                      "Vsix"
+                                                  ],
+                              "shortName":  "libext",
+                              "groupIdentity":  null,
+                              "identity":  "madsk.examplelibraryinstaller"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/LibraryInstallerExtensionTemplate/1.0.5",
+        "Description":  "A project template for building Library Installer extensions",
+        "Copyright":  null,
+        "Authors":  "Mads Kristensen",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/madskristensen/LibraryInstallerExtensionTemplate",
+        "Package":  "LibraryInstallerExtensionTemplate"
+    },
+    {
+        "Owners":  "Stefan Hausotte",
+        "Version":  "1.0.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CakeApp-1.0.1.nupkg\\",
+        "DownloadCount":  99,
+        "Tags":  "Cake build dotnet new core",
+        "Templates":  [
+                          {
+                              "author":  "Stefan Hausotte",
+                              "name":  "Console app with Cake build system template",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      ".Net Core",
+                                                      "dotnet",
+                                                      "template",
+                                                      "cake"
+                                                  ],
+                              "shortName":  "cake",
+                              "groupIdentity":  null,
+                              "identity":  "Core.Cake.Template"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/CakeApp/1.0.1",
+        "Description":  "\"dotnet new\" solution template to create a core console app based on the Cake build system.",
+        "Copyright":  "2017 @ Stefan Hausotte",
+        "Authors":  "Stefan Hausotte",
+        "LicenseUrl":  "https://github.com/secana/CakeApp/blob/master/LICENSE",
+        "ProjectUrl":  "https://github.com/secana/CakeApp",
+        "Package":  "CakeApp"
+    },
+    {
+        "Owners":  "Mads Kristensen",
+        "Version":  "1.0.7",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\AspNetCore.Web.Templates-1.0.7.nupkg\\",
+        "DownloadCount":  87,
+        "Tags":  "asp.net core .net template",
+        "Templates":  [
+                          {
+                              "author":  "Mads Kristensen",
+                              "name":  "ASP.NET Core MVC Basic",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Web",
+                                                      "MVC"
+                                                  ],
+                              "shortName":  "mvcbasic",
+                              "groupIdentity":  "madsk.mvc.basic",
+                              "identity":  "madsk.mvc.basic"
+                          },
+                          {
+                              "author":  "Mads Kristensen",
+                              "name":  "ASP.NET Core Static Web",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "HTML"
+                                       },
+                              "classifications":  [
+                                                      "Web",
+                                                      "Static"
+                                                  ],
+                              "shortName":  "staticweb",
+                              "groupIdentity":  "madsk.static.web",
+                              "identity":  "madsk.static.web"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/AspNetCore.Web.Templates/1.0.7",
+        "Description":  "A collection ASP.NET Core templates",
+        "Copyright":  null,
+        "Authors":  "Mads Kristensen",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/madskristensen/AspNetCoreTemplatePack",
+        "Package":  "AspNetCore.Web.Templates"
+    },
+    {
+        "Owners":  "Peachpie, Petr Houska",
+        "Version":  "0.1.0-CI00010",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Peachpie.Templates-0.1.0-CI00010.nupkg\\",
+        "DownloadCount":  50,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "author":  "Peachpie",
+                              "name":  "Peachpie console application",
+                              "tags":  {
+                                           "language":  "PHP"
+                                       },
+                              "classifications":  "Console",
+                              "shortName":  "peachpie-console",
+                              "groupIdentity":  "Peachpie.Templates.ConsoleApp",
+                              "identity":  "Peachpie.Templates.ConsoleApp"
+                          },
+                          {
+                              "author":  "Peachpie",
+                              "name":  "Peachpie library",
+                              "tags":  {
+                                           "language":  "PHP"
+                                       },
+                              "classifications":  "Library",
+                              "shortName":  "peachpie-phplib",
+                              "groupIdentity":  "Peachpie.Templates.PhpLib",
+                              "identity":  "Peachpie.Templates.PhpLib"
+                          },
+                          {
+                              "author":  "Peachpie",
+                              "name":  "Peachpie web application",
+                              "tags":  {
+                                           "language":  "PHP"
+                                       },
+                              "classifications":  [
+                                                      "Web",
+                                                      "Empty"
+                                                  ],
+                              "shortName":  "peachpie-web",
+                              "groupIdentity":  "Peachpie.Templates.WebApp",
+                              "identity":  "Peachpie.Templates.WebApp"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/Peachpie.Templates/0.1.0-CI00010",
+        "Description":  "Templates of PHP projects for .NET platform using Peachpie Compiler.",
+        "Copyright":  "Copyright 2017. All right Reserved.",
+        "Authors":  "Peachpie, Petr Houska",
+        "LicenseUrl":  "https://github.com/iolevel/peachpie/blob/master/LICENSE.txt",
+        "ProjectUrl":  "https://github.com/iolevel/peachpie",
+        "Package":  "Peachpie.Templates"
     }
 ]
