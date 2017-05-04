@@ -1,12 +1,27 @@
 [cmdletbinding()]
 param()
 
+function Get-FullPathNormalized{
+    [cmdletbinding()]
+    param (
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [string[]] $path
+    )
+    process {
+        foreach($p in $path){
+            if(-not ([string]::IsNullOrWhiteSpace($p))){
+                $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($path)
+            }
+        }
+    }
+}
+
 $global:MacProfileSettings = New-Object PSObject -Property @{
     HomeDir = $env:HOME
     ModulesToLoad = @(
-        (get-item (join-path -Path $global:codehome 'sayed-tools/powershell/github-ps.psm1' -ErrorAction SilentlyContinue)).FullName
-        (get-item (join-path -Path $global:codehome 'sayed-tools/powershell/sayed-tools.psm1' -ErrorAction SilentlyContinue)).FullName
-        (get-item (join-path $Global:dropboxpath 'Personal/PcSettings/Powershell/sayed-profile-xplat.psm1' -ErrorAction SilentlyContinue)).FullName        
+        (Get-FullPathNormalized (join-path -Path $global:codehome 'sayed-tools/powershell/github-ps.psm1' -ErrorAction SilentlyContinue))
+        (Get-FullPathNormalized (join-path -Path $global:codehome 'sayed-tools/powershell/sayed-tools.psm1' -ErrorAction SilentlyContinue))
+        (Get-FullPathNormalized (join-path $Global:dropboxpath 'Personal/PcSettings/Powershell/sayed-profile-xplat.psm1' -ErrorAction SilentlyContinue))
     )
 }
 
@@ -42,25 +57,6 @@ function Import-MyModules{
     }
 }
 
-<#
-[string[]]$modsToLoad = @(
-    (join-path -Path $global:codehome 'sayed-tools/powershell/github-ps.psm1' -ErrorAction SilentlyContinue)
-    (join-path -Path $global:codehome 'sayed-tools/powershell/sayed-tools.psm1' -ErrorAction SilentlyContinue)
-    (join-path $Global:dropboxpath 'Personal/PcSettings/Powershell/sayed-profile-xplat.psm1' -ErrorAction SilentlyContinue)
-    # (join-path $Global:dropboxpath 'Personal/PcSettings/Powershell/sayed-profile.psm1' -ErrorAction SilentlyContinue)
-)
-
-foreach ($modpath in $modsToLoad) {
-    if(Test-Path $modpath){
-        'Importing module from [{0}]' -f $modpath | Write-Host
-        Import-Module $modpath -Global -DisableNameChecking
-    }
-    else{
-        'Module not found at [{0}]' -f $modpath | Write-Output
-    }
-}
-#>
-
 function clip{
     [cmdletbinding()]
     param(
@@ -83,7 +79,7 @@ function clip{
 function Ensure-GitConfigExists{
     [cmdletbinding()]
     param(
-        [string]$gitconfigpath = ([System.IO.Path]::GetFullPath((join-path $global:MacProfileSettings.HomeDir .gitconfig -ErrorAction SilentlyContinue)))
+        [string]$gitconfigpath = (Get-FullPathNormalized (join-path $global:MacProfileSettings.HomeDir .gitconfig -ErrorAction SilentlyContinue))
     )
     process{
         if(-not ([string]::IsNullOrWhiteSpace($gitconfigpath)) -and (-not (test-path $gitconfigpath))) {
@@ -92,9 +88,17 @@ function Ensure-GitConfigExists{
     } 
 }
 
-#### Start script
+# This is the function that the profile script should call
+function InitalizeEnv{
+    [cmdletbinding()]
+    param()
+    process{
 
-Set-InitialPath
-if( (Import-MyModules) -eq $true){
-    Ensure-GitConfigExists
+        Set-InitialPath
+        if( (Import-MyModules) -eq $true){
+            Ensure-GitConfigExists
+        }
+
+    }
 }
+

@@ -6,6 +6,28 @@ param()
     You can add this to you build script to ensure that psbuild is available before calling
     Invoke-MSBuild. If psbuild is not available locally it will be downloaded automatically.
 #>
+function Resolve-FullPath{
+    [cmdletbinding()]
+    param
+    (
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [string[]] $path
+    )
+    process{
+        foreach($p in $path){
+            if(-not ([string]::IsNullOrWhiteSpace($p))){
+                $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($path)
+            }
+        }
+    }
+}
+
+# TODO: Needs to be moved to a different file since this is Windows specific
+<#
+.SYNOPSIS
+    You can add this to you build script to ensure that psbuild is available before calling
+    Invoke-MSBuild. If psbuild is not available locally it will be downloaded automatically.
+#>
 function EnsurePsbuildInstlled{
     [cmdletbinding()]
     param(
