@@ -14,10 +14,10 @@ Template options:
   -lang, --language   Specifies the language of the template to create.
                           C#, F#, VB
                       Default: C#
-  -f|--framework    The target framework for the project.                                   
+  -f, --framework    The target framework for the project.                                   
                         netcoreapp2.0, netcoreapp1.1, netcoreapp1.0
                     Default: netcoreapp2.0                                                  
-  -p|--enable-pack  Whether or not to enable packaging using "dotnet pack" for the project.
+  -p, --enable-pack  Whether or not to enable packaging using "dotnet pack" for the project.
                     Type: bool (Optional)                                                         
                     Default: false                                                          
   --no-restore      If specified, skips the automatic package restore of the project on create.     

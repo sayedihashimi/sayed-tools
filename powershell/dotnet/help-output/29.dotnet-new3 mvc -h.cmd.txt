@@ -14,10 +14,10 @@ Template options:
   -lang, --language               Specifies the language of the template to create.
                                       C#, F#, VB
                                   Default: C#
-  -f|--framework                  The target framework for the project.                                                                                     
+  -f, --framework                  The target framework for the project.                                                                                     
                                       netcoreapp2.0, netcoreapp1.1, netcoreapp1.0                                    
                                   Default: netcoreapp2.0
-  -au|--auth                      The type of authentication to use                                                                                         
+  -au, --auth                      The type of authentication to use                                                                                         
                                       None             - No authentication                                                                                  
                                       Individual       - Individual authentication                                                                          
                                       IndividualB2C    - Individual authentication with Azure AD B2C                                                        
@@ -28,11 +28,11 @@ Template options:
   --aad-b2c-instance              The Azure Active Directory B2C instance to connect to (use with IndividualB2C auth type).                                 
                                   Type: string (Optional)                                                                                                         
                                   Default: https://login.microsoftonline.com/tfp/                                                                           
-  -ssp|--susi-policy-id           The sign-in and sign-up policy ID for this project (use with IndividualB2C auth type).                                    
+  -ssp, --susi-policy-id           The sign-in and sign-up policy ID for this project (use with IndividualB2C auth type).                                    
                                   Type: string (Optional)                                                                                                         
-  -rp|--reset-password-policy-id  The reset password policy ID for this project (use with IndividualB2C auth type).                                         
+  -rp, --reset-password-policy-id  The reset password policy ID for this project (use with IndividualB2C auth type).                                         
                                   Type: string (Optional)                                                                                                         
-  -ep|--edit-profile-policy-id    The edit profile policy ID for this project (use with IndividualB2C auth type).                                           
+  -ep, --edit-profile-policy-id    The edit profile policy ID for this project (use with IndividualB2C auth type).                                           
                                   Type: string (Optional)                                                                                                         
   --aad-instance                  The Azure Active Directory instance to connect to (use with Single-org or Multi-org auth types).                          
                                   Type: string (Optional)                                                                                                         
@@ -49,10 +49,10 @@ Template options:
   --callback-path                 The request path within the application's base path of the redirect URI (use with Single-org or IndividualB2C auth types).
                                   Type: string (Optional)                                                                                                         
                                   Default: /signin-oidc                                                                                                     
-  -r|--org-read-access            Whether or not to allow this application read access to the directory (only applies to SingleOrg or MultiOrg auth types). 
+  -r, --org-read-access            Whether or not to allow this application read access to the directory (only applies to SingleOrg or MultiOrg auth types). 
                                   Type: bool (Optional)                                                                                                           
                                   Default: false                                                                                                            
-  -uld|--use-local-db             Whether or not to use LocalDB instead of SQLite                                                                           
+  -uld, --use-local-db             Whether or not to use LocalDB instead of SQLite                                                                           
                                   Type: bool (Optional)                                                                                                           
                                   Default: false                                                                                                            
   --no-restore                    If specified, skips the automatic package restore of the project on create.                                                       

@@ -14,10 +14,10 @@ Template options:
   -lang, --language      Specifies the language of the template to create.
                              C#, F#, VB
                          Default: C#
-  -f|--framework         The target framework for the project.                                                                                     
+  -f, --framework         The target framework for the project.                                                                                     
                              netcoreapp2.0, netcoreapp1.1, netcoreapp1.0                                    
                          Default: netcoreapp2.0                                                                                                                 
-  -au|--auth             The type of authentication to use                                                                       
+  -au, --auth             The type of authentication to use                                                                       
                              None             - No authentication                                                                
                              IndividualB2C    - Individual authentication with Azure AD B2C                                      
                              SingleOrg        - Organizational authentication for a single tenant                                
@@ -26,9 +26,9 @@ Template options:
   --aad-b2c-instance     The Azure Active Directory B2C instance to connect to (use with IndividualB2C auth type).               
                          Type: string (Optional)                                                                                       
                          Default: https://login.microsoftonline.com/tfp/                                                         
-  -ssp|--susi-policy-id  The sign-in and sign-up policy ID for this project (use with IndividualB2C auth type).                  
+  -ssp, --susi-policy-id  The sign-in and sign-up policy ID for this project (use with IndividualB2C auth type).                  
                          Type: string (Optional)                                                                                       
-  -s|--aad-instance      The Azure Active Directory instance to connect to (use with Single-org auth type).                      
+  -s, --aad-instance      The Azure Active Directory instance to connect to (use with Single-org auth type).                      
                          Type: string (Optional)                                                                                       
                          Default: https://login.microsoftonline.com/                                                             
   --audience             The AppIdUrl for the project (use with Single-org auth).                                                
@@ -43,7 +43,7 @@ Template options:
   --tenant-id            The TenantId ID of the directory to connect to (use with Single-org auth).                              
                          Type: string (Optional)                                                                                       
                          Default: 22222222-2222-2222-2222-222222222222                                                           
-  -r|--org-read-access   Whether or not to allow this application read access to the directory (only applies to Single-org auth).
+  -r, --org-read-access   Whether or not to allow this application read access to the directory (only applies to Single-org auth).
                          Type: bool (Optional)                                                                                         
                          Default: false                                                                                          
   --no-restore           If specified, skips the automatic package restore of the project on create.                                     
