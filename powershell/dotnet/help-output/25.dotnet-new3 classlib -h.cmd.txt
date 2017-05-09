@@ -13,7 +13,7 @@ Template options:
   -lang, --language   Specifies the language of the template to create.
                           C#, F#, VB
                       Default: C#
-  -f|--framework      The target framework for the project.                              
+  -f, --framework     The target framework for the project.                              
                           netcoreapp2.0, netcoreapp1.1, netcoreapp1.0, netstandard2.0, netstandard1.6, netstandard1.5
                           netstandard1.4, netstandard1.3, netstandard1.2, netstandard1.1, netstandard1.0                         
                       Default: netstandard2.0
