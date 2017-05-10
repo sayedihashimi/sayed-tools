@@ -40,15 +40,16 @@ function Import-MyModules{
     [cmdletbinding()]
     param()
     process{
+        'Importing modules...' | Write-Verbose
         [bool]$allImported = $true
         foreach ($modpath in $global:MacProfileSettings.ModulesToLoad) {
             if(Test-Path $modpath){
-                'Importing module from [{0}]' -f $modpath | Write-Host
+                'Importing module from [{0}]' -f $modpath | Write-Verbose
                 Import-Module $modpath -Global -DisableNameChecking | Write-Verbose
             }
             else{
                 $allImported = $false
-                'Module not found at [{0}]' -f $modpath | Write-Output
+                'Module not found at [{0}]' -f $modpath | Write-Host
             }
         }
 
@@ -98,7 +99,13 @@ function InitalizeEnv{
         if( (Import-MyModules) -eq $true){
             Ensure-GitConfigExists
         }
-
+        else{
+            'in else' | Write-Host -ForegroundColor Cyan
+        }
     }
 }
 
+
+
+
+InitalizeEnv
