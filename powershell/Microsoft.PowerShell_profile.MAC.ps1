@@ -22,6 +22,8 @@ else{
 if(Test-Path $macProfilePath){
     'Importing macProfile from [{0}]' -f $macProfilePath | Write-Output
     Import-Module $macProfilePath -Global -DisableNameChecking
+
+    InitalizeEnv
 }
 else{
     'mac profile module not found at [{0}]' -f $macProfilePath | Write-Warning
