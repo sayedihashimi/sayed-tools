@@ -32,7 +32,7 @@ if([string]::IsNullOrWhiteSpace($outputPath)) {
     @{'command'='dotnet';'CArgs'=@('new','mvc','-h')}
     @{'command'='dotnet';'CArgs'=@('new','webapi','-h')}
     @{'command'='dotnet';'CArgs'=@('new','sln','-h')}
-
+    <#
     @{'command'='dotnet-new3'},
     @{'command'='dotnet-new3';'CArgs'=@('-h')},
     @{'command'='dotnet-new3';'CArgs'=@('-l')},
@@ -50,6 +50,7 @@ if([string]::IsNullOrWhiteSpace($outputPath)) {
     @{'command'='dotnet-new3';'CArgs'=@('NotExists')}
     @{'command'='dotnet-new3';'CArgs'=@('--install','-h')}
     @{'command'='dotnet-new3';'CArgs'=@('--uninstall','-h')}
+    #>
 )
 
 function GetNewTempFile(){
