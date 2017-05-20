@@ -21,7 +21,7 @@ $global:MacProfileSettings = New-Object PSObject -Property @{
     ModulesToLoad = @(
         (Get-FullPathNormalized (join-path -Path $global:codehome 'sayed-tools/powershell/github-ps.psm1' -ErrorAction SilentlyContinue))
         (Get-FullPathNormalized (join-path -Path $global:codehome 'sayed-tools/powershell/sayed-tools.psm1' -ErrorAction SilentlyContinue))
-        (Get-FullPathNormalized (join-path $Global:dropboxpath 'Personal/PcSettings/Powershell/sayed-profile-xplat.psm1' -ErrorAction SilentlyContinue))
+        (Get-FullPathNormalized (join-path $global:codehome 'sayed-tools/powershell/sayed-profile-xplat.psm1' -ErrorAction SilentlyContinue))
     )
 }
 
@@ -100,7 +100,7 @@ function InitalizeEnv{
             Ensure-GitConfigExists
         }
         else{
-            'in else' | Write-Host -ForegroundColor Cyan
+            'Missing at least 1 module.' | Write-Host -ForegroundColor Cyan
         }
     }
 }

@@ -41,6 +41,56 @@ function Resolve-FullPath{
 }
 New-Alias -Name GetFullPath -Value Resolve-FullPath
 New-Alias -Name Get-NormalizedPath -Value Resolve-FullPath
+New-Alias -Name Get-Fullpath -Value Resolve-FullPath
+
+function Add-Path{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [string[]]$pathToAdd,
+
+        [System.EnvironmentVariableTarget]$envTarget = [System.EnvironmentVariableTarget]::Process,
+
+        [bool]$alsoAddToProcess = $true
+    )
+    process{
+        [string]$existingPath = ([System.Environment]::GetEnvironmentVariable('path',$envTarget))
+        
+        [string]$existingPathLower = $existingPath.ToLowerInvariant()
+        
+        foreach($path in $pathToAdd){
+            if(-not ([string]::IsNullOrWhiteSpace($path))){
+                [string]$fullpath = (Get-Fullpath -path $path)
+                if(test-path -path $fullpath){
+                    $trimmed = $fullpath.TrimEnd('\')
+                    
+                    # don't add if it's already included
+                    if(-not ($existingPathLower.Contains($trimmed.ToLowerInvariant()))){
+                        $newPath = ('{0};{1}' -f $existingPath,$trimmed)
+                        [System.Environment]::SetEnvironmentVariable('path',$newPath,$envTarget)
+                    }
+
+                    if( ($alsoAddToProcess -eq $true) -and ($envTarget -ne [System.EnvironmentVariableTarget]::Process) ){
+                        [string]$oldprocesspath = [System.Environment]::GetEnvironmentVariable('path',[System.EnvironmentVariableTarget]::Process)
+                        $oldprocesspathlower = $oldprocesspath.ToLowerInvariant()
+                        if(-not $oldprocesspathlower.Contains($trimmed.ToLowerInvariant())){
+                            $newprocesspath = ('{0};{1}' -f $existingPath,$trimmed)
+                            [System.Environment]::SetEnvironmentVariable('path',$newprocesspath,[System.EnvironmentVariableTarget]::Process)
+                        }
+                    }
+                }
+                else{
+                    'Not adding to path because the path was not found [{0}], fullpath=[{1}]' -f $path,$fullpath | Write-Warning
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
 
 ######################################
 # Windows specific below
@@ -380,5 +430,32 @@ function CommandExists(){
         }
 
         $exists
+    }
+}
+
+function Sayed-ConfigureGit{
+    [cmdletbinding()]
+    param()
+    process{
+        & git config --global user.name 'Sayed Ibrahim Hashimi'
+        & git config --global user.email 'sayed.hashimi@gmail.com'
+
+        & git config --global color.status.changed "cyan normal bold"
+        & git config --global color.status.untracked "cyan normal bold"
+        & git config --global color.diff.old "red normal bold"
+        & git config --global color.diff.new "green normal bold"
+
+        & git config --global core.autocrlf "true"
+
+        & git config --global push.default "matching"
+
+        
+        # TODO: Ensure this works for windows/mac before adding
+        # & git config --global merge.keepBackup "false"
+        # & git config --global merge.tool "p4merge"
+        # & git config --global mergetool.p4merge.cmd 'p4merge.exe \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"'
+        # & git config --global mergetool.p4merge.keepTemporaries 'false'
+        # & git config --global mergetool.p4merge.trustExitCode 'false'
+        # & git config --global mergetool.p4merge.keepBackup 'false'
     }
 }
