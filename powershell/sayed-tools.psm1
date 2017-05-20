@@ -19,6 +19,48 @@ function Test-IsLinuxOrMac{
 }
 New-Alias -Name IsLinuxOrMac -Value Test-IsLinuxOrMac
 
+$Global:isLinuxOrMac = (Test-IsLinuxOrMac)
+
+function Test-Command{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,Mandatory=$true)]
+        [string]$command
+    )
+    process{
+        [bool]$exists = $false
+        try{
+            if( (get-command $command -ErrorAction SilentlyContinue)) {
+                $exists = $true
+            }
+        }
+        catch{
+            $exists = $false
+        }
+
+        $exists
+    }
+}
+Set-Alias -Name CommandExists -Value Test-Command
+
+function Test-Alias{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [string[]]$name
+    )
+    process{
+        foreach($n in $name){
+            if( (Get-Alias -Name $n -ErrorAction SilentlyContinue) ){
+                $true
+            }
+            else{
+                $false
+            }
+        }
+    }
+}
+
 <#
 .SYNOPSIS
     You can add this to you build script to ensure that psbuild is available before calling
@@ -87,9 +129,27 @@ function Add-Path{
     }
 }
 
+function Get-IPInfo{
+    [cmdletbinding()]
+    param()
+    process{
+        if($isLinuxOrMac){
+            ifconfig | grep inet
+        }
+        else{
+            ipconfig
+        }
+    }
+}
+if($isLinuxOrMac){
+    Set-Alias -Name ipconfig -Value Get-IPInfo
+}
 
 
 
+if($isLinuxOrMac){
+#    Set-Alias -Name
+}
 
 
 ######################################
@@ -409,27 +469,6 @@ function Install-PowerShellCookbook{
     param()
     process{
         Install-Module -Name PowerShellCookbook -Force
-    }
-}
-
-function CommandExists(){
-    [cmdletbinding()]
-    param(
-        [Parameter(Position=0,Mandatory=$true)]
-        [string]$command
-    )
-    process{
-        [bool]$exists = $false
-        try{
-            if( (get-command $command -ErrorAction SilentlyContinue)) {
-                $exists = $true
-            }
-        }
-        catch{
-            $exists = $false
-        }
-
-        $exists
     }
 }
 
