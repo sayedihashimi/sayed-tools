@@ -129,6 +129,19 @@ function Add-Path{
     }
 }
 
+function Get-MachineName{
+    [cmdletbinding()]
+    param()
+    process{
+        if($isLinuxOrMac){
+            scutil --get LocalHostName
+        }
+        else{
+            $env:ComputerName
+        }
+    }
+}
+
 function Get-IPInfo{
     [cmdletbinding()]
     param()
@@ -145,12 +158,25 @@ if($isLinuxOrMac){
     Set-Alias -Name ipconfig -Value Get-IPInfo
 }
 
+function Save-MachineInfo{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [string]$outfile
+    )
+    process{
+        $fullpath = (Get-NormalizedPath -Path $outfile)
 
+        if(-not ([string]::IsNullOrWhiteSpace($fullpath))){
+            $dir = Split-Path -Path $fullpath -Parent
+            if(-not (Test-Path -Path $dir)){
+                New-Item -Path $dir -ItemType Directory
+            }
 
-if($isLinuxOrMac){
-#    Set-Alias -Name
+            Get-IPInfo | Out-File -FilePath $fullpath -Encoding ascii
+        }
+    }
 }
-
 
 ######################################
 # Windows specific below

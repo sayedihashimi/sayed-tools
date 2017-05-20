@@ -2,6 +2,7 @@
 param()
 
 [string]$global:dropboxpath = (get-item '~/Dropbox/' -ErrorAction SilentlyContinue).FullName
+[string]$global:dropboxhome = $global:dropboxpath
 [string]$global:codehome = (get-item (Join-path ~ mycode) -ErrorAction SilentlyContinue).FullName
 [string]$macProfilePath = (get-item (Join-Path $global:codehome sayed-tools/powershell/mac-profile.psm1) -ErrorAction SilentlyContinue).FullName
 
