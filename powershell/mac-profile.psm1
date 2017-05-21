@@ -89,36 +89,6 @@ function Ensure-GitConfigExists{
     } 
 }
 
-function SayedConfigureSaveMachineInfoJob{
-    [cmdletbinding()]
-    param(
-        [int]$sleepSeconds = (5*60)
-    )
-    process{
-        [string]$machineName = (Get-MachineName)
-        [string]$outfilepath = (Get-FullPathNormalized -path (Join-Path $Global:dropboxpath ('Personal/PcSettings/Powershell/MachineInfo/{0}.txt' -f $machineName)))
-        # create a script block that will run every 5 min
-        [scriptblock]$saveMachineScript = {
-            [bool]$continueScript = $true
-
-            if($continueScript -eq $true){
-                try{
-                    'Saving machine info to file [{0}]' -f $outfilepath | Write-Verbose
-                    Save-MachineInfo -outfile $outfilepath
-
-                    'Sleeping for [{0}] seconds' -f $sleepSeconds | Write-Verbose
-                    Start-Sleep -Seconds $sleepSeconds
-                }
-                catch{
-                    Write-Output -InputObject $_.Exception
-                }
-            }
-        }
-
-        & $saveMachineScript
-    }
-}
-
 # This is the function that the profile script should call
 function InitalizeEnv{
     [cmdletbinding()]

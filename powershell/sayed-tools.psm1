@@ -178,6 +178,49 @@ function Save-MachineInfo{
     }
 }
 
+function SayedConfigureSaveMachineInfoJob{
+    [cmdletbinding()]
+    param(
+        [int]$sleepSeconds = (60),
+        [string]$pathToCheck = (Get-FullPathNormalized -path (Join-Path $Global:dropboxpath 'Personal/PcSettings/Powershell/MachineInfo/create.txt')),
+        [switch]$asJob
+    )
+    process{
+
+# create a script block that will run every 5 min
+        [scriptblock]$saveMachineScript = {
+            [string]$machineName = (Get-MachineName)
+            [string]$outfilepath = (Get-FullPathNormalized -path (Join-Path $Global:dropboxpath ('Personal/PcSettings/Powershell/MachineInfo/{0}.txt' -f $machineName)))
+        
+            [bool]$continueScript = $true
+
+            while($continueScript -eq $true){
+                try{
+                    if(Test-Path $pathToCheck){
+                        'Saving machine info to file [{0}]' -f $outfilepath | Write-Verbose
+                        Save-MachineInfo -outfile $outfilepath
+                    }
+                }
+                catch{
+                    Write-Output -InputObject $_.Exception
+                }
+
+                'Sleeping for [{0}] seconds' -f $sleepSeconds | Write-Verbose
+                Start-Sleep -Seconds $sleepSeconds
+            }
+            
+        }
+        if($asJob -eq $true){
+            'Starting SaveMachineInfo as Job' | Write-Output
+            Start-Job -ScriptBlock $saveMachineScript -Name 'SaveMachineInfo'
+        }
+        else{
+            'Starting SaveMachineInfo as script' | Write-Output
+            & $saveMachineScript
+        }
+    }
+}
+
 ######################################
 # Windows specific below
 ######################################
