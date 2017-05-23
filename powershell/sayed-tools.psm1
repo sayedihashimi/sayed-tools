@@ -182,13 +182,13 @@ function SayedConfigureSaveMachineInfoJob{
     [cmdletbinding()]
     param(
         [int]$sleepSeconds = (60),
-        [string]$pathToCheck = (Get-FullPathNormalized -path (Join-Path $Global:dropboxpath 'Personal/PcSettings/Powershell/MachineInfo/create.txt')),
+        [string]$pathToCheck = (Get-FullPathNormalized -path (Join-Path $Global:dropboxhome 'Personal/PcSettings/Powershell/MachineInfo/create.txt')),
         [string]$toolsModulePath = $PSCommandPath,
         [switch]$asJob
     )
     process{
         [string]$machineName = (Get-MachineName)
-        [string]$outfilepath = (Get-FullPathNormalized -path (Join-Path $Global:dropboxpath ('Personal/PcSettings/Powershell/MachineInfo/{0}.txt' -f $machineName)))
+        [string]$outfilepath = (Get-FullPathNormalized -path (Join-Path $Global:dropboxhome ('Personal/PcSettings/Powershell/MachineInfo/{0}.txt' -f $machineName)))
 # create a script block that will run every 5 min
         [scriptblock]$saveMachineScript = {
             [cmdletbinding()]
