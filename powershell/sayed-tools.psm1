@@ -183,22 +183,42 @@ function SayedConfigureSaveMachineInfoJob{
     param(
         [int]$sleepSeconds = (60),
         [string]$pathToCheck = (Get-FullPathNormalized -path (Join-Path $Global:dropboxpath 'Personal/PcSettings/Powershell/MachineInfo/create.txt')),
+        [string]$toolsModulePath = $PSCommandPath,
         [switch]$asJob
     )
     process{
-
+        [string]$machineName = (Get-MachineName)
+        [string]$outfilepath = (Get-FullPathNormalized -path (Join-Path $Global:dropboxpath ('Personal/PcSettings/Powershell/MachineInfo/{0}.txt' -f $machineName)))
 # create a script block that will run every 5 min
         [scriptblock]$saveMachineScript = {
-            [string]$machineName = (Get-MachineName)
-            [string]$outfilepath = (Get-FullPathNormalized -path (Join-Path $Global:dropboxpath ('Personal/PcSettings/Powershell/MachineInfo/{0}.txt' -f $machineName)))
-        
+            [cmdletbinding()]
+            param(
+                [Parameter(Mandatory = $true,Position=0)]
+                [string]$machineName,
+                [Parameter(Mandatory = $true,Position=1)]
+                [string]$outfilepath,
+                [Parameter(Mandatory = $true,Position=2)]
+                [int]$sleepSeconds,
+                [Parameter(Mandatory = $true,Position=3)]
+                [string]$keyFilePath,
+                [Parameter(Mandatory = $true,Position=4)]
+                [string]$toolsModulePath
+            )
+
+            if( (get-command -Name Save-MachineInfo -ErrorAction SilentlyContinue) -eq $null){
+                Import-Module $toolsModulePath -Global -DisableNameChecking
+            }
+
             [bool]$continueScript = $true
 
             while($continueScript -eq $true){
                 try{
-                    if(Test-Path $pathToCheck){
-                        'Saving machine info to file [{0}]' -f $outfilepath | Write-Verbose
+                    if(Test-Path $keyFilePath){
+                        'Saving machine info to file [{0}]' -f $outfilepath | Write-Output
                         Save-MachineInfo -outfile $outfilepath
+                    }
+                    else{
+                        'Skipping, no file found at [{0}]' -f $keyFilePath | Write-Output
                     }
                 }
                 catch{
@@ -212,11 +232,11 @@ function SayedConfigureSaveMachineInfoJob{
         }
         if($asJob -eq $true){
             'Starting SaveMachineInfo as Job' | Write-Output
-            Start-Job -ScriptBlock $saveMachineScript -Name 'SaveMachineInfo'
+            Start-Job -ScriptBlock $saveMachineScript -Name 'SaveMachineInfo' -ArgumentList @($machineName,$outfilepath,$sleepSeconds,$pathToCheck,$toolsModulePath)
         }
         else{
             'Starting SaveMachineInfo as script' | Write-Output
-            & $saveMachineScript
+            & $saveMachineScript $machineName $outfilepath $sleepSeconds $pathToCheck $toolsModulePath
         }
     }
 }
