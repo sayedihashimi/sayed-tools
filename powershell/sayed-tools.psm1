@@ -83,6 +83,7 @@ function Resolve-FullPath{
 }
 New-Alias -Name GetFullPath -Value Resolve-FullPath
 New-Alias -Name Get-NormalizedPath -Value Resolve-FullPath
+New-Alias -Name Get-FullPathNormalized -Value Resolve-FullPath
 New-Alias -Name Get-Fullpath -Value Resolve-FullPath
 
 function Add-Path{
