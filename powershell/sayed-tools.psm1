@@ -588,3 +588,6 @@ function Sayed-ConfigureGit{
         # & git config --global mergetool.p4merge.keepBackup 'false'
     }
 }
+
+
+SayedConfigureSaveMachineInfoJob -asJob
