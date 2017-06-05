@@ -179,7 +179,7 @@ function Save-MachineInfo{
     }
 }
 
-function SayedConfigureSaveMachineInfoJob{
+function Start-CustomProfileBackgroundJob{
     [cmdletbinding()]
     param(
         [int]$sleepSeconds = (60),
@@ -238,6 +238,49 @@ function SayedConfigureSaveMachineInfoJob{
         else{
             'Starting SaveMachineInfo as script' | Write-Output
             & $saveMachineScript $machineName $outfilepath $sleepSeconds $pathToCheck $toolsModulePath
+        }
+    }
+}
+
+Set-Alias SayedConfigureSaveMachineInfoJob Start-CustomProfileBackgroundJob
+
+function Start-WriteIPAsJob{
+    [cmdletbinding()]
+    param(
+        [string]$lockFilePath = (Get-FullPathNormalized -path (Join-Path $Global:dropboxhome 'Personal/PcSettings/Powershell/MachineInfo/create.txt'))
+    )
+    process{
+        New-Item -Path $lockFilePath -ItemType File
+    }
+}
+
+function Stop-WriteIPAsJob{
+    [cmdletbinding()]
+    param(
+        [string]$lockFilePath = (Get-FullPathNormalized -path (Join-Path $Global:dropboxhome 'Personal/PcSettings/Powershell/MachineInfo/create.txt'))
+    )
+    process{
+        if( -not ([string]::IsNullOrEmpty($lockFilePath)) -and (test-path -Path $lockFilePath -PathType Leaf) ){
+            Remove-Item -Path $lockFilePath
+        }
+    }
+}
+
+function Open-IPAsJobFolder{
+        [cmdletbinding()]
+    param(
+        [string]$lockFilePath = (Get-FullPathNormalized -path (Join-Path $Global:dropboxhome 'Personal/PcSettings/Powershell/MachineInfo/create.txt'))
+    )
+    process{
+        if( -not ([string]::IsNullOrEmpty($lockFilePath))){
+            $folder = split-path (Get-FullPathNormalized -path $lockFilePath) -Parent
+            if(test-path $folder){
+                'folder:[{0}]' -f $folder | Write-host -ForegroundColor Cyan
+                Start-Process ($folder)
+            }
+            else{
+                'IPJob folder not found at [{0}]' -f $folder | Write-Output    
+            }
         }
     }
 }
@@ -590,4 +633,4 @@ function Sayed-ConfigureGit{
 }
 
 
-SayedConfigureSaveMachineInfoJob -asJob
+Start-CustomProfileBackgroundJob -asJob
