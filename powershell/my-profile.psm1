@@ -16,7 +16,7 @@ function Get-FullPathNormalized{
     }
 }
 
-$global:MacProfileSettings = New-Object PSObject -Property @{
+$global:MyProfileSettings = New-Object PSObject -Property @{
     HomeDir = $env:HOME
     ModulesToLoad = @(
         (Get-FullPathNormalized (join-path -Path $global:codehome 'sayed-tools/powershell/github-ps.psm1' -ErrorAction SilentlyContinue))
@@ -42,7 +42,7 @@ function Import-MyModules{
     process{
         'Importing modules...' | Write-Verbose
         [bool]$allImported = $true
-        foreach ($modpath in $global:MacProfileSettings.ModulesToLoad) {
+        foreach ($modpath in $global:MyProfileSettings.ModulesToLoad) {
             if(Test-Path $modpath){
                 'Importing module from [{0}]' -f $modpath | Write-Verbose
                 Import-Module $modpath -Global -DisableNameChecking | Write-Verbose
@@ -80,7 +80,7 @@ function clip{
 function Ensure-GitConfigExists{
     [cmdletbinding()]
     param(
-        [string]$gitconfigpath = (Get-FullPathNormalized (join-path $global:MacProfileSettings.HomeDir .gitconfig -ErrorAction SilentlyContinue))
+        [string]$gitconfigpath = (Get-FullPathNormalized (join-path $global:MyProfileSettings.HomeDir .gitconfig -ErrorAction SilentlyContinue))
     )
     process{
         if(-not ([string]::IsNullOrWhiteSpace($gitconfigpath)) -and (-not (test-path $gitconfigpath))) {
