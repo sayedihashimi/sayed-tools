@@ -182,7 +182,8 @@ function Save-MachineInfo{
 function Start-CustomProfileBackgroundJob{
     [cmdletbinding()]
     param(
-        [int]$sleepSeconds = (60),
+        [int]$sleepSeconds = (30),
+        [int]$sleepAfterCreate = (5*60),
         [string]$pathToCheck = (Get-FullPathNormalized -path (Join-Path $Global:dropboxhome 'Personal/PcSettings/Powershell/MachineInfo/create.txt')),
         [string]$toolsModulePath = $PSCommandPath,
         [switch]$asJob
@@ -213,10 +214,12 @@ function Start-CustomProfileBackgroundJob{
             [bool]$continueScript = $true
 
             while($continueScript -eq $true){
+                [bool]$droppedFile = $false
                 try{
                     if(Test-Path $keyFilePath){
                         'Saving machine info to file [{0}]' -f $outfilepath | Write-Output
                         Save-MachineInfo -outfile $outfilepath
+                        $droppedFile = $true
                     }
                     else{
                         'Skipping, no file found at [{0}]' -f $keyFilePath | Write-Output
@@ -224,6 +227,10 @@ function Start-CustomProfileBackgroundJob{
                 }
                 catch{
                     Write-Output -InputObject $_.Exception
+                }
+
+                if($droppedFile){
+                    $sleepSeconds = $sleepAfterCreate
                 }
 
                 'Sleeping for [{0}] seconds' -f $sleepSeconds | Write-Verbose
