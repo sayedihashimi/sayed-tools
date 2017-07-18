@@ -205,7 +205,7 @@ function Get-PackageDownloadStats(){
             [string]$packageurl = ($urlformat -f $pkgname)
 
             try{
-            $response = (Invoke-WebRequest -Uri $packageurl -ErrorAction SilentlyContinue)
+            $response = (Invoke-WebRequest -Uri $packageurl -ErrorAction SilentlyContinue -TimeoutSec 60)
             if($response -ne $null){
                 [string]$html = ($response.rawcontent)
                 if(-not([string]::IsNullOrWhiteSpace($html))) {

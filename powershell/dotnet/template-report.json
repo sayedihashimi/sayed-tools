@@ -3,7 +3,7 @@
         "Owners":  "Microsoft",
         "Version":  "0.9.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.AspNetCore.SpaTemplates-0.9.3.nupkg\\",
-        "DownloadCount":  45806,
+        "DownloadCount":  46087,
         "Tags":  null,
         "Templates":  [
                           {
@@ -115,7 +115,7 @@
         "Owners":  "Microsoft",
         "Version":  "1.0.0-preview-000403",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.DotNet.Web.Spa.ProjectTemplates-1.0.0-preview-000403.nupkg\\",
-        "DownloadCount":  6493,
+        "DownloadCount":  6719,
         "Tags":  null,
         "Templates":  [
                           {
@@ -179,7 +179,7 @@
         "Owners":  "Steve Desmond",
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\libyear-1.0.1.nupkg\\",
-        "DownloadCount":  1893,
+        "DownloadCount":  1896,
         "Tags":  null,
         "Templates":  [
                           {
@@ -217,7 +217,7 @@
         "Owners":  "Muhammad Rehan Saeed (RehanSaeed.com)",
         "Version":  "1.6.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Boilerplate.Templates-1.6.1.nupkg\\",
-        "DownloadCount":  1629,
+        "DownloadCount":  1632,
         "Tags":  "ASP.NET Core Boilerplate Muhammad Rehan Saeed Framework",
         "Templates":  [
                           {
@@ -250,7 +250,7 @@
         "Owners":  "Brock Allen, Dominick Baier",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\IdentityServer4.Templates-1.0.0.nupkg\\",
-        "DownloadCount":  1161,
+        "DownloadCount":  1162,
         "Tags":  null,
         "Templates":  [
                           {
@@ -299,7 +299,7 @@
         "Owners":  "Amazon Web Services",
         "Version":  "1.3.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Amazon.Lambda.Templates-1.3.0.nupkg\\",
-        "DownloadCount":  1143,
+        "DownloadCount":  1144,
         "Tags":  "AWS Amazon Lambda",
         "Templates":  [
                           {
@@ -502,7 +502,7 @@
         "Owners":  "Dustin Moris Gorski",
         "Version":  "0.1.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\giraffe-template-0.1.6.nupkg\\",
-        "DownloadCount":  962,
+        "DownloadCount":  964,
         "Tags":  "giraffe web app razor pages micro service dotnet new template",
         "Templates":  [
                           {
@@ -532,7 +532,7 @@
         "Owners":  "Chad Ramos (pioneercode.com)",
         "Version":  "1.0.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Pioneer.Console.Boilerplate-1.0.6.nupkg\\",
-        "DownloadCount":  801,
+        "DownloadCount":  802,
         "Tags":  "Pioneer Code Boilerplate .NET Core Console Dependency Injection Logging Configuration Chad Ramos",
         "Templates":  [
                           {
@@ -565,7 +565,7 @@
         "Owners":  "kiootic",
         "Version":  "3.5.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MonoGame.Template.NETCore-3.5.1.nupkg\\",
-        "DownloadCount":  720,
+        "DownloadCount":  721,
         "Tags":  "MonoGame Game Core VSCode",
         "Templates":  [
                           {
@@ -596,7 +596,7 @@
         "Owners":  "Mads Kristensen",
         "Version":  "1.0.21",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MadsKristensen.AspNetCore.Web.Templates-1.0.21.nupkg\\",
-        "DownloadCount":  704,
+        "DownloadCount":  707,
         "Tags":  "asp.net core .net template",
         "Templates":  [
                           {
@@ -657,7 +657,7 @@
         "Owners":  "RIGANTI",
         "Version":  "1.1.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\DotVVM.Templates-1.1.2.nupkg\\",
-        "DownloadCount":  660,
+        "DownloadCount":  662,
         "Tags":  null,
         "Templates":  [
                           {
@@ -688,7 +688,7 @@
         "Owners":  "BrainCrumbz",
         "Version":  "1.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\dotnet-new-nspec-1.0.2.nupkg\\",
-        "DownloadCount":  630,
+        "DownloadCount":  632,
         "Tags":  "testing bdd tdd rspec mocha dotnet core test template",
         "Templates":  [
                           {
@@ -718,7 +718,7 @@
         "Owners":  "Kralizek",
         "Version":  "1.1.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Kralizek.Lambda.Templates-1.1.1.nupkg\\",
-        "DownloadCount":  567,
+        "DownloadCount":  568,
         "Tags":  null,
         "Templates":  [
                           {
@@ -911,7 +911,7 @@
         "Owners":  "Micha? Niegrzybowski",
         "Version":  "1.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\WebAPI.FSharp.Template-1.1.0.nupkg\\",
-        "DownloadCount":  506,
+        "DownloadCount":  508,
         "Tags":  ".net core Web API F# template",
         "Templates":  [
                           {
@@ -1080,7 +1080,7 @@
         "Owners":  "Mads Kristensen",
         "Version":  "1.0.5",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\LibraryInstallerExtensionTemplate-1.0.5.nupkg\\",
-        "DownloadCount":  437,
+        "DownloadCount":  438,
         "Tags":  "extensibility vssdk vsix",
         "Templates":  [
                           {
@@ -1111,7 +1111,7 @@
         "Owners":  "Stefan Hausotte",
         "Version":  "1.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CakeApp-1.1.0.nupkg\\",
-        "DownloadCount":  425,
+        "DownloadCount":  426,
         "Tags":  "Cake build dotnet new core",
         "Templates":  [
                           {
@@ -1282,38 +1282,10 @@
         "Package":  "Fable.Template.Elmish.React.Demo"
     },
     {
-        "Owners":  "NServiceBus Ltd",
-        "Version":  "1.0.1-alpha0009",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NServiceBus.Template.WindowsService-1.0.1-alpha0009.nupkg\\",
-        "DownloadCount":  140,
-        "Tags":  "NServiceBus, SelfHost",
-        "Templates":  [
-                          {
-                              "author":  "NServiceBus Ltd",
-                              "name":  "NServiceBus WindowsService",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
-                              "classifications":  "nservicebus",
-                              "shortName":  "nsbservice",
-                              "groupIdentity":  "nservicebus",
-                              "identity":  "NServiceBusWindowsService"
-                          }
-                      ],
-        "DownloadUrl":  "http://www.nuget.org/api/v2/package/NServiceBus.Template.WindowsService/1.0.1-alpha0009",
-        "Description":  "dotnet new template for hosting a NServiceBus Endpoint in a windows service.",
-        "Copyright":  "Copyright 2010-2017 NServiceBus. All rights reserved",
-        "Authors":  "NServiceBus Ltd",
-        "LicenseUrl":  "http://particular.net/LicenseAgreement",
-        "ProjectUrl":  "http://particular.net/",
-        "Package":  "NServiceBus.Template.WindowsService"
-    },
-    {
         "Owners":  "Dan Siegel",
         "Version":  "1.0.0-alpha4",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Prism.Forms.QuickstartTemplates-1.0.0-alpha4.nupkg\\",
-        "DownloadCount":  138,
+        "DownloadCount":  149,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1369,6 +1341,34 @@
         "LicenseUrl":  "https://github.com/PrismLibrary/Prism/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/PrismLibrary/Prism.Templates",
         "Package":  "Prism.Forms.QuickstartTemplates"
+    },
+    {
+        "Owners":  "NServiceBus Ltd",
+        "Version":  "1.0.1-alpha0009",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NServiceBus.Template.WindowsService-1.0.1-alpha0009.nupkg\\",
+        "DownloadCount":  140,
+        "Tags":  "NServiceBus, SelfHost",
+        "Templates":  [
+                          {
+                              "author":  "NServiceBus Ltd",
+                              "name":  "NServiceBus WindowsService",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "classifications":  "nservicebus",
+                              "shortName":  "nsbservice",
+                              "groupIdentity":  "nservicebus",
+                              "identity":  "NServiceBusWindowsService"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/NServiceBus.Template.WindowsService/1.0.1-alpha0009",
+        "Description":  "dotnet new template for hosting a NServiceBus Endpoint in a windows service.",
+        "Copyright":  "Copyright 2010-2017 NServiceBus. All rights reserved",
+        "Authors":  "NServiceBus Ltd",
+        "LicenseUrl":  "http://particular.net/LicenseAgreement",
+        "ProjectUrl":  "http://particular.net/",
+        "Package":  "NServiceBus.Template.WindowsService"
     },
     {
         "Owners":  "NServiceBus Ltd",
@@ -1433,9 +1433,41 @@
     },
     {
         "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
+        "Version":  "2017.7.17.3",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\TeamWeb.MvcTemplate-2017.7.17.3.nupkg\\",
+        "DownloadCount":  104,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "author":  "Melvin Vermeer \u003cmelvin.vermeer@wortell.nl\u003e",
+                              "name":  "Team Web Mvc Web Application",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Aspnet",
+                                                      "Mvc",
+                                                      "Gulp",
+                                                      "Sass"
+                                                  ],
+                              "shortName":  "teamwebmvc",
+                              "groupIdentity":  null,
+                              "identity":  "TeamWeb.MvcTemplate"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/TeamWeb.MvcTemplate/2017.7.17.3",
+        "Description":  "Team Web Mvc Web Application",
+        "Copyright":  "Copyright 2017: Wortell. All right Reserved.",
+        "Authors":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
+        "LicenseUrl":  "http://www.wortell.nl/",
+        "ProjectUrl":  "http://www.wortell.nl/",
+        "Package":  "TeamWeb.MvcTemplate"
+    },
+    {
+        "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
         "Version":  "0.1.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Melvin.Mvc.Template-0.1.2.nupkg\\",
-        "DownloadCount":  99,
+        "DownloadCount":  102,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1467,7 +1499,7 @@
         "Owners":  "Ram",
         "Version":  "0.1.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MicroServiceWebApiTemplate-0.1.3.nupkg\\",
-        "DownloadCount":  87,
+        "DownloadCount":  95,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1489,38 +1521,6 @@
         "LicenseUrl":  "https://github.com/PioneerCode/pioneer-console-boilerplate/blob/master/LICENSE",
         "ProjectUrl":  null,
         "Package":  "MicroServiceWebApiTemplate"
-    },
-    {
-        "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
-        "Version":  "2017.7.17.3",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\TeamWeb.MvcTemplate-2017.7.17.3.nupkg\\",
-        "DownloadCount":  86,
-        "Tags":  null,
-        "Templates":  [
-                          {
-                              "author":  "Melvin Vermeer \u003cmelvin.vermeer@wortell.nl\u003e",
-                              "name":  "Team Web Mvc Web Application",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "Aspnet",
-                                                      "Mvc",
-                                                      "Gulp",
-                                                      "Sass"
-                                                  ],
-                              "shortName":  "teamwebmvc",
-                              "groupIdentity":  null,
-                              "identity":  "TeamWeb.MvcTemplate"
-                          }
-                      ],
-        "DownloadUrl":  "http://www.nuget.org/api/v2/package/TeamWeb.MvcTemplate/2017.7.17.3",
-        "Description":  "Team Web Mvc Web Application",
-        "Copyright":  "Copyright 2017: Wortell. All right Reserved.",
-        "Authors":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
-        "LicenseUrl":  "http://www.wortell.nl/",
-        "ProjectUrl":  "http://www.wortell.nl/",
-        "Package":  "TeamWeb.MvcTemplate"
     },
     {
         "Owners":  "Juan Blanco",
@@ -1557,7 +1557,7 @@
         "Owners":  "Hub3c",
         "Version":  "0.0.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Hub3c.Integration.Template-0.0.3.nupkg\\",
-        "DownloadCount":  61,
+        "DownloadCount":  67,
         "Tags":  "Template C# NET.CORE",
         "Templates":  [
                           {
@@ -1611,7 +1611,7 @@
         "Owners":  "Peter Kottas",
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Templates-1.0.1.nupkg\\",
-        "DownloadCount":  49,
+        "DownloadCount":  54,
         "Tags":  "dotnetcore templates,.netcore templates,windows service templates,micro templates",
         "Templates":  [
                           {
@@ -1633,6 +1633,33 @@
         "LicenseUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService",
         "Package":  "PeterKottas.DotNetCore.WindowsService.Templates"
+    },
+    {
+        "Owners":  "Peter Kottas",
+        "Version":  "1.0.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Template-1.0.1.nupkg\\",
+        "DownloadCount":  49,
+        "Tags":  "dotnetcore template,.netcore template,windows service template,micro template",
+        "Templates":  [
+                          {
+                              "author":  "Peter Kottas",
+                              "name":  "Minimal microservice",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  "Microservices",
+                              "shortName":  "mcrsvc",
+                              "groupIdentity":  null,
+                              "identity":  "PeterKottas.DotNetCore.WindowsService.Template"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/PeterKottas.DotNetCore.WindowsService.Template/1.0.1",
+        "Description":  "Minimal template for dot net core microservice.",
+        "Copyright":  null,
+        "Authors":  "Peter Kottas",
+        "LicenseUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService/blob/master/LICENSE",
+        "ProjectUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService",
+        "Package":  "PeterKottas.DotNetCore.WindowsService.Template"
     },
     {
         "Owners":  "Prafull Bhosale",
@@ -1665,33 +1692,6 @@
         "Package":  "CustomAspNetCodeGeneratorTemplate"
     },
     {
-        "Owners":  "Peter Kottas",
-        "Version":  "1.0.1",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Template-1.0.1.nupkg\\",
-        "DownloadCount":  47,
-        "Tags":  "dotnetcore template,.netcore template,windows service template,micro template",
-        "Templates":  [
-                          {
-                              "author":  "Peter Kottas",
-                              "name":  "Minimal microservice",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  "Microservices",
-                              "shortName":  "mcrsvc",
-                              "groupIdentity":  null,
-                              "identity":  "PeterKottas.DotNetCore.WindowsService.Template"
-                          }
-                      ],
-        "DownloadUrl":  "http://www.nuget.org/api/v2/package/PeterKottas.DotNetCore.WindowsService.Template/1.0.1",
-        "Description":  "Minimal template for dot net core microservice.",
-        "Copyright":  null,
-        "Authors":  "Peter Kottas",
-        "LicenseUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService/blob/master/LICENSE",
-        "ProjectUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService",
-        "Package":  "PeterKottas.DotNetCore.WindowsService.Template"
-    },
-    {
         "Owners":  "Mariusz Kotas",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice.Simple-1.0.0.nupkg\\",
@@ -1722,7 +1722,7 @@
         "Owners":  "Ben Sheeler",
         "Version":  "0.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Sheelersoft.AngularTemplate-0.0.2.nupkg\\",
-        "DownloadCount":  32,
+        "DownloadCount":  33,
         "Tags":  ".Net Core Angular Template",
         "Templates":  [
                           {
@@ -1749,7 +1749,7 @@
         "Owners":  "Ram",
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\ESMicroServiceWebApiTemplate-0.1.0.nupkg\\",
-        "DownloadCount":  24,
+        "DownloadCount":  26,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1776,7 +1776,7 @@
         "Owners":  "Carlos Mendible (@cmendibl3)",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.WebAPI.AWS.Lambda-1.0.0.nupkg\\",
-        "DownloadCount":  16,
+        "DownloadCount":  21,
         "Tags":  "dotnetcore template .netcore aws lambda",
         "Templates":  [
                           {
@@ -1802,35 +1802,8 @@
     {
         "Owners":  "Carlos Mendible (@cmendibl3)",
         "Version":  "1.0.0",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.ASPNET.Raspberry-1.0.0.nupkg\\",
-        "DownloadCount":  15,
-        "Tags":  "dotnetcore template .netcore RaspberryPi",
-        "Templates":  [
-                          {
-                              "author":  "Carlos Mendible",
-                              "name":  "ASP.NET Core Web Application for Raspberry Pi",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  "Web",
-                              "shortName":  "webrpi",
-                              "groupIdentity":  null,
-                              "identity":  "codeityourself.web.raspberry"
-                          }
-                      ],
-        "DownloadUrl":  "http://www.nuget.org/api/v2/package/CodeItYourself.ASPNET.Raspberry/1.0.0",
-        "Description":  "Create an ASP.NET Core Web application ready to run on your Raspberry Pi",
-        "Copyright":  null,
-        "Authors":  "Carlos Mendible (@cmendibl3)",
-        "LicenseUrl":  null,
-        "ProjectUrl":  "https://github.com/cmendible/dotnetcore.templates",
-        "Package":  "CodeItYourself.ASPNET.Raspberry"
-    },
-    {
-        "Owners":  "Carlos Mendible (@cmendibl3)",
-        "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.WebAPI.EchoBot-1.0.0.nupkg\\",
-        "DownloadCount":  14,
+        "DownloadCount":  20,
         "Tags":  "dotnetcore template .netcore bot botframework",
         "Templates":  [
                           {
@@ -1852,5 +1825,32 @@
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/cmendible/dotnetcore.templates",
         "Package":  "CodeItYourself.WebAPI.EchoBot"
+    },
+    {
+        "Owners":  "Carlos Mendible (@cmendibl3)",
+        "Version":  "1.0.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.ASPNET.Raspberry-1.0.0.nupkg\\",
+        "DownloadCount":  20,
+        "Tags":  "dotnetcore template .netcore RaspberryPi",
+        "Templates":  [
+                          {
+                              "author":  "Carlos Mendible",
+                              "name":  "ASP.NET Core Web Application for Raspberry Pi",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  "Web",
+                              "shortName":  "webrpi",
+                              "groupIdentity":  null,
+                              "identity":  "codeityourself.web.raspberry"
+                          }
+                      ],
+        "DownloadUrl":  "http://www.nuget.org/api/v2/package/CodeItYourself.ASPNET.Raspberry/1.0.0",
+        "Description":  "Create an ASP.NET Core Web application ready to run on your Raspberry Pi",
+        "Copyright":  null,
+        "Authors":  "Carlos Mendible (@cmendibl3)",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/cmendible/dotnetcore.templates",
+        "Package":  "CodeItYourself.ASPNET.Raspberry"
     }
 ]
