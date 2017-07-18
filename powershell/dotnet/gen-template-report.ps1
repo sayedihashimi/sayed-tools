@@ -324,14 +324,14 @@ function Get-Nuget{
     )
     process{
         if(!(Test-Path $toolsDir)){
-            New-Item -Path $toolsDir -ItemType Directory | out-null
+            New-Item -Path $toolsDir -ItemType Directory | Write-Verbose
         }
 
         $nugetDestPath = Join-Path -Path $toolsDir -ChildPath nuget.exe
 
         if(!(Test-Path $nugetDestPath)){
             'Downloading nuget.exe' | Write-Verbose
-            Invoke-WebRequest -Uri $nugetDownloadUrl -OutFile $nugetDestPath | out-null
+            Invoke-WebRequest -Uri $nugetDownloadUrl -OutFile $nugetDestPath | Write-Verbose
             
             # (New-Object System.Net.WebClient).DownloadFile($nugetDownloadUrl, $nugetDestPath) | Out-Null
 
