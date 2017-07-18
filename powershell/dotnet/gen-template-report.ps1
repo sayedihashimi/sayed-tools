@@ -20,6 +20,22 @@ function InternalGet-ScriptDirectory{
 }
 
 $scriptDir = InternalGet-ScriptDirectory
+
+function Get-FullPathNormalized{
+    [cmdletbinding()]
+    param (
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [string[]] $path
+    )
+    process {
+        foreach($p in $path){
+            if(-not ([string]::IsNullOrWhiteSpace($p))){
+                $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($path)
+            }
+        }
+    }
+}
+
 function Load-NewtonsoftJson{
     [cmdletbinding()]
     param(
@@ -319,19 +335,19 @@ function Get-TemplateReport{
 function Get-Nuget{
     [cmdletbinding()]
     param(
-        $toolsDir = '~/.sayedtools/',
+        $toolsDir = (Get-FullPathNormalized -path (join-path $scriptDir '../../contrib/')),
         $nugetDownloadUrl = 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe'
     )
     process{
         if(!(Test-Path $toolsDir)){
-            New-Item -Path $toolsDir -ItemType Directory | out-null
+            New-Item -Path $toolsDir -ItemType Directory | Write-Verbose
         }
 
         $nugetDestPath = Join-Path -Path $toolsDir -ChildPath nuget.exe
 
         if(!(Test-Path $nugetDestPath)){
             'Downloading nuget.exe' | Write-Verbose
-            Invoke-WebRequest -Uri $nugetDownloadUrl -OutFile $nugetDestPath | out-null
+            Invoke-WebRequest -Uri $nugetDownloadUrl -OutFile $nugetDestPath | Write-Verbose
             
             # (New-Object System.Net.WebClient).DownloadFile($nugetDownloadUrl, $nugetDestPath) | Out-Null
 
@@ -679,14 +695,14 @@ function Run-FullReport{
 
 
         if($env:APPVEYOR -eq $true){
-            Push-AppveyorArtifact -path $reportPath -Filename 'tempalte-report.json'
+            Push-AppveyorArtifact -path $reportPath -Filename 'template-report.json'
         }
     }
 }
 
 try{
     if(-not ($skipReport)){
-        # & (get-nuget) update -self
+        & (get-nuget) update -self
         Run-FullReport -searchTerm $searchTerm
     }
 }
