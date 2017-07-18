@@ -1,5 +1,6 @@
 AJA.AdminLTE
 Alza.Konzole.Templates.Microservice
+Alza.Konzole.Templates.Microservice.Simple
 1.0.0.0
 100
 Accord.Extensions.Imaging.Algorithms.LINE2D
