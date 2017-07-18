@@ -695,7 +695,7 @@ function Run-FullReport{
 
 
         if($env:APPVEYOR -eq $true){
-            Push-AppveyorArtifact -path $reportPath -Filename 'tempalte-report.json'
+            Push-AppveyorArtifact -path $reportPath -Filename 'template-report.json'
         }
     }
 }
