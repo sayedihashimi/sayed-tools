@@ -113,8 +113,8 @@
     },
     {
         "Owners":  "Microsoft",
-        "Version":  "1.0.0-preview-000403",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.DotNet.Web.Spa.ProjectTemplates-1.0.0-preview-000403.nupkg\\",
+        "Version":  "1.0.0-preview-000409",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.DotNet.Web.Spa.ProjectTemplates-1.0.0-preview-000409.nupkg\\",
         "DownloadCount":  6719,
         "Tags":  null,
         "Templates":  [
@@ -167,7 +167,7 @@
                               "identity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.ReactRedux.CSharp"
                           }
                       ],
-        "DownloadUrl":  "https://api.nuget.org/packages/microsoft.dotnet.web.spa.projecttemplates.1.0.0-preview-000403.nupkg",
+        "DownloadUrl":  "https://api.nuget.org/packages/microsoft.dotnet.web.spa.projecttemplates.1.0.0-preview-000409.nupkg",
         "Description":  "Single Page Application templates for ASP.NET Core",
         "Copyright":  "Copyright ? Microsoft Corporation",
         "Authors":  "Microsoft",
@@ -938,6 +938,36 @@
         "Package":  "WebAPI.FSharp.Template"
     },
     {
+        "Owners":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
+        "Version":  "0.1.0-alpha0058",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Cake.Frosting.Template-0.1.0-alpha0058.nupkg\\",
+        "DownloadCount":  474,
+        "Tags":  "Cake Script Build",
+        "Templates":  [
+                          {
+                              "author":  "Patrik Svensson (patrik@patriksvensson.se)",
+                              "name":  "Cake Frosting Build Script",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Cake",
+                                                      "Frosting"
+                                                  ],
+                              "shortName":  "cakefrosting",
+                              "groupIdentity":  null,
+                              "identity":  "Cake.Frosting"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/cake.frosting.template.0.1.0-alpha0058.nupkg",
+        "Description":  "Cake.Frosting templates for the .NET SDK.",
+        "Copyright":  "Copyright (c) .NET Foundation and contributors",
+        "Authors":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
+        "LicenseUrl":  "https://github.com/cake-build/frosting/blob/develop/LICENSE",
+        "ProjectUrl":  "https://github.com/cake-build/frosting",
+        "Package":  "Cake.Frosting.Template"
+    },
+    {
         "Owners":  "tintoy",
         "Version":  "0.1.0-alpha2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.PSCore-0.1.0-alpha2.nupkg\\",
@@ -967,36 +997,6 @@
         "LicenseUrl":  "https://raw.githubusercontent.com/tintoy/ps-core-module-template/master/LICENSE",
         "ProjectUrl":  "https://github.com/tintoy/ps-core-module-template",
         "Package":  "FiftyProtons.Templates.PSCore"
-    },
-    {
-        "Owners":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
-        "Version":  "0.1.0-alpha0058",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Cake.Frosting.Template-0.1.0-alpha0058.nupkg\\",
-        "DownloadCount":  474,
-        "Tags":  "Cake Script Build",
-        "Templates":  [
-                          {
-                              "author":  "Patrik Svensson (patrik@patriksvensson.se)",
-                              "name":  "Cake Frosting Build Script",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "Cake",
-                                                      "Frosting"
-                                                  ],
-                              "shortName":  "cakefrosting",
-                              "groupIdentity":  null,
-                              "identity":  "Cake.Frosting"
-                          }
-                      ],
-        "DownloadUrl":  "https://api.nuget.org/packages/cake.frosting.template.0.1.0-alpha0058.nupkg",
-        "Description":  "Cake.Frosting templates for the .NET SDK.",
-        "Copyright":  "Copyright (c) .NET Foundation and contributors",
-        "Authors":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
-        "LicenseUrl":  "https://github.com/cake-build/frosting/blob/develop/LICENSE",
-        "ProjectUrl":  "https://github.com/cake-build/frosting",
-        "Package":  "Cake.Frosting.Template"
     },
     {
         "Owners":  "Idea42, LLC",
@@ -1405,6 +1405,33 @@
         "Package":  "NServiceBus.Template.TransportAdapter.WindowsService"
     },
     {
+        "Owners":  "Mariusz Kotas",
+        "Version":  "1.0.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice-1.0.0.nupkg\\",
+        "DownloadCount":  119,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "author":  "Mariusz Kotas",
+                              "name":  "Konzole microservice",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  "Solution",
+                              "shortName":  "konzole-service",
+                              "groupIdentity":  "Alza.Konzole.Templates",
+                              "identity":  "Alza.Konzole.Templates.Microservice"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/alza.konzole.templates.microservice.1.0.0.nupkg",
+        "Description":  "Alza Konzole template for creating new microservice",
+        "Copyright":  null,
+        "Authors":  "Mariusz Kotas",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/alzacz/konzole2",
+        "Package":  "Alza.Konzole.Templates.Microservice"
+    },
+    {
         "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
         "Version":  "2017.7.17.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\TeamWeb.MvcTemplate-2017.7.17.3.nupkg\\",
@@ -1665,6 +1692,33 @@
         "Package":  "CustomAspNetCodeGeneratorTemplate"
     },
     {
+        "Owners":  "Mariusz Kotas",
+        "Version":  "1.0.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice.Simple-1.0.0.nupkg\\",
+        "DownloadCount":  38,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "author":  "Mariusz Kotas",
+                              "name":  "Konzole simple microservice",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  "Solution",
+                              "shortName":  "konzole-service-simple",
+                              "groupIdentity":  "Alza.Konzole.Templates",
+                              "identity":  "Alza.Konzole.Templates.Microservice.Simple"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/alza.konzole.templates.microservice.simple.1.0.0.nupkg",
+        "Description":  "Alza Konzole template for creating new simple microservice",
+        "Copyright":  null,
+        "Authors":  "Mariusz Kotas",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://gitlab.alz.lcl/konzole2",
+        "Package":  "Alza.Konzole.Templates.Microservice.Simple"
+    },
+    {
         "Owners":  "Ben Sheeler",
         "Version":  "0.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Sheelersoft.AngularTemplate-0.0.2.nupkg\\",
@@ -1748,6 +1802,33 @@
     {
         "Owners":  "Carlos Mendible (@cmendibl3)",
         "Version":  "1.0.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.ASPNET.Raspberry-1.0.0.nupkg\\",
+        "DownloadCount":  20,
+        "Tags":  "dotnetcore template .netcore RaspberryPi",
+        "Templates":  [
+                          {
+                              "author":  "Carlos Mendible",
+                              "name":  "ASP.NET Core Web Application for Raspberry Pi",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  "Web",
+                              "shortName":  "webrpi",
+                              "groupIdentity":  null,
+                              "identity":  "codeityourself.web.raspberry"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/codeityourself.aspnet.raspberry.1.0.0.nupkg",
+        "Description":  "Create an ASP.NET Core Web application ready to run on your Raspberry Pi",
+        "Copyright":  null,
+        "Authors":  "Carlos Mendible (@cmendibl3)",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/cmendible/dotnetcore.templates",
+        "Package":  "CodeItYourself.ASPNET.Raspberry"
+    },
+    {
+        "Owners":  "Carlos Mendible (@cmendibl3)",
+        "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.WebAPI.EchoBot-1.0.0.nupkg\\",
         "DownloadCount":  20,
         "Tags":  "dotnetcore template .netcore bot botframework",
@@ -1773,30 +1854,32 @@
         "Package":  "CodeItYourself.WebAPI.EchoBot"
     },
     {
-        "Owners":  "Carlos Mendible (@cmendibl3)",
-        "Version":  "1.0.0",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.ASPNET.Raspberry-1.0.0.nupkg\\",
-        "DownloadCount":  20,
-        "Tags":  "dotnetcore template .netcore RaspberryPi",
+        "Owners":  "Thomas Burkhart",
+        "Version":  "0.1.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Nancy.Templates.BasicNetCoreApp-0.1.0.nupkg\\",
+        "DownloadCount":  0,
+        "Tags":  "web app nancyfx dotnet new template",
         "Templates":  [
                           {
-                              "author":  "Carlos Mendible",
-                              "name":  "ASP.NET Core Web Application for Raspberry Pi",
+                              "author":  "Thomas Burkhart",
+                              "name":  "NancyCoreApp Template for running on Kestrel",
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "Web",
-                              "shortName":  "webrpi",
+                              "classifications":  {
+
+                                                  },
+                              "shortName":  "NancyCoreApp",
                               "groupIdentity":  null,
-                              "identity":  "codeityourself.web.raspberry"
+                              "identity":  null
                           }
                       ],
-        "DownloadUrl":  "https://api.nuget.org/packages/codeityourself.aspnet.raspberry.1.0.0.nupkg",
-        "Description":  "Create an ASP.NET Core Web application ready to run on your Raspberry Pi",
+        "DownloadUrl":  "https://api.nuget.org/packages/nancy.templates.basicnetcoreapp.0.1.0.nupkg",
+        "Description":  "A dotnet-new Template for a basic NancyFx .Net Core App running on Kestrel",
         "Copyright":  null,
-        "Authors":  "Carlos Mendible (@cmendibl3)",
+        "Authors":  "Thomas Burkhart",
         "LicenseUrl":  null,
-        "ProjectUrl":  "https://github.com/cmendible/dotnetcore.templates",
-        "Package":  "CodeItYourself.ASPNET.Raspberry"
+        "ProjectUrl":  "https://github.com/escamoteur/NancyCoreApp",
+        "Package":  "Nancy.Templates.BasicNetCoreApp"
     }
 ]
