@@ -117,7 +117,7 @@ function GetLocalFileFor{
         
         if(-not (test-path $expectedPath)){
             # download the file
-            EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null            
+            EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null
             Invoke-WebRequest -Uri $downloadUrl -TimeoutSec $timeoutSec -OutFile $expectedPath -ErrorAction SilentlyContinue | Write-Verbose
         }
 
@@ -169,7 +169,9 @@ function GetTemplatesToCheck(){
                     @{
                         'Name'=$res[0]
                         'Version'=$res[1]
-                        'DownloadUrl' = ('http://www.nuget.org/api/v2/package/{0}/{1}' -f $res[0],$res[1])
+                        #'DownloadUrl' = ('http://www.nuget.org/api/v2/package/{0}/{1}' -f $res[0],$res[1])                        
+                        'DownloadUrl' = (('https://api.nuget.org/packages/{0}.{1}.nupkg' -f $res[0],$res[1]).ToLower())
+                        # https://api.nuget.org/packages/{0}.{1}.1.3.0.nupkg
                     }}})
 
             if($LASTEXITCODE -eq 0){
@@ -209,7 +211,7 @@ function Get-PackageDownloadStats(){
             [string]$packageurl = ($urlformat -f $pkgname)
 
             try{
-                $response = (Invoke-WebRequest -Uri $packageurl -TimeoutSec $timeoutSec -ErrorAction SilentlyContinue)
+                $response = (Invoke-WebRequest -Uri $packageurl -TimeoutSec $timeoutSec -ErrorAction SilentlyContinue )
                 if($response -ne $null){
                     [string]$html = ($response.rawcontent)
                     if(-not([string]::IsNullOrWhiteSpace($html))) {
@@ -435,7 +437,7 @@ function Get-JsonObjectFromTemplateFile{
                     identity=$jObj2.identity.Value
                     groupIdentity=$jObj2.groupIdentity.Value
                     shortName = $jObj2.shortName.Value
-                    tags = [string[]]@{}
+                    tags = @{}
                 }
 
                 $jObj2.tags|%{
