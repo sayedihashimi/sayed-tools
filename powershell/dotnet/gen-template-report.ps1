@@ -106,7 +106,10 @@ function GetLocalFileFor{
 
         [Parameter(Position=1,Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [string]$filename
+        [string]$filename,
+
+        [Parameter(Position=2)]
+        [int]$timeoutSec = 60
     )
     process{
         'GetLocalFileFor: url:[{0}] filename:[{1}]' -f $downloadUrl,$filename | Write-Verbose
@@ -115,7 +118,7 @@ function GetLocalFileFor{
         if(-not (test-path $expectedPath)){
             # download the file
             EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null            
-            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath -ErrorAction SilentlyContinue | Write-Verbose
+            Invoke-WebRequest -Uri $downloadUrl -TimeoutSec $timeoutSec -OutFile $expectedPath -ErrorAction SilentlyContinue | Write-Verbose
         }
 
         if(-not (test-path $expectedPath)){
@@ -195,7 +198,8 @@ function Get-PackageDownloadStats(){
     param(
         [Parameter(Position=0,ValueFromPipeline=$true)]
         [object[]]$package,
-        [string]$urlformat = 'http://www.nuget.org/packages/{0}/'
+        [string]$urlformat = 'http://www.nuget.org/packages/{0}/',
+        [int]$timeoutSec = 60
     )
     process{
         # $html = (Invoke-WebRequest -Uri 'http://www.nuget.org/packages/SlowCheetah/').rawcontent
@@ -205,27 +209,30 @@ function Get-PackageDownloadStats(){
             [string]$packageurl = ($urlformat -f $pkgname)
 
             try{
-            $response = (Invoke-WebRequest -Uri $packageurl -ErrorAction SilentlyContinue -TimeoutSec 60)
-            if($response -ne $null){
-                [string]$html = ($response.rawcontent)
-                if(-not([string]::IsNullOrWhiteSpace($html))) {
-                    $htmllines = $html.split("`n")
-                    $dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
-                    if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
-                        $dlcount = ($Matches[1])
+                $response = (Invoke-WebRequest -Uri $packageurl -TimeoutSec $timeoutSec -ErrorAction SilentlyContinue)
+                if($response -ne $null){
+                    [string]$html = ($response.rawcontent)
+                    if(-not([string]::IsNullOrWhiteSpace($html))) {
+                        $htmllines = $html.split("`n")
+                        $dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
+                        if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
+                            $dlcount = ($Matches[1])
+                        }
+                        $downloadUrl = $pkgobj.DownloadUrl
                     }
-                    $downloadUrl = $pkgobj.DownloadUrl
-                }
             
-                New-Object -TypeName psobject -Property @{
-                    'Name'=$pkgname
-                    'DownloadCount'=$dlcount
-                    'Downloadurl'=$downloadUrl
-                    'Version'=$pkgobj.Version
-                    'ExtractPath'=[string]$null
-                    'NuspecPath'=[string]$null
+                    New-Object -TypeName psobject -Property @{
+                        'Name'=$pkgname
+                        'DownloadCount'=$dlcount
+                        'Downloadurl'=$downloadUrl
+                        'Version'=$pkgobj.Version
+                        'ExtractPath'=[string]$null
+                        'NuspecPath'=[string]$null
+                    }
                 }
-            }
+                else{
+                    'No web result from url [{0}]' -f $packageurl | Write-Verbose
+                }
             }
             catch{
                 $_.Exception | Write-Verbose
@@ -428,7 +435,7 @@ function Get-JsonObjectFromTemplateFile{
                     identity=$jObj2.identity.Value
                     groupIdentity=$jObj2.groupIdentity.Value
                     shortName = $jObj2.shortName.Value
-                    tags = @{}
+                    tags = [string[]]@{}
                 }
 
                 $jObj2.tags|%{
