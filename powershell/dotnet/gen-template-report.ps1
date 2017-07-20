@@ -106,7 +106,10 @@ function GetLocalFileFor{
 
         [Parameter(Position=1,Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [string]$filename
+        [string]$filename,
+
+        [Parameter(Position=2)]
+        [int]$timeoutSec = 60
     )
     process{
         'GetLocalFileFor: url:[{0}] filename:[{1}]' -f $downloadUrl,$filename | Write-Verbose
@@ -114,8 +117,8 @@ function GetLocalFileFor{
         
         if(-not (test-path $expectedPath)){
             # download the file
-            EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null            
-            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath -ErrorAction SilentlyContinue | Write-Verbose
+            EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null
+            Invoke-WebRequest -Uri $downloadUrl -TimeoutSec $timeoutSec -OutFile $expectedPath -ErrorAction SilentlyContinue | Write-Verbose
         }
 
         if(-not (test-path $expectedPath)){
@@ -166,7 +169,9 @@ function GetTemplatesToCheck(){
                     @{
                         'Name'=$res[0]
                         'Version'=$res[1]
-                        'DownloadUrl' = ('http://www.nuget.org/api/v2/package/{0}/{1}' -f $res[0],$res[1])
+                        #'DownloadUrl' = ('http://www.nuget.org/api/v2/package/{0}/{1}' -f $res[0],$res[1])                        
+                        'DownloadUrl' = (('https://api.nuget.org/packages/{0}.{1}.nupkg' -f $res[0],$res[1]).ToLower())
+                        # https://api.nuget.org/packages/{0}.{1}.1.3.0.nupkg
                     }}})
 
             if($LASTEXITCODE -eq 0){
@@ -195,7 +200,8 @@ function Get-PackageDownloadStats(){
     param(
         [Parameter(Position=0,ValueFromPipeline=$true)]
         [object[]]$package,
-        [string]$urlformat = 'http://www.nuget.org/packages/{0}/'
+        [string]$urlformat = 'http://www.nuget.org/packages/{0}/',
+        [int]$timeoutSec = 60
     )
     process{
         # $html = (Invoke-WebRequest -Uri 'http://www.nuget.org/packages/SlowCheetah/').rawcontent
@@ -205,27 +211,30 @@ function Get-PackageDownloadStats(){
             [string]$packageurl = ($urlformat -f $pkgname)
 
             try{
-            $response = (Invoke-WebRequest -Uri $packageurl -ErrorAction SilentlyContinue)
-            if($response -ne $null){
-                [string]$html = ($response.rawcontent)
-                if(-not([string]::IsNullOrWhiteSpace($html))) {
-                    $htmllines = $html.split("`n")
-                    $dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
-                    if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
-                        $dlcount = ($Matches[1])
+                $response = (Invoke-WebRequest -Uri $packageurl -TimeoutSec $timeoutSec -ErrorAction SilentlyContinue )
+                if($response -ne $null){
+                    [string]$html = ($response.rawcontent)
+                    if(-not([string]::IsNullOrWhiteSpace($html))) {
+                        $htmllines = $html.split("`n")
+                        $dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
+                        if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
+                            $dlcount = ($Matches[1])
+                        }
+                        $downloadUrl = $pkgobj.DownloadUrl
                     }
-                    $downloadUrl = $pkgobj.DownloadUrl
-                }
             
-                New-Object -TypeName psobject -Property @{
-                    'Name'=$pkgname
-                    'DownloadCount'=$dlcount
-                    'Downloadurl'=$downloadUrl
-                    'Version'=$pkgobj.Version
-                    'ExtractPath'=[string]$null
-                    'NuspecPath'=[string]$null
+                    New-Object -TypeName psobject -Property @{
+                        'Name'=$pkgname
+                        'DownloadCount'=$dlcount
+                        'Downloadurl'=$downloadUrl
+                        'Version'=$pkgobj.Version
+                        'ExtractPath'=[string]$null
+                        'NuspecPath'=[string]$null
+                    }
                 }
-            }
+                else{
+                    'No web result from url [{0}]' -f $packageurl | Write-Verbose
+                }
             }
             catch{
                 $_.Exception | Write-Verbose
