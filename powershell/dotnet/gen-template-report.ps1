@@ -433,7 +433,6 @@ function Get-JsonObjectFromTemplateFile{
                     author=$jObj2.author.Value
                     symbols=$jObj2.symbols
                     classifications=($jObj2.classifications|%{$_.Value})
-                    description = ($jObj2.description.Value)
                     name=$jObj2.name.Value
                     identity=$jObj2.identity.Value
                     groupIdentity=$jObj2.groupIdentity.Value
@@ -521,11 +520,29 @@ function Get-PackageTemplateStats{
                             groupIdentity = $template.groupIdentity
                             shortName = $template.shortName
                             tags = $template.tags # [string[]]@() #($tempalte.tags|%{$_.ToString()})
-                            description = $template.description
                             # parameters = ($template.symbols|%{$_.ToString()})
                         }
+<#
+                        if($template.tags -ne $null){
+                            foreach($tt in $tempalte.tags){
+                                if($tt -ne $null){
+                                    $tobject.tags += $tt.ToString()
+                                }
+                            }
+                        }
+#>
 
                         $result.Templates += $tobject
+                        <#
+                        author=$jObj2.author.Value
+                    symbols=$jObj2.symbols
+                    classifications=($jObj2.classifications|%{$_.Value})
+                    name=$jObj2.name.Value
+                    identity=$jObj2.identity.Value
+                    groupIdentity=$jObj2.groupIdentity.Value
+                    shortName = $jObj2.shortName.Value
+                    tags = ($jObj2.tags|%{$_.ToString()})
+                        #>
                     }
 
                     $result
