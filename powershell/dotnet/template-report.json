@@ -3,104 +3,110 @@
         "Owners":  "Microsoft",
         "Version":  "0.9.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.AspNetCore.SpaTemplates-0.9.3.nupkg\\",
-        "DownloadCount":  46087,
+        "DownloadCount":  47411,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Microsoft",
-                              "name":  "MVC ASP.NET Core with Angular",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
                                                       "SPA"
                                                   ],
-                              "shortName":  "angular",
                               "groupIdentity":  "Microsoft.AspNetCore.SpaTemplates.Angular",
-                              "identity":  "Microsoft.AspNetCore.SpaTemplates.Angular.CSharp"
-                          },
-                          {
-                              "author":  "Microsoft",
-                              "name":  "MVC ASP.NET Core with Aurelia",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "MVC ASP.NET Core with Angular",
+                              "shortName":  "angular",
+                              "identity":  "Microsoft.AspNetCore.SpaTemplates.Angular.CSharp",
+                              "description":  null,
+                              "author":  "Microsoft"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
                                                       "SPA"
                                                   ],
-                              "shortName":  "aurelia",
                               "groupIdentity":  "Microsoft.AspNetCore.SpaTemplates.Aurelia",
-                              "identity":  "Microsoft.AspNetCore.SpaTemplates.Aurelia.CSharp"
-                          },
-                          {
-                              "author":  "Microsoft",
-                              "name":  "MVC ASP.NET Core with Knockout.js",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "MVC ASP.NET Core with Aurelia",
+                              "shortName":  "aurelia",
+                              "identity":  "Microsoft.AspNetCore.SpaTemplates.Aurelia.CSharp",
+                              "description":  null,
+                              "author":  "Microsoft"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
                                                       "SPA"
                                                   ],
-                              "shortName":  "knockout",
                               "groupIdentity":  "Microsoft.AspNetCore.SpaTemplates.Knockout",
-                              "identity":  "Microsoft.AspNetCore.SpaTemplates.Knockout.CSharp"
-                          },
-                          {
-                              "author":  "Microsoft",
-                              "name":  "MVC ASP.NET Core with React.js",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "MVC ASP.NET Core with Knockout.js",
+                              "shortName":  "knockout",
+                              "identity":  "Microsoft.AspNetCore.SpaTemplates.Knockout.CSharp",
+                              "description":  null,
+                              "author":  "Microsoft"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
                                                       "SPA"
                                                   ],
-                              "shortName":  "react",
                               "groupIdentity":  "Microsoft.AspNetCore.SpaTemplates.React",
-                              "identity":  "Microsoft.AspNetCore.SpaTemplates.React.CSharp"
-                          },
-                          {
-                              "author":  "Microsoft",
-                              "name":  "MVC ASP.NET Core with React.js and Redux",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "MVC ASP.NET Core with React.js",
+                              "shortName":  "react",
+                              "identity":  "Microsoft.AspNetCore.SpaTemplates.React.CSharp",
+                              "description":  null,
+                              "author":  "Microsoft"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
                                                       "SPA"
                                                   ],
-                              "shortName":  "reactredux",
                               "groupIdentity":  "Microsoft.AspNetCore.SpaTemplates.ReactRedux",
-                              "identity":  "Microsoft.AspNetCore.SpaTemplates.ReactRedux.CSharp"
-                          },
-                          {
-                              "author":  "Microsoft",
-                              "name":  "MVC ASP.NET Core with Vue.js",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "MVC ASP.NET Core with React.js and Redux",
+                              "shortName":  "reactredux",
+                              "identity":  "Microsoft.AspNetCore.SpaTemplates.ReactRedux.CSharp",
+                              "description":  null,
+                              "author":  "Microsoft"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
                                                       "SPA"
                                                   ],
-                              "shortName":  "vue",
                               "groupIdentity":  "Microsoft.AspNetCore.SpaTemplates.Vue",
-                              "identity":  "Microsoft.AspNetCore.SpaTemplates.Vue.CSharp"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "MVC ASP.NET Core with Vue.js",
+                              "shortName":  "vue",
+                              "identity":  "Microsoft.AspNetCore.SpaTemplates.Vue.CSharp",
+                              "description":  null,
+                              "author":  "Microsoft"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/microsoft.aspnetcore.spatemplates.0.9.3.nupkg",
@@ -115,56 +121,59 @@
         "Owners":  "Microsoft",
         "Version":  "1.0.0-preview-000409",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.DotNet.Web.Spa.ProjectTemplates-1.0.0-preview-000409.nupkg\\",
-        "DownloadCount":  6719,
+        "DownloadCount":  7614,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Microsoft",
-                              "name":  "ASP.NET Core with Angular",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
                                                       "SPA"
                                                   ],
-                              "shortName":  "angular",
                               "groupIdentity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.Angular",
-                              "identity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.Angular.CSharp"
-                          },
-                          {
-                              "author":  "Microsoft",
-                              "name":  "ASP.NET Core with React.js",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "ASP.NET Core with Angular",
+                              "shortName":  "angular",
+                              "identity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.Angular.CSharp",
+                              "description":  null,
+                              "author":  "Microsoft"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
                                                       "SPA"
                                                   ],
-                              "shortName":  "react",
                               "groupIdentity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.React",
-                              "identity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.React.CSharp"
-                          },
-                          {
-                              "author":  "Microsoft",
-                              "name":  "ASP.NET Core with React.js and Redux",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "ASP.NET Core with React.js",
+                              "shortName":  "react",
+                              "identity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.React.CSharp",
+                              "description":  null,
+                              "author":  "Microsoft"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "MVC",
                                                       "SPA"
                                                   ],
-                              "shortName":  "reactredux",
                               "groupIdentity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.ReactRedux",
-                              "identity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.ReactRedux.CSharp"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "ASP.NET Core with React.js and Redux",
+                              "shortName":  "reactredux",
+                              "identity":  "Microsoft.DotNet.Web.Spa.ProjectTemplates.ReactRedux.CSharp",
+                              "description":  null,
+                              "author":  "Microsoft"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/microsoft.dotnet.web.spa.projecttemplates.1.0.0-preview-000409.nupkg",
@@ -179,30 +188,32 @@
         "Owners":  "Steve Desmond",
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\libyear-1.0.1.nupkg\\",
-        "DownloadCount":  1896,
+        "DownloadCount":  1980,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Steve Desmond",
-                              "name":  "LibYear",
+                              "classifications":  null,
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  null,
+                              "name":  "LibYear",
                               "shortName":  "libyear",
-                              "groupIdentity":  null,
-                              "identity":  "libyear"
+                              "identity":  "libyear",
+                              "description":  null,
+                              "author":  "Steve Desmond"
                           },
                           {
-                              "author":  "Steve Desmond",
-                              "name":  "LibYear",
+                              "classifications":  null,
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  null,
+                              "name":  "LibYear",
                               "shortName":  "libyear",
-                              "groupIdentity":  null,
-                              "identity":  "libyear"
+                              "identity":  "libyear",
+                              "description":  null,
+                              "author":  "Steve Desmond"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/libyear.1.0.1.nupkg",
@@ -217,15 +228,10 @@
         "Owners":  "Muhammad Rehan Saeed (RehanSaeed.com)",
         "Version":  "1.6.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Boilerplate.Templates-1.6.1.nupkg\\",
-        "DownloadCount":  1632,
+        "DownloadCount":  1697,
         "Tags":  "ASP.NET Core Boilerplate Muhammad Rehan Saeed Framework",
         "Templates":  [
                           {
-                              "author":  "Muhammad Rehan Saeed (RehanSaeed.com)",
-                              "name":  "ASP.NET Core 1.1.2 API Boilerplate",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Web",
                                                       "WebAPI",
@@ -233,9 +239,15 @@
                                                       "MVC",
                                                       "API"
                                                   ],
-                              "shortName":  "bapi",
                               "groupIdentity":  "Boilerplate",
-                              "identity":  "Boilerplate.AspNetCore.Api.CSharp"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "ASP.NET Core 1.1.2 API Boilerplate",
+                              "shortName":  "bapi",
+                              "identity":  "Boilerplate.AspNetCore.Api.CSharp",
+                              "description":  null,
+                              "author":  "Muhammad Rehan Saeed (RehanSaeed.com)"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/boilerplate.templates.1.6.1.nupkg",
@@ -247,220 +259,181 @@
         "Package":  "Boilerplate.Templates"
     },
     {
-        "Owners":  "Brock Allen, Dominick Baier",
-        "Version":  "1.0.0",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\IdentityServer4.Templates-1.0.0.nupkg\\",
-        "DownloadCount":  1162,
-        "Tags":  null,
-        "Templates":  [
-                          {
-                              "author":  "Dominick Baier",
-                              "name":  "IdentityServer4 Basic",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  "IdentityServer4",
-                              "shortName":  "is4",
-                              "groupIdentity":  "IdentityServer4.Basic",
-                              "identity":  "IdentityServer4.Basic"
-                          },
-                          {
-                              "author":  "Dominick Baier",
-                              "name":  "IdentityServer4 with in-memory stores and test users",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  "IdentityServer4",
-                              "shortName":  "is4inmem",
-                              "groupIdentity":  "IdentityServer4.InMem",
-                              "identity":  "IdentityServer4.InMem"
-                          },
-                          {
-                              "author":  "Dominick Baier",
-                              "name":  "IdentityServer4 quickstart UI",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  "IdentityServer4",
-                              "shortName":  "is4ui",
-                              "groupIdentity":  "IdentityServer4.UI",
-                              "identity":  "IdentityServer4.UI"
-                          }
-                      ],
-        "DownloadUrl":  "https://api.nuget.org/packages/identityserver4.templates.1.0.0.nupkg",
-        "Description":  "IdentityServer4 Templates",
-        "Copyright":  null,
-        "Authors":  "Brock Allen, Dominick Baier",
-        "LicenseUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates/blob/dev/LICENSE",
-        "ProjectUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates",
-        "Package":  "IdentityServer4.Templates"
-    },
-    {
         "Owners":  "Amazon Web Services",
         "Version":  "1.3.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Amazon.Lambda.Templates-1.3.0.nupkg\\",
-        "DownloadCount":  1144,
+        "DownloadCount":  1207,
         "Tags":  "AWS Amazon Lambda",
         "Templates":  [
                           {
-                              "author":  "AWS",
-                              "name":  "Lambda ASP.NET Core Web API",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Serverless"
                                                   ],
-                              "shortName":  "lambda.AspNetCoreWebAPI",
                               "groupIdentity":  "AWS.Lambda.AspNetCoreWebAPI.Serverless",
-                              "identity":  "AWS.Lambda.Serverless.AspNetCoreWebAPI.CSharp"
-                          },
-                          {
-                              "author":  "AWS",
-                              "name":  "Lambda Detect Image Labels",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lambda ASP.NET Core Web API",
+                              "shortName":  "lambda.AspNetCoreWebAPI",
+                              "identity":  "AWS.Lambda.Serverless.AspNetCoreWebAPI.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
+                          },
+                          {
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Function"
                                                   ],
-                              "shortName":  "lambda.DetectImageLabels",
                               "groupIdentity":  "AWS.Lambda.Function.DetectImageLabels",
-                              "identity":  "AWS.Lambda.Function.DetectImageLabels.CSharp"
-                          },
-                          {
-                              "author":  "AWS",
-                              "name":  "Lambda DynamoDB Blog API",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lambda Detect Image Labels",
+                              "shortName":  "lambda.DetectImageLabels",
+                              "identity":  "AWS.Lambda.Function.DetectImageLabels.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
+                          },
+                          {
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Serverless"
                                                   ],
-                              "shortName":  "lambda.DynamoDBBlogAPI",
                               "groupIdentity":  "AWS.Lambda.Serverless.DynamoDBBlogAPI",
-                              "identity":  "AWS.Lambda.Serverless.DynamoDBBlogAPI.CSharp"
-                          },
-                          {
-                              "author":  "AWS",
-                              "name":  "Lambda Empty Function",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lambda DynamoDB Blog API",
+                              "shortName":  "lambda.DynamoDBBlogAPI",
+                              "identity":  "AWS.Lambda.Serverless.DynamoDBBlogAPI.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
+                          },
+                          {
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Function"
                                                   ],
-                              "shortName":  "lambda.EmptyFunction",
                               "groupIdentity":  "AWS.Lambda.Function.Empty",
-                              "identity":  "AWS.Lambda.Function.Empty.CSharp"
-                          },
-                          {
-                              "author":  "AWS",
-                              "name":  "Lambda Empty Serverless",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lambda Empty Function",
+                              "shortName":  "lambda.EmptyFunction",
+                              "identity":  "AWS.Lambda.Function.Empty.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
+                          },
+                          {
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Serverless"
                                                   ],
-                              "shortName":  "lambda.EmptyServerless",
                               "groupIdentity":  "AWS.Lambda.Serverless.Empty",
-                              "identity":  "AWS.Lambda.Serverless.Empty.CSharp"
-                          },
-                          {
-                              "author":  "AWS",
-                              "name":  "Lex Book Trip Sample",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lambda Empty Serverless",
+                              "shortName":  "lambda.EmptyServerless",
+                              "identity":  "AWS.Lambda.Serverless.Empty.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
+                          },
+                          {
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Function"
                                                   ],
-                              "shortName":  "lambda.LexBookTripSample",
                               "groupIdentity":  "AWS.Lambda.Function.LexBookTripSample",
-                              "identity":  "AWS.Lambda.Function.LexBookTripSample.CSharp"
-                          },
-                          {
-                              "author":  "AWS",
-                              "name":  "Lambda Simple DynamoDB Function",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lex Book Trip Sample",
+                              "shortName":  "lambda.LexBookTripSample",
+                              "identity":  "AWS.Lambda.Function.LexBookTripSample.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
+                          },
+                          {
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Function"
                                                   ],
-                              "shortName":  "lambda.DynamoDB",
                               "groupIdentity":  "AWS.Lambda.Simple.DynamoDB",
-                              "identity":  "AWS.Lambda.Simple.DynamoDB.CSharp"
-                          },
-                          {
-                              "author":  "AWS",
-                              "name":  "Lambda Simple Kinesis Firehose Function",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lambda Simple DynamoDB Function",
+                              "shortName":  "lambda.DynamoDB",
+                              "identity":  "AWS.Lambda.Simple.DynamoDB.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
+                          },
+                          {
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Function"
                                                   ],
-                              "shortName":  "lambda.KinesisFirehose",
                               "groupIdentity":  "AWS.Lambda.Simple.KinesisFirehose",
-                              "identity":  "AWS.Lambda.Simple.KinesisFirehose.CSharp"
-                          },
-                          {
-                              "author":  "AWS",
-                              "name":  "Lambda Simple Kinesis Function",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lambda Simple Kinesis Firehose Function",
+                              "shortName":  "lambda.KinesisFirehose",
+                              "identity":  "AWS.Lambda.Simple.KinesisFirehose.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
+                          },
+                          {
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Function"
                                                   ],
-                              "shortName":  "lambda.Kinesis",
                               "groupIdentity":  "AWS.Lambda.Simple.Kinesis",
-                              "identity":  "AWS.Lambda.Simple.Kinesis.CSharp"
-                          },
-                          {
-                              "author":  "AWS",
-                              "name":  "Lambda Simple S3 Function",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lambda Simple Kinesis Function",
+                              "shortName":  "lambda.Kinesis",
+                              "identity":  "AWS.Lambda.Simple.Kinesis.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
+                          },
+                          {
                               "classifications":  [
                                                       "AWS",
                                                       "Lambda",
                                                       "Function"
                                                   ],
-                              "shortName":  "lambda.S3",
                               "groupIdentity":  "AWS.Lambda.Simple.S3",
-                              "identity":  "AWS.Lambda.Simple.S3.CSharp"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "Lambda Simple S3 Function",
+                              "shortName":  "lambda.S3",
+                              "identity":  "AWS.Lambda.Simple.S3.CSharp",
+                              "description":  null,
+                              "author":  "AWS"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/amazon.lambda.templates.1.3.0.nupkg",
@@ -472,22 +445,75 @@
         "Package":  "Amazon.Lambda.Templates"
     },
     {
+        "Owners":  "Brock Allen, Dominick Baier",
+        "Version":  "1.0.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\IdentityServer4.Templates-1.0.0.nupkg\\",
+        "DownloadCount":  1199,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "classifications":  "IdentityServer4",
+                              "groupIdentity":  "IdentityServer4.Basic",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "IdentityServer4 Basic",
+                              "shortName":  "is4",
+                              "identity":  "IdentityServer4.Basic",
+                              "description":  null,
+                              "author":  "Dominick Baier"
+                          },
+                          {
+                              "classifications":  "IdentityServer4",
+                              "groupIdentity":  "IdentityServer4.InMem",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "IdentityServer4 with in-memory stores and test users",
+                              "shortName":  "is4inmem",
+                              "identity":  "IdentityServer4.InMem",
+                              "description":  null,
+                              "author":  "Dominick Baier"
+                          },
+                          {
+                              "classifications":  "IdentityServer4",
+                              "groupIdentity":  "IdentityServer4.UI",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "IdentityServer4 quickstart UI",
+                              "shortName":  "is4ui",
+                              "identity":  "IdentityServer4.UI",
+                              "description":  null,
+                              "author":  "Dominick Baier"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/identityserver4.templates.1.0.0.nupkg",
+        "Description":  "IdentityServer4 Templates",
+        "Copyright":  null,
+        "Authors":  "Brock Allen, Dominick Baier",
+        "LicenseUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates/blob/dev/LICENSE",
+        "ProjectUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates",
+        "Package":  "IdentityServer4.Templates"
+    },
+    {
         "Owners":  "Jimmy Byrd",
         "Version":  "0.3.5",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MiniScaffold-0.3.5.nupkg\\",
-        "DownloadCount":  1044,
+        "DownloadCount":  1147,
         "Tags":  "class library template fsharp",
         "Templates":  [
                           {
-                              "author":  "Jimmy Byrd",
-                              "name":  "MiniScaffold",
+                              "classifications":  "Scaffold",
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "F#"
                                        },
-                              "classifications":  "Scaffold",
+                              "name":  "MiniScaffold",
                               "shortName":  "mini-scaffold",
-                              "groupIdentity":  null,
-                              "identity":  "MiniScaffold"
+                              "identity":  "MiniScaffold",
+                              "description":  null,
+                              "author":  "Jimmy Byrd"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/miniscaffold.0.3.5.nupkg",
@@ -502,22 +528,23 @@
         "Owners":  "Dustin Moris Gorski",
         "Version":  "0.1.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\giraffe-template-0.1.6.nupkg\\",
-        "DownloadCount":  964,
+        "DownloadCount":  1026,
         "Tags":  "giraffe web app razor pages micro service dotnet new template",
         "Templates":  [
                           {
-                              "author":  "David Sinclair and contributors",
-                              "name":  "Giraffe Web App",
-                              "tags":  {
-                                           "language":  "F#"
-                                       },
                               "classifications":  [
                                                       "Web",
                                                       "Giraffe"
                                                   ],
-                              "shortName":  "giraffe",
                               "groupIdentity":  null,
-                              "identity":  "Giraffe.Template"
+                              "tags":  {
+                                           "language":  "F#"
+                                       },
+                              "name":  "Giraffe Web App",
+                              "shortName":  "giraffe",
+                              "identity":  "Giraffe.Template",
+                              "description":  null,
+                              "author":  "David Sinclair and contributors"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/giraffe-template.0.1.6.nupkg",
@@ -532,15 +559,10 @@
         "Owners":  "Chad Ramos (pioneercode.com)",
         "Version":  "1.0.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Pioneer.Console.Boilerplate-1.0.6.nupkg\\",
-        "DownloadCount":  802,
+        "DownloadCount":  856,
         "Tags":  "Pioneer Code Boilerplate .NET Core Console Dependency Injection Logging Configuration Chad Ramos",
         "Templates":  [
                           {
-                              "author":  "Chad Ramos \u003cchad@pioneercode.com\u003e",
-                              "name":  "Pioneer Code: Console Application with dependency injection, logging \u0026 configuration.",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Console",
                                                       "Boilerplate",
@@ -548,9 +570,15 @@
                                                       "Logging",
                                                       "Configuration"
                                                   ],
-                              "shortName":  "pioneer-console",
                               "groupIdentity":  null,
-                              "identity":  "Pioneer.Console.Boilerplate"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "Pioneer Code: Console Application with dependency injection, logging \u0026 configuration.",
+                              "shortName":  "pioneer-console",
+                              "identity":  "Pioneer.Console.Boilerplate",
+                              "description":  null,
+                              "author":  "Chad Ramos \u003cchad@pioneercode.com\u003e"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/pioneer.console.boilerplate.1.0.6.nupkg",
@@ -565,23 +593,24 @@
         "Owners":  "kiootic",
         "Version":  "3.5.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MonoGame.Template.NETCore-3.5.1.nupkg\\",
-        "DownloadCount":  721,
+        "DownloadCount":  765,
         "Tags":  "MonoGame Game Core VSCode",
         "Templates":  [
                           {
-                              "author":  "kiootic",
-                              "name":  "MonoGame DesktopGL Project",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Game",
                                                       "MonoGame"
                                                   ],
-                              "shortName":  "monogamegl",
                               "groupIdentity":  null,
-                              "identity":  "MonoGame.DesktopGL.CSharp"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "MonoGame DesktopGL Project",
+                              "shortName":  "monogamegl",
+                              "identity":  "MonoGame.DesktopGL.CSharp",
+                              "description":  null,
+                              "author":  "kiootic"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/monogame.template.netcore.3.5.1.nupkg",
@@ -596,53 +625,56 @@
         "Owners":  "Mads Kristensen",
         "Version":  "1.0.21",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MadsKristensen.AspNetCore.Web.Templates-1.0.21.nupkg\\",
-        "DownloadCount":  707,
+        "DownloadCount":  750,
         "Tags":  "asp.net core .net template",
         "Templates":  [
                           {
-                              "author":  "Mads Kristensen",
-                              "name":  "ASP.NET Core MVC Basic",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Web",
                                                       "MVC"
                                                   ],
-                              "shortName":  "mvcbasic",
                               "groupIdentity":  "madsk.mvc.basic",
-                              "identity":  "madsk.mvc.basic"
-                          },
-                          {
-                              "author":  "Mads Kristensen",
-                              "name":  "ASP.NET Core MVC Fast",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "ASP.NET Core MVC Basic",
+                              "shortName":  "mvcbasic",
+                              "identity":  "madsk.mvc.basic",
+                              "description":  null,
+                              "author":  "Mads Kristensen"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "MVC"
                                                   ],
-                              "shortName":  "mvcfast",
                               "groupIdentity":  "madsk.mvc.fast",
-                              "identity":  "madsk.mvc.fast"
-                          },
-                          {
-                              "author":  "Mads Kristensen",
-                              "name":  "ASP.NET Core Static Web",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "ASP.NET Core MVC Fast",
+                              "shortName":  "mvcfast",
+                              "identity":  "madsk.mvc.fast",
+                              "description":  null,
+                              "author":  "Mads Kristensen"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "Static"
                                                   ],
-                              "shortName":  "staticweb",
                               "groupIdentity":  "madsk.static.web",
-                              "identity":  "madsk.static.web"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "ASP.NET Core Static Web",
+                              "shortName":  "staticweb",
+                              "identity":  "madsk.static.web",
+                              "description":  null,
+                              "author":  "Mads Kristensen"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/madskristensen.aspnetcore.web.templates.1.0.21.nupkg",
@@ -657,23 +689,24 @@
         "Owners":  "RIGANTI",
         "Version":  "1.1.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\DotVVM.Templates-1.1.2.nupkg\\",
-        "DownloadCount":  662,
+        "DownloadCount":  698,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "RIGANTI",
-                              "name":  "DotVVM Web Application",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Web",
                                                       "DotVVM"
                                                   ],
-                              "shortName":  "dotvvm",
                               "groupIdentity":  "DotVVM.Templates",
-                              "identity":  "DotVVM.Templates.EmptyWeb"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "DotVVM Web Application",
+                              "shortName":  "dotvvm",
+                              "identity":  "DotVVM.Templates.EmptyWeb",
+                              "description":  null,
+                              "author":  "RIGANTI"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/dotvvm.templates.1.1.2.nupkg",
@@ -688,22 +721,23 @@
         "Owners":  "BrainCrumbz",
         "Version":  "1.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\dotnet-new-nspec-1.0.2.nupkg\\",
-        "DownloadCount":  632,
+        "DownloadCount":  672,
         "Tags":  "testing bdd tdd rspec mocha dotnet core test template",
         "Templates":  [
                           {
-                              "author":  "BrainCrumbz",
-                              "name":  "NSpec .NET Core C# Test Project",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Test",
                                                       "NSpec"
                                                   ],
-                              "shortName":  "nspectest",
                               "groupIdentity":  "NSpec",
-                              "identity":  "NSpec.CSharp.TestLibrary"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "NSpec .NET Core C# Test Project",
+                              "shortName":  "nspectest",
+                              "identity":  "NSpec.CSharp.TestLibrary",
+                              "description":  null,
+                              "author":  "BrainCrumbz"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/dotnet-new-nspec.1.0.2.nupkg",
@@ -715,124 +749,73 @@
         "Package":  "dotnet-new-nspec"
     },
     {
-        "Owners":  "Kralizek",
-        "Version":  "1.1.1",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Kralizek.Lambda.Templates-1.1.1.nupkg\\",
-        "DownloadCount":  568,
+        "Owners":  "Idea42, LLC",
+        "Version":  "1.0.11",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Idea42.NetCore.Templates-1.0.11.nupkg\\",
+        "DownloadCount":  643,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Renato Golia",
-                              "name":  "Lambda Empty Event Function",
+                              "classifications":  [
+                                                      "Web",
+                                                      "Angular1x",
+                                                      "Base"
+                                                  ],
+                              "groupIdentity":  "Idea42.NetCore.Templates.Angular1",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
-                              "classifications":  [
-                                                      "AWS",
-                                                      "Lambda",
-                                                      "Function",
-                                                      "Template"
-                                                  ],
-                              "shortName":  "lambda-template-event-empty",
-                              "groupIdentity":  "Kralizek.Lambda.Template.EventFunction.Empty.CSharp",
-                              "identity":  "Kralizek.Lambda.Template.EventFunction.Empty"
+                              "name":  "Idea42: Angular 1x base",
+                              "shortName":  "idea42.angular1",
+                              "identity":  "Idea42.NetCore.Templates.Angular1.CSharp",
+                              "description":  null,
+                              "author":  "Idea42, LLC"
                           },
                           {
-                              "author":  "Renato Golia",
-                              "name":  "Lambda Empty RequestResponse Function",
+                              "classifications":  [
+                                                      "WebAPI",
+                                                      "Authentication",
+                                                      "Base"
+                                                  ],
+                              "groupIdentity":  "Idea42.NetCore.Templates.AuthApi",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
-                              "classifications":  [
-                                                      "AWS",
-                                                      "Lambda",
-                                                      "Function",
-                                                      "Template"
-                                                  ],
-                              "shortName":  "lambda-template-requestresponse-empty",
-                              "groupIdentity":  "Kralizek.Lambda.Template.RequestResponseFunction.Empty.CSharp",
-                              "identity":  "Kralizek.Lambda.Template.RequestResponseFunction.Empty"
-                          },
-                          {
-                              "author":  "Renato Golia",
-                              "name":  "Lambda Boilerplate Event Function",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "AWS",
-                                                      "Lambda",
-                                                      "Function",
-                                                      "Template"
-                                                  ],
-                              "shortName":  "lambda-template-event-boilerplate",
-                              "groupIdentity":  "Kralizek.Lambda.Template.EventFunction.Boilerplate.CSharp",
-                              "identity":  "Kralizek.Lambda.Template.EventFunction.Boilerplate"
-                          },
-                          {
-                              "author":  "Renato Golia",
-                              "name":  "Lambda Boilerplate RequestResponse Function",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "AWS",
-                                                      "Lambda",
-                                                      "Function",
-                                                      "Template"
-                                                  ],
-                              "shortName":  "lambda-template-requestresponse-boilerplate",
-                              "groupIdentity":  "Kralizek.Lambda.Template.RequestResponseFunction.Boilerplate.CSharp",
-                              "identity":  "Kralizek.Lambda.Template.RequestResponseFunction.Boilerplate"
-                          },
-                          {
-                              "author":  "Renato Golia",
-                              "name":  "Lambda SNS Event Function",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "AWS",
-                                                      "Lambda",
-                                                      "Function",
-                                                      "Template",
-                                                      "SNS"
-                                                  ],
-                              "shortName":  "lambda-template-sns-event",
-                              "groupIdentity":  "Kralizek.Lambda.Template.EventFunction.SNS.CSharp",
-                              "identity":  "Kralizek.Lambda.Template.EventFunction.SNS"
+                              "name":  "Idea42: Authenticated API Base",
+                              "shortName":  "idea42.authapi",
+                              "identity":  "Idea42.NetCore.Templates.AuthApi.CSharp",
+                              "description":  null,
+                              "author":  "Idea42, LLC"
                           }
                       ],
-        "DownloadUrl":  "https://api.nuget.org/packages/kralizek.lambda.templates.1.1.1.nupkg",
-        "Description":  "Templates for AWS Lambda that use templates available in Kralizek.Lambda.Template",
-        "Copyright":  null,
-        "Authors":  "Kralizek",
-        "LicenseUrl":  "https://raw.githubusercontent.com/Kralizek/AWSLambdaSharpTemplate/master/LICENSE.txt",
-        "ProjectUrl":  "https://github.com/Kralizek/AWSLambdaSharpTemplate",
-        "Package":  "Kralizek.Lambda.Templates"
+        "DownloadUrl":  "https://api.nuget.org/packages/idea42.netcore.templates.1.0.11.nupkg",
+        "Description":  "A set of useful templates that Idea42 uses to rapidly create projects",
+        "Copyright":  "Copyright ? Idea42, LLC",
+        "Authors":  "Idea42, LLC",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/idea42co/NetCoreTemplates",
+        "Package":  "Idea42.NetCore.Templates"
     },
     {
         "Owners":  "Micha? Niegrzybowski",
         "Version":  "5.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Expecto.Template-5.0.0.nupkg\\",
-        "DownloadCount":  557,
+        "DownloadCount":  600,
         "Tags":  ".net core Expecto template",
         "Templates":  [
                           {
-                              "author":  "Micha? Niegrzybowski",
-                              "name":  "Expecto .net core Template",
+                              "classifications":  "Test",
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "F#"
                                        },
-                              "classifications":  "Test",
+                              "name":  "Expecto .net core Template",
                               "shortName":  "expecto",
-                              "groupIdentity":  null,
-                              "identity":  "Expecto.Template"
+                              "identity":  "Expecto.Template",
+                              "description":  null,
+                              "author":  "Micha? Niegrzybowski"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/expecto.template.5.0.0.nupkg",
@@ -844,59 +827,169 @@
         "Package":  "Expecto.Template"
     },
     {
-        "Owners":  "tintoy",
-        "Version":  "0.1.0-beta1",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.DotNetNew-0.1.0-beta1.nupkg\\",
-        "DownloadCount":  543,
+        "Owners":  "Kralizek",
+        "Version":  "1.1.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Kralizek.Lambda.Templates-1.1.1.nupkg\\",
+        "DownloadCount":  597,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Adam Friedman (tintoy@tintoy.io)",
-                              "name":  "Item template",
+                              "classifications":  [
+                                                      "AWS",
+                                                      "Lambda",
+                                                      "Function",
+                                                      "Template"
+                                                  ],
+                              "groupIdentity":  "Kralizek.Lambda.Template.EventFunction.Empty.CSharp",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Lambda Empty Event Function",
+                              "shortName":  "lambda-template-event-empty",
+                              "identity":  "Kralizek.Lambda.Template.EventFunction.Empty",
+                              "description":  null,
+                              "author":  "Renato Golia"
+                          },
+                          {
+                              "classifications":  [
+                                                      "AWS",
+                                                      "Lambda",
+                                                      "Function",
+                                                      "Template"
+                                                  ],
+                              "groupIdentity":  "Kralizek.Lambda.Template.RequestResponseFunction.Empty.CSharp",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "Lambda Empty RequestResponse Function",
+                              "shortName":  "lambda-template-requestresponse-empty",
+                              "identity":  "Kralizek.Lambda.Template.RequestResponseFunction.Empty",
+                              "description":  null,
+                              "author":  "Renato Golia"
+                          },
+                          {
+                              "classifications":  [
+                                                      "AWS",
+                                                      "Lambda",
+                                                      "Function",
+                                                      "Template"
+                                                  ],
+                              "groupIdentity":  "Kralizek.Lambda.Template.EventFunction.Boilerplate.CSharp",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "Lambda Boilerplate Event Function",
+                              "shortName":  "lambda-template-event-boilerplate",
+                              "identity":  "Kralizek.Lambda.Template.EventFunction.Boilerplate",
+                              "description":  null,
+                              "author":  "Renato Golia"
+                          },
+                          {
+                              "classifications":  [
+                                                      "AWS",
+                                                      "Lambda",
+                                                      "Function",
+                                                      "Template"
+                                                  ],
+                              "groupIdentity":  "Kralizek.Lambda.Template.RequestResponseFunction.Boilerplate.CSharp",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "Lambda Boilerplate RequestResponse Function",
+                              "shortName":  "lambda-template-requestresponse-boilerplate",
+                              "identity":  "Kralizek.Lambda.Template.RequestResponseFunction.Boilerplate",
+                              "description":  null,
+                              "author":  "Renato Golia"
+                          },
+                          {
+                              "classifications":  [
+                                                      "AWS",
+                                                      "Lambda",
+                                                      "Function",
+                                                      "Template",
+                                                      "SNS"
+                                                  ],
+                              "groupIdentity":  "Kralizek.Lambda.Template.EventFunction.SNS.CSharp",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "Lambda SNS Event Function",
+                              "shortName":  "lambda-template-sns-event",
+                              "identity":  "Kralizek.Lambda.Template.EventFunction.SNS",
+                              "description":  null,
+                              "author":  "Renato Golia"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/kralizek.lambda.templates.1.1.1.nupkg",
+        "Description":  "Templates for AWS Lambda that use templates available in Kralizek.Lambda.Template",
+        "Copyright":  null,
+        "Authors":  "Kralizek",
+        "LicenseUrl":  "https://raw.githubusercontent.com/Kralizek/AWSLambdaSharpTemplate/master/LICENSE.txt",
+        "ProjectUrl":  "https://github.com/Kralizek/AWSLambdaSharpTemplate",
+        "Package":  "Kralizek.Lambda.Templates"
+    },
+    {
+        "Owners":  "tintoy",
+        "Version":  "0.1.0-beta1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.DotNetNew-0.1.0-beta1.nupkg\\",
+        "DownloadCount":  576,
+        "Tags":  null,
+        "Templates":  [
+                          {
                               "classifications":  [
                                                       "Common",
                                                       "Templates",
                                                       "Item"
                                                   ],
-                              "shortName":  "item-template",
                               "groupIdentity":  "FiftyProtons.Templates.Item",
-                              "identity":  "FiftyProtons.Item"
-                          },
-                          {
-                              "author":  "Adam Friedman (tintoy@tintoy.io)",
-                              "name":  "Project template",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Item template",
+                              "shortName":  "item-template",
+                              "identity":  "FiftyProtons.Item",
+                              "description":  null,
+                              "author":  "Adam Friedman (tintoy@tintoy.io)"
+                          },
+                          {
                               "classifications":  [
                                                       "Common",
                                                       "Templates",
                                                       "Project"
                                                   ],
-                              "shortName":  "project-template",
                               "groupIdentity":  "FiftyProtons.Templates.Project",
-                              "identity":  "FiftyProtons.Project"
-                          },
-                          {
-                              "author":  "Adam Friedman (tintoy@tintoy.io)",
-                              "name":  "Template packaging template",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Project template",
+                              "shortName":  "project-template",
+                              "identity":  "FiftyProtons.Project",
+                              "description":  null,
+                              "author":  "Adam Friedman (tintoy@tintoy.io)"
+                          },
+                          {
                               "classifications":  [
                                                       "Common",
                                                       "Templates",
                                                       "Packaging"
                                                   ],
-                              "shortName":  "packaging-template",
                               "groupIdentity":  "FiftyProtons.Templates.PackagingProject",
-                              "identity":  "FiftyProtons.PackagingProject"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "Template packaging template",
+                              "shortName":  "packaging-template",
+                              "identity":  "FiftyProtons.PackagingProject",
+                              "description":  null,
+                              "author":  "Adam Friedman (tintoy@tintoy.io)"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/fiftyprotons.templates.dotnetnew.0.1.0-beta1.nupkg",
@@ -911,22 +1004,23 @@
         "Owners":  "Micha? Niegrzybowski",
         "Version":  "1.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\WebAPI.FSharp.Template-1.1.0.nupkg\\",
-        "DownloadCount":  508,
+        "DownloadCount":  533,
         "Tags":  ".net core Web API F# template",
         "Templates":  [
                           {
-                              "author":  "Micha? Niegrzybowski",
-                              "name":  "F# ASP.NET Core Web Api",
-                              "tags":  {
-                                           "language":  "F#"
-                                       },
                               "classifications":  [
                                                       "Web",
                                                       "WebAPI"
                                                   ],
-                              "shortName":  "webapi",
                               "groupIdentity":  null,
-                              "identity":  "WebApi.FSharp"
+                              "tags":  {
+                                           "language":  "F#"
+                                       },
+                              "name":  "F# ASP.NET Core Web Api",
+                              "shortName":  "webapi",
+                              "identity":  "WebApi.FSharp",
+                              "description":  null,
+                              "author":  "Micha? Niegrzybowski"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/webapi.fsharp.template.1.1.0.nupkg",
@@ -938,56 +1032,27 @@
         "Package":  "WebAPI.FSharp.Template"
     },
     {
-        "Owners":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
-        "Version":  "0.1.0-alpha0058",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Cake.Frosting.Template-0.1.0-alpha0058.nupkg\\",
-        "DownloadCount":  474,
-        "Tags":  "Cake Script Build",
-        "Templates":  [
-                          {
-                              "author":  "Patrik Svensson (patrik@patriksvensson.se)",
-                              "name":  "Cake Frosting Build Script",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "Cake",
-                                                      "Frosting"
-                                                  ],
-                              "shortName":  "cakefrosting",
-                              "groupIdentity":  null,
-                              "identity":  "Cake.Frosting"
-                          }
-                      ],
-        "DownloadUrl":  "https://api.nuget.org/packages/cake.frosting.template.0.1.0-alpha0058.nupkg",
-        "Description":  "Cake.Frosting templates for the .NET SDK.",
-        "Copyright":  "Copyright (c) .NET Foundation and contributors",
-        "Authors":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
-        "LicenseUrl":  "https://github.com/cake-build/frosting/blob/develop/LICENSE",
-        "ProjectUrl":  "https://github.com/cake-build/frosting",
-        "Package":  "Cake.Frosting.Template"
-    },
-    {
         "Owners":  "tintoy",
         "Version":  "0.1.0-alpha2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.PSCore-0.1.0-alpha2.nupkg\\",
-        "DownloadCount":  474,
+        "DownloadCount":  496,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Adam Friedman (tintoy@tintoy.io)",
-                              "name":  "PowerShell Core module",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Common",
                                                       "PowerShell"
                                                   ],
-                              "shortName":  "ps-core-module",
                               "groupIdentity":  null,
-                              "identity":  "tintoy.powershell.core.module"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "PowerShell Core module",
+                              "shortName":  "ps-core-module",
+                              "identity":  "tintoy.powershell.core.module",
+                              "description":  null,
+                              "author":  "Adam Friedman (tintoy@tintoy.io)"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/fiftyprotons.templates.pscore.0.1.0-alpha2.nupkg",
@@ -999,73 +1064,57 @@
         "Package":  "FiftyProtons.Templates.PSCore"
     },
     {
-        "Owners":  "Idea42, LLC",
-        "Version":  "1.0.11",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Idea42.NetCore.Templates-1.0.11.nupkg\\",
-        "DownloadCount":  473,
-        "Tags":  null,
+        "Owners":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
+        "Version":  "0.1.0-alpha0058",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Cake.Frosting.Template-0.1.0-alpha0058.nupkg\\",
+        "DownloadCount":  496,
+        "Tags":  "Cake Script Build",
         "Templates":  [
                           {
-                              "author":  "Idea42, LLC",
-                              "name":  "Idea42: Angular 1x base",
+                              "classifications":  [
+                                                      "Cake",
+                                                      "Frosting"
+                                                  ],
+                              "groupIdentity":  null,
                               "tags":  {
-                                           "type":  "project",
                                            "language":  "C#"
                                        },
-                              "classifications":  [
-                                                      "Web",
-                                                      "Angular1x",
-                                                      "Base"
-                                                  ],
-                              "shortName":  "idea42.angular1",
-                              "groupIdentity":  "Idea42.NetCore.Templates.Angular1",
-                              "identity":  "Idea42.NetCore.Templates.Angular1.CSharp"
-                          },
-                          {
-                              "author":  "Idea42, LLC",
-                              "name":  "Idea42: Authenticated API Base",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "WebAPI",
-                                                      "Authentication",
-                                                      "Base"
-                                                  ],
-                              "shortName":  "idea42.authapi",
-                              "groupIdentity":  "Idea42.NetCore.Templates.AuthApi",
-                              "identity":  "Idea42.NetCore.Templates.AuthApi.CSharp"
+                              "name":  "Cake Frosting Build Script",
+                              "shortName":  "cakefrosting",
+                              "identity":  "Cake.Frosting",
+                              "description":  null,
+                              "author":  "Patrik Svensson (patrik@patriksvensson.se)"
                           }
                       ],
-        "DownloadUrl":  "https://api.nuget.org/packages/idea42.netcore.templates.1.0.11.nupkg",
-        "Description":  "A set of useful templates that Idea42 uses to rapidly create projects",
-        "Copyright":  "Copyright ? Idea42, LLC",
-        "Authors":  "Idea42, LLC",
-        "LicenseUrl":  null,
-        "ProjectUrl":  "https://github.com/idea42co/NetCoreTemplates",
-        "Package":  "Idea42.NetCore.Templates"
+        "DownloadUrl":  "https://api.nuget.org/packages/cake.frosting.template.0.1.0-alpha0058.nupkg",
+        "Description":  "Cake.Frosting templates for the .NET SDK.",
+        "Copyright":  "Copyright (c) .NET Foundation and contributors",
+        "Authors":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
+        "LicenseUrl":  "https://github.com/cake-build/frosting/blob/develop/LICENSE",
+        "ProjectUrl":  "https://github.com/cake-build/frosting",
+        "Package":  "Cake.Frosting.Template"
     },
     {
         "Owners":  "Andrew Lock",
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NetEscapades.Templates-1.0.1.nupkg\\",
-        "DownloadCount":  458,
+        "DownloadCount":  479,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Andrew Lock",
-                              "name":  "Basic ASP.NET Core Web API",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "WebAPI",
                                                       "Web API"
                                                   ],
-                              "shortName":  "basicwebapi",
                               "groupIdentity":  null,
-                              "identity":  "NetEscapades.Templates.BasicWebApi"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "Basic ASP.NET Core Web API",
+                              "shortName":  "basicwebapi",
+                              "identity":  "NetEscapades.Templates.BasicWebApi",
+                              "description":  null,
+                              "author":  "Andrew Lock"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/netescapades.templates.1.0.1.nupkg",
@@ -1080,23 +1129,24 @@
         "Owners":  "Mads Kristensen",
         "Version":  "1.0.5",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\LibraryInstallerExtensionTemplate-1.0.5.nupkg\\",
-        "DownloadCount":  438,
+        "DownloadCount":  468,
         "Tags":  "extensibility vssdk vsix",
         "Templates":  [
                           {
-                              "author":  "Mads Kristensen",
-                              "name":  "Library Installer Extension",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Extensibility",
                                                       "Vsix"
                                                   ],
-                              "shortName":  "libext",
                               "groupIdentity":  null,
-                              "identity":  "madsk.examplelibraryinstaller"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "Library Installer Extension",
+                              "shortName":  "libext",
+                              "identity":  "madsk.examplelibraryinstaller",
+                              "description":  null,
+                              "author":  "Mads Kristensen"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/libraryinstallerextensiontemplate.1.0.5.nupkg",
@@ -1111,24 +1161,25 @@
         "Owners":  "Stefan Hausotte",
         "Version":  "1.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CakeApp-1.1.0.nupkg\\",
-        "DownloadCount":  426,
+        "DownloadCount":  465,
         "Tags":  "Cake build dotnet new core",
         "Templates":  [
                           {
-                              "author":  "Stefan Hausotte",
-                              "name":  "Console app with Cake build system template",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       ".Net Core",
                                                       "dotnet",
                                                       "template",
                                                       "cake"
                                                   ],
-                              "shortName":  "cake",
                               "groupIdentity":  null,
-                              "identity":  "Core.Cake.Template"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "Console app with Cake build system template",
+                              "shortName":  "cake",
+                              "identity":  "Core.Cake.Template",
+                              "description":  null,
+                              "author":  "Stefan Hausotte"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/cakeapp.1.1.0.nupkg",
@@ -1141,73 +1192,77 @@
     },
     {
         "Owners":  "Peachpie, Petr Houska",
-        "Version":  "0.7.0-CI00013",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Peachpie.Templates-0.7.0-CI00013.nupkg\\",
-        "DownloadCount":  300,
+        "Version":  "0.7.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Peachpie.Templates-0.7.0.nupkg\\",
+        "DownloadCount":  339,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Peachpie",
-                              "name":  "Peachpie console application",
-                              "tags":  {
-                                           "language":  "PHP"
-                                       },
-                              "classifications":  "Console",
-                              "shortName":  "peachpie-console",
-                              "groupIdentity":  "Peachpie.Templates.ConsoleApp",
-                              "identity":  "Peachpie.Templates.ConsoleApp"
-                          },
-                          {
-                              "author":  "Peachpie",
-                              "name":  "Peachpie library",
-                              "tags":  {
-                                           "language":  "PHP"
-                                       },
                               "classifications":  "Library",
-                              "shortName":  "peachpie-phplib",
-                              "groupIdentity":  "Peachpie.Templates.PhpLib",
-                              "identity":  "Peachpie.Templates.PhpLib"
-                          },
-                          {
-                              "author":  "Peachpie",
-                              "name":  "Peachpie web application",
+                              "groupIdentity":  "Peachpie.Templates.ClassLibrary",
                               "tags":  {
                                            "language":  "PHP"
                                        },
+                              "name":  "Peachpie Class library",
+                              "shortName":  "peachpie-classlibrary",
+                              "identity":  "Peachpie.Templates.ClassLibrary",
+                              "description":  null,
+                              "author":  "Peachpie"
+                          },
+                          {
+                              "classifications":  "Console",
+                              "groupIdentity":  "Peachpie.Templates.ConsoleApp",
+                              "tags":  {
+                                           "language":  "PHP"
+                                       },
+                              "name":  "Peachpie console application",
+                              "shortName":  "peachpie-console",
+                              "identity":  "Peachpie.Templates.ConsoleApp",
+                              "description":  null,
+                              "author":  "Peachpie"
+                          },
+                          {
                               "classifications":  [
                                                       "Web",
                                                       "Empty"
                                                   ],
-                              "shortName":  "peachpie-web",
                               "groupIdentity":  "Peachpie.Templates.WebApp",
-                              "identity":  "Peachpie.Templates.WebApp"
+                              "tags":  {
+                                           "language":  "PHP"
+                                       },
+                              "name":  "Peachpie web application",
+                              "shortName":  "peachpie-web",
+                              "identity":  "Peachpie.Templates.WebApp",
+                              "description":  null,
+                              "author":  "Peachpie"
                           }
                       ],
-        "DownloadUrl":  "https://api.nuget.org/packages/peachpie.templates.0.7.0-ci00013.nupkg",
+        "DownloadUrl":  "https://api.nuget.org/packages/peachpie.templates.0.7.0.nupkg",
         "Description":  "Templates of PHP projects for .NET platform using Peachpie Compiler.",
         "Copyright":  "Copyright 2017. All right Reserved.",
         "Authors":  "Peachpie, Petr Houska",
-        "LicenseUrl":  "https://github.com/iolevel/peachpie/blob/master/LICENSE.txt",
-        "ProjectUrl":  "https://github.com/iolevel/peachpie",
+        "LicenseUrl":  "https://github.com/peachpiecompiler/peachpie/blob/master/LICENSE.txt",
+        "ProjectUrl":  "https://github.com/peachpiecompiler/peachpie",
         "Package":  "Peachpie.Templates"
     },
     {
         "Owners":  "LykkeX",
         "Version":  "1.0.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Lykke.Template-1.0.6.nupkg\\",
-        "DownloadCount":  235,
+        "DownloadCount":  261,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "LykkeX",
-                              "name":  "Lykke.Template",
+                              "classifications":  "Solution",
+                              "groupIdentity":  "Lykke.Template",
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "Solution",
+                              "name":  "Lykke.Template",
                               "shortName":  "LykkeTemplate",
-                              "groupIdentity":  "Lykke.Template",
-                              "identity":  "Lykke.Template"
+                              "identity":  "Lykke.Template",
+                              "description":  "Lykke internal API template",
+                              "author":  "LykkeX"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/lykke.template.1.0.6.nupkg",
@@ -1219,26 +1274,91 @@
         "Package":  "Lykke.Template"
     },
     {
-        "Owners":  "akharlov",
-        "Version":  "1.0.1",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NUnit3.DotNetNew.Template-1.0.1.nupkg\\",
-        "DownloadCount":  181,
-        "Tags":  "NUnit dotnet core",
+        "Owners":  "Dan Siegel",
+        "Version":  "1.0.0-alpha4",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Prism.Forms.QuickstartTemplates-1.0.0-alpha4.nupkg\\",
+        "DownloadCount":  232,
+        "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Aleksei Kharlov aka halex2005 (codeofclimber.ru)",
-                              "name":  "NUnit 3 Test Project",
+                              "classifications":  [
+                                                      "Xamarin",
+                                                      "Prism"
+                                                  ],
+                              "groupIdentity":  "PrismLibrary.Xamarin.Forms",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
+                              "name":  "Prism Forms Mobile App - Empty",
+                              "shortName":  "prismformsempty",
+                              "identity":  "PrismLibrary.Xamarin.Forms.CSharp",
+                              "description":  null,
+                              "author":  "Dan Siegel"
+                          },
+                          {
+                              "classifications":  [
+                                                      "Xamarin",
+                                                      "Prism"
+                                                  ],
+                              "groupIdentity":  "PrismLibrary.Xamarin.Forms",
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "Prism Forms Mobile App - Quickstart",
+                              "shortName":  "prismforms",
+                              "identity":  "PrismLibrary.Xamarin.Forms.QuickStart.CSharp",
+                              "description":  null,
+                              "author":  "Dan Siegel"
+                          },
+                          {
+                              "classifications":  [
+                                                      "Prism",
+                                                      "Xamarin Forms"
+                                                  ],
+                              "groupIdentity":  null,
+                              "tags":  {
+                                           "type":  "item",
+                                           "language":  "C#"
+                                       },
+                              "name":  "Prism Forms Item Templates",
+                              "shortName":  "prismitem",
+                              "identity":  "prism.forms.item.templates",
+                              "description":  null,
+                              "author":  "Dan Siegel"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/prism.forms.quickstarttemplates.1.0.0-alpha4.nupkg",
+        "Description":  "Prism Library Templates",
+        "Copyright":  null,
+        "Authors":  "Dan Siegel",
+        "LicenseUrl":  "https://github.com/PrismLibrary/Prism/blob/master/LICENSE",
+        "ProjectUrl":  "https://github.com/PrismLibrary/Prism.Templates",
+        "Package":  "Prism.Forms.QuickstartTemplates"
+    },
+    {
+        "Owners":  "akharlov",
+        "Version":  "1.0.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NUnit3.DotNetNew.Template-1.0.1.nupkg\\",
+        "DownloadCount":  207,
+        "Tags":  "NUnit dotnet core",
+        "Templates":  [
+                          {
                               "classifications":  [
                                                       "Test",
                                                       "NUnit"
                                                   ],
-                              "shortName":  "nunit",
                               "groupIdentity":  null,
-                              "identity":  "NUnit3.DotNetNew.Template"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "NUnit 3 Test Project",
+                              "shortName":  "nunit",
+                              "identity":  "NUnit3.DotNetNew.Template",
+                              "description":  "A project that contains NUnit tests that can run on .NET Core on Windows, Linux and macOS",
+                              "author":  "Aleksei Kharlov aka halex2005 (codeofclimber.ru)"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/nunit3.dotnetnew.template.1.0.1.nupkg",
@@ -1253,24 +1373,25 @@
         "Owners":  "Maxime Mangel",
         "Version":  "0.1.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Fable.Template.Elmish.React.Demo-0.1.3.nupkg\\",
-        "DownloadCount":  159,
+        "DownloadCount":  202,
         "Tags":  "fable template fsharp",
         "Templates":  [
                           {
-                              "author":  "Maxime Mangel",
-                              "name":  "Fable.Elmish.React.Demo App",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "F#"
-                                       },
                               "classifications":  [
                                                       "Fable",
                                                       "Elmish",
                                                       "React"
                                                   ],
-                              "shortName":  "fable-elmish-react-demo",
                               "groupIdentity":  "FableElmishReactDemo",
-                              "identity":  "Fable.Template.Elmish.React.Demo"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "F#"
+                                       },
+                              "name":  "Fable.Elmish.React.Demo App",
+                              "shortName":  "fable-elmish-react-demo",
+                              "identity":  "Fable.Template.Elmish.React.Demo",
+                              "description":  null,
+                              "author":  "Maxime Mangel"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/fable.template.elmish.react.demo.0.1.3.nupkg",
@@ -1282,84 +1403,24 @@
         "Package":  "Fable.Template.Elmish.React.Demo"
     },
     {
-        "Owners":  "Dan Siegel",
-        "Version":  "1.0.0-alpha4",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Prism.Forms.QuickstartTemplates-1.0.0-alpha4.nupkg\\",
-        "DownloadCount":  149,
-        "Tags":  null,
-        "Templates":  [
-                          {
-                              "author":  "Dan Siegel",
-                              "name":  "Prism Forms Mobile App - Empty",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "Xamarin",
-                                                      "Prism"
-                                                  ],
-                              "shortName":  "prismformsempty",
-                              "groupIdentity":  "PrismLibrary.Xamarin.Forms",
-                              "identity":  "PrismLibrary.Xamarin.Forms.CSharp"
-                          },
-                          {
-                              "author":  "Dan Siegel",
-                              "name":  "Prism Forms Mobile App - Quickstart",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "Xamarin",
-                                                      "Prism"
-                                                  ],
-                              "shortName":  "prismforms",
-                              "groupIdentity":  "PrismLibrary.Xamarin.Forms",
-                              "identity":  "PrismLibrary.Xamarin.Forms.QuickStart.CSharp"
-                          },
-                          {
-                              "author":  "Dan Siegel",
-                              "name":  "Prism Forms Item Templates",
-                              "tags":  {
-                                           "type":  "item",
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "Prism",
-                                                      "Xamarin Forms"
-                                                  ],
-                              "shortName":  "prismitem",
-                              "groupIdentity":  null,
-                              "identity":  "prism.forms.item.templates"
-                          }
-                      ],
-        "DownloadUrl":  "https://api.nuget.org/packages/prism.forms.quickstarttemplates.1.0.0-alpha4.nupkg",
-        "Description":  "Prism Library Templates",
-        "Copyright":  null,
-        "Authors":  "Dan Siegel",
-        "LicenseUrl":  "https://github.com/PrismLibrary/Prism/blob/master/LICENSE",
-        "ProjectUrl":  "https://github.com/PrismLibrary/Prism.Templates",
-        "Package":  "Prism.Forms.QuickstartTemplates"
-    },
-    {
         "Owners":  "NServiceBus Ltd",
         "Version":  "1.0.1-alpha0009",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NServiceBus.Template.WindowsService-1.0.1-alpha0009.nupkg\\",
-        "DownloadCount":  140,
+        "DownloadCount":  161,
         "Tags":  "NServiceBus, SelfHost",
         "Templates":  [
                           {
-                              "author":  "NServiceBus Ltd",
-                              "name":  "NServiceBus WindowsService",
+                              "classifications":  "nservicebus",
+                              "groupIdentity":  "nservicebus",
                               "tags":  {
                                            "type":  "project",
                                            "language":  "C#"
                                        },
-                              "classifications":  "nservicebus",
+                              "name":  "NServiceBus WindowsService",
                               "shortName":  "nsbservice",
-                              "groupIdentity":  "nservicebus",
-                              "identity":  "NServiceBusWindowsService"
+                              "identity":  "NServiceBusWindowsService",
+                              "description":  null,
+                              "author":  "NServiceBus Ltd"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/nservicebus.template.windowsservice.1.0.1-alpha0009.nupkg",
@@ -1371,88 +1432,28 @@
         "Package":  "NServiceBus.Template.WindowsService"
     },
     {
-        "Owners":  "NServiceBus Ltd",
-        "Version":  "1.0.1-alpha0009",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NServiceBus.Template.TransportAdapter.WindowsService-1.0.1-alpha0009.nupkg\\",
-        "DownloadCount":  124,
-        "Tags":  "NServiceBus, SelfHost",
-        "Templates":  [
-                          {
-                              "author":  "NServiceBus Ltd",
-                              "name":  "WindowsService for ServiceControl Transport Adapter",
-                              "tags":  {
-                                           "type":  "project",
-                                           "language":  "C#"
-                                       },
-                              "classifications":  [
-                                                      "nservicebus",
-                                                      "servicecontrol",
-                                                      "transportadapter",
-                                                      "windowsservice",
-                                                      "host"
-                                                  ],
-                              "shortName":  "sc-adapter-service",
-                              "groupIdentity":  null,
-                              "identity":  "NServiceBus.Templates.ServiceControl.TransportAdapter.WindowsService"
-                          }
-                      ],
-        "DownloadUrl":  "https://api.nuget.org/packages/nservicebus.template.transportadapter.windowsservice.1.0.1-alpha0009.nupkg",
-        "Description":  "dotnet new template for hosting a ServiceControl.TransportAdapter in a windows service.",
-        "Copyright":  "Copyright 2010-2017 NServiceBus. All rights reserved",
-        "Authors":  "NServiceBus Ltd",
-        "LicenseUrl":  "http://particular.net/LicenseAgreement",
-        "ProjectUrl":  "http://particular.net/",
-        "Package":  "NServiceBus.Template.TransportAdapter.WindowsService"
-    },
-    {
-        "Owners":  "Mariusz Kotas",
-        "Version":  "1.0.0",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice-1.0.0.nupkg\\",
-        "DownloadCount":  119,
-        "Tags":  null,
-        "Templates":  [
-                          {
-                              "author":  "Mariusz Kotas",
-                              "name":  "Konzole microservice",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  "Solution",
-                              "shortName":  "konzole-service",
-                              "groupIdentity":  "Alza.Konzole.Templates",
-                              "identity":  "Alza.Konzole.Templates.Microservice"
-                          }
-                      ],
-        "DownloadUrl":  "https://api.nuget.org/packages/alza.konzole.templates.microservice.1.0.0.nupkg",
-        "Description":  "Alza Konzole template for creating new microservice",
-        "Copyright":  null,
-        "Authors":  "Mariusz Kotas",
-        "LicenseUrl":  null,
-        "ProjectUrl":  "https://github.com/alzacz/konzole2",
-        "Package":  "Alza.Konzole.Templates.Microservice"
-    },
-    {
         "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
         "Version":  "2017.7.17.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\TeamWeb.MvcTemplate-2017.7.17.3.nupkg\\",
-        "DownloadCount":  104,
+        "DownloadCount":  157,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Melvin Vermeer \u003cmelvin.vermeer@wortell.nl\u003e",
-                              "name":  "Team Web Mvc Web Application",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Aspnet",
                                                       "Mvc",
                                                       "Gulp",
                                                       "Sass"
                                                   ],
-                              "shortName":  "teamwebmvc",
                               "groupIdentity":  null,
-                              "identity":  "TeamWeb.MvcTemplate"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "Team Web Mvc Web Application",
+                              "shortName":  "teamwebmvc",
+                              "identity":  "TeamWeb.MvcTemplate",
+                              "description":  null,
+                              "author":  "Melvin Vermeer \u003cmelvin.vermeer@wortell.nl\u003e"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/teamweb.mvctemplate.2017.7.17.3.nupkg",
@@ -1467,24 +1468,25 @@
         "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
         "Version":  "0.1.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Melvin.Mvc.Template-0.1.2.nupkg\\",
-        "DownloadCount":  102,
+        "DownloadCount":  156,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Melvin Vermeer \u003cmelvin.vermeer@wortell.nl\u003e",
-                              "name":  "Melvin Mvc Web Application",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Aspnet",
                                                       "Mvc",
                                                       "Gulp",
                                                       "Sass"
                                                   ],
-                              "shortName":  "melvinmvc",
                               "groupIdentity":  null,
-                              "identity":  "Melvin.Mvc.Template"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "Melvin Mvc Web Application",
+                              "shortName":  "melvinmvc",
+                              "identity":  "Melvin.Mvc.Template",
+                              "description":  null,
+                              "author":  "Melvin Vermeer \u003cmelvin.vermeer@wortell.nl\u003e"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/melvin.mvc.template.0.1.2.nupkg",
@@ -1496,22 +1498,86 @@
         "Package":  "Melvin.Mvc.Template"
     },
     {
-        "Owners":  "Ram",
-        "Version":  "0.1.3",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MicroServiceWebApiTemplate-0.1.3.nupkg\\",
-        "DownloadCount":  95,
+        "Owners":  "Mariusz Kotas",
+        "Version":  "1.0.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice-1.0.0.nupkg\\",
+        "DownloadCount":  145,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Enterprise Software Team",
-                              "name":  "ASP.NET Core Microservice API Template",
+                              "classifications":  "Solution",
+                              "groupIdentity":  "Alza.Konzole.Templates",
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "WebAPI",
-                              "shortName":  "eswebapi",
+                              "name":  "Konzole microservice",
+                              "shortName":  "konzole-service",
+                              "identity":  "Alza.Konzole.Templates.Microservice",
+                              "description":  "Alza Konzole template for the new microservice",
+                              "author":  "Mariusz Kotas"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/alza.konzole.templates.microservice.1.0.0.nupkg",
+        "Description":  "Alza Konzole template for creating new microservice",
+        "Copyright":  null,
+        "Authors":  "Mariusz Kotas",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/alzacz/konzole2",
+        "Package":  "Alza.Konzole.Templates.Microservice"
+    },
+    {
+        "Owners":  "NServiceBus Ltd",
+        "Version":  "1.0.1-alpha0009",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NServiceBus.Template.TransportAdapter.WindowsService-1.0.1-alpha0009.nupkg\\",
+        "DownloadCount":  144,
+        "Tags":  "NServiceBus, SelfHost",
+        "Templates":  [
+                          {
+                              "classifications":  [
+                                                      "nservicebus",
+                                                      "servicecontrol",
+                                                      "transportadapter",
+                                                      "windowsservice",
+                                                      "host"
+                                                  ],
                               "groupIdentity":  null,
-                              "identity":  "ESTemplates.WebApiTemplate"
+                              "tags":  {
+                                           "type":  "project",
+                                           "language":  "C#"
+                                       },
+                              "name":  "WindowsService for ServiceControl Transport Adapter",
+                              "shortName":  "sc-adapter-service",
+                              "identity":  "NServiceBus.Templates.ServiceControl.TransportAdapter.WindowsService",
+                              "description":  null,
+                              "author":  "NServiceBus Ltd"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/nservicebus.template.transportadapter.windowsservice.1.0.1-alpha0009.nupkg",
+        "Description":  "dotnet new template for hosting a ServiceControl.TransportAdapter in a windows service.",
+        "Copyright":  "Copyright 2010-2017 NServiceBus. All rights reserved",
+        "Authors":  "NServiceBus Ltd",
+        "LicenseUrl":  "http://particular.net/LicenseAgreement",
+        "ProjectUrl":  "http://particular.net/",
+        "Package":  "NServiceBus.Template.TransportAdapter.WindowsService"
+    },
+    {
+        "Owners":  "Ram",
+        "Version":  "0.1.3",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MicroServiceWebApiTemplate-0.1.3.nupkg\\",
+        "DownloadCount":  138,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "classifications":  "WebAPI",
+                              "groupIdentity":  null,
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "ASP.NET Core Microservice API Template",
+                              "shortName":  "eswebapi",
+                              "identity":  "ESTemplates.WebApiTemplate",
+                              "description":  null,
+                              "author":  "Enterprise Software Team"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/microservicewebapitemplate.0.1.3.nupkg",
@@ -1526,23 +1592,24 @@
         "Owners":  "Juan Blanco",
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Nethereum.Templates.Faucet-0.1.0.nupkg\\",
-        "DownloadCount":  79,
+        "DownloadCount":  114,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Juan Blanco",
-                              "name":  "Nethereum Web Faucet",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Web",
                                                       "Blockchain",
                                                       "Ethereum"
                                                   ],
-                              "shortName":  "nethereumfaucet",
                               "groupIdentity":  null,
-                              "identity":  "Nethereum.Faucet"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "Nethereum Web Faucet",
+                              "shortName":  "nethereumfaucet",
+                              "identity":  "Nethereum.Faucet",
+                              "description":  null,
+                              "author":  "Juan Blanco"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/nethereum.templates.faucet.0.1.0.nupkg",
@@ -1557,19 +1624,20 @@
         "Owners":  "Hub3c",
         "Version":  "0.0.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Hub3c.Integration.Template-0.0.3.nupkg\\",
-        "DownloadCount":  67,
+        "DownloadCount":  103,
         "Tags":  "Template C# NET.CORE",
         "Templates":  [
                           {
-                              "author":  "Armand Caesario",
-                              "name":  "Hub3c Integration Template Project",
+                              "classifications":  null,
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  null,
+                              "name":  "Hub3c Integration Template Project",
                               "shortName":  null,
-                              "groupIdentity":  null,
-                              "identity":  "WebAPI"
+                              "identity":  "WebAPI",
+                              "description":  null,
+                              "author":  "Armand Caesario"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/hub3c.integration.template.0.0.3.nupkg",
@@ -1581,22 +1649,110 @@
         "Package":  "Hub3c.Integration.Template"
     },
     {
-        "Owners":  "Stephen Phillips",
-        "Version":  "0.1.0",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MonoGameTemplate-0.1.0.nupkg\\",
-        "DownloadCount":  60,
+        "Owners":  "Jeremy Lindsay (@jeremylindsayni)",
+        "Version":  "0.2.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\RaspberryPi.Template-0.2.0.nupkg\\",
+        "DownloadCount":  94,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Stephen Phillips",
-                              "name":  "MonoGame",
+                              "classifications":  [
+                                                      "IoT",
+                                                      "Console"
+                                                  ],
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "MonoGame",
-                              "shortName":  "monogame",
+                              "name":  "Empty .NET Core IoT project",
+                              "shortName":  "coreiot",
+                              "identity":  "IoT.Core",
+                              "description":  null,
+                              "author":  "Jeremy Lindsay \u003chttps://jeremylindsayni.wordpress.com\u003e"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/raspberrypi.template.0.2.0.nupkg",
+        "Description":  "An empty project template for .NET Core 2 IoT applications deployed to the Raspberry Pi 3.\n\nI wrote about how to use this template and install it into your development environment in this post:\n\nhttps://jeremylindsayni.wordpress.com/2017/03/21/how-to-a-net-core-template-to-create-a-new-project-from-the-command-line-with-dotnet-new-i/",
+        "Copyright":  "Copyright 2017: Jeremy Lindsay. All rights reserved.",
+        "Authors":  "Jeremy Lindsay (@jeremylindsayni)",
+        "LicenseUrl":  "https://github.com/jeremylindsayni/RaspberryPiTemplate/blob/master/LICENSE",
+        "ProjectUrl":  "https://github.com/jeremylindsayni/RaspberryPiTemplate",
+        "Package":  "RaspberryPi.Template"
+    },
+    {
+        "Owners":  "Peter Kottas",
+        "Version":  "1.0.1",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Templates-1.0.1.nupkg\\",
+        "DownloadCount":  89,
+        "Tags":  "dotnetcore templates,.netcore templates,windows service templates,micro templates",
+        "Templates":  [
+                          {
+                              "classifications":  "Microservices",
                               "groupIdentity":  null,
-                              "identity":  "MonoGameTemplate"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "Microservice - minimal",
+                              "shortName":  "mcrsvc-min",
+                              "identity":  "PeterKottas.DotNetCore.WindowsService.MinimalTemplate",
+                              "description":  null,
+                              "author":  "Peter Kottas"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/peterkottas.dotnetcore.windowsservice.templates.1.0.1.nupkg",
+        "Description":  "Templates for dot net core microservice.",
+        "Copyright":  null,
+        "Authors":  "Peter Kottas",
+        "LicenseUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService/blob/master/LICENSE",
+        "ProjectUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService",
+        "Package":  "PeterKottas.DotNetCore.WindowsService.Templates"
+    },
+    {
+        "Owners":  "Ben Sheeler",
+        "Version":  "0.0.2",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Sheelersoft.AngularTemplate-0.0.2.nupkg\\",
+        "DownloadCount":  88,
+        "Tags":  ".Net Core Angular Template",
+        "Templates":  [
+                          {
+                              "classifications":  "Web",
+                              "groupIdentity":  null,
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "Angular Template",
+                              "shortName":  "sheelersoft-angular",
+                              "identity":  "sheelersoft.AngularTemplate",
+                              "description":  null,
+                              "author":  "Ben Sheeler"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/sheelersoft.angulartemplate.0.0.2.nupkg",
+        "Description":  "A template for .Net Core and Angular",
+        "Copyright":  "Copyright 2017",
+        "Authors":  "Ben Sheeler",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/sheelersoft/AngularTemplate",
+        "Package":  "Sheelersoft.AngularTemplate"
+    },
+    {
+        "Owners":  "Stephen Phillips",
+        "Version":  "0.1.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MonoGameTemplate-0.1.0.nupkg\\",
+        "DownloadCount":  81,
+        "Tags":  null,
+        "Templates":  [
+                          {
+                              "classifications":  "MonoGame",
+                              "groupIdentity":  null,
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "MonoGame",
+                              "shortName":  "monogame",
+                              "identity":  "MonoGameTemplate",
+                              "description":  null,
+                              "author":  "Stephen Phillips"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/monogametemplate.0.1.0.nupkg",
@@ -1610,47 +1766,21 @@
     {
         "Owners":  "Peter Kottas",
         "Version":  "1.0.1",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Templates-1.0.1.nupkg\\",
-        "DownloadCount":  54,
-        "Tags":  "dotnetcore templates,.netcore templates,windows service templates,micro templates",
-        "Templates":  [
-                          {
-                              "author":  "Peter Kottas",
-                              "name":  "Microservice - minimal",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  "Microservices",
-                              "shortName":  "mcrsvc-min",
-                              "groupIdentity":  null,
-                              "identity":  "PeterKottas.DotNetCore.WindowsService.MinimalTemplate"
-                          }
-                      ],
-        "DownloadUrl":  "https://api.nuget.org/packages/peterkottas.dotnetcore.windowsservice.templates.1.0.1.nupkg",
-        "Description":  "Templates for dot net core microservice.",
-        "Copyright":  null,
-        "Authors":  "Peter Kottas",
-        "LicenseUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService/blob/master/LICENSE",
-        "ProjectUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService",
-        "Package":  "PeterKottas.DotNetCore.WindowsService.Templates"
-    },
-    {
-        "Owners":  "Peter Kottas",
-        "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Template-1.0.1.nupkg\\",
-        "DownloadCount":  49,
+        "DownloadCount":  78,
         "Tags":  "dotnetcore template,.netcore template,windows service template,micro template",
         "Templates":  [
                           {
-                              "author":  "Peter Kottas",
-                              "name":  "Minimal microservice",
+                              "classifications":  "Microservices",
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "Microservices",
+                              "name":  "Minimal microservice",
                               "shortName":  "mcrsvc",
-                              "groupIdentity":  null,
-                              "identity":  "PeterKottas.DotNetCore.WindowsService.Template"
+                              "identity":  "PeterKottas.DotNetCore.WindowsService.Template",
+                              "description":  null,
+                              "author":  "Peter Kottas"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/peterkottas.dotnetcore.windowsservice.template.1.0.1.nupkg",
@@ -1665,22 +1795,23 @@
         "Owners":  "Prafull Bhosale",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CustomAspNetCodeGeneratorTemplate-1.0.0.nupkg\\",
-        "DownloadCount":  48,
+        "DownloadCount":  76,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Prafull Bhosale",
-                              "name":  "Custom Code Generator for ASP.NET Core",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  [
                                                       "Code-Generator",
                                                       "Web"
                                                   ],
-                              "shortName":  "codegenerator",
                               "groupIdentity":  null,
-                              "identity":  "ASPNETCORE.CustomCodeGenerator"
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "Custom Code Generator for ASP.NET Core",
+                              "shortName":  "codegenerator",
+                              "identity":  "ASPNETCORE.CustomCodeGenerator",
+                              "description":  null,
+                              "author":  "Prafull Bhosale"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/customaspnetcodegeneratortemplate.1.0.0.nupkg",
@@ -1695,19 +1826,20 @@
         "Owners":  "Mariusz Kotas",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice.Simple-1.0.0.nupkg\\",
-        "DownloadCount":  38,
+        "DownloadCount":  66,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Mariusz Kotas",
-                              "name":  "Konzole simple microservice",
+                              "classifications":  "Solution",
+                              "groupIdentity":  "Alza.Konzole.Templates",
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "Solution",
+                              "name":  "Konzole simple microservice",
                               "shortName":  "konzole-service-simple",
-                              "groupIdentity":  "Alza.Konzole.Templates",
-                              "identity":  "Alza.Konzole.Templates.Microservice.Simple"
+                              "identity":  "Alza.Konzole.Templates.Microservice.Simple",
+                              "description":  "Alza Konzole template for the new simple microservice (just CRUD, without any domain/business logic)",
+                              "author":  "Mariusz Kotas"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/alza.konzole.templates.microservice.simple.1.0.0.nupkg",
@@ -1719,49 +1851,23 @@
         "Package":  "Alza.Konzole.Templates.Microservice.Simple"
     },
     {
-        "Owners":  "Ben Sheeler",
-        "Version":  "0.0.2",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Sheelersoft.AngularTemplate-0.0.2.nupkg\\",
-        "DownloadCount":  33,
-        "Tags":  ".Net Core Angular Template",
-        "Templates":  [
-                          {
-                              "author":  "Ben Sheeler",
-                              "name":  "Angular Template",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
-                              "classifications":  "Web",
-                              "shortName":  "sheelersoft-angular",
-                              "groupIdentity":  null,
-                              "identity":  "sheelersoft.AngularTemplate"
-                          }
-                      ],
-        "DownloadUrl":  "https://api.nuget.org/packages/sheelersoft.angulartemplate.0.0.2.nupkg",
-        "Description":  "A template for .Net Core and Angular",
-        "Copyright":  "Copyright 2017",
-        "Authors":  "Ben Sheeler",
-        "LicenseUrl":  null,
-        "ProjectUrl":  "https://github.com/sheelersoft/AngularTemplate",
-        "Package":  "Sheelersoft.AngularTemplate"
-    },
-    {
         "Owners":  "Ram",
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\ESMicroServiceWebApiTemplate-0.1.0.nupkg\\",
-        "DownloadCount":  26,
+        "DownloadCount":  48,
         "Tags":  null,
         "Templates":  [
                           {
-                              "author":  "Enterprise Software Team",
-                              "name":  "ASP.NET Core Microservice API Template",
+                              "classifications":  "WebAPI",
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "WebAPI",
+                              "name":  "ASP.NET Core Microservice API Template",
                               "shortName":  "eswebapi",
-                              "groupIdentity":  null,
-                              "identity":  "ESTemplates.WebApiTemplate"
+                              "identity":  "ESTemplates.WebApiTemplate",
+                              "description":  null,
+                              "author":  "Enterprise Software Team"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/esmicroservicewebapitemplate.0.1.0.nupkg",
@@ -1776,19 +1882,20 @@
         "Owners":  "Carlos Mendible (@cmendibl3)",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.WebAPI.AWS.Lambda-1.0.0.nupkg\\",
-        "DownloadCount":  21,
+        "DownloadCount":  43,
         "Tags":  "dotnetcore template .netcore aws lambda",
         "Templates":  [
                           {
-                              "author":  "Carlos Mendible",
-                              "name":  "ASP.NET Core Web API AWS Lambda",
+                              "classifications":  "Web/WebAPI",
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "Web/WebAPI",
+                              "name":  "ASP.NET Core Web API AWS Lambda",
                               "shortName":  "webapilambda",
-                              "groupIdentity":  null,
-                              "identity":  "codeityourself.webapi.aws.lambda"
+                              "identity":  "codeityourself.webapi.aws.lambda",
+                              "description":  null,
+                              "author":  "Carlos Mendible"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/codeityourself.webapi.aws.lambda.1.0.0.nupkg",
@@ -1803,19 +1910,20 @@
         "Owners":  "Carlos Mendible (@cmendibl3)",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.ASPNET.Raspberry-1.0.0.nupkg\\",
-        "DownloadCount":  20,
+        "DownloadCount":  43,
         "Tags":  "dotnetcore template .netcore RaspberryPi",
         "Templates":  [
                           {
-                              "author":  "Carlos Mendible",
-                              "name":  "ASP.NET Core Web Application for Raspberry Pi",
+                              "classifications":  "Web",
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "Web",
+                              "name":  "ASP.NET Core Web Application for Raspberry Pi",
                               "shortName":  "webrpi",
-                              "groupIdentity":  null,
-                              "identity":  "codeityourself.web.raspberry"
+                              "identity":  "codeityourself.web.raspberry",
+                              "description":  null,
+                              "author":  "Carlos Mendible"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/codeityourself.aspnet.raspberry.1.0.0.nupkg",
@@ -1830,19 +1938,20 @@
         "Owners":  "Carlos Mendible (@cmendibl3)",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.WebAPI.EchoBot-1.0.0.nupkg\\",
-        "DownloadCount":  20,
+        "DownloadCount":  42,
         "Tags":  "dotnetcore template .netcore bot botframework",
         "Templates":  [
                           {
-                              "author":  "Carlos Mendible",
-                              "name":  "ASP.NET Core Web Application Echo Bot",
+                              "classifications":  "Web/API",
+                              "groupIdentity":  null,
                               "tags":  {
                                            "language":  "C#"
                                        },
-                              "classifications":  "Web/API",
+                              "name":  "ASP.NET Core Web Application Echo Bot",
                               "shortName":  "webechobot",
-                              "groupIdentity":  null,
-                              "identity":  "codeityourself.webapi.echobot"
+                              "identity":  "codeityourself.webapi.echobot",
+                              "description":  null,
+                              "author":  "Carlos Mendible"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/codeityourself.webapi.echobot.1.0.0.nupkg",
@@ -1857,21 +1966,22 @@
         "Owners":  "Thomas Burkhart",
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Nancy.Templates.BasicNetCoreApp-0.1.0.nupkg\\",
-        "DownloadCount":  0,
+        "DownloadCount":  35,
         "Tags":  "web app nancyfx dotnet new template",
         "Templates":  [
                           {
-                              "author":  "Thomas Burkhart",
-                              "name":  "NancyCoreApp Template for running on Kestrel",
-                              "tags":  {
-                                           "language":  "C#"
-                                       },
                               "classifications":  {
 
                                                   },
-                              "shortName":  "NancyCoreApp",
                               "groupIdentity":  null,
-                              "identity":  null
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "name":  "NancyCoreApp Template for running on Kestrel",
+                              "shortName":  "NancyCoreApp",
+                              "identity":  null,
+                              "description":  "",
+                              "author":  "Thomas Burkhart"
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/nancy.templates.basicnetcoreapp.0.1.0.nupkg",
