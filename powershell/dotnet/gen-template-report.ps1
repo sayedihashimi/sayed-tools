@@ -430,13 +430,13 @@ function Get-JsonObjectFromTemplateFile{
                 $jObj2 = [Newtonsoft.Json.Linq.JObject]::Parse($json)
 
                 $result = New-Object -TypeName psobject -Property @{ 
-                    author=$jObj2.author.Value
+                    author=[string]$jObj2.author.Value
                     symbols=$jObj2.symbols
-                    classifications=($jObj2.classifications|%{$_.Value})
-                    name=$jObj2.name.Value
-                    identity=$jObj2.identity.Value
-                    groupIdentity=$jObj2.groupIdentity.Value
-                    shortName = $jObj2.shortName.Value
+                    classifications=[string[]]($jObj2.classifications|%{$_.Value})
+                    name=[string]$jObj2.name.Value
+                    identity=[string]$jObj2.identity.Value
+                    groupIdentity=[string]$jObj2.groupIdentity.Value
+                    shortName = [string]$jObj2.shortName.Value
                     tags = @{}
                 }
 
@@ -514,7 +514,7 @@ function Get-PackageTemplateStats{
                     foreach($template in $templateFileObj){
                         $tobject = New-Object psobject -Property @{
                             author = $template.author
-                            classifications = $template.classifications
+                            classifications = [string[]]($template.classifications)
                             name = $template.name
                             identity = $template.identity
                             groupIdentity = $template.groupIdentity
