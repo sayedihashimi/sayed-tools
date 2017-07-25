@@ -484,6 +484,7 @@ function Get-PackageTemplateStats{
                         ExtractPath = $pkg.ExtractPath
                         Description = [string]$null
                         ProjectUrl = [string]$null
+                        IconUrl = [string]$null
                         LicenseUrl = [string]$null
                         Copyright = [string]$null
                         Owners = [string]$null
@@ -497,6 +498,7 @@ function Get-PackageTemplateStats{
                             [xml]$nuspec = (get-content $pkg.NuspecPath)
                             $result.Description = $nuspec.package.metadata.description
                             $result.ProjectUrl = $nuspec.package.metadata.projectUrl
+                            $result.IconUrl = $nuspec.package.metadata.iconUrl
                             $result.LicenseUrl = $nuspec.package.metadata.licenseUrl
                             $result.Copyright = $nuspec.package.metadata.copyright
                             $result.Owners = $nuspec.package.metadata.owners

@@ -1,6 +1,6 @@
 [
     {
-        "Owners":  "Microsoft",
+        "IconUrl":  null,
         "Version":  "0.9.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.AspNetCore.SpaTemplates-0.9.3.nupkg\\",
         "DownloadCount":  47792,
@@ -109,10 +109,11 @@
         "Authors":  "Microsoft",
         "LicenseUrl":  "https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm",
         "ProjectUrl":  "https://github.com/aspnet/javascriptservices",
-        "Package":  "Microsoft.AspNetCore.SpaTemplates"
+        "Package":  "Microsoft.AspNetCore.SpaTemplates",
+        "Owners":  "Microsoft"
     },
     {
-        "Owners":  "Microsoft",
+        "IconUrl":  null,
         "Version":  "1.0.0-preview-000409",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.DotNet.Web.Spa.ProjectTemplates-1.0.0-preview-000409.nupkg\\",
         "DownloadCount":  7693,
@@ -173,10 +174,11 @@
         "Authors":  "Microsoft",
         "LicenseUrl":  "https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm",
         "ProjectUrl":  "https://github.com/aspnet/javascriptservices",
-        "Package":  "Microsoft.DotNet.Web.Spa.ProjectTemplates"
+        "Package":  "Microsoft.DotNet.Web.Spa.ProjectTemplates",
+        "Owners":  "Microsoft"
     },
     {
-        "Owners":  "Steve Desmond",
+        "IconUrl":  null,
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\libyear-1.0.1.nupkg\\",
         "DownloadCount":  2005,
@@ -190,7 +192,7 @@
                                        },
                               "classifications":  null,
                               "shortName":  "libyear",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "libyear"
                           },
                           {
@@ -201,7 +203,7 @@
                                        },
                               "classifications":  null,
                               "shortName":  "libyear",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "libyear"
                           }
                       ],
@@ -211,10 +213,11 @@
         "Authors":  "Steve Desmond",
         "LicenseUrl":  null,
         "ProjectUrl":  null,
-        "Package":  "libyear"
+        "Package":  "libyear",
+        "Owners":  "Steve Desmond"
     },
     {
-        "Owners":  "Muhammad Rehan Saeed (RehanSaeed.com)",
+        "IconUrl":  "https://raw.githubusercontent.com/ASP-NET-Core-Boilerplate/Templates/master/Images/Icon.png",
         "Version":  "1.6.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Boilerplate.Templates-1.6.2.nupkg\\",
         "DownloadCount":  1735,
@@ -258,10 +261,11 @@
         "Authors":  "Muhammad Rehan Saeed (RehanSaeed.com)",
         "LicenseUrl":  "https://github.com/ASP-NET-Core-Boilerplate/Templates/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/ASP-NET-Core-Boilerplate/Templates",
-        "Package":  "Boilerplate.Templates"
+        "Package":  "Boilerplate.Templates",
+        "Owners":  "Muhammad Rehan Saeed (RehanSaeed.com)"
     },
     {
-        "Owners":  "Amazon Web Services",
+        "IconUrl":  null,
         "Version":  "1.3.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Amazon.Lambda.Templates-1.3.0.nupkg\\",
         "DownloadCount":  1220,
@@ -434,10 +438,11 @@
         "Authors":  "Amazon Web Services",
         "LicenseUrl":  "https://aws.amazon.com/apache-2-0/",
         "ProjectUrl":  "https://github.com/aws/aws-lambda-dotnet",
-        "Package":  "Amazon.Lambda.Templates"
+        "Package":  "Amazon.Lambda.Templates",
+        "Owners":  "Amazon Web Services"
     },
     {
-        "Owners":  "Brock Allen, Dominick Baier",
+        "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\IdentityServer4.Templates-1.0.0.nupkg\\",
         "DownloadCount":  1209,
@@ -489,10 +494,11 @@
         "Authors":  "Brock Allen, Dominick Baier",
         "LicenseUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates/blob/dev/LICENSE",
         "ProjectUrl":  "https://github.com/IdentityServer/IdentityServer4.Templates",
-        "Package":  "IdentityServer4.Templates"
+        "Package":  "IdentityServer4.Templates",
+        "Owners":  "Brock Allen, Dominick Baier"
     },
     {
-        "Owners":  "Jimmy Byrd",
+        "IconUrl":  null,
         "Version":  "0.3.5",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MiniScaffold-0.3.5.nupkg\\",
         "DownloadCount":  1156,
@@ -508,7 +514,7 @@
                                                       "Scaffold"
                                                   ],
                               "shortName":  "mini-scaffold",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "MiniScaffold"
                           }
                       ],
@@ -518,10 +524,11 @@
         "Authors":  "Jimmy Byrd",
         "LicenseUrl":  "https://github.com/TheAngryByrd/MiniScaffold/blob/master/LICENSE.md",
         "ProjectUrl":  "https://github.com/TheAngryByrd/MiniScaffold",
-        "Package":  "MiniScaffold"
+        "Package":  "MiniScaffold",
+        "Owners":  "Jimmy Byrd"
     },
     {
-        "Owners":  "Dustin Moris Gorski",
+        "IconUrl":  "https://raw.githubusercontent.com/dustinmoris/giraffe/master/giraffe-64x64.png",
         "Version":  "0.1.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\giraffe-template-0.1.6.nupkg\\",
         "DownloadCount":  1037,
@@ -538,7 +545,7 @@
                                                       "Giraffe"
                                                   ],
                               "shortName":  "giraffe",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "Giraffe.Template"
                           }
                       ],
@@ -548,10 +555,11 @@
         "Authors":  "David Sinclair",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/dustinmoris/Giraffe",
-        "Package":  "giraffe-template"
+        "Package":  "giraffe-template",
+        "Owners":  "Dustin Moris Gorski"
     },
     {
-        "Owners":  "Chad Ramos (pioneercode.com)",
+        "IconUrl":  "http://pioneercode.com/images/logo-large.png",
         "Version":  "1.0.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Pioneer.Console.Boilerplate-1.0.6.nupkg\\",
         "DownloadCount":  864,
@@ -571,7 +579,7 @@
                                                       "Configuration"
                                                   ],
                               "shortName":  "pioneer-console",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "Pioneer.Console.Boilerplate"
                           }
                       ],
@@ -581,10 +589,11 @@
         "Authors":  "Chad Ramos (pioneercode.com)",
         "LicenseUrl":  "https://github.com/PioneerCode/pioneer-console-boilerplate/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/PioneerCode/pioneer-console-boilerplate",
-        "Package":  "Pioneer.Console.Boilerplate"
+        "Package":  "Pioneer.Console.Boilerplate",
+        "Owners":  "Chad Ramos (pioneercode.com)"
     },
     {
-        "Owners":  "kiootic",
+        "IconUrl":  null,
         "Version":  "3.5.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MonoGame.Template.NETCore-3.5.1.nupkg\\",
         "DownloadCount":  774,
@@ -602,7 +611,7 @@
                                                       "MonoGame"
                                                   ],
                               "shortName":  "monogamegl",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "MonoGame.DesktopGL.CSharp"
                           }
                       ],
@@ -612,10 +621,11 @@
         "Authors":  "kiootic",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/kiootic/MonoGame-core-template",
-        "Package":  "MonoGame.Template.NETCore"
+        "Package":  "MonoGame.Template.NETCore",
+        "Owners":  "kiootic"
     },
     {
-        "Owners":  "Mads Kristensen",
+        "IconUrl":  "https://raw.githubusercontent.com/madskristensen/AspNetCoreTemplatePack/master/src/Static.Web/.template.config/icon.png",
         "Version":  "1.0.21",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MadsKristensen.AspNetCore.Web.Templates-1.0.21.nupkg\\",
         "DownloadCount":  767,
@@ -673,10 +683,11 @@
         "Authors":  "Mads Kristensen",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/madskristensen/AspNetCoreTemplatePack",
-        "Package":  "MadsKristensen.AspNetCore.Web.Templates"
+        "Package":  "MadsKristensen.AspNetCore.Web.Templates",
+        "Owners":  "Mads Kristensen"
     },
     {
-        "Owners":  "RIGANTI",
+        "IconUrl":  null,
         "Version":  "1.1.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\DotVVM.Templates-1.1.2.nupkg\\",
         "DownloadCount":  708,
@@ -704,10 +715,11 @@
         "Authors":  "RIGANTI",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/riganti/dotvvm",
-        "Package":  "DotVVM.Templates"
+        "Package":  "DotVVM.Templates",
+        "Owners":  "RIGANTI"
     },
     {
-        "Owners":  "BrainCrumbz",
+        "IconUrl":  "https://cdn.rawgit.com/nspec/NSpec/gh-pages/assets/images/logo.png",
         "Version":  "1.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\dotnet-new-nspec-1.0.2.nupkg\\",
         "DownloadCount":  681,
@@ -734,10 +746,11 @@
         "Authors":  "BrainCrumbz",
         "LicenseUrl":  "https://github.com/nspec/DotNetNewNSpec/blob/master/license.txt",
         "ProjectUrl":  "https://github.com/nspec/DotNetNewNSpec",
-        "Package":  "dotnet-new-nspec"
+        "Package":  "dotnet-new-nspec",
+        "Owners":  "BrainCrumbz"
     },
     {
-        "Owners":  "Idea42, LLC",
+        "IconUrl":  null,
         "Version":  "1.0.11",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Idea42.NetCore.Templates-1.0.11.nupkg\\",
         "DownloadCount":  651,
@@ -782,10 +795,11 @@
         "Authors":  "Idea42, LLC",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/idea42co/NetCoreTemplates",
-        "Package":  "Idea42.NetCore.Templates"
+        "Package":  "Idea42.NetCore.Templates",
+        "Owners":  "Idea42, LLC"
     },
     {
-        "Owners":  "Micha? Niegrzybowski",
+        "IconUrl":  null,
         "Version":  "5.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Expecto.Template-5.0.0.nupkg\\",
         "DownloadCount":  609,
@@ -801,7 +815,7 @@
                                                       "Test"
                                                   ],
                               "shortName":  "expecto",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "Expecto.Template"
                           }
                       ],
@@ -811,10 +825,11 @@
         "Authors":  "Micha? Niegrzybowski",
         "LicenseUrl":  "https://github.com/MNie/Expecto.Template/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/MNie/Expecto.Template",
-        "Package":  "Expecto.Template"
+        "Package":  "Expecto.Template",
+        "Owners":  "Micha? Niegrzybowski"
     },
     {
-        "Owners":  "Kralizek",
+        "IconUrl":  null,
         "Version":  "1.1.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Kralizek.Lambda.Templates-1.1.1.nupkg\\",
         "DownloadCount":  605,
@@ -913,10 +928,11 @@
         "Authors":  "Kralizek",
         "LicenseUrl":  "https://raw.githubusercontent.com/Kralizek/AWSLambdaSharpTemplate/master/LICENSE.txt",
         "ProjectUrl":  "https://github.com/Kralizek/AWSLambdaSharpTemplate",
-        "Package":  "Kralizek.Lambda.Templates"
+        "Package":  "Kralizek.Lambda.Templates",
+        "Owners":  "Kralizek"
     },
     {
-        "Owners":  "tintoy",
+        "IconUrl":  null,
         "Version":  "0.1.0-beta1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.DotNetNew-0.1.0-beta1.nupkg\\",
         "DownloadCount":  585,
@@ -977,10 +993,11 @@
         "Authors":  "tintoy",
         "LicenseUrl":  "https://raw.githubusercontent.com/tintoy/dotnet-template-templates/master/LICENSE",
         "ProjectUrl":  "https://github.com/tintoy/dotnet-template-templates",
-        "Package":  "FiftyProtons.Templates.DotNetNew"
+        "Package":  "FiftyProtons.Templates.DotNetNew",
+        "Owners":  "tintoy"
     },
     {
-        "Owners":  "Micha? Niegrzybowski",
+        "IconUrl":  null,
         "Version":  "1.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\WebAPI.FSharp.Template-1.1.0.nupkg\\",
         "DownloadCount":  541,
@@ -997,7 +1014,7 @@
                                                       "WebAPI"
                                                   ],
                               "shortName":  "webapi",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "WebApi.FSharp"
                           }
                       ],
@@ -1007,10 +1024,11 @@
         "Authors":  "Micha? Niegrzybowski",
         "LicenseUrl":  "https://github.com/MNie/FSharpNetCoreWebApiTemplate/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/MNie/FSharpNetCoreWebApiTemplate",
-        "Package":  "WebAPI.FSharp.Template"
+        "Package":  "WebAPI.FSharp.Template",
+        "Owners":  "Micha? Niegrzybowski"
     },
     {
-        "Owners":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
+        "IconUrl":  "https://raw.githubusercontent.com/cake-build/graphics/master/png/cake-medium.png",
         "Version":  "0.1.0-alpha0058",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Cake.Frosting.Template-0.1.0-alpha0058.nupkg\\",
         "DownloadCount":  505,
@@ -1027,7 +1045,7 @@
                                                       "Frosting"
                                                   ],
                               "shortName":  "cakefrosting",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "Cake.Frosting"
                           }
                       ],
@@ -1037,10 +1055,11 @@
         "Authors":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors",
         "LicenseUrl":  "https://github.com/cake-build/frosting/blob/develop/LICENSE",
         "ProjectUrl":  "https://github.com/cake-build/frosting",
-        "Package":  "Cake.Frosting.Template"
+        "Package":  "Cake.Frosting.Template",
+        "Owners":  "Patrik Svensson, Mattias Karlsson, Gary Ewan Park and contributors"
     },
     {
-        "Owners":  "tintoy",
+        "IconUrl":  null,
         "Version":  "0.1.0-alpha2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.PSCore-0.1.0-alpha2.nupkg\\",
         "DownloadCount":  504,
@@ -1058,7 +1077,7 @@
                                                       "PowerShell"
                                                   ],
                               "shortName":  "ps-core-module",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "tintoy.powershell.core.module"
                           }
                       ],
@@ -1068,10 +1087,11 @@
         "Authors":  "tintoy",
         "LicenseUrl":  "https://raw.githubusercontent.com/tintoy/ps-core-module-template/master/LICENSE",
         "ProjectUrl":  "https://github.com/tintoy/ps-core-module-template",
-        "Package":  "FiftyProtons.Templates.PSCore"
+        "Package":  "FiftyProtons.Templates.PSCore",
+        "Owners":  "tintoy"
     },
     {
-        "Owners":  "Andrew Lock",
+        "IconUrl":  null,
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NetEscapades.Templates-1.0.1.nupkg\\",
         "DownloadCount":  487,
@@ -1088,7 +1108,7 @@
                                                       "Web API"
                                                   ],
                               "shortName":  "basicwebapi",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "NetEscapades.Templates.BasicWebApi"
                           }
                       ],
@@ -1098,10 +1118,11 @@
         "Authors":  "Andrew Lock",
         "LicenseUrl":  null,
         "ProjectUrl":  null,
-        "Package":  "NetEscapades.Templates"
+        "Package":  "NetEscapades.Templates",
+        "Owners":  "Andrew Lock"
     },
     {
-        "Owners":  "Mads Kristensen",
+        "IconUrl":  "https://github.com/aspnet/LibraryInstaller/raw/master/src/LibraryInstaller.Vsix/Resources/Icon.png",
         "Version":  "1.0.5",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\LibraryInstallerExtensionTemplate-1.0.5.nupkg\\",
         "DownloadCount":  476,
@@ -1119,7 +1140,7 @@
                                                       "Vsix"
                                                   ],
                               "shortName":  "libext",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "madsk.examplelibraryinstaller"
                           }
                       ],
@@ -1129,10 +1150,11 @@
         "Authors":  "Mads Kristensen",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/madskristensen/LibraryInstallerExtensionTemplate",
-        "Package":  "LibraryInstallerExtensionTemplate"
+        "Package":  "LibraryInstallerExtensionTemplate",
+        "Owners":  "Mads Kristensen"
     },
     {
-        "Owners":  "Stefan Hausotte",
+        "IconUrl":  null,
         "Version":  "1.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CakeApp-1.1.0.nupkg\\",
         "DownloadCount":  473,
@@ -1151,7 +1173,7 @@
                                                       "cake"
                                                   ],
                               "shortName":  "cake",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "Core.Cake.Template"
                           }
                       ],
@@ -1161,10 +1183,11 @@
         "Authors":  "Stefan Hausotte",
         "LicenseUrl":  "https://github.com/secana/CakeApp/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/secana/CakeApp",
-        "Package":  "CakeApp"
+        "Package":  "CakeApp",
+        "Owners":  "Stefan Hausotte"
     },
     {
-        "Owners":  "Peachpie, Petr Houska",
+        "IconUrl":  null,
         "Version":  "0.7.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Peachpie.Templates-0.7.0.nupkg\\",
         "DownloadCount":  351,
@@ -1217,10 +1240,11 @@
         "Authors":  "Peachpie, Petr Houska",
         "LicenseUrl":  "https://github.com/peachpiecompiler/peachpie/blob/master/LICENSE.txt",
         "ProjectUrl":  "https://github.com/peachpiecompiler/peachpie",
-        "Package":  "Peachpie.Templates"
+        "Package":  "Peachpie.Templates",
+        "Owners":  "Peachpie, Petr Houska"
     },
     {
-        "Owners":  "LykkeX",
+        "IconUrl":  null,
         "Version":  "1.0.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Lykke.Template-1.0.6.nupkg\\",
         "DownloadCount":  269,
@@ -1246,10 +1270,11 @@
         "Authors":  "LykkeX",
         "LicenseUrl":  "https://github.com/LykkeCity/DotNetCoreServiceTemplate/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/LykkeCity/DotNetCoreServiceTemplate",
-        "Package":  "Lykke.Template"
+        "Package":  "Lykke.Template",
+        "Owners":  "LykkeX"
     },
     {
-        "Owners":  "Dan Siegel",
+        "IconUrl":  null,
         "Version":  "1.0.0-alpha4",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Prism.Forms.QuickstartTemplates-1.0.0-alpha4.nupkg\\",
         "DownloadCount":  241,
@@ -1297,7 +1322,7 @@
                                                       "Xamarin Forms"
                                                   ],
                               "shortName":  "prismitem",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "prism.forms.item.templates"
                           }
                       ],
@@ -1307,10 +1332,11 @@
         "Authors":  "Dan Siegel",
         "LicenseUrl":  "https://github.com/PrismLibrary/Prism/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/PrismLibrary/Prism.Templates",
-        "Package":  "Prism.Forms.QuickstartTemplates"
+        "Package":  "Prism.Forms.QuickstartTemplates",
+        "Owners":  "Dan Siegel"
     },
     {
-        "Owners":  "Jeremy Lindsay (@jeremylindsayni)",
+        "IconUrl":  null,
         "Version":  "0.4.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\RaspberryPi.Template-0.4.0.nupkg\\",
         "DownloadCount":  239,
@@ -1327,7 +1353,7 @@
                                                       "Console"
                                                   ],
                               "shortName":  "coreiot",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "IoT.Core"
                           }
                       ],
@@ -1337,10 +1363,11 @@
         "Authors":  "Jeremy Lindsay (@jeremylindsayni)",
         "LicenseUrl":  "https://github.com/jeremylindsayni/RaspberryPiTemplate/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/jeremylindsayni/RaspberryPiTemplate",
-        "Package":  "RaspberryPi.Template"
+        "Package":  "RaspberryPi.Template",
+        "Owners":  "Jeremy Lindsay (@jeremylindsayni)"
     },
     {
-        "Owners":  "akharlov",
+        "IconUrl":  "https://avatars2.githubusercontent.com/u/2678858",
         "Version":  "1.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NUnit3.DotNetNew.Template-1.1.0.nupkg\\",
         "DownloadCount":  221,
@@ -1398,10 +1425,11 @@
         "Authors":  "akharlov",
         "LicenseUrl":  "https://github.com/halex2005/dotnet-new-nunit/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/halex2005/dotnet-new-nunit",
-        "Package":  "NUnit3.DotNetNew.Template"
+        "Package":  "NUnit3.DotNetNew.Template",
+        "Owners":  "akharlov"
     },
     {
-        "Owners":  "Maxime Mangel",
+        "IconUrl":  null,
         "Version":  "0.1.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Fable.Template.Elmish.React.Demo-0.1.3.nupkg\\",
         "DownloadCount":  211,
@@ -1430,10 +1458,11 @@
         "Authors":  "Maxime Mangel",
         "LicenseUrl":  "https://github.com/fable-elmish/elmish/blob/master/LICENSE.md",
         "ProjectUrl":  "https://github.com/fable-elmish/elmish",
-        "Package":  "Fable.Template.Elmish.React.Demo"
+        "Package":  "Fable.Template.Elmish.React.Demo",
+        "Owners":  "Maxime Mangel"
     },
     {
-        "Owners":  "NServiceBus Ltd",
+        "IconUrl":  "http://s3.amazonaws.com/nuget.images/NServiceBus_32.png",
         "Version":  "1.0.1-alpha0009",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NServiceBus.Template.WindowsService-1.0.1-alpha0009.nupkg\\",
         "DownloadCount":  172,
@@ -1460,10 +1489,11 @@
         "Authors":  "NServiceBus Ltd",
         "LicenseUrl":  "http://particular.net/LicenseAgreement",
         "ProjectUrl":  "http://particular.net/",
-        "Package":  "NServiceBus.Template.WindowsService"
+        "Package":  "NServiceBus.Template.WindowsService",
+        "Owners":  "NServiceBus Ltd"
     },
     {
-        "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
+        "IconUrl":  null,
         "Version":  "2017.7.17.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\TeamWeb.MvcTemplate-2017.7.17.3.nupkg\\",
         "DownloadCount":  165,
@@ -1482,7 +1512,7 @@
                                                       "Sass"
                                                   ],
                               "shortName":  "teamwebmvc",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "TeamWeb.MvcTemplate"
                           }
                       ],
@@ -1492,10 +1522,11 @@
         "Authors":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
         "LicenseUrl":  "http://www.wortell.nl/",
         "ProjectUrl":  "http://www.wortell.nl/",
-        "Package":  "TeamWeb.MvcTemplate"
+        "Package":  "TeamWeb.MvcTemplate",
+        "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)"
     },
     {
-        "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
+        "IconUrl":  null,
         "Version":  "0.1.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Melvin.Mvc.Template-0.1.2.nupkg\\",
         "DownloadCount":  164,
@@ -1514,7 +1545,7 @@
                                                       "Sass"
                                                   ],
                               "shortName":  "melvinmvc",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "Melvin.Mvc.Template"
                           }
                       ],
@@ -1524,10 +1555,11 @@
         "Authors":  "Melvin Vermeer (melvin.vermeer@wortell.nl)",
         "LicenseUrl":  "http://www.wortell.nl/",
         "ProjectUrl":  "http://www.wortell.nl/",
-        "Package":  "Melvin.Mvc.Template"
+        "Package":  "Melvin.Mvc.Template",
+        "Owners":  "Melvin Vermeer (melvin.vermeer@wortell.nl)"
     },
     {
-        "Owners":  "NServiceBus Ltd",
+        "IconUrl":  "http://s3.amazonaws.com/nuget.images/NServiceBus_32.png",
         "Version":  "1.0.1-alpha0009",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NServiceBus.Template.TransportAdapter.WindowsService-1.0.1-alpha0009.nupkg\\",
         "DownloadCount":  156,
@@ -1548,7 +1580,7 @@
                                                       "host"
                                                   ],
                               "shortName":  "sc-adapter-service",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "NServiceBus.Templates.ServiceControl.TransportAdapter.WindowsService"
                           }
                       ],
@@ -1558,10 +1590,11 @@
         "Authors":  "NServiceBus Ltd",
         "LicenseUrl":  "http://particular.net/LicenseAgreement",
         "ProjectUrl":  "http://particular.net/",
-        "Package":  "NServiceBus.Template.TransportAdapter.WindowsService"
+        "Package":  "NServiceBus.Template.TransportAdapter.WindowsService",
+        "Owners":  "NServiceBus Ltd"
     },
     {
-        "Owners":  "Mariusz Kotas",
+        "IconUrl":  "https://i.alza.cz/Styles/images/svg/alza_cz.svg",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice-1.0.0.nupkg\\",
         "DownloadCount":  153,
@@ -1587,10 +1620,11 @@
         "Authors":  "Mariusz Kotas",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/alzacz/konzole2",
-        "Package":  "Alza.Konzole.Templates.Microservice"
+        "Package":  "Alza.Konzole.Templates.Microservice",
+        "Owners":  "Mariusz Kotas"
     },
     {
-        "Owners":  "Ram",
+        "IconUrl":  null,
         "Version":  "0.1.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MicroServiceWebApiTemplate-0.1.3.nupkg\\",
         "DownloadCount":  146,
@@ -1606,7 +1640,7 @@
                                                       "WebAPI"
                                                   ],
                               "shortName":  "eswebapi",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "ESTemplates.WebApiTemplate"
                           }
                       ],
@@ -1616,10 +1650,11 @@
         "Authors":  "Ram",
         "LicenseUrl":  "https://github.com/PioneerCode/pioneer-console-boilerplate/blob/master/LICENSE",
         "ProjectUrl":  null,
-        "Package":  "MicroServiceWebApiTemplate"
+        "Package":  "MicroServiceWebApiTemplate",
+        "Owners":  "Ram"
     },
     {
-        "Owners":  "Juan Blanco",
+        "IconUrl":  "https://raw.githubusercontent.com/Nethereum/Nethereum/master/logos/logo64x64.png",
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Nethereum.Templates.Faucet-0.1.0.nupkg\\",
         "DownloadCount":  122,
@@ -1637,7 +1672,7 @@
                                                       "Ethereum"
                                                   ],
                               "shortName":  "nethereumfaucet",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "Nethereum.Faucet"
                           }
                       ],
@@ -1647,10 +1682,11 @@
         "Authors":  "Juan Blanco",
         "LicenseUrl":  "https://raw.githubusercontent.com/Nethereum/Nethereum/master/LICENSE.md",
         "ProjectUrl":  "http://www.nethereum.com/",
-        "Package":  "Nethereum.Templates.Faucet"
+        "Package":  "Nethereum.Templates.Faucet",
+        "Owners":  "Juan Blanco"
     },
     {
-        "Owners":  "Hub3c",
+        "IconUrl":  null,
         "Version":  "0.0.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Hub3c.Integration.Template-0.0.3.nupkg\\",
         "DownloadCount":  111,
@@ -1663,8 +1699,8 @@
                                            "language":  "C#"
                                        },
                               "classifications":  null,
-                              "shortName":  null,
-                              "groupIdentity":  null,
+                              "shortName":  "",
+                              "groupIdentity":  "",
                               "identity":  "WebAPI"
                           }
                       ],
@@ -1674,10 +1710,11 @@
         "Authors":  "Armand Caesario, Ahmad Permana",
         "LicenseUrl":  null,
         "ProjectUrl":  null,
-        "Package":  "Hub3c.Integration.Template"
+        "Package":  "Hub3c.Integration.Template",
+        "Owners":  "Hub3c"
     },
     {
-        "Owners":  "Peter Kottas",
+        "IconUrl":  null,
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Templates-1.0.1.nupkg\\",
         "DownloadCount":  100,
@@ -1693,7 +1730,7 @@
                                                       "Microservices"
                                                   ],
                               "shortName":  "mcrsvc-min",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "PeterKottas.DotNetCore.WindowsService.MinimalTemplate"
                           }
                       ],
@@ -1703,10 +1740,11 @@
         "Authors":  "Peter Kottas",
         "LicenseUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService",
-        "Package":  "PeterKottas.DotNetCore.WindowsService.Templates"
+        "Package":  "PeterKottas.DotNetCore.WindowsService.Templates",
+        "Owners":  "Peter Kottas"
     },
     {
-        "Owners":  "Mariusz Kotas",
+        "IconUrl":  "https://i.alza.cz/Styles/images/svg/alza_cz.svg",
         "Version":  "1.0.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice.Simple-1.0.0.1.nupkg\\",
         "DownloadCount":  99,
@@ -1732,10 +1770,11 @@
         "Authors":  "Mariusz Kotas",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://gitlab.alz.lcl/konzole2",
-        "Package":  "Alza.Konzole.Templates.Microservice.Simple"
+        "Package":  "Alza.Konzole.Templates.Microservice.Simple",
+        "Owners":  "Mariusz Kotas"
     },
     {
-        "Owners":  "Ben Sheeler",
+        "IconUrl":  null,
         "Version":  "0.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Sheelersoft.AngularTemplate-0.0.2.nupkg\\",
         "DownloadCount":  96,
@@ -1751,7 +1790,7 @@
                                                       "Web"
                                                   ],
                               "shortName":  "sheelersoft-angular",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "sheelersoft.AngularTemplate"
                           }
                       ],
@@ -1761,10 +1800,11 @@
         "Authors":  "Ben Sheeler",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/sheelersoft/AngularTemplate",
-        "Package":  "Sheelersoft.AngularTemplate"
+        "Package":  "Sheelersoft.AngularTemplate",
+        "Owners":  "Ben Sheeler"
     },
     {
-        "Owners":  "take",
+        "IconUrl":  null,
         "Version":  "0.1.2.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Take.Blip.Client.ConsoleTemplate-0.1.2.1.nupkg\\",
         "DownloadCount":  96,
@@ -1780,7 +1820,7 @@
                                                       "Bots"
                                                   ],
                               "shortName":  "blip-console",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "Take.Blip.Client.ConsoleTemplate"
                           }
                       ],
@@ -1790,10 +1830,11 @@
         "Authors":  "take",
         "LicenseUrl":  "https://github.com/takenet/blip-sdk-csharp/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/takenet/blip-sdk-csharp",
-        "Package":  "Take.Blip.Client.ConsoleTemplate"
+        "Package":  "Take.Blip.Client.ConsoleTemplate",
+        "Owners":  "take"
     },
     {
-        "Owners":  "Stephen Phillips",
+        "IconUrl":  null,
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MonoGameTemplate-0.1.0.nupkg\\",
         "DownloadCount":  89,
@@ -1809,7 +1850,7 @@
                                                       "MonoGame"
                                                   ],
                               "shortName":  "monogame",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "MonoGameTemplate"
                           }
                       ],
@@ -1819,10 +1860,11 @@
         "Authors":  "Stephen Phillips",
         "LicenseUrl":  "https://raw.githubusercontent.com/Korthax/MonoGameTemplate/master/LICENSE.md",
         "ProjectUrl":  "https://github.com/Korthax/MonoGameTemplate",
-        "Package":  "MonoGameTemplate"
+        "Package":  "MonoGameTemplate",
+        "Owners":  "Stephen Phillips"
     },
     {
-        "Owners":  "Peter Kottas",
+        "IconUrl":  null,
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Template-1.0.1.nupkg\\",
         "DownloadCount":  86,
@@ -1838,7 +1880,7 @@
                                                       "Microservices"
                                                   ],
                               "shortName":  "mcrsvc",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "PeterKottas.DotNetCore.WindowsService.Template"
                           }
                       ],
@@ -1848,10 +1890,11 @@
         "Authors":  "Peter Kottas",
         "LicenseUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService/blob/master/LICENSE",
         "ProjectUrl":  "https://github.com/PeterKottas/DotNetCore.WindowsService",
-        "Package":  "PeterKottas.DotNetCore.WindowsService.Template"
+        "Package":  "PeterKottas.DotNetCore.WindowsService.Template",
+        "Owners":  "Peter Kottas"
     },
     {
-        "Owners":  "Prafull Bhosale",
+        "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CustomAspNetCodeGeneratorTemplate-1.0.0.nupkg\\",
         "DownloadCount":  84,
@@ -1868,7 +1911,7 @@
                                                       "Web"
                                                   ],
                               "shortName":  "codegenerator",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "ASPNETCORE.CustomCodeGenerator"
                           }
                       ],
@@ -1878,10 +1921,11 @@
         "Authors":  "Prafull Bhosale",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/prafullbhosale/CustomAspNetCodeGeneratorTemplate",
-        "Package":  "CustomAspNetCodeGeneratorTemplate"
+        "Package":  "CustomAspNetCodeGeneratorTemplate",
+        "Owners":  "Prafull Bhosale"
     },
     {
-        "Owners":  "Ram",
+        "IconUrl":  null,
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\ESMicroServiceWebApiTemplate-0.1.0.nupkg\\",
         "DownloadCount":  56,
@@ -1897,7 +1941,7 @@
                                                       "WebAPI"
                                                   ],
                               "shortName":  "eswebapi",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "ESTemplates.WebApiTemplate"
                           }
                       ],
@@ -1907,10 +1951,11 @@
         "Authors":  "Ram",
         "LicenseUrl":  "https://github.com/PioneerCode/pioneer-console-boilerplate/blob/master/LICENSE",
         "ProjectUrl":  null,
-        "Package":  "ESMicroServiceWebApiTemplate"
+        "Package":  "ESMicroServiceWebApiTemplate",
+        "Owners":  "Ram"
     },
     {
-        "Owners":  "Carlos Mendible (@cmendibl3)",
+        "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.WebAPI.AWS.Lambda-1.0.0.nupkg\\",
         "DownloadCount":  51,
@@ -1926,7 +1971,7 @@
                                                       "Web/WebAPI"
                                                   ],
                               "shortName":  "webapilambda",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "codeityourself.webapi.aws.lambda"
                           }
                       ],
@@ -1936,10 +1981,11 @@
         "Authors":  "Carlos Mendible (@cmendibl3)",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/cmendible/dotnetcore.templates",
-        "Package":  "CodeItYourself.WebAPI.AWS.Lambda"
+        "Package":  "CodeItYourself.WebAPI.AWS.Lambda",
+        "Owners":  "Carlos Mendible (@cmendibl3)"
     },
     {
-        "Owners":  "Carlos Mendible (@cmendibl3)",
+        "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.ASPNET.Raspberry-1.0.0.nupkg\\",
         "DownloadCount":  51,
@@ -1955,7 +2001,7 @@
                                                       "Web"
                                                   ],
                               "shortName":  "webrpi",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "codeityourself.web.raspberry"
                           }
                       ],
@@ -1965,10 +2011,11 @@
         "Authors":  "Carlos Mendible (@cmendibl3)",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/cmendible/dotnetcore.templates",
-        "Package":  "CodeItYourself.ASPNET.Raspberry"
+        "Package":  "CodeItYourself.ASPNET.Raspberry",
+        "Owners":  "Carlos Mendible (@cmendibl3)"
     },
     {
-        "Owners":  "Carlos Mendible (@cmendibl3)",
+        "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.WebAPI.EchoBot-1.0.0.nupkg\\",
         "DownloadCount":  50,
@@ -1984,7 +2031,7 @@
                                                       "Web/API"
                                                   ],
                               "shortName":  "webechobot",
-                              "groupIdentity":  null,
+                              "groupIdentity":  "",
                               "identity":  "codeityourself.webapi.echobot"
                           }
                       ],
@@ -1994,10 +2041,11 @@
         "Authors":  "Carlos Mendible (@cmendibl3)",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/cmendible/dotnetcore.templates",
-        "Package":  "CodeItYourself.WebAPI.EchoBot"
+        "Package":  "CodeItYourself.WebAPI.EchoBot",
+        "Owners":  "Carlos Mendible (@cmendibl3)"
     },
     {
-        "Owners":  "Thomas Burkhart",
+        "IconUrl":  "http://i.imgur.com/bR4Yf.jpg",
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Nancy.Templates.BasicNetCoreApp-0.1.0.nupkg\\",
         "DownloadCount":  43,
@@ -2011,8 +2059,8 @@
                                        },
                               "classifications":  null,
                               "shortName":  "NancyCoreApp",
-                              "groupIdentity":  null,
-                              "identity":  null
+                              "groupIdentity":  "",
+                              "identity":  ""
                           }
                       ],
         "DownloadUrl":  "https://api.nuget.org/packages/nancy.templates.basicnetcoreapp.0.1.0.nupkg",
@@ -2021,6 +2069,7 @@
         "Authors":  "Thomas Burkhart",
         "LicenseUrl":  null,
         "ProjectUrl":  "https://github.com/escamoteur/NancyCoreApp",
-        "Package":  "Nancy.Templates.BasicNetCoreApp"
+        "Package":  "Nancy.Templates.BasicNetCoreApp",
+        "Owners":  "Thomas Burkhart"
     }
 ]
