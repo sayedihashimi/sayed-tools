@@ -159,6 +159,32 @@ if($isLinuxOrMac){
     Set-Alias -Name ipconfig -Value Get-IPInfo
 }
 
+function Add-AliasForTool{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [object[]]$tool
+    )
+    process{
+        foreach($t in $tool){
+            $found = $false
+            # find the first path on disk
+            foreach($p in $t.path){
+                if(test-path $p){
+                    $t.alias | % { Set-Alias -Name $_ -Value $p -Scope Global }
+                    $found=$true
+                }
+
+                break;
+            }
+
+            if(-not $found){
+                ("{0} not found at [{1}]" -f ( $t.alias -join ';' ), ($t.Path -join ';')) | Write-Host
+            }
+        }
+    }
+}
+
 function Save-MachineInfo{
     [cmdletbinding()]
     param(
