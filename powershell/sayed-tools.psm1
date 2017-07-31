@@ -61,11 +61,6 @@ function Test-Alias{
     }
 }
 
-<#
-.SYNOPSIS
-    You can add this to you build script to ensure that psbuild is available before calling
-    Invoke-MSBuild. If psbuild is not available locally it will be downloaded automatically.
-#>
 function Resolve-FullPath{
     [cmdletbinding()]
     param
@@ -498,8 +493,6 @@ if(Test-IsWindows){
             }
         [Wallpaper.Setter]::SetWallpaper( $Path, $Style )
     }
-
-
 }
 
 function Ensure-DirectoryExists{
@@ -513,14 +506,12 @@ function Ensure-DirectoryExists{
     }
 }
 
-
 function Get-VisualStudioGitAttributes{
     [cmdletbinding()]
     param(
         [Parameter(Position=0)]
-        [System.IO.FileInfo[]]$destination = (join-path $PWD '.gitattributes'),
+        [string[]]$destination = (join-path $PWD '.gitattributes'),
         $sourceUri = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/.gitattributes'
-        
     )
     process{
         $webresult = (Invoke-WebRequest -Uri $sourceUri).Content
@@ -549,7 +540,7 @@ function Get-VisualStudioGitIgnore{
     [cmdletbinding()]
     param(
         [Parameter(Position=0)]
-        [System.IO.FileInfo[]]$destination = (join-path $PWD '.gitignore'),
+        [string[]]$destination = (join-path $PWD '.gitignore'),
         $sourceUri = 'https://raw.githubusercontent.com/github/gitignore/master/VisualStudio.gitignore'
         
     )
@@ -624,7 +615,6 @@ function New-LoremIpsum{
         if( (CommandExists clip)){
             $text | clip
             "`r`n >>>>> generated content is on the clip board" | Write-Output
-
         }
     }
 }

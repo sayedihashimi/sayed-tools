@@ -1,6 +1,8 @@
 [cmdletbinding()]
 param()
 
+$isLinuxOrMac = ($IsLinux -or $IsOSX)
+
 function Get-FullPathNormalized{
     [cmdletbinding()]
     param (
@@ -58,21 +60,23 @@ function Import-MyModules{
     }
 }
 
-function clip{
-    [cmdletbinding()]
-    param(
-        [Parameter(Position=0,ValueFromPipeline=$true)]
-        [object[]]$inObj
-    )
-    begin{
-        [object[]]$toProcess = @()
-    }
-    process{
-        $toProcess += $_
-    }
-    end{
-        if($toProcess -ne $null){
-            $toProcess | Out-String | pbcopy
+if($isLinuxOrMac){
+    function clip{
+        [cmdletbinding()]
+        param(
+            [Parameter(Position=0,ValueFromPipeline=$true)]
+            [object[]]$inObj
+        )
+        begin{
+            [object[]]$toProcess = @()
+        }
+        process{
+            $toProcess += $_
+        }
+        end{
+            if($toProcess -ne $null){
+                $toProcess | Out-String | pbcopy
+            }
         }
     }
 }
