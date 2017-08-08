@@ -1,3 +1,6 @@
+Microsoft.DotNet.Common.ProjectTemplates.2.0
+Microsoft.DotNet.Web.ProjectTemplates.2.0
+Microsoft.DotNet.Test.ProjectTemplates.2.0
 No
 1.0.0.0
 100
