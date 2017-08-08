@@ -4,6 +4,8 @@ Microsoft.DotNet.Test.ProjectTemplates.2.0
 Microsoft.DotNet.Web.ProjectTemplates.1.x
 Microsoft.DotNet.Test.ProjectTemplates.1.x
 Microsoft.DotNet.Common.ProjectTemplates.1.x
+Microsoft.DotNet.Web.ItemTemplates
+Microsoft.DotNet.Common.ItemTemplates
 No
 1.0.0.0
 100
