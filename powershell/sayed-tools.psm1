@@ -506,6 +506,18 @@ function Ensure-DirectoryExists{
     }
 }
 
+function Init-VSGitRepo{
+    [cmdletbinding()]
+    param()
+    process{
+        & git init .
+        Get-VisualStudioGitIgnore
+        Get-VisualStudioGitAttributes
+        & git add .
+        & git commit -m 'git init'
+    }
+}
+
 function Get-VisualStudioGitAttributes{
     [cmdletbinding()]
     param(
