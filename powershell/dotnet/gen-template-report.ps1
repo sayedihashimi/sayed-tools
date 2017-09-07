@@ -217,7 +217,7 @@ function Get-PackageDownloadStats(){
                     if(-not([string]::IsNullOrWhiteSpace($html))) {
                         $htmllines = $html.split("`n")
 
-                        $dlpattern = '\s([0-9]+)\s[0-9]+\/.*'
+                        $dlpattern = '.*current version\)\s+([0-9,]+)\s[0-9]+\/.*'
                         $dlcount = -1
                         try{
                             $dlcount = ([regex]::Match($response.ParsedHtml.getElementById('version-history').innerText,$dlpattern)).Groups[1].Value
