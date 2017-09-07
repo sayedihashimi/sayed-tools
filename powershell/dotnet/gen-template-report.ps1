@@ -216,9 +216,19 @@ function Get-PackageDownloadStats(){
                     [string]$html = ($response.rawcontent)
                     if(-not([string]::IsNullOrWhiteSpace($html))) {
                         $htmllines = $html.split("`n")
-                        $dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
-                        if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
-                            $dlcount = ($Matches[1])
+
+                        $dlpattern = '\s([0-9]+)\s[0-9]+\/.*'
+                        $dlcount = -1
+                        try{
+                            $dlcount = ([regex]::Match($response.ParsedHtml.getElementById('version-history').innerText,$dlpattern)).Groups[1].Value
+                        }
+                        catch{}
+                        #$dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
+                        #if($dlstring -match '<p class="stat-number">([0-9,]+)<\/p>'){
+                        #    $dlcount = ($Matches[1])
+                        #}
+                        if($dlcount -eq -1){
+                            'problem, package [{0}]' -f $packageurl | Write-Host -ForegroundColor Cyan
                         }
                         $downloadUrl = $pkgobj.DownloadUrl
                     }
