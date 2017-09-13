@@ -589,7 +589,7 @@ function EnsurePhotoViewerRegkeyAdded{
         [string]$photoviewhasrunpath = (Join-Path $global:machinesetupconfig.MachineSetupConfigFolder 'photoviewerreg.hasrun'),
 
         [Parameter(Position=3)]
-        [string]$photoviewerregdownloadurl = 'https://dl.dropboxusercontent.com/u/40134810/PcSettings/photo-viewer.reg'
+        [string]$photoviewerregdownloadurl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/photo-viewer.reg'
     )
     process{
         if(-not (Test-Path $photoviewhasrunpath)){
