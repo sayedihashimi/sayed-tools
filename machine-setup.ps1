@@ -67,9 +67,10 @@ $global:machinesetupconfig = @{
         'kindle',
         'dropbox'
     )
-    WallpaperUrl = 'https://dl.dropboxusercontent.com/u/40134810/wallpaper/checking-out-the-view.jpg'
+    WallpaperUrl = 'https://www.dropbox.com/s/4jufvqdl69lgmkc/checking-out-the-view.jpg?dl=0'
 }
 
+#// 'https://dl.dropboxusercontent.com/u/40134810/wallpaper/checking-out-the-view.jpg'
 function InternalGet-ScriptDirectory{
     split-path (((Get-Variable MyInvocation -Scope 1).Value).MyCommand.Path)
 }
@@ -561,7 +562,7 @@ function ConfigurePowershell{
     param(
         [string]$psProfilePath = $profile,
         [string]$sourceProfilePath,
-        [string]$profileDownloadurl = 'https://dl.dropboxusercontent.com/u/40134810/sayed-profile-script-current.ps1'
+        [string]$profileDownloadurl = 'https://www.dropbox.com/s/k1i3pkxzk2njvd5/sayed-profile-script-current.ps1?dl=0'
     )
     process{
         if([string]::IsNullOrWhiteSpace($sourceProfilePath)){
@@ -787,7 +788,7 @@ function DisableScreenSaver(){
 }
 
 $global:machinesetupuserconfig = @{
-    AddFontScriptUrl = 'https://dl.dropboxusercontent.com/u/40134810/PcSettings/Add-Font.ps1'
+    AddFontScriptUrl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/Add-Font.ps1'
     Fonts = @(
         @{
             Filename = 'source-sans-pro-1.075R-it.zip'
