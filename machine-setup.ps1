@@ -67,7 +67,7 @@ $global:machinesetupconfig = @{
         'kindle',
         'dropbox'
     )
-    WallpaperUrl = 'https://www.dropbox.com/s/4jufvqdl69lgmkc/checking-out-the-view.jpg?dl=0'
+    WallpaperUrl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/checking-out-the-view.jpg'
 }
 
 #// 'https://dl.dropboxusercontent.com/u/40134810/wallpaper/checking-out-the-view.jpg'
