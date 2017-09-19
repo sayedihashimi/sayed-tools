@@ -217,10 +217,12 @@ function Get-PackageDownloadStats(){
                     if(-not([string]::IsNullOrWhiteSpace($html))) {
                         $htmllines = $html.split("`n")
 
-                        $dlpattern = '.*current version\)\s+([0-9,]+)\s[0-9]+\/.*'
+                        # $dlpattern = '.*current version\)\s+([0-9,]+)\s[0-9]+\/.*'
+                        $dlpattern = '([0-9,]+)\s+total downloads'
                         $dlcount = -1
                         try{
-                            $dlcount = ([regex]::Match($response.ParsedHtml.getElementById('version-history').innerText,$dlpattern)).Groups[1].Value
+                            # $dlcount = ([regex]::Match($response.ParsedHtml.getElementById('version-history').innerText,$dlpattern)).Groups[1].Value
+                            $dlcount = ([regex]::Match($response.RawContent,$dlpattern)).Groups[1].Value
                         }
                         catch{}
                         #$dlstring = (((( $htmllines|Select-String '<p class="stat-label">Downloads</p>' -SimpleMatch -Context 1))) | Select-Object -ExpandProperty Context | Select-Object -ExpandProperty PreContext)
