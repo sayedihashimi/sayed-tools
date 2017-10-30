@@ -437,6 +437,10 @@ function Get-JsonObjectFromTemplateFile{
                 continue;
             }
 
+            if($filepath.tolower().contains('sharp')){
+                'break here' | Write-Output
+            }
+            
             try{
                 $json = [System.IO.File]::ReadAllText($filepath)
                 $jObj2 = [Newtonsoft.Json.Linq.JObject]::Parse($json)
@@ -451,11 +455,12 @@ function Get-JsonObjectFromTemplateFile{
                     shortName = [string]$jObj2.shortName.Value
                     tags = @{}
                 }
-
-                $jObj2.tags|%{
-                    $result.tags.Add($_.Name,$_.Value.ToString())
+                
+                if($jObj2.tags -ne $null){
+                    $jObj2.tags|%{
+                        $result.tags.Add($_.Name,$_.Value.ToString())
+                    }
                 }
-
                 $result
             }
             catch{
