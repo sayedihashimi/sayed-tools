@@ -3,7 +3,7 @@
         "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.AspNetCore.SpaTemplates-1.0.0.nupkg\\",
-        "DownloadCount":  63618,
+        "DownloadCount":  64291,
         "Tags":  null,
         "Templates":  [
                           {
@@ -68,7 +68,7 @@
         "IconUrl":  null,
         "Version":  "1.0.417",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Microsoft.DotNet.Web.Spa.ProjectTemplates-1.0.417.nupkg\\",
-        "DownloadCount":  13749,
+        "DownloadCount":  13846,
         "Tags":  null,
         "Templates":  [
                           {
@@ -133,7 +133,7 @@
         "IconUrl":  null,
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\libyear-1.0.1.nupkg\\",
-        "DownloadCount":  2518,
+        "DownloadCount":  2526,
         "Tags":  null,
         "Templates":  [
                           {
@@ -172,7 +172,7 @@
         "IconUrl":  "https://raw.githubusercontent.com/ASP-NET-Core-Boilerplate/Templates/master/Images/Icon.png",
         "Version":  "1.6.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Boilerplate.Templates-1.6.2.nupkg\\",
-        "DownloadCount":  2259,
+        "DownloadCount":  2277,
         "Tags":  "ASP.NET Core Boilerplate Muhammad Rehan Saeed Framework",
         "Templates":  [
                           {
@@ -220,7 +220,7 @@
         "IconUrl":  null,
         "Version":  "1.4.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Amazon.Lambda.Templates-1.4.1.nupkg\\",
-        "DownloadCount":  1795,
+        "DownloadCount":  1823,
         "Tags":  "AWS Amazon Lambda",
         "Templates":  [
                           {
@@ -413,7 +413,7 @@
         "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\IdentityServer4.Templates-1.0.0.nupkg\\",
-        "DownloadCount":  1681,
+        "DownloadCount":  1701,
         "Tags":  null,
         "Templates":  [
                           {
@@ -469,7 +469,7 @@
         "IconUrl":  "https://raw.githubusercontent.com/dustinmoris/giraffe/master/giraffe-64x64.png",
         "Version":  "0.2.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\giraffe-template-0.2.0.nupkg\\",
-        "DownloadCount":  1591,
+        "DownloadCount":  1633,
         "Tags":  "giraffe web app razor pages micro service dotnet new template",
         "Templates":  [
                           {
@@ -500,7 +500,7 @@
         "IconUrl":  null,
         "Version":  "0.3.5",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MiniScaffold-0.3.5.nupkg\\",
-        "DownloadCount":  1554,
+        "DownloadCount":  1560,
         "Tags":  "class library template fsharp",
         "Templates":  [
                           {
@@ -530,7 +530,7 @@
         "IconUrl":  null,
         "Version":  "1.0.24",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Idea42.NetCore.Templates-1.0.24.nupkg\\",
-        "DownloadCount":  1441,
+        "DownloadCount":  1453,
         "Tags":  null,
         "Templates":  [
                           {
@@ -595,7 +595,7 @@
         "IconUrl":  "https://raw.githubusercontent.com/madskristensen/AspNetCoreTemplatePack/master/src/Static.Web/.template.config/icon.png",
         "Version":  "1.0.21",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MadsKristensen.AspNetCore.Web.Templates-1.0.21.nupkg\\",
-        "DownloadCount":  1255,
+        "DownloadCount":  1270,
         "Tags":  "asp.net core .net template",
         "Templates":  [
                           {
@@ -657,7 +657,7 @@
         "IconUrl":  "http://pioneercode.com/images/logo-large.png",
         "Version":  "1.0.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Pioneer.Console.Boilerplate-1.0.6.nupkg\\",
-        "DownloadCount":  1104,
+        "DownloadCount":  1110,
         "Tags":  "Pioneer Code Boilerplate .NET Core Console Dependency Injection Logging Configuration Chad Ramos",
         "Templates":  [
                           {
@@ -691,7 +691,7 @@
         "IconUrl":  null,
         "Version":  "1.2.0-alpha1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\DotVVM.Templates-1.2.0-alpha1.nupkg\\",
-        "DownloadCount":  1050,
+        "DownloadCount":  1060,
         "Tags":  null,
         "Templates":  [
                           {
@@ -723,7 +723,7 @@
         "IconUrl":  null,
         "Version":  "0.5.11",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Take.Blip.Client.Templates-0.5.11.nupkg\\",
-        "DownloadCount":  1025,
+        "DownloadCount":  1047,
         "Tags":  "blip bot chatbots",
         "Templates":  [
                           {
@@ -766,7 +766,7 @@
         "IconUrl":  null,
         "Version":  "3.5.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MonoGame.Template.NETCore-3.5.1.nupkg\\",
-        "DownloadCount":  985,
+        "DownloadCount":  999,
         "Tags":  "MonoGame Game Core VSCode",
         "Templates":  [
                           {
@@ -798,7 +798,7 @@
         "IconUrl":  null,
         "Version":  "0.7.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Peachpie.Templates-0.7.0.nupkg\\",
-        "DownloadCount":  952,
+        "DownloadCount":  971,
         "Tags":  null,
         "Templates":  [
                           {
@@ -855,7 +855,7 @@
         "IconUrl":  "https://cdn.rawgit.com/nspec/NSpec/gh-pages/assets/images/logo.png",
         "Version":  "1.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\dotnet-new-nspec-1.0.2.nupkg\\",
-        "DownloadCount":  885,
+        "DownloadCount":  892,
         "Tags":  "testing bdd tdd rspec mocha dotnet core test template",
         "Templates":  [
                           {
@@ -886,7 +886,7 @@
         "IconUrl":  null,
         "Version":  "5.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Expecto.Template-5.0.0.nupkg\\",
-        "DownloadCount":  880,
+        "DownloadCount":  887,
         "Tags":  ".net core Expecto template",
         "Templates":  [
                           {
@@ -916,7 +916,7 @@
         "IconUrl":  null,
         "Version":  "0.1.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.DotNetNew-0.1.1.nupkg\\",
-        "DownloadCount":  838,
+        "DownloadCount":  844,
         "Tags":  null,
         "Templates":  [
                           {
@@ -965,7 +965,7 @@
         "IconUrl":  null,
         "Version":  "1.1.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Kralizek.Lambda.Templates-1.1.1.nupkg\\",
-        "DownloadCount":  792,
+        "DownloadCount":  798,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1068,7 +1068,7 @@
         "IconUrl":  null,
         "Version":  "1.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\WebAPI.FSharp.Template-1.1.0.nupkg\\",
-        "DownloadCount":  759,
+        "DownloadCount":  765,
         "Tags":  ".net core Web API F# template",
         "Templates":  [
                           {
@@ -1099,7 +1099,7 @@
         "IconUrl":  null,
         "Version":  "2.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CakeApp-2.0.1.nupkg\\",
-        "DownloadCount":  752,
+        "DownloadCount":  759,
         "Tags":  "Cake build dotnet new core",
         "Templates":  [
                           {
@@ -1132,7 +1132,7 @@
         "IconUrl":  "https://raw.githubusercontent.com/cake-build/graphics/master/png/cake-medium.png",
         "Version":  "0.1.0-alpha0070",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Cake.Frosting.Template-0.1.0-alpha0070.nupkg\\",
-        "DownloadCount":  714,
+        "DownloadCount":  721,
         "Tags":  "Cake Script Build",
         "Templates":  [
                           {
@@ -1163,7 +1163,7 @@
         "IconUrl":  null,
         "Version":  "0.4.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\RaspberryPi.Template-0.4.0.nupkg\\",
-        "DownloadCount":  689,
+        "DownloadCount":  702,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1194,7 +1194,7 @@
         "IconUrl":  null,
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Prism.Forms.QuickstartTemplates-1.0.1.nupkg\\",
-        "DownloadCount":  681,
+        "DownloadCount":  691,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1271,7 +1271,7 @@
         "IconUrl":  "https://github.com/aspnet/LibraryInstaller/raw/master/src/LibraryInstaller.Vsix/Resources/Icon.png",
         "Version":  "1.0.5",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\LibraryInstallerExtensionTemplate-1.0.5.nupkg\\",
-        "DownloadCount":  672,
+        "DownloadCount":  678,
         "Tags":  "extensibility vssdk vsix",
         "Templates":  [
                           {
@@ -1303,7 +1303,7 @@
         "IconUrl":  null,
         "Version":  "0.1.0-alpha2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\FiftyProtons.Templates.PSCore-0.1.0-alpha2.nupkg\\",
-        "DownloadCount":  659,
+        "DownloadCount":  665,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1335,7 +1335,7 @@
         "IconUrl":  null,
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NetEscapades.Templates-1.0.1.nupkg\\",
-        "DownloadCount":  654,
+        "DownloadCount":  660,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1366,7 +1366,7 @@
         "IconUrl":  null,
         "Version":  "0.1.30",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Take.Blip.Client.ConsoleTemplate-0.1.30.nupkg\\",
-        "DownloadCount":  559,
+        "DownloadCount":  565,
         "Tags":  "blip bot chatbots",
         "Templates":  [
                           {
@@ -1409,7 +1409,7 @@
         "IconUrl":  "https://avatars2.githubusercontent.com/u/2678858",
         "Version":  "1.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NUnit3.DotNetNew.Template-1.1.0.nupkg\\",
-        "DownloadCount":  524,
+        "DownloadCount":  537,
         "Tags":  "NUnit dotnet core",
         "Templates":  [
                           {
@@ -1471,7 +1471,7 @@
         "IconUrl":  null,
         "Version":  "0.2.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Fable.Template.Elmish.React.Demo-0.2.0.nupkg\\",
-        "DownloadCount":  512,
+        "DownloadCount":  522,
         "Tags":  "fable template fsharp",
         "Templates":  [
                           {
@@ -1504,7 +1504,7 @@
         "IconUrl":  null,
         "Version":  "2017.7.25.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\TeamWeb.MvcTemplate-2017.7.25.1.nupkg\\",
-        "DownloadCount":  458,
+        "DownloadCount":  464,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1537,7 +1537,7 @@
         "IconUrl":  null,
         "Version":  "1.0.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Lykke.Template-1.0.6.nupkg\\",
-        "DownloadCount":  454,
+        "DownloadCount":  460,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1567,7 +1567,7 @@
         "IconUrl":  "https://i.alza.cz/Styles/images/svg/alza_cz.svg",
         "Version":  "1.0.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice.Simple-1.0.0.2.nupkg\\",
-        "DownloadCount":  417,
+        "DownloadCount":  426,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1597,7 +1597,7 @@
         "IconUrl":  null,
         "Version":  "0.1.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Melvin.Mvc.Template-0.1.2.nupkg\\",
-        "DownloadCount":  394,
+        "DownloadCount":  400,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1630,7 +1630,7 @@
         "IconUrl":  null,
         "Version":  "0.1.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MicroServiceWebApiTemplate-0.1.3.nupkg\\",
-        "DownloadCount":  378,
+        "DownloadCount":  387,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1660,7 +1660,7 @@
         "IconUrl":  null,
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Templates-1.0.1.nupkg\\",
-        "DownloadCount":  375,
+        "DownloadCount":  383,
         "Tags":  "dotnetcore templates,.netcore templates,windows service templates,micro templates",
         "Templates":  [
                           {
@@ -1690,7 +1690,7 @@
         "IconUrl":  "http://s3.amazonaws.com/nuget.images/NServiceBus_32.png",
         "Version":  "1.0.1-beta0002",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NServiceBus.Template.WindowsService-1.0.1-beta0002.nupkg\\",
-        "DownloadCount":  353,
+        "DownloadCount":  360,
         "Tags":  "NServiceBus, SelfHost",
         "Templates":  [
                           {
@@ -1721,7 +1721,7 @@
         "IconUrl":  "http://s3.amazonaws.com/nuget.images/NServiceBus_32.png",
         "Version":  "1.0.1-beta0002",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NServiceBus.Template.TransportAdapter.WindowsService-1.0.1-beta0002.nupkg\\",
-        "DownloadCount":  328,
+        "DownloadCount":  335,
         "Tags":  "NServiceBus, SelfHost",
         "Templates":  [
                           {
@@ -1756,7 +1756,7 @@
         "IconUrl":  "https://raw.githubusercontent.com/Nethereum/Nethereum/master/logos/logo64x64.png",
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Nethereum.Templates.Faucet-0.1.0.nupkg\\",
-        "DownloadCount":  318,
+        "DownloadCount":  324,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1788,7 +1788,7 @@
         "IconUrl":  "https://i.alza.cz/Styles/images/svg/alza_cz.svg",
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Alza.Konzole.Templates.Microservice-1.0.0.nupkg\\",
-        "DownloadCount":  315,
+        "DownloadCount":  322,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1818,7 +1818,7 @@
         "IconUrl":  null,
         "Version":  "0.0.3",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Hub3c.Integration.Template-0.0.3.nupkg\\",
-        "DownloadCount":  310,
+        "DownloadCount":  316,
         "Tags":  "Template C# NET.CORE",
         "Templates":  [
                           {
@@ -1846,7 +1846,7 @@
         "IconUrl":  null,
         "Version":  "0.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Sheelersoft.AngularTemplate-0.0.2.nupkg\\",
-        "DownloadCount":  290,
+        "DownloadCount":  303,
         "Tags":  ".Net Core Angular Template",
         "Templates":  [
                           {
@@ -1876,7 +1876,7 @@
         "IconUrl":  null,
         "Version":  "1.0.1",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\PeterKottas.DotNetCore.WindowsService.Template-1.0.1.nupkg\\",
-        "DownloadCount":  278,
+        "DownloadCount":  284,
         "Tags":  "dotnetcore template,.netcore template,windows service template,micro template",
         "Templates":  [
                           {
@@ -1906,7 +1906,7 @@
         "IconUrl":  "http://korzh.com/images/korzh-logo.png",
         "Version":  "4.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Korzh.EasyQuery.AspNetCoreTemplates-4.0.0.nupkg\\",
-        "DownloadCount":  265,
+        "DownloadCount":  271,
         "Tags":  "easyquery,asp.net core,template,adhoc reporting,SQL,query builder",
         "Templates":  [
                           {
@@ -1936,7 +1936,7 @@
         "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CustomAspNetCodeGeneratorTemplate-1.0.0.nupkg\\",
-        "DownloadCount":  255,
+        "DownloadCount":  262,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1967,7 +1967,7 @@
         "IconUrl":  null,
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MonoGameTemplate-0.1.0.nupkg\\",
-        "DownloadCount":  254,
+        "DownloadCount":  260,
         "Tags":  null,
         "Templates":  [
                           {
@@ -1997,7 +1997,7 @@
         "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.WebAPI.AWS.Lambda-1.0.0.nupkg\\",
-        "DownloadCount":  229,
+        "DownloadCount":  235,
         "Tags":  "dotnetcore template .netcore aws lambda",
         "Templates":  [
                           {
@@ -2027,7 +2027,7 @@
         "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.ASPNET.Raspberry-1.0.0.nupkg\\",
-        "DownloadCount":  222,
+        "DownloadCount":  228,
         "Tags":  "dotnetcore template .netcore RaspberryPi",
         "Templates":  [
                           {
@@ -2057,7 +2057,7 @@
         "IconUrl":  null,
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\ESMicroServiceWebApiTemplate-0.1.0.nupkg\\",
-        "DownloadCount":  219,
+        "DownloadCount":  225,
         "Tags":  null,
         "Templates":  [
                           {
@@ -2087,7 +2087,7 @@
         "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\CodeItYourself.WebAPI.EchoBot-1.0.0.nupkg\\",
-        "DownloadCount":  215,
+        "DownloadCount":  221,
         "Tags":  "dotnetcore template .netcore bot botframework",
         "Templates":  [
                           {
@@ -2117,7 +2117,7 @@
         "IconUrl":  "http://i.imgur.com/bR4Yf.jpg",
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Nancy.Templates.BasicNetCoreApp-0.1.0.nupkg\\",
-        "DownloadCount":  212,
+        "DownloadCount":  219,
         "Tags":  "web app nancyfx dotnet new template",
         "Templates":  [
                           {
@@ -2145,7 +2145,7 @@
         "IconUrl":  "https://petabridge.com/images/logo.png",
         "Version":  "0.1.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Petabridge.Templates-0.1.2.nupkg\\",
-        "DownloadCount":  203,
+        "DownloadCount":  210,
         "Tags":  "template dotnet new Petabridge DocFx build NBench Akka",
         "Templates":  [
                           {
@@ -2178,7 +2178,7 @@
         "IconUrl":  null,
         "Version":  "0.0.2",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NancyFx.Core.Template-0.0.2.nupkg\\",
-        "DownloadCount":  175,
+        "DownloadCount":  181,
         "Tags":  ".net core NancyFx template f#",
         "Templates":  [
                           {
@@ -2206,9 +2206,9 @@
     },
     {
         "IconUrl":  "https://raw.githubusercontent.com/joeaudette/cloudscribe/master/cloudscribe-icon-32.png",
-        "Version":  "1.0.5",
-        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\cloudscribe.templates-1.0.5.nupkg\\",
-        "DownloadCount":  125,
+        "Version":  "1.0.6",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\cloudscribe.templates-1.0.6.nupkg\\",
+        "DownloadCount":  153,
         "Tags":  "ASP.NET Core cloudscribe",
         "Templates":  [
                           {
@@ -2226,7 +2226,7 @@
                               "identity":  "cloudscribe.Template.CSharp"
                           }
                       ],
-        "DownloadUrl":  "https://api.nuget.org/packages/cloudscribe.templates.1.0.5.nupkg",
+        "DownloadUrl":  "https://api.nuget.org/packages/cloudscribe.templates.1.0.6.nupkg",
         "Description":  "Project template for starting new web application projects with cloudscribe library components",
         "Copyright":  "Copyright ? Source Tree Solutions",
         "Authors":  "Joe Audette",
@@ -2239,7 +2239,7 @@
         "IconUrl":  null,
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\MSBuildExtensionTemplate-0.1.0.nupkg\\",
-        "DownloadCount":  124,
+        "DownloadCount":  132,
         "Tags":  "dotnet msbuild extension",
         "Templates":  [
                           {
@@ -2286,7 +2286,7 @@
         "IconUrl":  null,
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Fable.Template.Library-0.1.0.nupkg\\",
-        "DownloadCount":  122,
+        "DownloadCount":  131,
         "Tags":  "class library template fsharp",
         "Templates":  [
                           {
@@ -2316,7 +2316,7 @@
         "IconUrl":  null,
         "Version":  "0.1.6",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\NorDroN.AngularTemplate-0.1.6.nupkg\\",
-        "DownloadCount":  111,
+        "DownloadCount":  128,
         "Tags":  ".Net Core Angular Template",
         "Templates":  [
                           {
@@ -2346,7 +2346,7 @@
         "IconUrl":  null,
         "Version":  "0.1.4",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Vue.Simple.Template-0.1.4.nupkg\\",
-        "DownloadCount":  96,
+        "DownloadCount":  111,
         "Tags":  "template Vue Vuejs",
         "Templates":  [
                           {
@@ -2377,7 +2377,7 @@
         "IconUrl":  "https://raw.githubusercontent.com/persimmon-projects/Persimmon.Materials/master/StandardIcons/persimmon_128.png",
         "Version":  "0.1.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Persimmon.Templates-0.1.0.nupkg\\",
-        "DownloadCount":  91,
+        "DownloadCount":  97,
         "Tags":  null,
         "Templates":  [
                           {
@@ -2409,7 +2409,7 @@
         "IconUrl":  null,
         "Version":  "1.0.0",
         "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\Auth0.Templates-1.0.0.nupkg\\",
-        "DownloadCount":  73,
+        "DownloadCount":  81,
         "Tags":  null,
         "Templates":  [
                           {
@@ -2451,5 +2451,37 @@
         "ProjectUrl":  null,
         "Package":  "Auth0.Templates",
         "Owners":  "Auth0"
+    },
+    {
+        "IconUrl":  null,
+        "Version":  "1.0.0",
+        "ExtractPath":  "C:\\Users\\sayedha\\AppData\\Local\\Temp\\SayedHaMachineSetup\\apps\\BotwinTemplate-1.0.0.nupkg\\",
+        "DownloadCount":  10,
+        "Tags":  "botwin nancyfx nancy dotnet new template",
+        "Templates":  [
+                          {
+                              "author":  "Jonathan Channon \u003cjonathan.channon@gmail.com\u003e",
+                              "name":  "Botwin Template",
+                              "tags":  {
+                                           "language":  "C#"
+                                       },
+                              "classifications":  [
+                                                      "Botwin",
+                                                      "Botwin Template",
+                                                      "NancyFX"
+                                                  ],
+                              "shortName":  "botwin",
+                              "groupIdentity":  "Botwin",
+                              "identity":  "Botwin.Template"
+                          }
+                      ],
+        "DownloadUrl":  "https://api.nuget.org/packages/botwintemplate.1.0.0.nupkg",
+        "Description":  "A dotnet-new template for Botwin applications.",
+        "Copyright":  null,
+        "Authors":  "Jonathan Channon",
+        "LicenseUrl":  null,
+        "ProjectUrl":  "https://github.com/jchannon/Botwin",
+        "Package":  "BotwinTemplate",
+        "Owners":  "Jonathan Channon"
     }
 ]
