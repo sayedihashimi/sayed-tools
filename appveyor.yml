@@ -4,3 +4,13 @@ build_script:
   - ps: .\appveyor.ps1
 
 test: off
+
+
+
+environment:
+  publishUsername:
+    secure: +of8YobtR9CSGWdE1ttUTA==
+  publishPassword:
+    secure: 5D5/0OnhJtHvQVE1Qgp69VsQ6VrJ0k+1lQ9SLgjReLawxfvzv6WDozfh9Mln/pp4A3XjnRT9/JTadxNrzCHkAw==
+
+
