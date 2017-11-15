@@ -826,7 +826,7 @@ try{
         Run-FullReport -searchTerm $searchTerm
 
         if($publishJsonReport){
-            
+            DeployTemplateReport
         }
 
     }
