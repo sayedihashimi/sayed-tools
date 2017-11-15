@@ -670,7 +670,7 @@ function DeployTemplateReport{
         [string]$publishPassword = $env:publishPassword,
         [string]$deployUrl = 'https://dotnetnew-api.scm.azurewebsites.net/msdeploy.axd?site=dotnetnew-api',
         [string]$sourceRelFilepath = 'template-report.json',
-        [string]$destRelFilepath = 'wwwroot/template-report.json'
+        [string]$destRelFilepath = 'wwwroot/wwwroot/template-report.json'
     )
     process{
     # msdeploy -verb:sync -whatif -source:contentPath='C:\data\mycode\sayed-tools\powershell\dotnet\template-report2.json' -dest:contentPath='wwwroot/template-report.json',ComputerName="https://dotnetnew-api.scm.azurewebsites.net/msdeploy.axd?site=dotnetnew-api",UserName='%pubusername%',Password='%pubpwd%',AuthType='Basic'
