@@ -557,6 +557,29 @@ function ExtractRemoteZip{
     }
 }
 
+function ExtractLocalZip{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [ValidateNotNullOrEmpty()]
+        [string]$filepath
+    )
+    process{
+        $filename = [System.IO.Path]::GetFilename($filepath)
+        #$zippath = GetLocalFileFor -downloadUrl $downloadUrl -filename $filename
+        $expectedFolderpath = (join-path -Path ($global:machinesetupconfig.MachineSetupConfigFolder) ('apps\{0}\' -f $filename))
+
+        if(-not (test-path $expectedFolderpath)){
+            EnsureFolderExists -path $expectedFolderpath | Write-Verbose
+            # extract the folder to the directory
+            & (Get7ZipPath) x -y "-o$expectedFolderpath" "$filepath" | Write-Verbose
+        }        
+
+        # return the path to the folder
+        $expectedFolderpath
+    }
+}
+
 function ConfigurePowershell{
     [cmdletbinding()]
     param(
@@ -788,17 +811,17 @@ function DisableScreenSaver(){
 }
 
 $global:machinesetupuserconfig = @{
-    AddFontScriptUrl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/Add-Font.ps1'
+    AddFontScriptUrl = 'powershell/Add-Font.ps1'
     Fonts = @(
         @{
-            Filename = 'source-sans-pro-1.075R-it.zip'
-            DownloadUrl = 'https://github.com/adobe-fonts/source-sans-pro/archive/2.020R-ro/1.075R-it.zip'
-            RelpathToFontsFolder = 'source-sans-pro-2.020R-ro-1.075R-it\TTF'
+            Filename = join-path -Path $scriptDir 'powershell/fonts/source-sans-pro-2.020R-ro-1.075R-it.zip'
+            #DownloadUrl = 'https://github.com/adobe-fonts/source-sans-pro/archive/2.020R-ro/1.075R-it.zip'
+            RelpathToFontsFolder = 'source-sans-pro-2.020R-ro-1.075R-it/TTF'
         }
         @{
-            Filename = 'source-code-pro-1.050R-it.zip'
-            DownloadUrl = 'https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip'
-            RelpathToFontsFolder = 'source-code-pro-2.030R-ro-1.050R-it\TTF'
+            Filename = join-path -Path $scriptDir 'powershell/fonts/source-code-pro-2.030R-ro-1.050R-it.zip'
+            #DownloadUrl = 'https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip'
+            RelpathToFontsFolder = 'source-code-pro-2.030R-ro-1.050R-it/TTF'
         }
     )
 }
@@ -819,7 +842,7 @@ function AddFonts{
 
             foreach($font in $global:machinesetupuserconfig.Fonts){
                 # extract it
-                $extractfolder = ExtractRemoteZip -downloadUrl $font.Downloadurl -filename $font.Filename
+                $extractfolder = ExtractLocalZip -filepath $font.Filename #ExtractRemoteZip -downloadUrl $font.Downloadurl -filename $font.Filename
                 $pathtofiles = (join-path $extractfolder $font.RelpathToFontsFolder)
                 if(test-path $pathtofiles){
                     # call the Add-Font script
