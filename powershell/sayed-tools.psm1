@@ -632,6 +632,20 @@ function New-LoremIpsum{
 }
 Set-Alias -Name LoremIpsum -Value New-LoremIpsum
 
+function Get-FolderSize{
+    [cmdletbinding()]
+    param(
+        [string]$folder
+    )
+    process{
+        Get-ChildItem -Path $folder -Recurse -Directory |
+            select-object -expandproperty fullname |
+            Get-ChildItem |
+            Measure-Object -Sum Length |
+            Select-Object @{Name="Files"; Expression={$_.Count}},@{Name="Size";Expression={($_.Sum).ToString('#.##')}},@{Name="Size (MB)"; Expression={($_.Sum / 1MB).ToString('#.##')}},@{Name="Size (GB)"; Expression={($_.Sum / 1GB).ToString('#.##')}}
+    }
+}
+
 function Install-PowerShellCookbook{
     [cmdletbinding()]
     param()
