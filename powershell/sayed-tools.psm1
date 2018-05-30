@@ -681,5 +681,22 @@ function Sayed-ConfigureGit{
     }
 }
 
+function Get-FileModifiedTimes{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [System.IO.FileInfo[]]$filepath
+    )
+    process{
+
+        ## $filepath | Write-Output
+
+        foreach($path in $filepath){
+            [System.IO.FileInfo]$fullpath = Resolve-FullPath -path ($path.Fullname)
+            ## Get-Item ./test.md |Select-Object -Property Fullname,LastAccessTime,CreationTime
+            Get-Item -LiteralPath $fullpath | Select-Object -Property Fullname,CreationTime,LastAccessTime,LastWriteTime,CreationTimeUtc,LastAccessTimeUtc,LastWriteTimeUtc
+        }
+    }
+}
 
 Start-CustomProfileBackgroundJob -asJob
