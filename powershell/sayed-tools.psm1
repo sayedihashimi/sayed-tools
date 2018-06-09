@@ -685,7 +685,8 @@ function Get-FileModifiedTimes{
     [cmdletbinding()]
     param(
         [Parameter(Position=0,ValueFromPipeline=$true)]
-        [System.IO.FileInfo[]]$filepath
+        [System.IO.FileInfo[]]$filepath,
+        [swtich]$Force
     )
     process{
 
@@ -695,6 +696,28 @@ function Get-FileModifiedTimes{
             [System.IO.FileInfo]$fullpath = Resolve-FullPath -path ($path.Fullname)
             ## Get-Item ./test.md |Select-Object -Property Fullname,LastAccessTime,CreationTime
             Get-Item -LiteralPath $fullpath | Select-Object -Property Fullname,CreationTime,LastAccessTime,LastWriteTime,CreationTimeUtc,LastAccessTimeUtc,LastWriteTimeUtc
+        }
+    }
+}
+
+function Remove-Subfolders{
+    [cmdletbinding()]
+    param(
+        [string]$path = ($pwd),
+        [string[]]$folderNamesToInclude
+    )
+    process{
+        if([string]::IsNullOrWhiteSpace($path) -or ($folderNamesToInclude -eq $null) -or ($folderNamesToInclude.Length -le 0) ){
+            return
+        }
+
+        $fullpath = Resolve-FullPath -path $path
+
+        Get-ChildItem $fullpath -Include $folderNamesToInclude -Recurse -Directory |% {
+            $current = (Resolve-FullPath -path $_)
+            if(Test-Path -LiteralPath $current){
+                Remove-Item -LiteralPath $current -Recurse -Force:$Force
+            }
         }
     }
 }
