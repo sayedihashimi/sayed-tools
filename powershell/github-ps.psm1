@@ -25,7 +25,7 @@ function CloneRepo{
 
         switch ($method){
             'ssh' {
-                $url = ('git@github.com:{0}/{1}.git' -f $user, $repo)
+                $url = ('git@github.com:{0}{1}.git' -f $user, $repo)
             }
 
             'https' {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +10,7 @@ namespace Wap01.Controllers
     {
         public ActionResult Index()
         {
-            int foo = 1;
+            int foo = 318908877;
             return View();
         }
 
