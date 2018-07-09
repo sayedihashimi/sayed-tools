@@ -8,7 +8,6 @@ function CloneRepo{
         [Parameter(Position=0)]
         [string]$user,
 
-        [ValidateNotNullOrEmpty()]
         [Parameter(Position=2)]
         [string]$repo,
 
@@ -22,6 +21,14 @@ function CloneRepo{
     process{
         # ssh pattern git@github.com:sayedihashimi/aspnettemplates.git
         # https pattern https://github.com/sayedihashimi/aspnettemplates.git
+
+        if(-not ([string]::IsNullOrWhiteSpace($user)) -and ([string]::IsNullOrWhiteSpace($repo)) -and ($user.Contains('/'))){
+            $parts = $user.split('/')
+            if($parts.Length -eq 2){
+                $user = $parts[0]
+                $repo = $parts[1]
+            }    
+        }
 
         switch ($method){
             'ssh' {

@@ -632,6 +632,20 @@ function New-LoremIpsum{
 }
 Set-Alias -Name LoremIpsum -Value New-LoremIpsum
 
+function Get-FolderSize{
+    [cmdletbinding()]
+    param(
+        [string]$folder
+    )
+    process{
+        Get-ChildItem -Path $folder -Recurse -Directory |
+            select-object -expandproperty fullname |
+            Get-ChildItem |
+            Measure-Object -Sum Length |
+            Select-Object @{Name="Files"; Expression={$_.Count}},@{Name="Size";Expression={($_.Sum).ToString('#.##')}},@{Name="Size (MB)"; Expression={($_.Sum / 1MB).ToString('#.##')}},@{Name="Size (GB)"; Expression={($_.Sum / 1GB).ToString('#.##')}}
+    }
+}
+
 function Install-PowerShellCookbook{
     [cmdletbinding()]
     param()
@@ -667,5 +681,45 @@ function Sayed-ConfigureGit{
     }
 }
 
+function Get-FileModifiedTimes{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [System.IO.FileInfo[]]$filepath,
+        [swtich]$Force
+    )
+    process{
+
+        ## $filepath | Write-Output
+
+        foreach($path in $filepath){
+            [System.IO.FileInfo]$fullpath = Resolve-FullPath -path ($path.Fullname)
+            ## Get-Item ./test.md |Select-Object -Property Fullname,LastAccessTime,CreationTime
+            Get-Item -LiteralPath $fullpath | Select-Object -Property Fullname,CreationTime,LastAccessTime,LastWriteTime,CreationTimeUtc,LastAccessTimeUtc,LastWriteTimeUtc
+        }
+    }
+}
+
+function Remove-Subfolders{
+    [cmdletbinding()]
+    param(
+        [string]$path = ($pwd),
+        [string[]]$folderNamesToInclude
+    )
+    process{
+        if([string]::IsNullOrWhiteSpace($path) -or ($folderNamesToInclude -eq $null) -or ($folderNamesToInclude.Length -le 0) ){
+            return
+        }
+
+        $fullpath = Resolve-FullPath -path $path
+
+        Get-ChildItem $fullpath -Include $folderNamesToInclude -Recurse -Directory |% {
+            $current = (Resolve-FullPath -path $_)
+            if(Test-Path -LiteralPath $current){
+                Remove-Item -LiteralPath $current -Recurse -Force:$Force
+            }
+        }
+    }
+}
 
 Start-CustomProfileBackgroundJob -asJob
