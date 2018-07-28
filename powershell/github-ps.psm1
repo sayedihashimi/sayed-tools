@@ -32,7 +32,7 @@ function CloneRepo{
 
         switch ($method){
             'ssh' {
-                $url = ('git@github.com:{0}{1}.git' -f $user, $repo)
+                $url = ('git@github.com:{0}/{1}.git' -f $user, $repo)
             }
 
             'https' {
@@ -43,7 +43,7 @@ function CloneRepo{
                 throw ('Unknown value for clone method [{0}]' -f $method)
             }
         }
-
+        "CloneUrl: $url" | Write-Verbose
         $expectedPath = (Join-Path $pwd $repo)
         [string]$extraArgs = ''
         if(-not ([string]::IsNullOrWhiteSpace($directory))){
