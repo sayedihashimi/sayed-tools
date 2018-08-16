@@ -1,7 +1,7 @@
 [cmdletbinding()]
 param()
 
-$isLinuxOrMac = ($IsLinux -or $IsOSX)
+$isLinuxOrMac = ($IsLinux -or $IsMacOS -or $IsOSX)
 
 function Get-FullPathNormalized{
     [cmdletbinding()]
@@ -79,6 +79,22 @@ if($isLinuxOrMac){
             }
         }
     }
+
+    function Clean-VSMacLogFolder{
+        [cmdletbinding()]
+        param(
+            [string]$logFolderPath = '~/Library/Logs/VisualStudio/7.0'
+        )
+        process{
+            if(test-path $logFolderPath){
+                $files = (Get-ChildItem -Path $logFolderPath -Filter '*.log').FullName
+                "Deleting files:`n" + ($files -join "`n") | Write-Output
+                Remove-Item -LiteralPath $files
+            }
+        }
+    }
+
+
 }
 
 function Ensure-GitConfigExists{
