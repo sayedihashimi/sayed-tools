@@ -80,7 +80,7 @@ if($isLinuxOrMac){
         }
     }
 
-    function Clean-VSMacLogFolder{
+    function VSMac-CleanLogFolder{
         [cmdletbinding()]
         param(
             [string]$logFolderPath = '~/Library/Logs/VisualStudio/7.0'
@@ -91,6 +91,29 @@ if($isLinuxOrMac){
                 "Deleting files:`n" + ($files -join "`n") | Write-Output
                 Remove-Item -LiteralPath $files
             }
+        }
+    }
+
+    function VSMac-OpenLogFolder{
+        [cmdletbinding()]
+        param(
+            [string]$logFolderPath = '~/Library/Logs/VisualStudio/'
+        )
+        process{
+            open $logFolderPath
+        }
+    }
+
+    function VSMac-CompressLogs{
+        [cmdletbinding()]
+        param(
+            [string]$logFolderPath = '~/Library/Logs/VisualStudio/7.0',
+            [string]$destArchivePath = ('~/Library/Logs/VisualStudio/'+(Get-Date).ToString('yyyy.MM.dd.ss.ff.\zip'))
+        )
+        process{
+            Compress-Archive -Path $logFolderPath -DestinationPath $destArchivePath
+
+            $destArchivePath | Write-Output
         }
     }
 
