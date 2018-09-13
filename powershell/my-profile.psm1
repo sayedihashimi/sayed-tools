@@ -108,7 +108,7 @@ if($isLinuxOrMac){
         [cmdletbinding()]
         param(
             [string]$logFolderPath = '~/Library/Logs/VisualStudio/7.0',
-            [string]$destArchivePath = ('~/Library/Logs/VisualStudio/'+(Get-Date).ToString('yyyy.MM.dd.ss.ff.\zip'))
+            [string]$destArchivePath = ('~/Library/Logs/VisualStudio/ide-log-'+(Get-Date).ToString('yyyy.MM.dd.ss.ff') + '.zip')
         )
         process{
             Compress-Archive -Path $logFolderPath -DestinationPath $destArchivePath
