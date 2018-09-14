@@ -117,6 +117,92 @@ if($isLinuxOrMac){
         }
     }
 
+    function VSMac-OpenTelemetryFolder{
+        [cmdletbinding()]
+        param(
+            [string]$tempfolder = ([System.IO.Path]::GetTempPath())
+        )
+        process{
+            [string]$telfolder =(Get-FullPathNormalized (Join-Path -Path $tempfolder -ChildPath 'VSTelemetryLog'))
+            if(test-path $telfolder){
+                open $telfolder
+            }
+            else{
+                "Telemetry folder not found at '$telfolder'" | Write-Output
+            }
+        }
+    }
+
+    function VSMac-ClearTelemetryLogs{
+        [cmdletbinding()]
+        param(
+            [string]$telfolder = (Get-FullPathNormalized ("{0}/VSTelemetryLog" -f ([System.IO.Path]::GetTempPath())) )
+        )
+        process{
+            if(test-path $telfolder){
+                $files = Get-ChildItem $telfolder *.txt | Select-Object -ExpandProperty fullname 
+                foreach($file in $files) {
+                    if(test-path $file) {
+                        "Removing file '$file'" | Write-Output
+                        Remove-Item $file
+                    }
+                }
+            }
+        }
+    }
+
+    function VSMac-EnableTelemetryFilelogger{
+        [cmdletbinding()]
+        param(
+            [string]$vstelfolderpath = (get-fullpathnormalized '~/VSTelemetry/'),
+            [string]$filename = 'channels.json'
+        )
+        process{
+            [string]$filecontents = @'
+{
+    "fileLogger": "enabled"
+}
+'@
+            # if the folder doesn't exist create it
+            if(!(Test-Path -LiteralPath $vstelfolderpath)){
+                New-Item -LiteralPath $vstelfolderpath -ItemType Directory
+            }
+            $filepath = (Get-FullPathNormalized (Join-Path -Path $vstelfolderpath -ChildPath $filename))
+            "Creating tel file at '$filepath' " | Write-Output
+            $filecontents | Out-File -LiteralPath $filepath
+
+        }
+    }
+
+    function VSMac-DisableTelemetryLogging{
+        [cmdletbinding()]
+        param(
+            [string]$vstelfolderpath = (get-fullpathnormalized '~/VSTelemetry/'),
+            [string]$filename = 'channels.json'
+        )
+        process{
+            $filepath = (Get-FullPathNormalized (Join-Path -Path $vstelfolderpath -ChildPath $filename))
+            if(test-path -LiteralPath $filepath){
+                "Removing config file at '$filepath'" | Write-Output
+                Remove-Item -LiteralPath $filepath
+            }
+        }
+    }
+
+    function VSMac-OpenTelemetryConfigFolder{
+        [cmdletbinding()]
+        param(
+            [string]$vstelfolderpath = (get-fullpathnormalized '~/VSTelemetry/')
+        )
+        process{
+            if(test-path $vstelfolderpath){
+                open ($vstelfolderpath)
+            }
+            else{
+                "Tel config folder not found at '$vstelfolderpath'" |Write-Output
+            }
+        }
+    }
 
 }
 
