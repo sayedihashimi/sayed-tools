@@ -10,6 +10,8 @@ function Test-IsWindows{
 }
 New-Alias -Name IsWindows -Value Test-IsWindows
 
+$scriptDir = $PSScriptRoot
+
 function Test-IsLinuxOrMac{
     [cmdletbinding()]
     param()
@@ -505,7 +507,23 @@ function Ensure-DirectoryExists{
         }
     }
 }
+function Load-AlphaFS(){
+    [cmdletbinding()]
+    param(
+        [string]$alphafsdllpath = (Get-Fullpath (Join-Path $PSScriptRoot '..\contrib\alphafs.2.2.6\lib\net452\AlphaFS.dll'))
+    )
+    process{
+        #$alphafsdllpath = (Join-Path $scriptDir 'AlphaFS.dll')
 
+        if(-not(Test-Path $alphafsdllpath)){
+            throw ('alphafs.dll not found at [{0}]' -f $alphafsdllpath)
+        }
+
+        Import-Module -Name $alphafsdllpath
+        [Reflection.Assembly]::LoadFile($alphafsdllpath)
+        'alphafs.dll loaded' | Write-Verbose
+    }
+}
 function Init-VSGitRepo{
     [cmdletbinding()]
     param()

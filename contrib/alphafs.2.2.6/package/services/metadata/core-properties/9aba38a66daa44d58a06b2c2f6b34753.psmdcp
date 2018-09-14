@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
+  <dc:creator>Peter Palotas,  Jeffrey Jangli,  Alexandr Normuradov</dc:creator>
+  <dc:description>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more.</dc:description>
+  <dc:identifier>AlphaFS</dc:identifier>
+  <version>2.2.6.0</version>
+  <keywords>Win32, Filesystem, long path, Directory, File, Copy, Move, DirectoryInfo, FileInfo, NTFS</keywords>
+  <lastModifiedBy>NuGet, Version=3.4.4.1321, Culture=neutral, PublicKeyToken=31bf3856ad364e35;Microsoft Windows NT 6.2.9200.0;.NET Framework 4.5</lastModifiedBy>
+</coreProperties>

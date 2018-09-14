@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AlphaFS</id>
+    <version>2.2.6</version>
+    <title>AlphaFS</title>
+    <authors>Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</authors>
+    <owners>Peter Palotas</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/alphaleonis/AlphaFS/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://alphafs.alphaleonis.com/</projectUrl>
+    <iconUrl>http://alphaleonis.com/img/AlphaFS-icon.png</iconUrl>
+    <description>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more.</description>
+    <releaseNotes>Bugs Fixed:
+
+         - Issue #488: Path.CheckInvalidPathChars in Path.Helpers.cs should be case insensitive
+         - Issue #489: File.Copy fails with `DirectoryNotFoundException` on long path</releaseNotes>
+    <copyright>Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</copyright>
+    <tags>Win32, Filesystem, long path, Directory, File, Copy, Move, DirectoryInfo, FileInfo, NTFS</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Transactions" targetFramework="" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
