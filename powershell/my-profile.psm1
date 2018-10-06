@@ -80,6 +80,15 @@ if($isLinuxOrMac){
         }
     }
 
+    function Convert-ClipboardToPlainText{
+        [cmdletbinding()]
+        param()
+        process{
+            & pbpaste|pbcopy
+            'Clipboard converted to plain text' | Write-Output
+        }
+    }
+
     function VSMac-CleanLogFolder{
         [cmdletbinding()]
         param(
@@ -117,7 +126,7 @@ if($isLinuxOrMac){
         }
     }
 
-    function VSMac-OpenTelemetryFolder{
+    function VSMac-OpenTelemetryLogsFolder{
         [cmdletbinding()]
         param(
             [string]$tempfolder = ([System.IO.Path]::GetTempPath())
