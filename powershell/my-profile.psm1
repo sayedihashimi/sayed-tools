@@ -85,7 +85,7 @@ if($isLinuxOrMac){
         param()
         process{
             & pbpaste|pbcopy
-            'Clipboard converted to plain text' | Write-Output
+            ' ✓ Clipboard converted to plain text' | Write-Output
         }
     }
 
