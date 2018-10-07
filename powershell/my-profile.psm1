@@ -60,6 +60,43 @@ function Import-MyModules{
     }
 }
 
+function Open-Github(){
+    [cmdletbinding()]
+    param(
+        $path = $pwd
+    )
+    process{
+        $path = (Get-FullPathNormalized -path $path)
+        $pattern = 'origin\tgit@github.com:([a-zA-S-.]+)/([a-zA-Z-]+)\.git.*(fetch\))'
+        Push-Location -LiteralPath $path
+        $gitremotes = git remote -v
+        $res = [Regex]::Matches($gitremotes, $pattern)
+        if($res -ne $null){
+            if($res.Count -gt 1){
+                $res = $res[0]
+            }
+
+            $username = $res.Groups[1].Value
+            $reponame = $res.Groups[2].Value
+
+            # https://github.com/sayedihashimi/sayed-tools
+            $repourl = 'https://github.com/{0}/{1}' -f $username, $reponame
+
+            if($isLinuxOrMac){
+                open $repourl
+            }
+            else{
+                start $repourl
+            }
+
+            'https://github.com/{0}/{1}' -f $username, $reponame | Write-Host
+        }
+    }
+    End{
+        Pop-Location
+    }
+}
+
 if($isLinuxOrMac){
     function clip{
         [cmdletbinding()]
