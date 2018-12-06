@@ -97,6 +97,34 @@ function Open-Github(){
     }
 }
 
+function Ensure-GitConfigExists{
+    [cmdletbinding()]
+    param(
+        [string]$gitconfigpath = (Get-FullPathNormalized (join-path $global:MyProfileSettings.HomeDir .gitconfig -ErrorAction SilentlyContinue))
+    )
+    process{
+        if(-not ([string]::IsNullOrWhiteSpace($gitconfigpath)) -and (-not (test-path $gitconfigpath))) {
+            Sayed-ConfigureGit
+        }
+    } 
+}
+
+# This is the function that the profile script should call
+function InitalizeEnv{
+    [cmdletbinding()]
+    param()
+    process{
+
+        Set-InitialPath
+        if( (Import-MyModules) -eq $true){
+            Ensure-GitConfigExists
+        }
+        else{
+            'Missing at least 1 module.' | Write-Host -ForegroundColor Cyan
+        }
+    }
+}
+
 if($isLinuxOrMac){
     function clip{
         [cmdletbinding()]
@@ -252,31 +280,5 @@ if($isLinuxOrMac){
 
 }
 
-function Ensure-GitConfigExists{
-    [cmdletbinding()]
-    param(
-        [string]$gitconfigpath = (Get-FullPathNormalized (join-path $global:MyProfileSettings.HomeDir .gitconfig -ErrorAction SilentlyContinue))
-    )
-    process{
-        if(-not ([string]::IsNullOrWhiteSpace($gitconfigpath)) -and (-not (test-path $gitconfigpath))) {
-            Sayed-ConfigureGit
-        }
-    } 
-}
 
-# This is the function that the profile script should call
-function InitalizeEnv{
-    [cmdletbinding()]
-    param()
-    process{
-
-        Set-InitialPath
-        if( (Import-MyModules) -eq $true){
-            Ensure-GitConfigExists
-        }
-        else{
-            'Missing at least 1 module.' | Write-Host -ForegroundColor Cyan
-        }
-    }
-}
 InitalizeEnv
