@@ -149,7 +149,11 @@ if($isLinuxOrMac){
         [cmdletbinding()]
         param()
         process{
-            & pbpaste|pbcopy
+            $cliptemp = (& pbpaste)
+            $cliptemp = $cliptemp.Trim()
+            $cliptemp | pbcopy
+#            & pbpaste|pbcopy
+
             ' ✓ Clipboard converted to plain text' | Write-Output
         }
     }
@@ -157,13 +161,21 @@ if($isLinuxOrMac){
     function VSMac-CleanLogFolder{
         [cmdletbinding()]
         param(
-            [string]$logFolderPath = '~/Library/Logs/VisualStudio/7.0'
+            [string]$logRootFolderPath = '~/Library/Logs/VisualStudio/',
+            
+            [ValidateSet('7.0','8.0')]
+            [string]$version = '8.0'
         )
         process{
+            $logFolderPath = (Join-Path -Path $logRootFolderPath -ChildPath $version)
+
             if(test-path $logFolderPath){
                 $files = (Get-ChildItem -Path $logFolderPath -Filter '*.log').FullName
                 "Deleting files:`n" + ($files -join "`n") | Write-Output
                 Remove-Item -LiteralPath $files
+            }
+            else{
+                "Log folder not found at $logFolderPath" | Write-Warning
             }
         }
     }
@@ -181,16 +193,33 @@ if($isLinuxOrMac){
     function VSMac-CompressLogs{
         [cmdletbinding()]
         param(
-            [string]$logFolderPath = '~/Library/Logs/VisualStudio/7.0',
-            [string]$destArchivePath = ('~/Library/Logs/VisualStudio/ide-log-'+(Get-Date).ToString('yyyy.MM.dd.ss.ff') + '.zip')
+            [string]$logRootFolderPath = '~/Library/Logs/VisualStudio/',
+
+            [ValidateSet('7.0','8.0')]
+            [string]$version = '8.0',
+
+            [string]$filename,
+            [string]$resultFolderPath = '~/Library/Logs/VisualStudio/'
         )
         process{
-            Compress-Archive -Path $logFolderPath -DestinationPath $destArchivePath
+            if([string]::IsNullOrEmpty($filename)){
+                $dateStr = ((Get-Date).ToString('yyyy.MM.dd.ss.ff'))
+                $filename = ("ide-{0}-log-{1}.zip" -f $version, $dateStr)
+            }
 
-            $destArchivePath | Write-Output
+            $destArchivePath = (Join-Path -Path $resultFolderPath -ChildPath $filename)
+
+            $logFolderPath = (Join-Path -Path $logRootFolderPath -ChildPath $version)
+
+            if(Test-Path $logFolderPath){
+                Compress-Archive -Path $logFolderPath -DestinationPath $destArchivePath
+                $destArchivePath | Write-Output
+            }
+            else{
+                "Log folder not found at $logFolderPath" | Write-Warning
+            }
         }
     }
-
     function VSMac-OpenTelemetryLogsFolder{
         [cmdletbinding()]
         param(
