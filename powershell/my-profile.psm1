@@ -109,6 +109,19 @@ function Ensure-GitConfigExists{
     } 
 }
 
+function Get-FilesCreatedBetweenDates{
+    [cmdletbinding()]
+    param(
+        [datetime]$startDate,
+        [datetime]$endDate,
+        [string]$path,
+        [string]$include
+    )
+    process{
+        Get-ChildItem -Path $path $include -Recurse -File|? {$_.LastWriteTime -lt $endDate }|? {$_.LastWriteTime -gt $startDate} | Select Fullname ,LASTWRITETIME | Sort-Object -Property LASTWRITETIME -Descending 
+    }
+}
+
 # This is the function that the profile script should call
 function InitalizeEnv{
     [cmdletbinding()]
