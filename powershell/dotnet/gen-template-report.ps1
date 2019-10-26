@@ -174,14 +174,22 @@ function GetTemplatesToCheck(){
         foreach($st in $searchTerm){        
             $cmdToRun = '"{0}" list -Noninteractive -Prerelease {1}' -f (get-nuget),$st
             'cmdToRun: [{0}]' -f $cmdToRun | Write-Verbose 
-            $result = (Execute-CommandString -command $cmdToRun|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
+            
+            #$result = (Execute-CommandString -command $cmdToRun|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
+            #        @{
+            #            'Name'=$res[0]
+            #            'Version'=$res[1]                      
+            #            'DownloadUrl' = (('https://api.nuget.org/packages/{0}.{1}.nupkg' -f $res[0],$res[1]).ToLower())
+            #        }}})
+
+            $result = (Execute-Command -exePath ('"{0}"' -f (get-nuget)) -arguments ('list -Noninteractive -Prerelease {0}' -f $st))|%{$res = ($_.split(' '));if( ($res -ne $null) -and ($res.length -gt 1)) {
                     @{
                         'Name'=$res[0]
-                        'Version'=$res[1]
-                        #'DownloadUrl' = ('http://www.nuget.org/api/v2/package/{0}/{1}' -f $res[0],$res[1])                        
+                        'Version'=$res[1]                      
                         'DownloadUrl' = (('https://api.nuget.org/packages/{0}.{1}.nupkg' -f $res[0],$res[1]).ToLower())
-                        # https://api.nuget.org/packages/{0}.{1}.1.3.0.nupkg
-                    }}})
+                    }}}
+
+
 
             if($LASTEXITCODE -eq 0){
                 $allResults += $result
@@ -389,6 +397,51 @@ function Get-Nuget{
 
         # return the path of the file
         (get-item $nugetDestPath).FullName
+    }
+}
+
+function Execute-Command {
+    [cmdletbinding()]
+    param(
+        [Parameter(Mandatory = $true,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [String]$exePath,
+        [Parameter(Mandatory = $true,Position=1,ValueFromPipelineByPropertyName=$true)]
+        [String]$arguments,
+        [Parameter(Position=2)]
+        [System.IO.FileInfo]$workingDirectory
+        )
+    process{
+        $psi = New-Object -TypeName System.Diagnostics.ProcessStartInfo
+        $psi.CreateNoWindow = $true
+        $psi.UseShellExecute = $false
+        $psi.RedirectStandardOutput = $true
+        $psi.RedirectStandardError=$true
+        $psi.FileName = $exePath
+        $psi.Arguments = $arguments
+        if($workingDirectory -and (Test-Path -Path $workingDirectory)) {
+            $psi.WorkingDirectory = $workingDirectory
+        }
+
+        $process = New-Object -TypeName System.Diagnostics.Process
+        $process.StartInfo = $psi
+        $process.EnableRaisingEvents=$true
+
+        # Register the event handler for error
+        $stdErrEvent = Register-ObjectEvent -InputObject $process  -EventName 'ErrorDataReceived' -Action {
+            if (! [String]::IsNullOrEmpty($EventArgs.Data)) {
+             $EventArgs.Data | Write-Error 
+            }
+        }
+
+        # Starting process.
+        $process.Start() | Out-Null
+        $process.BeginErrorReadLine() | Out-Null
+        $output = $process.StandardOutput.ReadToEnd()
+        $process.WaitForExit() | Out-Null
+        $output | Write-Output
+        
+        # UnRegister the event handler for error
+        Unregister-Event -SourceIdentifier $stdErrEvent.Name | Out-Null
     }
 }
 
