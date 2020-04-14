@@ -152,7 +152,7 @@ function ExtractRemoteZip{
     process{
         $zippath = GetLocalFileFor -downloadUrl $downloadUrl -filename $filename
         $expectedFolderpath = (join-path -Path ($global:machinesetupconfig.MachineSetupConfigFolder) ('apps\{0}\' -f $filename))
-
+        'expectedFolderpath: {0}' -f $expectedFolderpath | Write-Output
         if(-not (test-path $expectedFolderpath)){
             EnsureFolderExists -path $expectedFolderpath | Write-Verbose
             # extract the folder to the directory
