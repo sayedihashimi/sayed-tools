@@ -70,6 +70,13 @@ $global:machinesetupconfig = @{
     WallpaperUrl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/checking-out-the-view.jpg'
 }
 
+function InstallPrompt{
+    PowerShellGet\Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
+    PowerShellGet\Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force
+    PowerShellGet\Install-Module posh-git -Scope CurrentUser
+    PowerShellGet\Install-Module oh-my-posh -Scope CurrentUser
+}
+
 #// 'https://dl.dropboxusercontent.com/u/40134810/wallpaper/checking-out-the-view.jpg'
 function InternalGet-ScriptDirectory{
     split-path (((Get-Variable MyInvocation -Scope 1).Value).MyCommand.Path)

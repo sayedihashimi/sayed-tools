@@ -109,6 +109,27 @@ function Ensure-GitConfigExists{
     } 
 }
 
+function Configure-DotnetTabCompletion(){
+    [cmdletbinding()]
+    param()
+    process{
+        # PowerShell parameter completion shim for the dotnet CLI 
+        Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
+            param($commandName, $wordToComplete, $cursorPosition)
+                dotnet complete --position $cursorPosition "$wordToComplete" | ForEach-Object {
+                [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+                }
+        }
+
+        Register-ArgumentCompleter -Native -CommandName sayedha -ScriptBlock {
+            param($commandName, $wordToComplete, $cursorPosition)
+                dotnet complete --position $cursorPosition "$wordToComplete" | ForEach-Object {
+                [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+                }
+        }
+    }
+}
+
 function Get-FilesCreatedBetweenDates{
     [cmdletbinding()]
     param(
@@ -135,9 +156,18 @@ function InitalizeEnv{
         else{
             'Missing at least 1 module.' | Write-Host -ForegroundColor Cyan
         }
+        ConfigurePrompt
+        Configure-DotnetTabCompletion
     }
 }
-
+function ConfigurePrompt{
+    Import-Module posh-git
+    Import-Module oh-my-posh
+    # Start the default settings
+    Set-Prompt
+    # Alternatively set the desired theme:
+    Set-Theme Agnoster
+}
 if($isLinuxOrMac){
     function clip{
         [cmdletbinding()]
