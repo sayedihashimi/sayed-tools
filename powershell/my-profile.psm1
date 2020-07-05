@@ -144,30 +144,174 @@ function Get-FilesCreatedBetweenDates{
 }
 
 # This is the function that the profile script should call
-function InitalizeEnv{
-    [cmdletbinding()]
-    param()
-    process{
 
-        Set-InitialPath
-        if( (Import-MyModules) -eq $true){
-            Ensure-GitConfigExists
+
+function ImportSayedTools{
+    [cmdletbinding()]
+    param(
+        $toolsmodpath = (join-path $codehome 'sayed-tools\powershell\sayed-tools.psm1')
+    )
+    process{
+        if(test-path $toolsmodpath){
+            Import-Module $toolsmodpath -Global -DisableNameChecking | Write-Verbose
+            # return true to indicate success
+            $true
         }
         else{
-            'Missing at least 1 module.' | Write-Host -ForegroundColor Cyan
+            'sayed-tools not found at [{0}]' -f $toolsmodpath | Write-Warning
+            # return false to indicate not-successful
+            $false
         }
-        ConfigurePrompt
-        Configure-DotnetTabCompletion
     }
 }
-function ConfigurePrompt{
-    Import-Module posh-git
-    Import-Module oh-my-posh
-    # Start the default settings
-    Set-Prompt
-    # Alternatively set the desired theme:
-    Set-Theme Agnoster
+
+function RunScriptIfExists{
+    [cmdletbinding()]
+    param(
+        [string]$scriptpath,
+        [string]$missingMessage = 'script not found at [{0}]'
+    )
+    process{
+        if(Test-Path $scriptpath -PathType Leaf){
+            . $scriptpath
+        }
+        else{
+            $missingMessage -f $scriptpath | Write-Warning
+        }
+    }
 }
+
+function Load-CustomModules2{
+    $customModsPath = @()
+    if(-not ([string]::IsNullOrWhiteSpace($dropboxPsHome))){
+        $customModsPath += (Join-Path -path $dropboxPsHome -ChildPath 'CustomModules')
+    }
+    if(-not([string]::IsNullOrWhiteSpace($codeHome))){
+        $customModsPath += (Join-Path -Path $codeHome -ChildPath 'pshelpers')
+        $customModsPath += (Join-Path -Path $codeHome -ChildPath 'sayed-tools\powershell')
+        $customModsPath += (Join-Path -Path $codeHome -ChildPath 'nuget-powershell')
+        $customModsPath += $codeHome
+    }
+
+    # custom mods folder found
+    $modulesToLoad = @()
+    $modulesToLoad += 'sayedha-pshelpers'
+    $modulesToLoad += 'github-ps'
+    $modulesToLoad += 'nuget-powershell'
+
+    foreach($p in $customModsPath){
+        foreach($modToLoad in $modulesToLoad){
+            $modFullPath = (Join-Path -Path $p -ChildPath ("{0}.psm1" -f $modToLoad))
+
+            if(Test-Path($modFullPath)){
+                if(Get-Module $modToLoad){
+                    Remove-Module $modToLoad
+                }
+
+                "Loading module [{0}] from [{1}]" -f $modToLoad, $modFullPath | Write-Verbose
+                Import-Module $modFullPath -DisableNameChecking -PassThru -Global | Out-Null
+
+                # first module found wins
+                break
+            }
+            else{
+                "Unable to find module at [{0}]" -f $modFullPath | Write-Verbose
+            }
+        }
+    }
+}
+function Add-GitToPath{
+    [cmdletbinding()]
+    param(
+        [string[]]$pathsToTry
+    )
+    process{       
+        if( ($pathsToTry -eq $null) -or ($pathsToTry.Length -le 0)){
+            $pathsToTry=@()
+            $pathsToTry += "${env:ProgramFiles}\git\bin"
+            $pathsToTry += "${env:ProgramFiles(x86)}\git\bin"
+        }
+       
+        foreach($path in $pathsToTry){
+            if(Test-Path -Path $path){
+                'found git at [{0}]' -f $path | Write-Verbose
+                Add-Path $path
+
+                Set-Alias git ("$path\git.exe")
+
+                return $true
+            }
+        }
+
+        return $false
+    }
+}
+function glog {
+    & git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  }
+function Sayed-ConfigureTools(){
+    if(-not $isLinuxOrMac){
+        "Configuring tools" | Write-Verbose
+        $toolsToConfigure = @(
+            @{ "alias"="msb","msbuild"; "path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin","$netFx4Path\msbuild.exe" },
+            @{ "alias"="dev10"; "path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio 10.0\Common7\IDE\devenv.exe"},
+            @{ "alias"="dev11";"path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio 11.0\Common7\IDE\devenv.exe"},
+            @{ "alias"="dev12";"path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe"},
+            @{ "alias"="dev14";"path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe" },
+            @{ "alias"="dev15";"path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe" },
+            @{ 'alias'='dev16';'path'="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe"},
+            @{ 'alias'='dev16-ga';'path'="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.exe"},
+            @{ "alias"="iisexpress"; "path"="${env:ProgramFiles(x86)}\IIS Express\iisexpress.exe" },
+            @{ "alias"="msdeploy","msd";"path"="$env:ProgramFiles\IIS\Microsoft Web Deploy V3\msdeploy.exe" },
+            @{ "alias"="np";"path"="${env:ProgramFiles(x86)}\Notepad++\notepad++.exe" },
+            @{ "alias"="p4merge"; "path"="${env:ProgramFiles(x86)}\Perforce\p4merge.exe","$env:ProgramFiles\Perforce\p4merge.exe" },
+            @{ "alias"="handle"; "path"="$dropBoxHome\Tools\SysinternalsSuite\handle.exe" },
+            @{ "alias"="kdiff"; "path"="$env:ProgramFiles\KDiff3\kdiff3.exe" },
+            @{ "alias"="mdpad"; "path"="$env:LOCALAPPDATA\Programs\MarkdownPad 2\markdownpad2.exe","${env:ProgramFiles(x86)}\MarkdownPad 2\MarkdownPad2.exe"}
+            @{ "alias"="code"; "path"="$env:ProgramFiles\Microsoft VS Code\Code.exe"}
+        )
+        Add-AliasForTool -tool $toolsToConfigure
+    }
+}
+function ConfigurePowerShellConsoleWindow(){    
+    # confiure the window
+    $pshost = get-host
+    $pswindow = $pshost.ui.rawui
+
+	$newsize = (Get-Host).UI.RawUI.BufferSize
+	$newsize.Height = 9000
+	(Get-Host).UI.RawUI.BufferSize = $newsize
+}
+
+function Configure-Posh{
+    # these must be run on machine setup - see https://gist.github.com/jchandra74/5b0c94385175c7a8d1cb39bc5157365e
+    # Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
+    # Import-Module 'posh-git'
+    # Import-Module 'oh-my-posh'
+    # 
+    Import-Module PSReadLine
+    Import-Module 'posh-git'
+    Import-Module 'oh-my-posh'
+    set-prompt
+
+    $themename = 'sorin-sayedha'
+    $themefilename = $themename + '.psm1'
+    $srcthemefile = Join-Path $codehome -ChildPath 'sayed-tools\powershell' $themefilename
+    $destthemefile = Join-Path (Get-Module oh-my-posh).ModuleBase -ChildPath 'Themes' $themefilename
+    
+    # always copy the theme file to get any changes that may have been applied
+    if( -not (test-path $destthemefile) -and (test-path $srcthemefile) ){
+        copy-item -LiteralPath $srcthemefile -Destination $destthemefile
+    }
+
+    set-theme $themename
+
+    $ThemeSettings.GitSymbols.BranchIdenticalStatusToSymbol=[char]::ConvertFromUtf32(0x2630)
+    $ThemeSettings.GitSymbols.BranchUntrackedSymbol=[char]::ConvertFromUtf32(0x26d4)
+}
+
+
+
 if($isLinuxOrMac){
     function clip{
         [cmdletbinding()]
@@ -352,5 +496,51 @@ if($isLinuxOrMac){
 
 }
 
+function InitalizeEnv{
+    [cmdletbinding()]
+    param()
+    process{
+
+        Set-InitialPath
+        if( (Import-MyModules) -eq $true){
+            Ensure-GitConfigExists
+        }
+        else{
+            'Missing at least 1 module.' | Write-Host -ForegroundColor Cyan
+        }
+
+        Configure-DotnetTabCompletion
+    }
+}
+
+function Sayed-InitailizeProfile{
+    [cmdletbinding()]
+    param()
+    process{
+        if(ImportSayedTools){
+            if((Add-GitToPath)){
+                Sayed-ConfigureGit
+            }
+            else {
+                'git not found' | Write-Warning
+            }
+
+            'Importing tools' | Write-Output
+            ConfigurePowerShellConsoleWindow
+            Configure-Posh
+            Load-CustomModules2
+            Sayed-ConfigureTools
+
+            SayedConfigureSaveMachineInfoJob -asJob
+        }
+        else{
+            'Not importing tools...' | Write-Output
+        }
+
+        if(Test-path $codeHome){
+            set-location $codeHome
+        }
+    }
+}
 
 InitalizeEnv
