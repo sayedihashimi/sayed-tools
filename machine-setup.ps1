@@ -28,10 +28,9 @@ $global:machinesetupconfig = @{
         'git.install',
         'googlechrome',
         'firefox',
-        '1password',
         'notepadplusplus.install',
         'conemu'
-        '7zip.install '
+        '7zip.install'
     )
     BaseRepos = @(
         (newobj @{
@@ -519,10 +518,13 @@ function GetLocalFileFor{
 
         [Parameter(Position=1,Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [string]$filename
+        [string]$filename,
+
+        [Parmeter(Postion=2)]
+        [string]$downloadRootDir = $global:machinesetupconfig.MachineSetupConfigFolder
     )
     process{
-        $expectedPath = (Join-Path $global:machinesetupconfig.MachineSetupConfigFolder $filename)
+        $expectedPath = (Join-Path $downloadRootDir $filename)
         
         if(-not (test-path $expectedPath)){
             # download the file
@@ -547,11 +549,14 @@ function ExtractRemoteZip{
 
         [Parameter(Position=1)]
         [ValidateNotNullOrEmpty()]
-        [string]$filename
+        [string]$filename,
+
+        [Parmeter(Postion=2)]
+        [string]$downloadRootDir = $global:machinesetupconfig.MachineSetupConfigFolder
     )
     process{
         $zippath = GetLocalFileFor -downloadUrl $downloadUrl -filename $filename
-        $expectedFolderpath = (join-path -Path ($global:machinesetupconfig.MachineSetupConfigFolder) ('apps\{0}\' -f $filename))
+        $expectedFolderpath = (join-path -Path $downloadRootDir ('apps\{0}\' -f $filename))
 
         if(-not (test-path $expectedFolderpath)){
             EnsureFolderExists -path $expectedFolderpath | Write-Verbose
@@ -958,7 +963,7 @@ function ConfigureMachine{
 #########################################
 # Begin script
 #########################################
-if(-not (IsRunningAsAdmin)) {
+if($runscript -and (-not (IsRunningAsAdmin))) {
     'This script needs to be run as an administrator' | Write-Error
     throw
 }

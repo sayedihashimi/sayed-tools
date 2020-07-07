@@ -100,10 +100,11 @@ function Open-Github(){
 function Ensure-GitConfigExists{
     [cmdletbinding()]
     param(
-        [string]$gitconfigpath = (Get-FullPathNormalized (join-path $global:MyProfileSettings.HomeDir .gitconfig -ErrorAction SilentlyContinue))
+        [string]$gitconfigpath # = (Get-FullPathNormalized (join-path $global:MyProfileSettings.HomeDir .gitconfig -ErrorAction SilentlyContinue))
     )
     process{
-        if(-not ([string]::IsNullOrWhiteSpace($gitconfigpath)) -and (-not (test-path $gitconfigpath))) {
+        $expectedPath = Get-FullPathNormalized -path "~/.gitconfig"
+        if(-not (test-path -Path $expectedPath)){
             Sayed-ConfigureGit
         }
     } 
@@ -295,21 +296,35 @@ function Configure-Posh{
     set-prompt
 
     $themename = 'sorin-sayedha'
+    $themename = 'Agnoster-sayedha'
     $themefilename = $themename + '.psm1'
     $srcthemefile = Join-Path $codehome -ChildPath 'sayed-tools\powershell' $themefilename
     $destthemefile = Join-Path (Get-Module oh-my-posh).ModuleBase -ChildPath 'Themes' $themefilename
     
     # always copy the theme file to get any changes that may have been applied
-    if( -not (test-path $destthemefile) -and (test-path $srcthemefile) ){
+    if(test-path $srcthemefile){
         copy-item -LiteralPath $srcthemefile -Destination $destthemefile
     }
 
     set-theme $themename
+    Set-Theme $themename
 
     $ThemeSettings.GitSymbols.BranchIdenticalStatusToSymbol=[char]::ConvertFromUtf32(0x2630)
     $ThemeSettings.GitSymbols.BranchUntrackedSymbol=[char]::ConvertFromUtf32(0x26d4)
+    Configure-PoshSettingsForTheme -themename $themename
 }
 
+function Configure-PoshSettingsForTheme{
+    [cmdletbinding()]
+    param(
+        [string]$themename
+    )
+    process{
+        if([string]::Compare('Agnoster-sayedha',$themename,$true) -eq 0){
+            #$ThemeSettings.PromptSymbols.StartSymbol = '%'
+        }
+    }
+}
 
 
 if($isLinuxOrMac){

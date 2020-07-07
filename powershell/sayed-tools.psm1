@@ -1,15 +1,6 @@
 [cmdletbinding()]
 param()
 
-function Test-IsWindows{
-    [cmdletbinding()]
-    param()
-    process{
-        -not ($IsLinux -or $IsOSX)
-    }
-}
-New-Alias -Name IsWindows -Value Test-IsWindows
-
 $scriptDir = $PSScriptRoot
 
 function Test-IsLinuxOrMac{
@@ -315,10 +306,114 @@ function Open-IPAsJobFolder{
     }
 }
 
+function GetLocalFileFor{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [ValidateNotNullOrEmpty()]
+        [string]$downloadUrl,
+
+        [Parameter(Position=1,Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$filename,
+
+        [Parameter(Position=2)]
+        [string]$downloadRootDir = (Join-Path $env:LOCALAPPDATA -ChildPath 'sayed-tools' 'downloads')
+    )
+    process{
+        $expectedPath = (Join-Path $downloadRootDir $filename)
+        
+        if(-not (test-path $expectedPath)){
+            # download the file
+            EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null            
+            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath | out-null
+        }
+
+        if(-not (test-path $expectedPath)){
+            throw ('Unable to download file from [{0}] to [{1}]' -f $downloadUrl, $expectedPath)
+        }
+
+        $expectedPath
+    }
+}
+
+function EnsureFolderExists{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,ValueFromPipeline=$true)]
+        [string[]]$path
+    )
+    process{
+        foreach($p in $path){
+            if(-not [string]::IsNullOrWhiteSpace($p) -and (-not (Test-Path $p))){
+                New-Item -Path $p -ItemType Directory
+            }
+        }
+    }
+}
+function ExtractRemoteZip{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [ValidateNotNullOrEmpty()]
+        [string]$downloadUrl,
+
+        [Parameter(Position=1)]
+        [ValidateNotNullOrEmpty()]
+        [string]$destFolderName,
+
+        [Parameter(Position=2)]
+        [string]$downloadRootDir = (Join-Path $env:LOCALAPPDATA -ChildPath 'sayed-tools' 'zips'),
+
+        [Parameter(Position=3)]
+        [string]$pathTo7Zip = (join-path $env:ProgramFiles '7-Zip\7z.exe')
+    )
+    process{
+        $zippath = GetLocalFileFor -downloadUrl $downloadUrl -filename "$destFolderName.zip"
+        $expectedFolderpath = (join-path -Path $downloadRootDir ('{0}\' -f $destFolderName))
+
+        if(-not (test-path $expectedFolderpath)){
+            EnsureFolderExists -path $expectedFolderpath | Write-Verbose
+            # extract the folder to the directory
+            & $pathTo7Zip x -y "-o$expectedFolderpath" "$zippath" | Write-Verbose
+        }        
+
+        # return the path to the folder
+        $expectedFolderpath
+    }
+}
+
+function ExtractLocalZip{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [ValidateNotNullOrEmpty()]
+        [string]$filepath,
+
+        [Parameter(Position=2)]
+        [string]$downloadRootDir = (Join-Path $env:LOCALAPPDATA -ChildPath 'sayed-tools' 'zips')
+    )
+    process{
+        $filename = [System.IO.Path]::GetFilename($filepath)
+        #$zippath = GetLocalFileFor -downloadUrl $downloadUrl -filename $filename
+        $expectedFolderpath = (join-path -Path $down -ChildPath ('{0}\' -f $filename))
+
+        if(-not (test-path $expectedFolderpath)){
+            EnsureFolderExists -path $expectedFolderpath | Write-Verbose
+            # extract the folder to the directory
+            & (Get7ZipPath) x -y "-o$expectedFolderpath" "$filepath" | Write-Verbose
+        }        
+
+        # return the path to the folder
+        $expectedFolderpath
+    }
+}
+
+
 ######################################
 # Windows specific below
 ######################################
-if(Test-IsWindows){
+if($IsWindows){
     <#
     .SYNOPSIS
         You can add this to you build script to ensure that psbuild is available before calling
@@ -494,6 +589,17 @@ if(Test-IsWindows){
                 Write-Warning -Message "Wallpaper not changed because $($_.Exception.Message)"
             }
         [Wallpaper.Setter]::SetWallpaper( $Path, $Style )
+    }
+
+    function Install-SysInternals{
+        [cmdletbinding()]
+        param(
+            $downloadUrl = 'https://download.sysinternals.com/files/SysinternalsSuite.zip'
+        )
+        process{
+            $installfolder = ExtractRemoteZip -downloadUrl $downloadUrl -destFolderName 'sysinternals.202006'
+            Add-Path -pathToAdd $installfolder
+        }
     }
 }
 
