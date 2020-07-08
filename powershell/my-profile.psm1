@@ -227,18 +227,25 @@ function Add-GitToPath{
         [string[]]$pathsToTry
     )
     process{       
-        if( ($pathsToTry -eq $null) -or ($pathsToTry.Length -le 0)){
-            $pathsToTry=@()
-            $pathsToTry += "${env:ProgramFiles}\git\bin"
-            $pathsToTry += "${env:ProgramFiles(x86)}\git\bin"
+        if($IsWindows){
+            if( ($pathsToTry -eq $null) -or ($pathsToTry.Length -le 0)){
+                $pathsToTry=@()
+                $pathsToTry += "${env:ProgramFiles}\git\bin"
+                $pathsToTry += "${env:ProgramFiles(x86)}\git\bin"
+            }
         }
-       
+        else{
+            if( ($pathsToTry -eq $null) -or ($pathsToTry.Length -le 0)){
+                $pathsToTry=@()
+                $pathsToTry += "/usr/bin/git"
+            }
+        }
         foreach($path in $pathsToTry){
             if(Test-Path -Path $path){
                 'found git at [{0}]' -f $path | Write-Verbose
                 Add-Path $path
 
-                Set-Alias git ("$path\git.exe")
+                # Set-Alias git ("$path\git.exe")
 
                 return $true
             }
@@ -279,9 +286,12 @@ function ConfigurePowerShellConsoleWindow(){
     $pshost = get-host
     $pswindow = $pshost.ui.rawui
 
-	$newsize = (Get-Host).UI.RawUI.BufferSize
-	$newsize.Height = 9000
-	(Get-Host).UI.RawUI.BufferSize = $newsize
+	# not supported on macOS
+    if($IsWindows){
+        $newsize = (Get-Host).UI.RawUI.BufferSize
+        $newsize.Height = 20000
+        (Get-Host).UI.RawUI.BufferSize = $newsize
+    }
 }
 
 function Configure-Posh{
@@ -299,10 +309,11 @@ function Configure-Posh{
     $themename = 'Agnoster-sayedha'
     $themefilename = $themename + '.psm1'
     $srcthemefile = Join-Path $codehome -ChildPath 'sayed-tools\powershell' $themefilename
-    $destthemefile = Join-Path (Get-Module oh-my-posh).ModuleBase -ChildPath 'Themes' $themefilename
+    $destthemefile = Join-Path (Get-ThemesLocation) -ChildPath $themefilename
     
     # always copy the theme file to get any changes that may have been applied
     if(test-path $srcthemefile){
+        'Copying them file "{0}"=>"{1}' -f $srcthemefile, $destthemefile | Write-Host
         copy-item -LiteralPath $srcthemefile -Destination $destthemefile
     }
 

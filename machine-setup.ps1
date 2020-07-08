@@ -130,6 +130,9 @@ if([string]::IsNullOrWhiteSpace($Global:codehome)){
 
     if([string]::IsNullOrWhiteSpace($Global:codehome)){
         $Global:codehome = 'c:\data\mycode'
+        if(-not $IsWindows){
+            $global:codehome = Join-Path (Get-Item ~) "data" "mycode"
+        }
     }
 }
 
