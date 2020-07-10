@@ -23,8 +23,8 @@ function Write-Theme {
         $prompt += Write-Prompt -Object "$($sl.PromptSymbols.ElevatedSymbol) " -ForegroundColor $sl.Colors.AdminIconForegroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
     }
 
-    $user = $sl.CurrentUser
-    $computer = $sl.CurrentHostname
+    #$user = $sl.CurrentUser
+    #$computer = $sl.CurrentHostname
     
     #if (Test-NotDefaultUser($user)) {
     #    #$prompt += Write-Prompt -Object "$user@$computer " -ForegroundColor $sl.Colors.SessionInfoForegroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
@@ -59,17 +59,17 @@ function Write-Theme {
     }
 
     # Writes the postfix to the prompt
-    $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol -ForegroundColor $lastColor
+    #$prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol -ForegroundColor $lastColor
 #    $prompt += Write-Prompt -Object ❯ -ForegroundColor $sl.Colors.CommandFailedIconForegroundColor
-    $prompt += [System.Environment]::NewLine
-    
+    #$prompt += [System.Environment]::NewLine
+    $prompt += Write-Prompt -Object ([System.Environment]::NewLine)
 #    $prompt += Write-Prompt -Object ❯ -ForegroundColor $sl.Colors.CommandFailedIconForegroundColor
 #    $prompt += Write-Prompt -Object ❯ -ForegroundColor $sl.Colors.AdminIconForegroundColor
 #    $prompt += Write-Prompt -Object ❯ -ForegroundColor $sl.Colors.GitNoLocalChangesAndAheadColor
 
     $prompt += Write-Prompt -Object '  ' -ForegroundColor $sl.Colors.PromptForegroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor
     $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol -ForegroundColor $sl.Colors.PromptBackgroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
-    $prompt += ' '
+    $prompt += ''
     $prompt
 }
 
