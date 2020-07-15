@@ -62,13 +62,14 @@ function Write-Theme {
     #$prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol -ForegroundColor $lastColor
 #    $prompt += Write-Prompt -Object ❯ -ForegroundColor $sl.Colors.CommandFailedIconForegroundColor
     #$prompt += [System.Environment]::NewLine
-    $prompt += Write-Prompt -Object ([System.Environment]::NewLine)
+    
 #    $prompt += Write-Prompt -Object ❯ -ForegroundColor $sl.Colors.CommandFailedIconForegroundColor
 #    $prompt += Write-Prompt -Object ❯ -ForegroundColor $sl.Colors.AdminIconForegroundColor
 #    $prompt += Write-Prompt -Object ❯ -ForegroundColor $sl.Colors.GitNoLocalChangesAndAheadColor
 
     $prompt += Write-Prompt -Object '  ' -ForegroundColor $sl.Colors.PromptForegroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor
     $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol -ForegroundColor $sl.Colors.PromptBackgroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
+    $prompt += Write-Prompt -Object ([System.Environment]::NewLine)
     $prompt += ''
     $prompt
 }

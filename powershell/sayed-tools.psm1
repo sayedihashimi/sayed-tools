@@ -641,7 +641,17 @@ function Init-VSGitRepo{
         & git commit -m 'git init'
     }
 }
-
+function Get-CurrentBranch{
+    [cmdletbinding()]
+    param()
+    process{
+        [string]$result = &git branch --show-current
+        if(-not $result){
+            $result = $result.trim();
+        }
+        $result
+    }
+}
 function Get-VisualStudioGitAttributes{
     [cmdletbinding()]
     param(

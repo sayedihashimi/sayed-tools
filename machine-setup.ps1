@@ -365,7 +365,8 @@ function CopyVisualStudioSnippets{
         if(test-path -Path $snippetSourcePath -PathType Container){
             [string[]]$snippetsToCopy = (Get-ChildItem -Path $snippetSourcePath *.snippet -File).FullName
             [string]$docspath = [Environment]::GetFolderPath("MyDocuments")
-            [string[]]$pathsToCopyTo ="$docspath\Visual Studio 2017\Code Snippets\Visual C#\My Code Snippets",
+            [string[]]$pathsToCopyTo ="$docspath\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets",
+                                      "$docspath\Visual Studio 2017\Code Snippets\Visual C#\My Code Snippets",
                                       "$docspath\Visual Studio 2015\Code Snippets\Visual C#\My Code Snippets",
                                       "$docspath\Visual Studio 2013\Code Snippets\Visual C#\My Code Snippets"
             foreach($p in $pathsToCopyTo){
