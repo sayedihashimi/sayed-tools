@@ -82,7 +82,9 @@ function Add-Path{
 
         [System.EnvironmentVariableTarget]$envTarget = [System.EnvironmentVariableTarget]::Process,
 
-        [bool]$alsoAddToProcess = $true
+        [bool]$alsoAddToProcess = $true,
+
+        [switch]$persist = $false
     )
     process{
         [string]$existingPath = ([System.Environment]::GetEnvironmentVariable('path',$envTarget))
@@ -107,6 +109,23 @@ function Add-Path{
                         if(-not $oldprocesspathlower.Contains($trimmed.ToLowerInvariant())){
                             $newprocesspath = ('{0};{1}' -f $existingPath,$trimmed)
                             [System.Environment]::SetEnvironmentVariable('path',$newprocesspath,[System.EnvironmentVariableTarget]::Process)
+                        }
+                    }
+
+                    if($persist){
+                        # need to add it to the registry
+                        if($IsWindows){
+                            $oldRegPath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
+                            $oldRegPathLower = $oldRegPath.ToLowerInvariant()
+                            # don't add if it's already included
+                            if(-not ($oldRegPathLower.Contains($trimmed.ToLowerInvariant()))){
+                                $newPath = ('{0};{1}' -f $oldRegPath,$trimmed)
+                                'Updating reg key from "{0}" to "{1}"' -f $oldRegPath, $newPath | Write-Output
+                                Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
+                            }
+                        }
+                        else{
+                            throw '$persist in Add-Path not supported outside of Windows OS.'
                         }
                     }
                 }
@@ -598,7 +617,7 @@ if($IsWindows){
         )
         process{
             $installfolder = ExtractRemoteZip -downloadUrl $downloadUrl -destFolderName 'sysinternals.202006'
-            Add-Path -pathToAdd $installfolder
+            Add-Path -pathToAdd $installfolder -persist
         }
     }
 }

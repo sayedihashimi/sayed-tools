@@ -71,6 +71,11 @@ function Write-Theme {
     $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol -ForegroundColor $sl.Colors.PromptBackgroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
     $prompt += Write-Prompt -Object ([System.Environment]::NewLine)
     $prompt += ''
+
+    $prompt += Write-Prompt -Object '  ' -ForegroundColor $sl.Colors.PromptForegroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor
+    $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol -ForegroundColor $sl.Colors.PromptBackgroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
+    #$prompt += ''
+
     $prompt
 }
 
