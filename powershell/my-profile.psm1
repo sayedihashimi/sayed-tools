@@ -300,16 +300,20 @@ function Configure-Posh{
     # Import-Module 'posh-git'
     # Import-Module 'oh-my-posh'
     # 
-    Import-Module PSReadLine
-    Import-Module 'posh-git'
-    Import-Module 'oh-my-posh'
+    Import-Module PSReadLine -Global
+    Import-Module 'posh-git' -Global
+    Import-Module 'oh-my-posh' -Global
     set-prompt
 
     $themename = 'sorin-sayedha'
     $themename = 'Agnoster-sayedha'
     $themefilename = $themename + '.psm1'
     $srcthemefile = Join-Path $codehome -ChildPath 'sayed-tools\powershell' $themefilename
-    $destthemefile = Join-Path (Get-ThemesLocation) -ChildPath $themefilename
+    $themeDestFolder = Get-ThemesLocation
+    if(-not (test-path $themeDestFolder)){
+        New-Item -Path $themeDestFolder -ItemType Directory
+    }
+    $destthemefile = Join-Path $themeDestFolder -ChildPath $themefilename
     
     # always copy the theme file to get any changes that may have been applied
     if(test-path $srcthemefile){

@@ -251,7 +251,7 @@ function Start-CustomProfileBackgroundJob{
                 try{
                     if(Test-Path $keyFilePath){
                         'Saving machine info to file [{0}]' -f $outfilepath | Write-Output
-                        Save-MachineInfo -outfile $outfilepath
+                        Save-MachineInfo -outfile $outfilepath | Out-Null
                         $droppedFile = $true
                     }
                     else{
