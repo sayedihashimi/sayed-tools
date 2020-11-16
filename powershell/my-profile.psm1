@@ -341,6 +341,14 @@ function Configure-PoshSettingsForTheme{
     }
 }
 
+function Start-MyHomepage{
+  [cmdletbinding()]
+  param()
+  process{
+    $path = (join-path $codeHome myhomepage/run-local.ps1)
+    &$path
+  }
+}
 
 if($isLinuxOrMac){
     function clip{
@@ -574,3 +582,7 @@ function Sayed-InitailizeProfile{
 }
 
 InitalizeEnv
+$machineProfilePath = (join-path $codehome machine-profile.ps1)
+if(test-path $machineProfilePath){
+    .$machineProfilePath
+}

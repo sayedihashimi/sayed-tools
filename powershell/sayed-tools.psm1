@@ -74,6 +74,18 @@ New-Alias -Name Get-NormalizedPath -Value Resolve-FullPath
 New-Alias -Name Get-FullPathNormalized -Value Resolve-FullPath
 New-Alias -Name Get-Fullpath -Value Resolve-FullPath
 
+function Reset-Templates{
+    [cmdletbinding()]
+    param(
+        [string]$templateEngineUserDir = (join-path -Path $env:USERPROFILE -ChildPath .templateengine)
+    )
+    process{
+        'resetting dotnet new templates. folder: "{0}"' -f $templateEngineUserDir | Write-host
+        get-childitem -path $templateEngineUserDir -directory | Select-Object -ExpandProperty FullName | remove-item -recurse
+        &dotnet new --debug:reinit
+    }
+}
+
 function Add-Path{
     [cmdletbinding()]
     param(
@@ -823,6 +835,10 @@ function Sayed-ConfigureGit{
 
         & git config --global push.default "matching"
 
+        if(-not (isLinuxOrMac)){
+            & git config --global diff.tool p4merge
+            & git config --global difftool.p4merge.path (Join-Path $env:ProgramFiles 'Perforce\p4merge.exe')
+        }
         
         # TODO: Ensure this works for windows/mac before adding
         # & git config --global merge.keepBackup "false"
