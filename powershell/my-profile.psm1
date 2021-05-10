@@ -400,7 +400,7 @@ if(-not $isLinuxOrMac){
             $logFolderPath = (Join-Path -Path $logRootFolderPath -ChildPath $version)
 
             if(Test-Path $logFolderPath){
-                Compress-Archive -Path $logFolderPath -DestinationPath $destArchivePath
+                Get-ChildItem $defaultVsLogsFolder -Recurse -Exclude *.zip|Compress-Archive -DestinationPath $destArchivePath
                 $destArchivePath | Write-Output
             }
             else{
