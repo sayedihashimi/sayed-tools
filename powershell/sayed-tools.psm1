@@ -81,7 +81,7 @@ function Reset-Templates{
     )
     process{
         'resetting dotnet new templates. folder: "{0}"' -f $templateEngineUserDir | Write-host
-        get-childitem -path $templateEngineUserDir -directory | Select-Object -ExpandProperty FullName | remove-item -recurse
+        get-childitem -path $templateEngineUserDir -directory | Select-Object -ExpandProperty FullName | remove-item -recurse -force
         &dotnet new --debug:reinit
     }
 }
@@ -888,6 +888,26 @@ function Remove-Subfolders{
                 Remove-Item -LiteralPath $current -Recurse -Force:$Force
             }
         }
+    }
+}
+
+function Reset-WebProvisionTool{
+    [cmdletbinding()]
+    param(
+        [string]$folderPath = (join-path $codeHome OSS\microsoft-identity-web)
+    )
+    process{
+        Push-Location $folderPath
+        # delete all bin/obj/nupkg folders to ensure we get a clean build
+        # this tool can be installed with: dotnet tool install --global SayedHa.Commands --version 1.0.3
+        sayedha removefolders -f bin -f obj -f nupkg 
+        'calling dotnet pack' | Write-Output
+        dotnet pack .\tools\app-provisioning-tool\app-provisioning-tool\ms-identity-app.csproj
+        'uninstall template' | Write-Output
+        dotnet tool uninstall -g ms-identity-app
+        'install template' | Write-Output
+        dotnet tool install -g --add-source .\tools\app-provisioning-tool\app-provisioning-tool\nupkg\ ms-identity-app
+        Pop-Location
     }
 }
 

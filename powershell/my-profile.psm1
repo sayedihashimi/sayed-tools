@@ -114,20 +114,22 @@ function Configure-DotnetTabCompletion(){
     [cmdletbinding()]
     param()
     process{
-        # PowerShell parameter completion shim for the dotnet CLI 
-        Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
-            param($commandName, $wordToComplete, $cursorPosition)
-                dotnet complete --position $cursorPosition "$wordToComplete" | ForEach-Object {
-                [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
-                }
-        }
+        # from https://github.com/dotnet/command-line-api/blob/main/src/System.CommandLine.Suggest/dotnet-suggest-shim.ps1
+        # dotnet suggest shell start
+        $availableToComplete = (dotnet-suggest list) | Out-String
+        $availableToCompleteArray = $availableToComplete.Split([Environment]::NewLine, [System.StringSplitOptions]::RemoveEmptyEntries) 
 
-        Register-ArgumentCompleter -Native -CommandName sayedha -ScriptBlock {
+        Register-ArgumentCompleter -Native -CommandName $availableToCompleteArray -ScriptBlock {
             param($commandName, $wordToComplete, $cursorPosition)
-                dotnet complete --position $cursorPosition "$wordToComplete" | ForEach-Object {
+            $fullpath = (Get-Command $wordToComplete.CommandElements[0]).Source
+
+            $arguments = $wordToComplete.Extent.ToString().Replace('"', '\"')
+            dotnet-suggest get -e $fullpath --position $cursorPosition -- "$arguments" | ForEach-Object {
                 [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
-                }
-        }
+            }
+    }
+$env:DOTNET_SUGGEST_SCRIPT_VERSION = "1.0.0"
+# dotnet suggest script end
     }
 }
 
@@ -350,6 +352,63 @@ function Start-MyHomepage{
   }
 }
 
+if(-not $isLinuxOrMac){
+    [string]$defaultVsLogsFolder = (join-path $env:temp VSLogs)
+    function VS-CleanLogFolder{
+        [cmdletbinding()]
+        param(
+            [string]$logRootFolderPath = $defaultVsLogsFolder
+        )
+        process{
+            if(test-path $logRootFolderPath){
+                $files = (Get-ChildItem -Path $logRootFolderPath -Filter '*.svclog').FullName
+                "Deleting files:`n" + ($files -join "`n") | Write-Output
+                Remove-Item -LiteralPath $files
+            }
+            else{
+                "Log folder not found at $logRootFolderPath" | Write-Warning
+            }
+        }
+    }
+
+    function VS-OpenLogFolder{
+        [cmdletbinding()]
+        param(
+            [string]$logFolderPath = $defaultVsLogsFolder
+        )
+        process{
+            start $logFolderPath
+        }
+    }
+
+    function VS-CompressLogs{
+        [cmdletbinding()]
+        param(
+            [string]$logRootFolderPath = $defaultVsLogsFolder,
+
+            [string]$filename,
+            [string]$resultFolderPath = $defaultVsLogsFolder
+        )
+        process{
+            if([string]::IsNullOrEmpty($filename)){
+                $dateStr = ((Get-Date).ToString('yyyy.MM.dd.ss.ff'))
+                $filename = ("vs-log-{0}.zip" -f $dateStr)
+            }
+
+            $destArchivePath = (Join-Path -Path $resultFolderPath -ChildPath $filename)
+
+            $logFolderPath = (Join-Path -Path $logRootFolderPath -ChildPath $version)
+
+            if(Test-Path $logFolderPath){
+                Compress-Archive -Path $logFolderPath -DestinationPath $destArchivePath
+                $destArchivePath | Write-Output
+            }
+            else{
+                "Log folder not found at $logFolderPath" | Write-Warning
+            }
+        }
+    }
+}
 if($isLinuxOrMac){
     function clip{
         [cmdletbinding()]
