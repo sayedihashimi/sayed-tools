@@ -1,6 +1,6 @@
 .NET Test Driver
 
-Usage: dotnet test [options] <PROJECT>
+Usage: dotnet test [options] <PROJECT> [[--] <RunSettings arguments>...]]
 
 Arguments:
   <PROJECT>   The project to test. Defaults to the current directory.
@@ -20,6 +20,7 @@ Options:
                                                         Example: --test-adapter-path <PATH_TO_ADAPTER>
   -l, --logger <LoggerUri/FriendlyName>                 Specify a logger for test results.
                                                         Example: --logger "trx[;LogFileName=<Defaults to unique file name>]"
+                                                        More info on logger arguments support:https://aka.ms/vstest-report
   -c, --configuration <CONFIGURATION>                   Configuration to use for building the project.  Default for most projects is  "Debug".
   -f, --framework <FRAMEWORK>                           Target framework to publish for. The target framework has to be specified in the project file.
   -o, --output <OUTPUT_DIR>                             Directory in which to find the binaries to be run
@@ -28,5 +29,13 @@ Options:
   --no-build                                            Do not build project before testing.
   -r, --results-directory <PATH_TO_RESULTS_DIRECTORY>   The directory where the test results are going to be placed. The specified directory will be created if it does not exist.
                                                         Example: --results-directory <PATH_TO_RESULTS_DIRECTORY>
+  --collect <DATA_COLLECTOR_FRIENDLY_NAME>              Enables data collector for the test run.
+                                                        More info here : https://aka.ms/vstest-collect
   -v, --verbosity                                       Set the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
 
+
+RunSettings arguments:
+  Arguments to pass runsettings configurations through commandline. Arguments may be specified as name-value pair of the form [name]=[value] after "-- ". Note the space after --. 
+  Use a space to separate multiple[name] =[value].
+  More info on RunSettings arguments support: https://aka.ms/vstest-runsettings-arguments
+  Example: dotnet test -- MSTest.DeploymentEnabled=false MSTest.MapInconclusiveToFailed=True
