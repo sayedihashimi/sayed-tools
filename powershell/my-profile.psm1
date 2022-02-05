@@ -264,20 +264,14 @@ function Sayed-ConfigureTools(){
         "Configuring tools" | Write-Verbose
         $toolsToConfigure = @(
             @{ "alias"="msb","msbuild"; "path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin","$netFx4Path\msbuild.exe" },
-            @{ "alias"="dev10"; "path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio 10.0\Common7\IDE\devenv.exe"},
-            @{ "alias"="dev11";"path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio 11.0\Common7\IDE\devenv.exe"},
-            @{ "alias"="dev12";"path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe"},
-            @{ "alias"="dev14";"path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe" },
-            @{ "alias"="dev15";"path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe" },
             @{ 'alias'='dev16';'path'="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe"},
             @{ 'alias'='dev16-ga';'path'="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.exe"},
             @{ "alias"="iisexpress"; "path"="${env:ProgramFiles(x86)}\IIS Express\iisexpress.exe" },
             @{ "alias"="msdeploy","msd";"path"="$env:ProgramFiles\IIS\Microsoft Web Deploy V3\msdeploy.exe" },
-            @{ "alias"="np";"path"="${env:ProgramFiles(x86)}\Notepad++\notepad++.exe" },
-            @{ "alias"="p4merge"; "path"="${env:ProgramFiles(x86)}\Perforce\p4merge.exe","$env:ProgramFiles\Perforce\p4merge.exe" },
+            @{ "alias"="np";"path"="$env:ProgramFiles\Notepad++\notepad++.exe" },
+            @{ "alias"="p4merge"; "path"="$env:ProgramFiles\Perforce\p4merge.exe","$env:ProgramFiles\Perforce\p4merge.exe" },
             @{ "alias"="handle"; "path"="$dropBoxHome\Tools\SysinternalsSuite\handle.exe" },
             @{ "alias"="kdiff"; "path"="$env:ProgramFiles\KDiff3\kdiff3.exe" },
-            @{ "alias"="mdpad"; "path"="$env:LOCALAPPDATA\Programs\MarkdownPad 2\markdownpad2.exe","${env:ProgramFiles(x86)}\MarkdownPad 2\MarkdownPad2.exe"}
             @{ "alias"="code"; "path"="$env:ProgramFiles\Microsoft VS Code\Code.exe"}
         )
         Add-AliasForTool -tool $toolsToConfigure
@@ -296,6 +290,7 @@ function ConfigurePowerShellConsoleWindow(){
     }
 }
 
+
 function Configure-Posh{
     # these must be run on machine setup - see https://gist.github.com/jchandra74/5b0c94385175c7a8d1cb39bc5157365e
     # Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
@@ -307,6 +302,8 @@ function Configure-Posh{
     Import-Module 'oh-my-posh' -Global
     set-prompt
 
+    # no longer supported after 3+ release
+    <#
     $themename = 'sorin-sayedha'
     $themename = 'Agnoster-sayedha'
     $themefilename = $themename + '.psm1'
@@ -325,10 +322,10 @@ function Configure-Posh{
 
     set-theme $themename
     Set-Theme $themename
-
+    
     $ThemeSettings.GitSymbols.BranchIdenticalStatusToSymbol=[char]::ConvertFromUtf32(0x2630)
     $ThemeSettings.GitSymbols.BranchUntrackedSymbol=[char]::ConvertFromUtf32(0x26d4)
-    Configure-PoshSettingsForTheme -themename $themename
+    Configure-PoshSettingsForTheme -themename $themename#>
 }
 
 function Configure-PoshSettingsForTheme{
@@ -606,7 +603,7 @@ function InitalizeEnv{
             'Missing at least 1 module.' | Write-Host -ForegroundColor Cyan
         }
 
-        Configure-DotnetTabCompletion
+        # Configure-DotnetTabCompletion
     }
 }
 
