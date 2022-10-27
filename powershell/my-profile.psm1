@@ -291,41 +291,11 @@ function ConfigurePowerShellConsoleWindow(){
 }
 
 
+
+# Ensure that Meslo LGM NF Font is installed and the terminal is configured to use it.
 function Configure-Posh{
-    # these must be run on machine setup - see https://gist.github.com/jchandra74/5b0c94385175c7a8d1cb39bc5157365e
-    # Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
-    # Import-Module 'posh-git'
-    # Import-Module 'oh-my-posh'
-    # 
-    Import-Module PSReadLine -Global
-    Import-Module 'posh-git' -Global
-    Import-Module 'oh-my-posh' -Global
-    set-prompt
-
-    # no longer supported after 3+ release
-    <#
-    $themename = 'sorin-sayedha'
-    $themename = 'Agnoster-sayedha'
-    $themefilename = $themename + '.psm1'
-    $srcthemefile = Join-Path $codehome -ChildPath 'sayed-tools\powershell' $themefilename
-    $themeDestFolder = Get-ThemesLocation
-    if(-not (test-path $themeDestFolder)){
-        New-Item -Path $themeDestFolder -ItemType Directory
-    }
-    $destthemefile = Join-Path $themeDestFolder -ChildPath $themefilename
-    
-    # always copy the theme file to get any changes that may have been applied
-    if(test-path $srcthemefile){
-        'Copying them file "{0}"=>"{1}' -f $srcthemefile, $destthemefile | Write-Host
-        copy-item -LiteralPath $srcthemefile -Destination $destthemefile
-    }
-
-    set-theme $themename
-    Set-Theme $themename
-    
-    $ThemeSettings.GitSymbols.BranchIdenticalStatusToSymbol=[char]::ConvertFromUtf32(0x2630)
-    $ThemeSettings.GitSymbols.BranchUntrackedSymbol=[char]::ConvertFromUtf32(0x26d4)
-    Configure-PoshSettingsForTheme -themename $themename#>
+    oh-my-posh init pwsh | Invoke-Expression
+    oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/quick-term.omp.json" | Invoke-Expression
 }
 
 function Configure-PoshSettingsForTheme{

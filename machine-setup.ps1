@@ -39,11 +39,10 @@ $global:machinesetupconfig = @{
 
         (newobj @{
                 SSH = 'git@github.com:sayedihashimi/pshelpers.git'
-                HTTPS = 'https://github.com/sayedihashimi/pshelpers.git' }),
-
-        (newobj @{
-                SSH = 'git@github.com:dahlbyk/posh-git.git'
-                HTTPS = 'git@github.com:dahlbyk/posh-git.git' })
+                HTTPS = 'https://github.com/sayedihashimi/pshelpers.git' })
+        # ,(newobj @{
+        #         SSH = 'git@github.com:dahlbyk/posh-git.git'
+        #         HTTPS = 'git@github.com:dahlbyk/posh-git.git' })
     )
     SecondaryChocoPackages = @(
         'p4merge',
@@ -71,9 +70,12 @@ $global:machinesetupconfig = @{
 
 function InstallPrompt{
     PowerShellGet\Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
-    PowerShellGet\Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force
-    PowerShellGet\Install-Module posh-git -Scope CurrentUser
-    PowerShellGet\Install-Module oh-my-posh -Scope CurrentUser
+    #PowerShellGet\Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force
+    #PowerShellGet\Install-Module posh-git -Scope CurrentUser
+    #PowerShellGet\Install-Module oh-my-posh -Scope CurrentUser
+
+    winget install JanDeDobbeleer.OhMyPosh -s winget
+    winget update JanDeDobbeleer.OhMyPosh -s winget
 }
 
 #// 'https://dl.dropboxusercontent.com/u/40134810/wallpaper/checking-out-the-view.jpg'
@@ -943,7 +945,7 @@ function ConfigureMachine{
         EnsureFolderExists ($global:machinesetupconfig.MachineSetupAppsFolder)
 
         InstallBaseApps
-        
+        InstallPrompt
         RunTask @(
             {EnsurePhotoViewerRegkeyAdded},
             {ConfigureTaskBar},
