@@ -310,6 +310,29 @@ function Configure-PoshSettingsForTheme{
     }
 }
 
+# python.exe must be on the path for this to work.
+function Start-WebServer{
+    [cmdletbinding()]
+    param(
+        [string] $runFolder = $pwd,
+        [int] $port = 8000,
+        [string] $pythonCommand = "python.exe"
+    )
+    process{
+        # python -m http.server 8000
+        # https://gist.github.com/magnetikonline/f880b0cb063c54568ade7073f935bbd1
+        $cmdargs = @(
+            "-m",
+            "http.server",
+            $port
+        )
+        $oldloc = get-location
+        set-location -Path $runFolder
+        & $pythonCommand $cmdargs
+        set-location -Path $oldloc
+    }
+}
+
 function Start-MyHomepage{
   [cmdletbinding()]
   param()
