@@ -25,12 +25,12 @@ $global:machinesetupconfig = @{
     BaseChocoPackages = @(
         'boxstarter',
         'boxstarter.winconfig'
-        'git.install',
-        'googlechrome',
-        'firefox',
-        'notepadplusplus.install',
-        'conemu'
-        '7zip.install'
+        # 'git.install',
+        # 'googlechrome',
+        #'firefox',
+        #'notepadplusplus.install',
+        #'conemu'
+        #'7zip.install'
     )
     BaseRepos = @(
         (newobj @{
@@ -45,27 +45,40 @@ $global:machinesetupconfig = @{
         #         HTTPS = 'git@github.com:dahlbyk/posh-git.git' })
     )
     SecondaryChocoPackages = @(
-        'p4merge',
-        'f.lux',        
+        #'p4merge',
+        #'f.lux',
         #'paint.net',
-        'sublimetext3',
-        'fiddler4',
+        #'sublimetext3',
+        #'fiddler4',
         #'gimp',
         #'linqpad4',
-        'kdiff3',
-        'balsamiqmockups3',
+        #'kdiff3',
+        #'balsamiqmockups3',
         #'adobe-creative-cloud',
         #'inkscape',
-        'visualstudiocode',
+        #'visualstudiocode',
         # spotify needs to be installed as normal user
         # 'spotify',
-        'everything',
+        #'everything',
         #'markdownpad2',
         #'snagit',
-        'kindle',
+        #'kindle',
         'dropbox'
     )
     WallpaperUrl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/checking-out-the-view.jpg'
+}
+
+function Install-WingetApps{
+    winget install -e --id Google.Chrome --source winget
+    winget install -e --id Git.Git --source winget
+    winget install -e --id Mozilla.Firefox --source winget
+    winget install -e --id Notepad++.Notepad++ --source winget
+    winget install -e --id Maximus5.ConEmu --source winget
+    winget install -e --id 7zip.7zip --source winget
+    winget install -e --id Perforce.P4Merge --source winget
+    winget install -e --id JoachimEibl.KDiff3 --source winget
+    winget install -e --id Balsamiq.Wireframes --source winget
+    winget install -e --id voidtools.Everything --source winget
 }
 
 function InstallPrompt{
@@ -278,7 +291,9 @@ function InstallBaseApps{
         [string]$pkgsbefore = ((choco list --local-only) -join ';')
         $Global:machinesetupconfig.BaseChocoPackages | InstallWithChoco
         [string]$pkgsafter = ((choco list --local-only) -join ';')
-        
+
+        Install-WingetApps
+
         if(-not ([string]::Equals($pkgsbefore,$pkgsafter,[System.StringComparison]::OrdinalIgnoreCase)) ){
             Add-Path -pathToAdd "$env:ProgramFiles\Git\bin" -envTarget User
             RestartThisScript
