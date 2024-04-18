@@ -3,6 +3,10 @@ param()
 
 $isLinuxOrMac = ($IsLinux -or $IsMacOS -or $IsOSX)
 
+# set alias for common tools that i use
+set-alias buildAhk (Join-Path $codehome 'autohotkeyscripts\visual-studio\2024.04.16.build.demo.ahk')
+set-alias ps99Gui (Join-Path $codehome 'autohotkeyscripts\ps99\gui.ahk')
+
 function Get-FullPathNormalized{
     [cmdletbinding()]
     param (
