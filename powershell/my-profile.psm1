@@ -64,43 +64,6 @@ function Import-MyModules{
     }
 }
 
-function Open-Github(){
-    [cmdletbinding()]
-    param(
-        $path = $pwd
-    )
-    process{
-        $path = (Get-FullPathNormalized -path $path)
-        $pattern = 'origin\tgit@github.com:([a-zA-S-.]+)/([a-zA-Z-]+)\.git.*(fetch\))'
-        Push-Location -LiteralPath $path
-        $gitremotes = git remote -v
-        $res = [Regex]::Matches($gitremotes, $pattern)
-        if($res -ne $null){
-            if($res.Count -gt 1){
-                $res = $res[0]
-            }
-
-            $username = $res.Groups[1].Value
-            $reponame = $res.Groups[2].Value
-
-            # https://github.com/sayedihashimi/sayed-tools
-            $repourl = 'https://github.com/{0}/{1}' -f $username, $reponame
-
-            if($isLinuxOrMac){
-                open $repourl
-            }
-            else{
-                start $repourl
-            }
-
-            'https://github.com/{0}/{1}' -f $username, $reponame | Write-Host
-        }
-    }
-    End{
-        Pop-Location
-    }
-}
-
 function Ensure-GitConfigExists{
     [cmdletbinding()]
     param(
@@ -267,16 +230,19 @@ function Sayed-ConfigureTools(){
     if(-not $isLinuxOrMac){
         "Configuring tools" | Write-Verbose
         $toolsToConfigure = @(
-            @{ "alias"="msb","msbuild"; "path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin","$netFx4Path\msbuild.exe" },
-            @{ 'alias'='dev16';'path'="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe"},
-            @{ 'alias'='dev16-ga';'path'="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.exe"},
-            @{ "alias"="iisexpress"; "path"="${env:ProgramFiles(x86)}\IIS Express\iisexpress.exe" },
-            @{ "alias"="msdeploy","msd";"path"="$env:ProgramFiles\IIS\Microsoft Web Deploy V3\msdeploy.exe" },
+            @{"alias"="buildAhk";"path"=(Join-Path $codehome 'autohotkeyscripts\visual-studio\2024.04.16.build.demo.ahk')},
+            @{"alias"="ps99Gui";"path"=(Join-Path $codehome 'autohotkeyscripts\ps99\gui.ahk')},
+
+           # @{ "alias"="msb","msbuild"; "path"="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin","$netFx4Path\msbuild.exe" },
+           # @{ 'alias'='dev16';'path'="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe"},
+           # @{ 'alias'='dev16-ga';'path'="${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.exe"},
+           # @{ "alias"="iisexpress"; "path"="${env:ProgramFiles(x86)}\IIS Express\iisexpress.exe" },
+           # @{ "alias"="msdeploy","msd";"path"="$env:ProgramFiles\IIS\Microsoft Web Deploy V3\msdeploy.exe" },
             @{ "alias"="np";"path"="$env:ProgramFiles\Notepad++\notepad++.exe" },
             @{ "alias"="p4merge"; "path"="$env:ProgramFiles\Perforce\p4merge.exe","$env:ProgramFiles\Perforce\p4merge.exe" },
-            @{ "alias"="handle"; "path"="$dropBoxHome\Tools\SysinternalsSuite\handle.exe" },
-            @{ "alias"="kdiff"; "path"="$env:ProgramFiles\KDiff3\kdiff3.exe" },
-            @{ "alias"="code"; "path"="$env:ProgramFiles\Microsoft VS Code\Code.exe"}
+           # @{ "alias"="handle"; "path"="$dropBoxHome\Tools\SysinternalsSuite\handle.exe" },
+            @{ "alias"="kdiff"; "path"="$env:ProgramFiles\KDiff3\kdiff3.exe" }
+           # @{ "alias"="code"; "path"="$env:ProgramFiles\Microsoft VS Code\Code.exe"}
         )
         Add-AliasForTool -tool $toolsToConfigure
     }
@@ -591,7 +557,7 @@ function InitalizeEnv{
     [cmdletbinding()]
     param()
     process{
-
+        Import-Module PSReadLine
         Set-InitialPath
         if( (Import-MyModules) -eq $true){
             Ensure-GitConfigExists
