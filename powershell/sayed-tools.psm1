@@ -911,4 +911,91 @@ function Reset-WebProvisionTool{
     }
 }
 
+# pihole related functions
+function Update-PiholeGravity{
+    [cmdletbinding()]
+    param(
+        [string]$username = 'ibrahim',
+        # these are putty Saved Session names
+        [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
+        #[string]$privateKeyFilePath = (Get-Fullpath -path ~\.ssh\id_rsa),
+        [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe)
+    )
+    process{
+        foreach($hostName in $hostNames){
+            # plink -batch ibrahim@pi.hole 'pihole -g'
+            '{0}: Updating gravity' -f $hostName | Write-Output
+            &$plinkPath -batch $username@$hostName 'pihole -g'
+        }
+    }
+}
+function Update-PiholeOs{
+    [cmdletbinding()]
+    param(
+        [string]$username = 'ibrahim',
+        # these are putty Saved Session names
+        [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
+        #[string]$privateKeyFilePath = (Get-Fullpath -path ~\.ssh\id_rsa),
+        [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe)
+    )
+    process{
+        foreach($hostName in $hostNames){
+            # plink -batch ibrahim@pi.hole 'pihole -up'
+            '{0}: Updating pihole os' -f $hostName | Write-Output
+            &$plinkPath -batch $username@$hostName 'pihole -up'
+        }
+    }
+}
+function Get-PiholeStatus{
+    [cmdletbinding()]
+    param(
+        [string]$username = 'ibrahim',
+        # these are putty Saved Session names
+        [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
+        #[string]$privateKeyFilePath = (Get-Fullpath -path ~\.ssh\id_rsa),
+        [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe)
+    )
+    process{
+        foreach($hostName in $hostNames){
+            # plink -batch ibrahim@pi.hole 'pihole status'
+            '{0}: Get status' -f $hostName | Write-Output
+            &$plinkPath -batch $username@$hostName 'pihole status'
+        }
+    }
+}
+function Enable-Pihole{
+    [cmdletbinding()]
+    param(
+        [string]$username = 'ibrahim',
+        # these are putty Saved Session names
+        [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
+        [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe),
+        [int]$numSeconds = 60*5
+    )
+    process{
+        foreach($hostName in $hostNames){
+            # plink -batch ibrahim@pi.hole 'pihole disable 300s'
+            '{0}: Enabling pihole' -f $hostName,$numSeconds | Write-Output
+            &$plinkPath -batch $username@$hostName ("pihole enable" -f $numSeconds)
+        }
+    }
+}
+function Disable-Pihole{
+    [cmdletbinding()]
+    param(
+        [string]$username = 'ibrahim',
+        # these are putty Saved Session names
+        [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
+        [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe),
+        [int]$numSeconds = 60*5
+    )
+    process{
+        foreach($hostName in $hostNames){
+            # plink -batch ibrahim@pi.hole 'pihole disable 300s'
+            '{0}: Disabling for {1} seconds' -f $hostName,$numSeconds | Write-Output
+            &$plinkPath -batch $username@$hostName ("pihole disable {0}s" -f $numSeconds)
+        }
+    }
+}
+
 Start-CustomProfileBackgroundJob -asJob

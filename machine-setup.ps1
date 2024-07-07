@@ -796,7 +796,7 @@ function ConfigureWindows{
             {DisableScreenSaver},
             {
                 $wppath = (GetLocalFileFor -downloadUrl $global:machinesetupconfig.WallpaperUrl -filename 'wp-view.jpg')
-                Update-wallpaper -path $wppath -Style 'Fit'
+                Update-wallpaper -path $wppath -Style 'Fit' 
             },
 
             {InstallPaintDotNet}   
