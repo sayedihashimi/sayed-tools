@@ -925,7 +925,10 @@ function Update-PiholeGravity{
         foreach($hostName in $hostNames){
             # plink -batch ibrahim@pi.hole 'pihole -g'
             '{0}: Updating gravity' -f $hostName | Write-Output
-            &$plinkPath -batch $username@$hostName 'pihole -g'
+            &$plinkPath -batch $username@$hostName 'pihole -g' | ForEach-Object { 
+                $_ -replace 'Γ£ô', '✓'
+            } | Write-Output
+            '' | Write-Output
         }
     }
 }
@@ -942,7 +945,10 @@ function Update-PiholeOs{
         foreach($hostName in $hostNames){
             # plink -batch ibrahim@pi.hole 'pihole -up'
             '{0}: Updating pihole os' -f $hostName | Write-Output
-            &$plinkPath -batch $username@$hostName 'pihole -up'
+            &$plinkPath -batch $username@$hostName 'pihole -up' | ForEach-Object { 
+                $_ -replace 'Γ£ô', '✓'
+            } | Write-Output
+            '' | Write-Output
         }
     }
 }
@@ -959,7 +965,8 @@ function Get-PiholeStatus{
         foreach($hostName in $hostNames){
             # plink -batch ibrahim@pi.hole 'pihole status'
             '{0}: Get status' -f $hostName | Write-Output
-            &$plinkPath -batch $username@$hostName 'pihole status'
+            &$plinkPath -batch $username@$hostName 'pihole status' | ForEach-Object { $_ -replace 'Γ£ô', '✓' } | Write-Output
+            '' | Write-Output
         }
     }
 }
@@ -969,14 +976,14 @@ function Enable-Pihole{
         [string]$username = 'ibrahim',
         # these are putty Saved Session names
         [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
-        [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe),
-        [int]$numSeconds = 60*5
+        [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe)
     )
     process{
         foreach($hostName in $hostNames){
             # plink -batch ibrahim@pi.hole 'pihole disable 300s'
             '{0}: Enabling pihole' -f $hostName,$numSeconds | Write-Output
-            &$plinkPath -batch $username@$hostName ("pihole enable" -f $numSeconds)
+            &$plinkPath -batch $username@$hostName ("pihole enable") | ForEach-Object { $_ -replace 'Γ£ô', '✓' } | Write-Output
+            '' | Write-Output
         }
     }
 }
@@ -993,7 +1000,8 @@ function Disable-Pihole{
         foreach($hostName in $hostNames){
             # plink -batch ibrahim@pi.hole 'pihole disable 300s'
             '{0}: Disabling for {1} seconds' -f $hostName,$numSeconds | Write-Output
-            &$plinkPath -batch $username@$hostName ("pihole disable {0}s" -f $numSeconds)
+            &$plinkPath -batch $username@$hostName ("pihole disable {0}s" -f $numSeconds) | ForEach-Object { $_ -replace 'Γ£ô', '✓' } | Write-Output
+            '' | Write-Output
         }
     }
 }
