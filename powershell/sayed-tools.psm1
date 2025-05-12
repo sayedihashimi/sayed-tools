@@ -74,6 +74,27 @@ New-Alias -Name Get-NormalizedPath -Value Resolve-FullPath
 New-Alias -Name Get-FullPathNormalized -Value Resolve-FullPath
 New-Alias -Name Get-Fullpath -Value Resolve-FullPath
 
+function Set-CliGitDiffTool(){
+    [cmdletbinding()]
+    param(
+        [string]$tool = 'p4merge'
+    )
+    process{
+        & git config --global diff.tool $tool
+        & git config --global merge.tool $tool
+    }
+}
+function Set-VSGitDiffTool(){
+        [cmdletbinding()]
+    param(
+        [string]$tool = 'vsdiffmerge'
+    )
+    process{
+        & git config --global diff.tool $tool
+        & git config --global merge.tool $tool
+    }
+}
+
 function Reset-Templates{
     [cmdletbinding()]
     param(
@@ -915,7 +936,6 @@ function Reset-WebProvisionTool{
 function Update-PiholeGravity{
     [cmdletbinding()]
     param(
-        [string]$username = 'ibrahim',
         # these are putty Saved Session names
         [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
         #[string]$privateKeyFilePath = (Get-Fullpath -path ~\.ssh\id_rsa),
@@ -935,7 +955,6 @@ function Update-PiholeGravity{
 function Update-PiholeOs{
     [cmdletbinding()]
     param(
-        [string]$username = 'ibrahim',
         # these are putty Saved Session names
         [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
         #[string]$privateKeyFilePath = (Get-Fullpath -path ~\.ssh\id_rsa),
@@ -955,7 +974,6 @@ function Update-PiholeOs{
 function Get-PiholeStatus{
     [cmdletbinding()]
     param(
-        [string]$username = 'ibrahim',
         # these are putty Saved Session names
         [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
         #[string]$privateKeyFilePath = (Get-Fullpath -path ~\.ssh\id_rsa),
@@ -973,7 +991,6 @@ function Get-PiholeStatus{
 function Enable-Pihole{
     [cmdletbinding()]
     param(
-        [string]$username = 'ibrahim',
         # these are putty Saved Session names
         [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
         [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe)
@@ -990,7 +1007,6 @@ function Enable-Pihole{
 function Disable-Pihole{
     [cmdletbinding()]
     param(
-        [string]$username = 'ibrahim',
         # these are putty Saved Session names
         [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
         [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe),
@@ -1005,5 +1021,55 @@ function Disable-Pihole{
         }
     }
 }
+
+# TODO: This doesn't work form some reason
+# I'm getting an error when I try to run this 'FATAL ERROR: Cannot answer interactive prompts in batch mode'
+function Add-PiholeWhiteWild{
+    [cmdletbinding()]
+    param(
+        # these are putty Saved Session names
+        [string[]]$hostNames = @('pi.hole','pi.hole-v2','pi.hole-v3'),
+        [string]$plinkPath = (Get-Fullpath -path $Env:Programfiles\PuTTY\plink.exe),
+        [string]$domain
+    )
+    process{
+
+        if(-not [string]::IsNullOrEmpty($domain)){
+            foreach($hostName in $hostNames){
+                # pihole --white-wild <domain>
+                '{0}: Adding domain "{0}" to white-wild' -f $hostName | Write-Output
+                &$plinkPath -batch $username@$hostName ("pihole --white-wild {0}" -f $domain) | ForEach-Object { $_ -replace 'Γ£ô', '✓' } | Write-Output
+                '' | Write-Output
+            }
+        }
+        else{
+            '$domain parameter is null or empty, no changes applied' | Write-Error
+        }
+    }
+}
+
+function Check-MinecraftBackups {
+    param (
+        [string]$Path = "\\sihdepot01\machine-backups\sih-gem12\minecraft"
+    )
+
+    if (-Not (Test-Path $Path)) {
+        throw "Backup folder not found: '$Path'"
+    }
+
+    $latestMod = Get-ChildItem -Path $Path -File -Recurse |
+                 Sort-Object LastWriteTime -Descending |
+                 Select-Object -First 1 -ExpandProperty LastWriteTime
+
+    if (-Not $latestMod) {
+        throw "No files found in backup folder: '$Path'"
+    }
+
+    $daysSince = (Get-Date) - $latestMod
+    if ($daysSince.TotalDays -ge 3) {
+        throw "Error: The latest Minecraft backup is over 3 days old. Check sih-gem12 to ensure backup resumes. (Last modified: $latestMod). Path: '$Path'"
+    }
+}
+
 
 Start-CustomProfileBackgroundJob -asJob

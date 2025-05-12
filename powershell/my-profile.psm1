@@ -247,7 +247,7 @@ function Sayed-ConfigureTools(){
         Add-AliasForTool -tool $toolsToConfigure
     }
 }
-function ConfigurePowerShellConsoleWindow(){    
+function ConfigurePowerShellConsoleWindow(){
     # confiure the window
     $pshost = get-host
     $pswindow = $pshost.ui.rawui
@@ -594,14 +594,17 @@ function Sayed-InitailizeProfile{
             'Not importing tools...' | Write-Output
         }
 
-        if(Test-path $codeHome){
-            set-location $codeHome
-        }
+        # TODO: REVISIT this, I need to find a way to only run this when in a Terminal and
+        # not in VS/VS Code terminal
+        #if(Test-path $codeHome){
+        #    set-location $codeHome
+        #}
     }
 }
-
+push-location
 InitalizeEnv
 $machineProfilePath = (join-path $codehome machine-profile.ps1)
 if(test-path $machineProfilePath){
     .$machineProfilePath
 }
+pop-location
