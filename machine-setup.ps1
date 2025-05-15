@@ -22,16 +22,16 @@ set-alias -Name newobj -Value New-ObjectFromProperties
 $global:machinesetupconfig = @{
     MachineSetupConfigFolder = (Join-Path $env:temp 'SayedHaMachineSetup')
     MachineSetupAppsFolder = (Join-Path $env:temp 'SayedHaMachineSetup\apps')
-    BaseChocoPackages = @(
-        'boxstarter',
-        'boxstarter.winconfig'
-        # 'git.install',
-        # 'googlechrome',
-        #'firefox',
-        #'notepadplusplus.install',
-        #'conemu'
-        #'7zip.install'
-    )
+    # BaseChocoPackages = @(
+    #     'boxstarter',
+    #     'boxstarter.winconfig'
+    #     # 'git.install',
+    #     # 'googlechrome',
+    #     #'firefox',
+    #     #'notepadplusplus.install',
+    #     #'conemu'
+    #     #'7zip.install'
+    # )
     BaseRepos = @(
         (newobj @{
                 SSH = 'git@github.com:sayedihashimi/sayed-tools.git'
@@ -44,27 +44,27 @@ $global:machinesetupconfig = @{
         #         SSH = 'git@github.com:dahlbyk/posh-git.git'
         #         HTTPS = 'git@github.com:dahlbyk/posh-git.git' })
     )
-    SecondaryChocoPackages = @(
-        #'p4merge',
-        #'f.lux',
-        #'paint.net',
-        #'sublimetext3',
-        #'fiddler4',
-        #'gimp',
-        #'linqpad4',
-        #'kdiff3',
-        #'balsamiqmockups3',
-        #'adobe-creative-cloud',
-        #'inkscape',
-        #'visualstudiocode',
-        # spotify needs to be installed as normal user
-        # 'spotify',
-        #'everything',
-        #'markdownpad2',
-        #'snagit',
-        #'kindle',
-        'dropbox'
-    )
+    # SecondaryChocoPackages = @(
+    #     #'p4merge',
+    #     #'f.lux',
+    #     #'paint.net',
+    #     #'sublimetext3',
+    #     #'fiddler4',
+    #     #'gimp',
+    #     #'linqpad4',
+    #     #'kdiff3',
+    #     #'balsamiqmockups3',
+    #     #'adobe-creative-cloud',
+    #     #'inkscape',
+    #     #'visualstudiocode',
+    #     # spotify needs to be installed as normal user
+    #     # 'spotify',
+    #     #'everything',
+    #     #'markdownpad2',
+    #     #'snagit',
+    #     #'kindle',
+    #     'dropbox'
+    # )
     WallpaperUrl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/checking-out-the-view.jpg'
 }
 
@@ -79,6 +79,19 @@ function Install-WingetApps{
     winget install -e --id JoachimEibl.KDiff3 --source winget
     winget install -e --id Balsamiq.Wireframes --source winget
     winget install -e --id voidtools.Everything --source winget
+    winget install -e --id=dotPDN.PaintDotNet --source winget
+    winget install -e --id=KDE.KDiff3 --source winget
+    winget install -e --id=AutoHotkey.AutoHotkey --source winget
+
+    # add git and p4merge to the path
+    $gitpath = (GetCommandFullpath -command git.exe)
+    $p4mergepath = (GetCommandFullpath -command p4merge.exe)
+    if(test-path($gitpath)){
+        Add-Path -pathToAdd $gitpath -envTarget User
+    }
+    if(test-path($p4mergepath)){
+        Add-Path -pathToAdd $p4mergepath -envTarget User
+    }
 }
 
 function InstallPrompt{
@@ -246,14 +259,15 @@ function GetCommandFullpath{
     }
 }
 
-function InstallChoclatey{
-    [cmdletbinding()]
-    param()
-    process{
-        iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
-        # restart the console to get the changes
-        RestartThisScript
-    }
+function Install-Winget{
+    # install winget, from: https://learn.microsoft.com/en-us/windows/package-manager/winget/
+    $progressPreference = 'silentlyContinue'
+    Write-Host "Installing WinGet PowerShell module from PSGallery..."
+    Install-PackageProvider -Name NuGet -Force | Out-Null
+    Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery | Out-Null
+    Write-Host "Using Repair-WinGetPackageManager cmdlet to bootstrap WinGet..."
+    Repair-WinGetPackageManager
+    Write-Host "Done."
 }
 
 function RestartThisScript{
@@ -280,23 +294,6 @@ function InstallWithChoco{
     process{
         foreach($pkg in $packages){
             choco install $pkg -y
-        }
-    }
-}
-
-function InstallBaseApps{
-    [cmdletbinding()]
-    param()
-    process{
-        [string]$pkgsbefore = ((choco list --local-only) -join ';')
-        $Global:machinesetupconfig.BaseChocoPackages | InstallWithChoco
-        [string]$pkgsafter = ((choco list --local-only) -join ';')
-
-        Install-WingetApps
-
-        if(-not ([string]::Equals($pkgsbefore,$pkgsafter,[System.StringComparison]::OrdinalIgnoreCase)) ){
-            Add-Path -pathToAdd "$env:ProgramFiles\Git\bin" -envTarget User
-            RestartThisScript
         }
     }
 }
@@ -330,31 +327,6 @@ function ConfigureFirefox{
             }
         }
 
-    }
-}
-
-function InstallSecondaryApps{
-    [cmdletbinding()]
-    param()
-    process{
-        $Global:machinesetupconfig.SecondaryChocoPackages | InstallWithChoco
-
-        EnsureFolderExists ($global:machinesetupconfig.MachineSetupAppsFolder)
-        EnsureInstalled-MarkdownPad
-
-        # TODO: Need to find a more generic way of doing this.
-        $pathPartsToAdd = @(
-            "$env:ProgramFiles\Git\bin"
-            "${env:ProgramFiles(x86)}\Perforce"
-            (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder 'markdownpad2-portable')
-        )
-        
-        $pathPartsToAdd | %{
-            $current = $_
-            if(Test-Path $current){
-                add-path -pathToAdd $current -envTarget User
-            }
-        }
     }
 }
 
@@ -400,26 +372,6 @@ function CopyVisualStudioSnippets{
         }
         else{
             'Snippet source dir not found at [{0}]' -f $snippetSourcePath | Write-Warning
-        }
-    }
-}
-
-function EnsureInstalled-MarkdownPad{
-    [cmdletbinding()]
-    param(
-        [string]$markdownpaddownloadurl = 'http://markdownpad.com/download/markdownpad2-portable.zip',
-        [string]$exerelpath = 'markdownpad2-portable\MarkdownPad2.exe'
-    )
-    process{
-        $expectedPath = (Join-Path $Global:machinesetupconfig.MachineSetupAppsFolder $exerelpath)
-        if(test-path $expectedPath){
-            $mkzip = (GetLocalFileFor -downloadUrl $markdownpaddownloadurl -filename 'markdownpad2-portable.zip')
-            $installFolder = $Global:machinesetupconfig.MachineSetupAppsFolder
-            & (Get7ZipPath) x -y "-o$installFolder" "$mkzip"
-            # pin to start menu
-            PinToStartmenu -pathtopin $expectedPath
-            # add to path
-            Add-Path -pathToAdd $expectedPath
         }
     }
 }
@@ -950,18 +902,15 @@ function ConfigureMachine{
         $codehome = $Global:codehome
     )
     process{
-        # check to see that Choclatey is installed
-
-        if(-not (IsCommandAvailable -command choco.exe)){
-            InstallChoclatey
-            #"`r`nERROR: Choclatey is not installed, install and rerun this script" | Write-Error
-            #throw
+        # install winget if not installed already
+        if(-not (IsCommandAvailable -command winget.exe)){
+            Install-Winget
         }
 
         EnsureFolderExists $codehome
         EnsureFolderExists ($global:machinesetupconfig.MachineSetupAppsFolder)
 
-        InstallBaseApps
+        Install-WingetApps
         InstallPrompt
         RunTask @(
             {EnsurePhotoViewerRegkeyAdded},
@@ -973,7 +922,7 @@ function ConfigureMachine{
 
             {EnsureBaseReposCloned},
             {LoadModules},
-            {InstallSecondaryApps},
+            # {InstallSecondaryApps},
 
             {ConfigureWindows},
             {ConfigureVisualStudio},
