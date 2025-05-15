@@ -84,8 +84,8 @@ function Install-WingetApps{
     winget install -e --id=AutoHotkey.AutoHotkey --source winget
 
     # add git and p4merge to the path
-    $gitpath = (GetCommandFullpath -command git.exe)
-    $p4mergepath = (GetCommandFullpath -command p4merge.exe)
+    $Global:gitpath = (GetCommandFullpath -command git.exe)
+    $Global:p4mergepath = (GetCommandFullpath -command p4merge.exe)
     if(test-path($gitpath)){
         Add-Path -pathToAdd $gitpath -envTarget User
     }
@@ -403,11 +403,11 @@ function EnsureBaseReposCloned{
                         # clone with ssh if the .ssh folder exists, otherwise with https
                         if( test-path $sshfolder){
                             'Cloning repo [{0}] with ssh because the .ssh folder was found at [{1}]' -f $reponame, $sshfolder | Write-Verbose
-                            & git.exe clone $sshurl    
+                            & ($Global:gitpath) clone $sshurl    
                         }
                         else{
                             'Cloning repo [{0}] with https because the .ssh folder was not found at [{1}]' -f $reponame, $sshfolder | Write-Verbose
-                            & git.exe clone $httpsurl
+                            & ($Global:gitpath) clone $httpsurl
                         }
                     }
                     finally{
