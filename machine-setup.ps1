@@ -17,21 +17,15 @@ function New-ObjectFromProperties{
         }
     }
 }
+
+$global:gitexepath = "C:\Program Files\Git\bin\git.exe"
+$global:p4mergepath = "C:\Program Files\Perforce\p4merge.exe"
+
 set-alias -Name newobj -Value New-ObjectFromProperties   
 
 $global:machinesetupconfig = @{
     MachineSetupConfigFolder = (Join-Path $env:temp 'SayedHaMachineSetup')
     MachineSetupAppsFolder = (Join-Path $env:temp 'SayedHaMachineSetup\apps')
-    # BaseChocoPackages = @(
-    #     'boxstarter',
-    #     'boxstarter.winconfig'
-    #     # 'git.install',
-    #     # 'googlechrome',
-    #     #'firefox',
-    #     #'notepadplusplus.install',
-    #     #'conemu'
-    #     #'7zip.install'
-    # )
     BaseRepos = @(
         (newobj @{
                 SSH = 'git@github.com:sayedihashimi/sayed-tools.git'
@@ -44,27 +38,6 @@ $global:machinesetupconfig = @{
         #         SSH = 'git@github.com:dahlbyk/posh-git.git'
         #         HTTPS = 'git@github.com:dahlbyk/posh-git.git' })
     )
-    # SecondaryChocoPackages = @(
-    #     #'p4merge',
-    #     #'f.lux',
-    #     #'paint.net',
-    #     #'sublimetext3',
-    #     #'fiddler4',
-    #     #'gimp',
-    #     #'linqpad4',
-    #     #'kdiff3',
-    #     #'balsamiqmockups3',
-    #     #'adobe-creative-cloud',
-    #     #'inkscape',
-    #     #'visualstudiocode',
-    #     # spotify needs to be installed as normal user
-    #     # 'spotify',
-    #     #'everything',
-    #     #'markdownpad2',
-    #     #'snagit',
-    #     #'kindle',
-    #     'dropbox'
-    # )
     WallpaperUrl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/checking-out-the-view.jpg'
 }
 
@@ -82,20 +55,28 @@ function Install-WingetApps{
     winget install -e --id=dotPDN.PaintDotNet --source winget
     winget install -e --id=KDE.KDiff3 --source winget
     winget install -e --id=AutoHotkey.AutoHotkey --source winget
+    winget install -e --id=Microsoft.PowerToys --source winget
+    winget install -e --id=Microsoft.VisualStudioCode --source winget
 
     # add git and p4merge to the path
-    $Global:gitpath = (GetCommandFullpath -command git.exe)
-    $Global:p4mergepath = (GetCommandFullpath -command p4merge.exe)
-    if(test-path($gitpath)){
-        Add-Path -pathToAdd $gitpath -envTarget User
+    if(test-path($global:gitexepath)){
+        Add-Path -pathToAdd $global:gitexepath -envTarget User
     }
-    if(test-path($p4mergepath)){
-        Add-Path -pathToAdd $p4mergepath -envTarget User
+    if(test-path($Global:p4mergepath)){
+        Add-Path -pathToAdd $Global:p4mergepath -envTarget User
+    }
+}
+
+function Install-PowerShellGet{
+    [cmdletbinding()]
+    param()
+    process{
+
     }
 }
 
 function InstallPrompt{
-    PowerShellGet\Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
+    PowerShellGet\Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
     #PowerShellGet\Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force
     #PowerShellGet\Install-Module posh-git -Scope CurrentUser
     #PowerShellGet\Install-Module oh-my-posh -Scope CurrentUser
@@ -733,50 +714,94 @@ function ConfigureTaskBar{
     }
 }
 
+function Update-WindowsSettings{
+    [cmdletbinding()]
+    param()
+    process{
+        $showHiddenFiles = $true
+        $showFileExtensions = $true
+
+        if($showHiddenFiles -eq $true){
+            'Enabling show hidden files' | Write-Output
+            Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name Hidden -Value 1
+        }
+        if($showFileExtensions -eq $true){
+            'Enabling show file extensions' | Write-Output
+            Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name HideFileExt -Value 0
+        }
+
+        '** You may need to manually enable the following Windows settings:' | Write-Output
+        '    Show mouse pointer when CTRL is clicked' | Write-Output
+        '    Mouse movement speed' | Write-Output
+
+        '' | Write-Output
+    }
+}
+
+# TODO: This doesn't seem to work for some reason
+# Taken from: https://www.tenforums.com/tutorials/101584-turn-off-show-pointer-location-ctrl-key-windows.html
+function Configure-ShowMouseLocationOnCtrl{
+    [cmdletbinding()]
+    param(
+        # Parameters:
+        # $UserKey: Registry key to modify (HKCU or HKU\(SID) or HKU\TempHive)
+        # $Off: If specified, "Show Pointer Location when <Ctrl> Key is pressed" will be turned off.
+        #       If not secified, "Show Pointer Location when <Ctrl> Key is pressed" will be turned on.
+        [string]$UserKey = "HKCU",
+        [switch]$Off
+    )
+    process{
+        #Which bit to toggle in which byte
+        $Bit = 0x40
+        $B = 1
+
+        $UserPreferencesMask = (Get-ItemProperty "HKCU:\Control Panel\Desktop" -Name "UserPreferencesMask").UserPreferencesMask
+
+        If ($UserPreferencesMask -eq $null){
+            Write-Error "Cannot find HKCU:\Control Panel\Desktop: UserPreferencesMask"
+        }
+
+        # Make a copy of $UserPreferencesMask for comparison
+        $NewMask = $UserPreferencesMask
+
+        # Toggle the "Show pointer location" bit
+        if ($Off) {
+            'Disabling show mouse pointer on CTRL' | Write-Output
+            $NewMask[$B] = $NewMask[$B] -band -bnot $Bit
+        }
+        else {
+            'Enabling show mouse pointer on CTRL' | Write-Output
+            $NewMask[$B] = $NewMask[$B] -bor $Bit
+        }
+
+        if ($NewMask -ne $UserPreferencesMask) {
+            '  Updating registry' | Write-Output
+            Set-ItemProperty "HKCU:\Control Panel\Desktop" -Name "UserPreferencesMask" -Value $NewMask
+        }
+        else{
+            '  No registry update needed' | Write-Output
+        }
+    }
+}
+
 function ConfigureWindows{
     [cmdletbinding()]
     param()
-    begin{
-        LoadBoxstarter
-    }
     process{
         RunTask @(
-            {Set-WindowsExplorerOptions -EnableShowFileExtensions},
-            {Enable-RemoteDesktop},
+            {Update-WindowsSettings},
 
             {AddFonts},
             {DisableScreenSaver},
             {
                 $wppath = (GetLocalFileFor -downloadUrl $global:machinesetupconfig.WallpaperUrl -filename 'wp-view.jpg')
                 Update-wallpaper -path $wppath -Style 'Fit' 
-            },
-
-            {InstallPaintDotNet}   
+            }
         )
 
         # TODO: update mouse pointer speed
 
         # TODO: update mouse pointer to show when CTRL is clicked
-    }
-}
-
-# http://www.getpaint.net/doc/latest/UnattendedInstallation.html
-function InstallPaintDotNet(){
-    [cmdletbinding()]
-    param(
-        [string]$downloadUrl = 'http://www.dotpdn.com/files/paint.net.4.0.13.install.zip',
-        [string]$filename = 'paint.net.4.0.13.install.zip',
-        [string]$installerRelPath = 'paint.net.4.0.13.install.exe'
-    )
-    process{        
-        $extractfolder = ExtractRemoteZip -downloadUrl $downloadUrl -filename $filename
-        $foo = 'bar'
-
-        $installerexe = Join-Path $extractfolder $installerRelPath
-
-        & $installerexe /auto DESKTOPSHORTCUT 1
-
-
     }
 }
 
@@ -845,14 +870,6 @@ function AddFonts{
         else{
             'Skipping font additions because of file [{0}]' -f $addFonthasrunpath | Write-Verbose 
         }
-    }
-}
-
-function LoadBoxstarter{
-    [cmdletbinding()]
-    param()
-    process{
-        Import-Module Boxstarter.WinConfig
     }
 }
 
