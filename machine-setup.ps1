@@ -365,7 +365,7 @@ function ConfigureApps{
     [cmdletbinding()]
     param()
     process{
-        ConfigureFirefox
+        # ConfigureFirefox
     }
 }
 
@@ -527,7 +527,8 @@ function GetLocalFileFor{
         
         if(-not (test-path $expectedPath)){
             # download the file
-            EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null            
+            EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null
+            'Downloading file "{0}"' -f $downloadUrl | Write-Output
             Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath | out-null
         }
 
@@ -623,10 +624,6 @@ function EnsurePhotoViewerRegkeyAdded{
     )
     process{
         if(-not (Test-Path $photoviewhasrunpath)){
-            if([string]::IsNullOrWhiteSpace($photoviewerregkeypath)){
-                $photoviewerregkeypath = (GetLocalFileFor -downloadUrl $photoviewerregdownloadurl -filename 'photo-viewer.reg')
-            }
-            
             if(-not (test-path $photoviewerregkeypath)){
                 'photo viewer reg key not found at "{0}"' -f $photoviewerregkeypath | Write-Warning
                 return
@@ -837,7 +834,7 @@ function ConfigureWindows{
         RunTask @(
             {Update-WindowsSettings},
 
-            {AddFonts},
+            #{AddFonts},
             {DisableScreenSaver},
             {
                 $wppath = (GetLocalFileFor -downloadUrl $global:machinesetupconfig.WallpaperUrl -filename 'wp-view.jpg')
