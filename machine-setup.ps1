@@ -1,7 +1,7 @@
 ﻿[cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [bool]$runscript = $true,
+    [bool]$initalizeScript = $true,
     
     [Parameter(Position=1)]
     [string]$pathToSettingsVhdxFile,
@@ -13,15 +13,23 @@ param(
     [string]$settingsVhdxDriveLetter = "X:"
 )
 
+$global:pathToSettingsVhdxFile = $pathToSettingsVhdxFile
+$global:settingsVhdxFilePassword = $settingsVhdxFilePassword
+$global:settingsVhdxDriveLetter = $settingsVhdxDriveLetter
+
+$global:gitexepath = "C:\Program Files\Git\bin\git.exe"
+$global:p4mergepath = "C:\Program Files\Perforce\p4merge.exe"
+$global:ps7Exepath = "C:\Program Files\PowerShell\7\pwsh.exe"
+
 function Prompt-ForParameters{
     [cmdletbinding()]
     param()
     process{
-        if([string]::IsNullOrEmpty($pathToSettingsVhdxFile)){
-            $pathToSettingsVhdxFile = Read-Host -Prompt 'Enter the path to the settings.vhdx file'
+        if([string]::IsNullOrEmpty($global:pathToSettingsVhdxFile)){
+            $global:pathToSettingsVhdxFile = Read-Host -Prompt 'Enter the path to the settings.vhdx file'
         }
         if(-not $settingsVhdxFilePassword){
-            $settingsVhdxFilePassword = Read-Host -Prompt 'Enter the password for the settings.vhdx file' -AsSecureString
+            $global:settingsVhdxFilePassword = Read-Host -Prompt 'Enter the password for the settings.vhdx file' -AsSecureString
         }
     }
 }
@@ -40,8 +48,7 @@ function New-ObjectFromProperties{
     }
 }
 
-$global:gitexepath = "C:\Program Files\Git\bin\git.exe"
-$global:p4mergepath = "C:\Program Files\Perforce\p4merge.exe"
+
 
 set-alias -Name newobj -Value New-ObjectFromProperties   
 
@@ -283,7 +290,7 @@ Restarting the script
 ************************************
 '@ | Write-Output
 
-        powershell.exe -NoExit -ExecutionPolicy RemoteSigned -File $($MyInvocation.ScriptName)
+        & $global:ps7Exepath -NoExit -ExecutionPolicy RemoteSigned -File $($MyInvocation.ScriptName) -initalizeScript:$false
         break
     }
 }
@@ -451,7 +458,7 @@ function ConfigureGit{
         $sshfolderpath = "$HOME\.ssh"
         test-path -Path "$HOME\.ssh" -PathType Container
         # check to see if the .gitconfig is already on disk, if so, skip all these steps
-        if(-not (test-path $sshfolderpath -directory)){
+        if(-not (test-path $sshfolderpath -PathType Container)){
             Mount-SettingsVirtualHardDrive
             'Copying .ssh folder to "{0}"' -f $sshfolderpath | Write-Output
             Copy-Item -Path "X:\.ssh" -Destination $sshfolderpath -Recurse -Force
@@ -459,55 +466,11 @@ function ConfigureGit{
                 'Copying .gitconfig to "{0}"' -f "$HOME\.gitconfig" | Write-Output
                 Copy-Item -LiteralPath "X:\.gitconfig" -Destination "$HOME\.gitconfig" -Force
             }
-            # copy the .gitconfig
-            Unmount-SettingsVirtualHardDrive
+            # Unmount-SettingsVirtualHardDrive
         }
         else{
             'Skipping configuregit because the ssh key at "{0}"' -f $sshkeyfilepath | Write-Output
         }
-    }
-}
-
-function ConfigureGitOld{
-    [cmdletbinding()]
-    param(
-        [string]$sshdownloadurl = $env:machinesetupsshurl,
-        [string]$machinesetuppwd = $env:machinesetuppassword
-    )
-    process{
-        # copy .gitconfig from dropbox to documents
-        $documentspath = ([Environment]::GetFolderPath("MyDocuments"))
-        if( ([string]::IsNullOrWhiteSpace($documentspath)) -or (-not (test-path $documentspath))){
-            'Documents folder not found at [{0}]' -f $documentspath |Write-Error
-            break
-        }
-
-        $gitconfigurl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/dotfiles/.gitconfig'
-        $gitconfigsource=(GetLocalFileFor -filename '.gitconfig' -downloadUrl $gitconfigurl)
-        $destgitconfig = (Join-Path $documentspath '.gitconfig')
-        if(-not (Test-Path $destgitconfig)){
-            '.gitconfig not found at [{0}] copying from [{1}]' -f $destgitconfig,$gitconfigsource | Write-Verbose
-            Copy-Item -Path $gitconfigsource -Destination $destgitconfig
-        }
-
-        # copy ssh keys to documents folder        
-        $destsshpath = (Join-Path $env:USERPROFILE '.ssh')
-        if(-not (Test-Path $destsshpath)){           
-            if([string]::IsNullOrWhiteSpace($sshdownloadurl) -or [string]::IsNullOrWhiteSpace($machinesetuppwd)){
-                 $msg = 'The .ssh url or the machine setup password is empty. Check 1Password for the values and assign env vars, and restart this script'
-                 throw $msg
-            }
-
-            $sshzip = (GetLocalFileFor -downloadUrl $sshdownloadurl -filename '.ssh.7z')
-            $7zipexe = (Get7ZipPath)
-            if(-not (Test-Path -Path $7zipexe -PathType Leaf) ){
-                throw ('7zip not found at [{0}]' -f $7zipexe)
-            }
-            EnsureFolderExists -path $destsshpath
-            & $7zipexe e -y "-p$machinesetuppwd" "-o$destsshpath" $sshzip
-        }
-
-        Add-Path -pathToAdd "$env:ProgramFiles\Git\bin" -envTarget User
     }
 }
 
@@ -958,6 +921,8 @@ function RunTask{
     }
 }
 
+# Main function that does most of the work.
+# Initialize-Script needs to be called before this.
 function ConfigureMachine{
     [cmdletbinding()]
     param(
@@ -966,9 +931,9 @@ function ConfigureMachine{
     )
     process{
         # install winget if not installed already
-        if(-not (IsCommandAvailable -command winget.exe)){
-            Install-Winget
-        }
+        #if(-not (IsCommandAvailable -command winget.exe)){
+        #    Install-Winget
+        #}
 
         EnsureFolderExists $codehome
         EnsureFolderExists ($global:machinesetupconfig.MachineSetupAppsFolder)
@@ -998,23 +963,23 @@ function Mount-SettingsVirtualHardDrive{
     [cmdletbinding()]
     param()
     process{
-        if(test-path ($pathToSettingsVhdxFile)){
-            if([string]::IsNullOrWhiteSpace($settingsVhdxFilePassword)) {
+        if(-not (test-path ($global:pathToSettingsVhdxFile))){
+            if([string]::IsNullOrWhiteSpace($global:settingsVhdxFilePassword)) {
                 '** Settings vhdx file password not provided' | Write-Warning
                 return
             }
-            if([string]::IsNullOrWhiteSpace($settingsVhdxDriveLetter)){
+            if([string]::IsNullOrWhiteSpace($global:settingsVhdxDriveLetter)){
                 $settingsVhdxDriveLetter = 'Z:'
             }
 
-            'Mounting virtual hard drive at "{0}"' -f $pathToSettingsVhdxFile | Write-Output
-            Mount-VHD -Path $pathToSettingsVhdxFile
-            $volume = Get-BitLockerVolume -MountPoint $settingsVhdxDriveLetter
+            'Mounting virtual hard drive at "{0}"' -f $global:pathToSettingsVhdxFile | Write-Output
+            Mount-VHD -Path $pathToSettingsVhdxFile 
+            $volume = Get-BitLockerVolume -MountPoint $global:settingsVhdxDriveLetter
             'Unlocking settings drive with bitlocker' | Write-Output
-            Unlock-BitLocker -MountPoint $volume.MountPoint -password $settingsVhdxFilePassword
+            Unlock-BitLocker -MountPoint $volume.MountPoint -password $global:settingsVhdxFilePassword
         }
         else{
-            '** Settings vhdx file not found at {0}' -f $pathToSettingsVhdxFile |Write-Warning
+            '** Settings vhdx file not found at {0}' -f $global:pathToSettingsVhdxFile |Write-Warning
         }
     }
 }
@@ -1032,22 +997,68 @@ function Unmount-SettingsVirtualHardDrive{
     }
 }
 
+# this will do the following:
+#   1. Install winget
+#   2. Install PowerShell 7
+#   3. Restart the script under powershell 7
+function Initalize-Script{
+    [cmdletbinding()]
+    param()
+    process{
+        if($initalizeScript){
+            # install winget if not installed already
+            if(-not (IsCommandAvailable -command winget.exe)){
+                Install-Winget
+            }
+
+            if(-not (test-path $global:ps7Exepath)){
+                'Installing PowerShell 7' | Write-Output
+                winget install --id Microsoft.PowerShell --source winget
+            }
+            
+
+            # check to see if pwsh is on disk and if so run the script with that and bypass initalize
+            if((test-path $global:ps7Exepath)){
+                'PowerShell 7 found at [{0}]' -f $global:ps7Exepath | Write-Output
+                'Restarting script with PowerShell 7' | Write-Output
+                RestartThisScript
+            }
+            else{
+                'PowerShell 7 not found at [{0}]' -f $global:ps7Exepath | Write-Output
+            }
+        }
+        else{
+            'Skipping initalize because $initalizeScript is false' | Write-Output
+        }
+    }
+}
+
+function Ensure-RunningOnPowerShell7{
+    [cmdletbinding()]
+    param()
+    process{
+        if($PSVersionTable.PSVersion.Major -lt 7){
+            # install powershell 7 and then restart this script
+            RestartThisScript
+        }
+    }
+}
+
 #########################################
 # Begin script
 #########################################
-if($runscript -and (-not (IsRunningAsAdmin))) {
+if(-not (IsRunningAsAdmin)) {
     'This script needs to be run as an administrator' | Write-Error
     throw
 }
 
 Prompt-ForParameters
+Initalize-Script
 
 Push-Location
 try{
     Set-Location $scriptDir
-    if($runscript -eq $true){
-        ConfigureMachine
-    }
+    ConfigureGit
 }
 finally{
     Pop-Location
