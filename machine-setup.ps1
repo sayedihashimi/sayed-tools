@@ -932,7 +932,7 @@ function LoadModules{
     [cmdletbinding()]
     param()
     process{
-        $modstoload = @("$global:codeHome\sayed-tools\powershell\sayed-tools.psm1")
+        $modstoload = @("$global:codeHome\sayed-tools\powershell\sayed-tools.psd1")
         foreach($mod in $modstoload){
             if(test-path $mod -PathType Leaf){
                 'Loading module from "{0}"' -f $mod| Write-Output
