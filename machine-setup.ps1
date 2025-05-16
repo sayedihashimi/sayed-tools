@@ -30,8 +30,14 @@ $global:gitexepath = "C:\Program Files\Git\bin\git.exe"
 $global:p4mergepath = "C:\Program Files\Perforce\p4merge.exe"
 $global:ps7Exepath = "C:\Program Files\PowerShell\7\pwsh.exe"
 $global:mountedVhdx = $false
+$Global:codehome = 'c:\data\mycode'
 
-$global:sayedhaToolsFolderPath = get-fullpath (join-path $Global:codehome 'sayed-tools')
+if([string]::IsNullOrWhiteSpace($Global:codehome)){
+    '$global:codehome is empty, it is required' | Write-Error
+    return
+}
+
+$global:sayedhaToolsFolderPath = join-path $Global:codehome 'sayed-tools'
 
 function Prompt-ForParameters{
     [cmdletbinding()]
@@ -41,10 +47,24 @@ function Prompt-ForParameters{
             $global:pcSettingsDirPath = Read-Host -Prompt 'Path to pcsettings folder'
             $global:pcSettingsDirPath = $global:pcSettingsDirPath.TrimStart('"').TrimEnd('"').TrimStart("'").TrimEnd("'")
         }
+        # if([string]::IsNullOrEmpty($global:pathToSettingsVhdxFile)){
+        #     $global:pathToSettingsVhdxFile = Read-Host -Prompt 'Enter the path to the settings.vhdx file'
+        #     $global:pathToSettingsVhdxFile = $global:pathToSettingsVhdxFile.TrimStart('"').TrimEnd('"').TrimStart("'").TrimEnd("'")
+        # }
+
         if([string]::IsNullOrEmpty($global:pathToSettingsVhdxFile)){
-            $global:pathToSettingsVhdxFile = Read-Host -Prompt 'Enter the path to the settings.vhdx file'
-            $global:pathToSettingsVhdxFile = $global:pathToSettingsVhdxFile.TrimStart('"').TrimEnd('"').TrimStart("'").TrimEnd("'")
+            # check to see if the file is there
+            $expectedPath = Get-FullPath (join-path -Path $global:pcSettingsDirPath 'sayedha-settings.vhdx')
+            if(test-path $expectedPath){
+                $global:pathToSettingsVhdxFile = $expectedPath
+            }
+            else{
+                'settings vhdx not found at expected path "{0}", prompting for the path' -f $expectedPath | Write-Output
+                $global:pathToSettingsVhdxFile = Read-Host -Prompt 'Enter the path to the settings.vhdx file'
+                $global:pathToSettingsVhdxFile = $global:pathToSettingsVhdxFile.TrimStart('"').TrimEnd('"').TrimStart("'").TrimEnd("'")
+            }
         }
+
         if(-not $settingsVhdxFilePassword){
             $global:settingsVhdxFilePassword = Read-Host -Prompt 'Enter the password for the settings.vhdx file' -AsSecureString
         }
@@ -92,6 +112,7 @@ $global:machinesetupconfig = @{
         #         HTTPS = 'git@github.com:dahlbyk/posh-git.git' })
     )
     WallpaperUrl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/checking-out-the-view.jpg'
+    WallpaperFilepath = (join-path -Path $Global:codehome 'sayed-tools/powershell/checking-out-the-view.jpg')
 }
 
 function Install-WingetApps{
@@ -110,6 +131,8 @@ function Install-WingetApps{
     winget install -e --id=AutoHotkey.AutoHotkey --source winget
     winget install -e --id=Microsoft.PowerToys --source winget
     winget install -e --id=Microsoft.VisualStudioCode --source winget
+    winget install -e --id=Winamp.Winamp --source winget
+    winget install -e --id=OBSProject.OBSStudio --source winget
 
     # add git and p4merge to the path
     if(test-path($global:gitexepath)){
@@ -175,30 +198,7 @@ function Get-Fullpath{
     }
 }
 
-if([string]::IsNullOrWhiteSpace($Global:dropboxhome)){
-    if(-not ([string]::IsNullOrWhiteSpace($env:dropboxhome))){
-        $Global:dropboxhome = $env:dropboxhome
-    }
 
-    if([string]::IsNullOrWhiteSpace($Global:dropboxhome)){
-        $Global:dropboxhome = 'c:\data\dropbox'
-    }
-}
-
-if([string]::IsNullOrWhiteSpace($Global:codehome)){
-    if(-not ([string]::IsNullOrWhiteSpace($env:codehome))){
-        $Global:codehome = $env:codehome
-    }
-
-    if([string]::IsNullOrWhiteSpace($Global:codehome)){
-        $Global:codehome = 'c:\data\mycode'
-        <#
-        if(-not $IsWindows){
-            $global:codehome = Join-Path (Get-Item ~) "data" "mycode"
-        }
-        #>
-    }
-}
 
 function Add-Path{
     [cmdletbinding()]
@@ -314,7 +314,7 @@ Restarting the script
 ************************************
 '@ | Write-Output
 
-        & $global:ps7Exepath -NoExit -ExecutionPolicy RemoteSigned -File $($MyInvocation.ScriptName) -initalizeScript:$false
+        & $global:ps7Exepath -NoExit -ExecutionPolicy RemoteSigned -File $($MyInvocation.ScriptName) -initalizeScript:$false -pcSettingsDirPath:$global:pcSettingsDirPath -settingsVhdxFilePassword $global:settingsVhdxFilePassword -settingsVhdxDriveLetter:$global:settingsVhdxDriveLetter
         break
     }
 }
@@ -667,7 +667,7 @@ function GetPinToTaskbarTool{
     )
     process{
         # see if the file has already been downloaded
-        [string]$expectedPath = (join-path $global:machinesetupconfig.MachineSetupConfigFolder 'PinTo10v2.exe')
+
         if(-not (test-path $expectedPath)){
             'PinToTaskbar tool not found at "{0}"' -f $expectedPath | Write-Warning
             
@@ -679,7 +679,7 @@ function GetPinToTaskbarTool{
         }
 
         if(-not (test-path $expectedPath)){
-            $msg = 'Unable to download PinToTaskbar from [{0}] to [{1}]' -f $downloadUrl,$expectedPath
+            $msg = 'PinToTaskbar tool not found at "{0}".' -f $expectedPath
             throw $msg 
         }
 
@@ -838,7 +838,13 @@ function ConfigureWindows{
             {DisableScreenSaver},
             {
                 $wppath = (GetLocalFileFor -downloadUrl $global:machinesetupconfig.WallpaperUrl -filename 'wp-view.jpg')
-                Update-wallpaper -path $wppath -Style 'Fit' 
+                if(test-path ($global:machinesetupconfig.WallpaperFilepath)){
+                    'Setting wallpaper' | Write-Output
+                    Update-wallpaper -path ($global:machinesetupconfig.WallpaperFilepath) -Style 'Fit' 
+                }
+                else{
+                    'Wallpaper file not found at "{0}"' -f ($global:machinesetupconfig.WallpaperFilepath) | Write-Output
+                }
             }
         )
 
@@ -929,8 +935,8 @@ function LoadModules{
         $modstoload = @("$global:codeHome\sayed-tools\powershell\sayed-tools.psm1")
         foreach($mod in $modstoload){
             if(test-path $mod -PathType Leaf){
-                'Loading module from [{0}]' -f $mod| Write-Verbose
-                Import-Module $mod -Global -DisableNameChecking
+                'Loading module from "{0}"' -f $mod| Write-Output
+                Import-Module -Name ((Resolve-path -Path $mod).Path) -Global -DisableNameChecking -Force -Verbose
             }
             else{
                 'Module file not found at [{0}]' -f $mod | Write-Warning
@@ -996,6 +1002,7 @@ function ConfigureMachine{
             {LoadModules},
             # {InstallSecondaryApps},
 
+            {LoadModules}
             {ConfigureWindows},
             {ConfigureVisualStudio},
             {ConfigureApps}            
