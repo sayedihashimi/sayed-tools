@@ -24,7 +24,7 @@ $global:tempSettingsVhdxFile = (Join-Path $global:tempdir 'settings.vhdx')
 $global:gitexepath = "C:\Program Files\Git\bin\git.exe"
 $global:p4mergepath = "C:\Program Files\Perforce\p4merge.exe"
 $global:ps7Exepath = "C:\Program Files\PowerShell\7\pwsh.exe"
-
+$global:mountedVhdx = $false
 function Prompt-ForParameters{
     [cmdletbinding()]
     param()
@@ -467,18 +467,21 @@ function ConfigureGit{
             Mount-SettingsVirtualHardDrive
             'Copying .ssh folder to "{0}"' -f $sshfolderpath | Write-Output
             Copy-Item -Path "X:\.ssh" -Destination $sshfolderpath -Recurse -Force
-
-            if(-not "$HOME\.gitconfig"){
-                'Copying .gitconfig to "{0}"' -f "$HOME\.gitconfig" | Write-Output
-                Copy-Item -LiteralPath "X:\.gitconfig" -Destination "$HOME\.gitconfig" -Force
-            }
-            # wait a bit to ensure the copy is complete
-            Start-Sleep -Seconds 2
-            Unmount-SettingsVirtualHardDrive
         }
         else{
-            'Skipping configuregit because the ssh key at "{0}"' -f $sshkeyfilepath | Write-Output
+            '.ssh folder exists at "{0}", not copying' -f $sshfolderpath | Write-Output
         }
+
+        if(-not  (Test-Path -Path "$HOME\.gitconfig")){
+            'Copying .gitconfig to "{0}"' -f "$HOME\.gitconfig" | Write-Output
+            Copy-Item -LiteralPath "X:\.gitconfig" -Destination "$HOME\.gitconfig" -Force
+        }
+        else{
+            '.gitconfig exists at "{0}", not copying' -f $sshfolderpath | Write-Output
+        }
+        # wait a bit to ensure the copy is complete
+        Start-Sleep -Seconds 2
+        Unmount-SettingsVirtualHardDrive
     }
 }
 
@@ -971,6 +974,13 @@ function Mount-SettingsVirtualHardDrive{
     [cmdletbinding()]
     param()
     process{
+        $driveLetter = "{0}:" -f $global:settingsVhdxDriveLetter
+        # if the drive is already mounted, don't mount it again
+        if(Test-Path $driveLetter){
+            'Settings drive already mounted' | Write-Output
+            return
+        }
+
         if(test-path ($global:pathToSettingsVhdxFile)){
             if([string]::IsNullOrWhiteSpace($global:settingsVhdxFilePassword)) {
                 '** Settings vhdx file password not provided' | Write-Warning
@@ -997,11 +1007,10 @@ assign letter={1}
 "@ -f $global:tempSettingsVhdxFile,$settingsVhdxDriveLetter | diskpart
             # give diskpart a few seconds to complete it's work
             Start-Sleep -Seconds 5
-
-            $driveLetter = "{0}:" -f $global:settingsVhdxDriveLetter
             $volume = Get-BitLockerVolume -MountPoint $driveLetter
             'Unlocking settings drive with bitlocker' | Write-Output
             Unlock-BitLocker -MountPoint $volume.MountPoint -password $global:settingsVhdxFilePassword
+            $global:mountedVhdx = $true
         }
         else{
             '** Settings vhdx file not found at {0}' -f $global:pathToSettingsVhdxFile |Write-Warning
@@ -1013,6 +1022,11 @@ function Unmount-SettingsVirtualHardDrive{
     [cmdletbinding()]
     param()
     process{
+        if($global:mountedVhdx -ne $true){
+            # only unmount if this script mounted it
+            return
+        }
+
         if(test-path ($global:tempSettingsVhdxFile)){
             @"
 select vdisk file="{0}"
@@ -1087,15 +1101,13 @@ if(-not (IsRunningAsAdmin)) {
     throw
 }
 
-
-
 Prompt-ForParameters
 Initalize-Script
 
 Push-Location
 try{
     Set-Location $scriptDir
-    ConfigureGit
+    ConfigureMachine
 }
 finally{
     Pop-Location
