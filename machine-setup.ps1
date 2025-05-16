@@ -1,8 +1,30 @@
 ﻿[cmdletbinding()]
 param(
     [Parameter(Position=0)]
-    [bool]$runscript = $true
+    [bool]$runscript = $true,
+    
+    [Parameter(Position=1)]
+    [string]$pathToSettingsVhdxFile,
+    
+    [Parameter(Position=2)]
+    [securestring]$settingsVhdxFilePassword,
+
+    [Parameter(Position=3)]
+    [string]$settingsVhdxDriveLetter = "X:"
 )
+
+function Prompt-ForParameters{
+    [cmdletbinding()]
+    param()
+    process{
+        if([string]::IsNullOrEmpty($pathToSettingsVhdxFile)){
+            $pathToSettingsVhdxFile = Read-Host -Prompt 'Enter the path to the settings.vhdx file'
+        }
+        if(-not $settingsVhdxFilePassword){
+            $settingsVhdxFilePassword = Read-Host -Prompt 'Enter the password for the settings.vhdx file' -AsSecureString
+        }
+    }
+}
 
 function New-ObjectFromProperties{
     [cmdletbinding()]
@@ -423,6 +445,30 @@ function ConfigureConsole{
 }
 
 function ConfigureGit{
+    [cmdletbinding()]
+    param()
+    process{
+        $sshfolderpath = "$HOME\.ssh"
+        test-path -Path "$HOME\.ssh" -PathType Container
+        # check to see if the .gitconfig is already on disk, if so, skip all these steps
+        if(-not (test-path $sshfolderpath -directory)){
+            Mount-SettingsVirtualHardDrive
+            'Copying .ssh folder to "{0}"' -f $sshfolderpath | Write-Output
+            Copy-Item -Path "X:\.ssh" -Destination $sshfolderpath -Recurse -Force
+            if(-not "$HOME\.gitconfig"){
+                'Copying .gitconfig to "{0}"' -f "$HOME\.gitconfig" | Write-Output
+                Copy-Item -LiteralPath "X:\.gitconfig" -Destination "$HOME\.gitconfig" -Force
+            }
+            # copy the .gitconfig
+            Unmount-SettingsVirtualHardDrive
+        }
+        else{
+            'Skipping configuregit because the ssh key at "{0}"' -f $sshkeyfilepath | Write-Output
+        }
+    }
+}
+
+function ConfigureGitOld{
     [cmdletbinding()]
     param(
         [string]$sshdownloadurl = $env:machinesetupsshurl,
@@ -948,6 +994,43 @@ function ConfigureMachine{
     }
 }
 
+function Mount-SettingsVirtualHardDrive{
+    [cmdletbinding()]
+    param()
+    process{
+        if(test-path ($pathToSettingsVhdxFile)){
+            if([string]::IsNullOrWhiteSpace($settingsVhdxFilePassword)) {
+                '** Settings vhdx file password not provided' | Write-Warning
+                return
+            }
+            if([string]::IsNullOrWhiteSpace($settingsVhdxDriveLetter)){
+                $settingsVhdxDriveLetter = 'Z:'
+            }
+
+            'Mounting virtual hard drive at "{0}"' -f $pathToSettingsVhdxFile | Write-Output
+            Mount-VHD -Path $pathToSettingsVhdxFile
+            $volume = Get-BitLockerVolume -MountPoint $settingsVhdxDriveLetter
+            'Unlocking settings drive with bitlocker' | Write-Output
+            Unlock-BitLocker -MountPoint $volume.MountPoint -password $settingsVhdxFilePassword
+        }
+        else{
+            '** Settings vhdx file not found at {0}' -f $pathToSettingsVhdxFile |Write-Warning
+        }
+    }
+}
+
+function Unmount-SettingsVirtualHardDrive{
+    [cmdletbinding()]
+    param()
+    process{
+        if(test-path ($pathToSettingsVhdxFile)){
+            Dismount-VHD -Path $pathToSettingsVhdxFile
+        }
+        else{
+            'Unable to dismount vhdx. File not found at "{0}"' -f $pathToSettingsVhdxFile | Write-Output
+        }
+    }
+}
 
 #########################################
 # Begin script
@@ -956,6 +1039,8 @@ if($runscript -and (-not (IsRunningAsAdmin))) {
     'This script needs to be run as an administrator' | Write-Error
     throw
 }
+
+Prompt-ForParameters
 
 Push-Location
 try{
