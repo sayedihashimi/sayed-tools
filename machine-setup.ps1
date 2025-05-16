@@ -10,12 +10,16 @@ param(
     [securestring]$settingsVhdxFilePassword,
 
     [Parameter(Position=3)]
-    [string]$settingsVhdxDriveLetter = "X:"
+    [string]$settingsVhdxDriveLetter = "X"
 )
 
 $global:pathToSettingsVhdxFile = $pathToSettingsVhdxFile
 $global:settingsVhdxFilePassword = $settingsVhdxFilePassword
 $global:settingsVhdxDriveLetter = $settingsVhdxDriveLetter
+$global:tempdir = "C:\temp\machine-setup"
+
+# the vhdx file passed in will be copied here
+$global:tempSettingsVhdxFile = (Join-Path $global:tempdir 'settings.vhdx')
 
 $global:gitexepath = "C:\Program Files\Git\bin\git.exe"
 $global:p4mergepath = "C:\Program Files\Perforce\p4merge.exe"
@@ -27,6 +31,7 @@ function Prompt-ForParameters{
     process{
         if([string]::IsNullOrEmpty($global:pathToSettingsVhdxFile)){
             $global:pathToSettingsVhdxFile = Read-Host -Prompt 'Enter the path to the settings.vhdx file'
+            $global:pathToSettingsVhdxFile = $global:pathToSettingsVhdxFile.TrimStart('"').TrimEnd('"').TrimStart("'").TrimEnd("'")
         }
         if(-not $settingsVhdxFilePassword){
             $global:settingsVhdxFilePassword = Read-Host -Prompt 'Enter the password for the settings.vhdx file' -AsSecureString
@@ -250,7 +255,7 @@ function IsCommandAvailable{
         $command
     )
     process{
-        $foundcmd = (get-command choco.exe -ErrorAction SilentlyContinue)
+        $foundcmd = (get-command $command -ErrorAction SilentlyContinue)
         [bool]$isinstalled = ($foundcmd -ne $null)
 
         # return the value
@@ -462,11 +467,14 @@ function ConfigureGit{
             Mount-SettingsVirtualHardDrive
             'Copying .ssh folder to "{0}"' -f $sshfolderpath | Write-Output
             Copy-Item -Path "X:\.ssh" -Destination $sshfolderpath -Recurse -Force
+
             if(-not "$HOME\.gitconfig"){
                 'Copying .gitconfig to "{0}"' -f "$HOME\.gitconfig" | Write-Output
                 Copy-Item -LiteralPath "X:\.gitconfig" -Destination "$HOME\.gitconfig" -Force
             }
-            # Unmount-SettingsVirtualHardDrive
+            # wait a bit to ensure the copy is complete
+            Start-Sleep -Seconds 2
+            Unmount-SettingsVirtualHardDrive
         }
         else{
             'Skipping configuregit because the ssh key at "{0}"' -f $sshkeyfilepath | Write-Output
@@ -963,18 +971,35 @@ function Mount-SettingsVirtualHardDrive{
     [cmdletbinding()]
     param()
     process{
-        if(-not (test-path ($global:pathToSettingsVhdxFile))){
+        if(test-path ($global:pathToSettingsVhdxFile)){
             if([string]::IsNullOrWhiteSpace($global:settingsVhdxFilePassword)) {
                 '** Settings vhdx file password not provided' | Write-Warning
                 return
             }
             if([string]::IsNullOrWhiteSpace($global:settingsVhdxDriveLetter)){
-                $settingsVhdxDriveLetter = 'Z:'
+                $settingsVhdxDriveLetter = 'X'
             }
 
-            'Mounting virtual hard drive at "{0}"' -f $global:pathToSettingsVhdxFile | Write-Output
-            Mount-VHD -Path $pathToSettingsVhdxFile 
-            $volume = Get-BitLockerVolume -MountPoint $global:settingsVhdxDriveLetter
+            # copy the file to the temp directory            
+            'Copying settings vhdx to temp folder to mount it' | Write-Output
+            EnsureFolderExists -path $global:tempdir
+            Copy-Item -LiteralPath $global:pathToSettingsVhdxFile -Destination $global:tempSettingsVhdxFile -Force
+
+            # mount-vhd requires an optional feature to be enabled, using diskpart instead
+            #Mount-VHD -Path $pathToSettingsVhdxFile 
+            'Mounting virtual hard drive at "{0}"' -f $global:tempSettingsVhdxFile | Write-Output
+            # can't use mount-vhd because in windows sandbox it can't be installed, better to use diskpart
+            @"
+select vdisk file="{0}"
+attach vdisk
+select volume 1
+assign letter={1}
+"@ -f $global:tempSettingsVhdxFile,$settingsVhdxDriveLetter | diskpart
+            # give diskpart a few seconds to complete it's work
+            Start-Sleep -Seconds 5
+
+            $driveLetter = "{0}:" -f $global:settingsVhdxDriveLetter
+            $volume = Get-BitLockerVolume -MountPoint $driveLetter
             'Unlocking settings drive with bitlocker' | Write-Output
             Unlock-BitLocker -MountPoint $volume.MountPoint -password $global:settingsVhdxFilePassword
         }
@@ -988,11 +1013,14 @@ function Unmount-SettingsVirtualHardDrive{
     [cmdletbinding()]
     param()
     process{
-        if(test-path ($pathToSettingsVhdxFile)){
-            Dismount-VHD -Path $pathToSettingsVhdxFile
+        if(test-path ($global:tempSettingsVhdxFile)){
+            @"
+select vdisk file="{0}"
+detach vdisk
+"@ -f $global:tempSettingsVhdxFile | diskpart
         }
         else{
-            'Unable to dismount vhdx. File not found at "{0}"' -f $pathToSettingsVhdxFile | Write-Output
+            'Unable to dismount vhdx. File not found at "{0}"' -f $global:tempSettingsVhdxFile | Write-Output
         }
     }
 }
@@ -1005,6 +1033,12 @@ function Initalize-Script{
     [cmdletbinding()]
     param()
     process{
+        # if running under PowerShell 7, ensure that Mount-VHD command is available
+        #if(-not (IsCommandAvailable -command Mount-VHD)){
+            #'Enabling optional features to get the Mount-VHD command.' | Write-Output
+            #Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-Management-PowerShell -All
+        #}
+
         if($initalizeScript){
             # install winget if not installed already
             if(-not (IsCommandAvailable -command winget.exe)){
@@ -1015,16 +1049,17 @@ function Initalize-Script{
                 'Installing PowerShell 7' | Write-Output
                 winget install --id Microsoft.PowerShell --source winget
             }
-            
 
-            # check to see if pwsh is on disk and if so run the script with that and bypass initalize
-            if((test-path $global:ps7Exepath)){
-                'PowerShell 7 found at [{0}]' -f $global:ps7Exepath | Write-Output
-                'Restarting script with PowerShell 7' | Write-Output
-                RestartThisScript
-            }
-            else{
-                'PowerShell 7 not found at [{0}]' -f $global:ps7Exepath | Write-Output
+            # check to see if we are running under powershell 7, if not restart with powershell 7
+            if($PSVersionTable.PSVersion.Major -lt 7){
+                if((test-path $global:ps7Exepath)){
+                    'PowerShell 7 found at [{0}]' -f $global:ps7Exepath | Write-Output
+                    'Restarting script with PowerShell 7' | Write-Output
+                    RestartThisScript
+                }
+                else{
+                    'PowerShell 7 not found at [{0}]' -f $global:ps7Exepath | Write-Error
+                }
             }
         }
         else{
@@ -1051,6 +1086,8 @@ if(-not (IsRunningAsAdmin)) {
     'This script needs to be run as an administrator' | Write-Error
     throw
 }
+
+
 
 Prompt-ForParameters
 Initalize-Script
