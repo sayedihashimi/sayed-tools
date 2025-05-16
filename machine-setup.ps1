@@ -3,16 +3,21 @@ param(
     [Parameter(Position=0)]
     [bool]$initalizeScript = $true,
     
+    # the pcsettings folder must already be on disk
     [Parameter(Position=1)]
+    [string]$pcSettingsDirPath,
+
+    [Parameter(Position=2)]
     [string]$pathToSettingsVhdxFile,
     
-    [Parameter(Position=2)]
+    [Parameter(Position=3)]
     [securestring]$settingsVhdxFilePassword,
 
-    [Parameter(Position=3)]
+    [Parameter(Position=4)]
     [string]$settingsVhdxDriveLetter = "X"
 )
 
+$global:pcSettingsDirPath = $pcSettingsDirPath
 $global:pathToSettingsVhdxFile = $pathToSettingsVhdxFile
 $global:settingsVhdxFilePassword = $settingsVhdxFilePassword
 $global:settingsVhdxDriveLetter = $settingsVhdxDriveLetter
@@ -25,16 +30,30 @@ $global:gitexepath = "C:\Program Files\Git\bin\git.exe"
 $global:p4mergepath = "C:\Program Files\Perforce\p4merge.exe"
 $global:ps7Exepath = "C:\Program Files\PowerShell\7\pwsh.exe"
 $global:mountedVhdx = $false
+
+$global:sayedhaToolsFolderPath = get-fullpath (join-path $Global:codehome 'sayed-tools')
+
 function Prompt-ForParameters{
     [cmdletbinding()]
     param()
     process{
+        if([string]::IsNullOrEmpty($global:pcSettingsDirPath)){
+            $global:pcSettingsDirPath = Read-Host -Prompt 'Path to pcsettings folder'
+            $global:pcSettingsDirPath = $global:pcSettingsDirPath.TrimStart('"').TrimEnd('"').TrimStart("'").TrimEnd("'")
+        }
         if([string]::IsNullOrEmpty($global:pathToSettingsVhdxFile)){
             $global:pathToSettingsVhdxFile = Read-Host -Prompt 'Enter the path to the settings.vhdx file'
             $global:pathToSettingsVhdxFile = $global:pathToSettingsVhdxFile.TrimStart('"').TrimEnd('"').TrimStart("'").TrimEnd("'")
         }
         if(-not $settingsVhdxFilePassword){
             $global:settingsVhdxFilePassword = Read-Host -Prompt 'Enter the password for the settings.vhdx file' -AsSecureString
+        }
+
+        if(-not (test-path $global:pcSettingsDirPath)){
+            'pcsettings folder not found at "{0}"' -f $global:pcSettingsDirPath | Write-Error
+        }
+        if(-not (test-path $global:pathToSettingsVhdxFile)){
+            'vhdx file at "{0}"' -f $global:pathToSettingsVhdxFile | Write-Error
         }
     }
 }
@@ -316,32 +335,29 @@ function InstallWithChoco{
 function ConfigureFirefox{
     [cmdletbinding()]
     param(
-        [string]$downloadRootUrl = 'https://dl.dropboxusercontent.com/u/40134810/PcSettings/firefox/',
         [string]$destFolder = "$env:ProgramFiles\Mozilla Firefox\defaults\pref\"
     )
     process{
+        $firefoxSettingsFolder = get-fullpath (join-path -path $global:pcsettings 'firefox')
         # TODO: Configure google as default search
         $files = @(
             @{
                 Filename = 'autoconfig.js'
-                SourceUrl = ('{0}autoconfig.js' -f $downloadRootUrl)
+                SourceUrl = ('{0}autoconfig.js' -f $firefoxSettingsFolder)
                 DestPath = (join-path $destFolder 'autoconfig.js' )
             }
             @{
                 Filename = 'mozilla.cfg'
-                SourceUrl = ('{0}mozilla.cfg' -f $downloadRootUrl)
+                SourceUrl = ('{0}mozilla.cfg' -f $firefoxSettingsFolder)
                 DestPath = (join-path $destFolder 'mozilla.cfg' )
             }
         )
 
         foreach($f in $files){
             if(-not (test-path $f.DestPath)){
-                $tf = (GetLocalFileFor -downloadUrl ($f.SourceUrl) -filename ($f.Filename))
-                EnsureFolderExists([System.IO.Path]::GetDirectoryName($f.DestPath))
-                Copy-Item -Path $tf -Destination $f.DestPath
+                Copy-Item -Path $f.SourceUrl -Destination $f.DestPath
             }
         }
-
     }
 }
 
@@ -418,11 +434,11 @@ function EnsureBaseReposCloned{
                         # clone with ssh if the .ssh folder exists, otherwise with https
                         if( test-path $sshfolder){
                             'Cloning repo [{0}] with ssh because the .ssh folder was found at [{1}]' -f $reponame, $sshfolder | Write-Verbose
-                            & ($Global:gitpath) clone $sshurl    
+                            & ($Global:gitexepath) clone $sshurl    
                         }
                         else{
                             'Cloning repo [{0}] with https because the .ssh folder was not found at [{1}]' -f $reponame, $sshfolder | Write-Verbose
-                            & ($Global:gitpath) clone $httpsurl
+                            & ($Global:gitexepath) clone $httpsurl
                         }
                     }
                     finally{
@@ -446,13 +462,20 @@ function ConfigureConsole{
     [cmdletbinding()]
     param(
         [Parameter(Position=0)]
-        [string]$conemuxmlurl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/dotfiles/ConEmu.xml',
+        [string]$conemuxmlSourceFile = (get-fullpath(join-path -path $global:sayedhaToolsFolderPath 'dotfiles/ConEmu.xml')),
         [Parameter(Position=1)]
         [string]$conemulocalpath = (Join-Path $env:APPDATA 'conemu.xml')
     )
     process{
         EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($conemulocalpath))
-        Invoke-WebRequest -Uri $conemuxmlurl -OutFile $conemulocalpath
+        if(test-path $conemuxmlSourceFile){
+            if(-not (test-path $conemulocalpath)){
+                copy-item -LiteralPath $conemuxmlSourceFile -Destination $conemulocalpath -Force
+            }
+        }
+        else{
+            'ConEmu config file not found at "{0}"' -f $conemuxmlSourceFile | Write-Output
+        }
     }
 }
 
@@ -496,7 +519,7 @@ function GetLocalFileFor{
         [ValidateNotNullOrEmpty()]
         [string]$filename,
 
-        [Parmeter(Postion=2)]
+        [Parameter(Position=2)]
         [string]$downloadRootDir = $global:machinesetupconfig.MachineSetupConfigFolder
     )
     process{
@@ -527,7 +550,7 @@ function ExtractRemoteZip{
         [ValidateNotNullOrEmpty()]
         [string]$filename,
 
-        [Parmeter(Postion=2)]
+        [Parameter(Position=2)]
         [string]$downloadRootDir = $global:machinesetupconfig.MachineSetupConfigFolder
     )
     process{
@@ -572,13 +595,12 @@ function ConfigurePowershell{
     [cmdletbinding()]
     param(
         [string]$psProfilePath = $profile,
-        [string]$sourceProfilePath,
-        [string]$profileDownloadurl = 'https://www.dropbox.com/s/k1i3pkxzk2njvd5/sayed-profile-script-current.ps1?dl=0'
+        [string]$sourceProfilePath = (get-fullpath (join-path $global:pcSettingsDirPath 'powershell\sayed-profile-script-current.ps1'))
     )
     process{
-        if([string]::IsNullOrWhiteSpace($sourceProfilePath)){
-            $sourceProfilePath = (GetLocalFileFor -downloadUrl $profileDownloadurl -filename sayed-profile-script-current.ps1)
-        }
+        # if([string]::IsNullOrWhiteSpace($sourceProfilePath)){
+        #     $sourceProfilePath = (GetLocalFileFor -downloadUrl $profileDownloadurl -filename sayed-profile-script-current.ps1)
+        # }
 
         # copy profile to $PROFILE if not exist
         $destprofile = $profile
@@ -594,13 +616,10 @@ function EnsurePhotoViewerRegkeyAdded{
     [cmdletbinding()]
     param(
         [Parameter(Position=0)]
-        [string]$photoviewerregkeypath,
+        [string]$photoviewerregkeypath = (get-fullpath(join-path $global:sayedhaToolsFolderPath 'powershell/photo-viewer.reg')),
 
         [Parameter(Position=1)]
-        [string]$photoviewhasrunpath = (Join-Path $global:machinesetupconfig.MachineSetupConfigFolder 'photoviewerreg.hasrun'),
-
-        [Parameter(Position=3)]
-        [string]$photoviewerregdownloadurl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/photo-viewer.reg'
+        [string]$photoviewhasrunpath = (Join-Path $global:machinesetupconfig.MachineSetupConfigFolder 'photoviewerreg.hasrun')
     )
     process{
         if(-not (Test-Path $photoviewhasrunpath)){
@@ -608,6 +627,11 @@ function EnsurePhotoViewerRegkeyAdded{
                 $photoviewerregkeypath = (GetLocalFileFor -downloadUrl $photoviewerregdownloadurl -filename 'photo-viewer.reg')
             }
             
+            if(-not (test-path $photoviewerregkeypath)){
+                'photo viewer reg key not found at "{0}"' -f $photoviewerregkeypath | Write-Warning
+                return
+            }
+
             # run the .reg key and then create the .hasrun file
             $errorCountBefore = $Error.Count
             & $photoviewerregkeypath
@@ -642,17 +666,19 @@ function GetPinToTaskbarTool{
     [cmdletbinding()]
     param(
         [Parameter(Position=0)]
-        [string]$downloadUrl = 'https://github.com/sayedihashimi/sayed-tools/raw/master/contrib/PinTo10v2.exe'
+        [string]$expectedPath = (get-fullpath(join-path -path $global:sayedhaToolsFolderPath 'contrib/PinTo10v2.exe'))
     )
     process{
         # see if the file has already been downloaded
         [string]$expectedPath = (join-path $global:machinesetupconfig.MachineSetupConfigFolder 'PinTo10v2.exe')
         if(-not (test-path $expectedPath)){
-            'Downloading PinToTaskbar from [{0}] to [{1}]' -f $downloadUrl,$expectedPath | Write-Verbose
+            'PinToTaskbar tool not found at "{0}"' -f $expectedPath | Write-Warning
+            
+            #'Downloading PinToTaskbar from [{0}] to [{1}]' -f $downloadUrl,$expectedPath | Write-Verbose
             # make sure the directory exists
-            EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | write-verbose
+            #EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | write-verbose
             # download the file
-            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath | write-verbose
+            #Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath | write-verbose
         }
 
         if(-not (test-path $expectedPath)){
@@ -828,20 +854,26 @@ function ConfigureWindows{
 function DisableScreenSaver(){
     [cmdletbinding()]
     param(
-        [string]$screenSaverDownloadUrl = 'https://github.com/sayedihashimi/sayed-tools/raw/master/contrib/ScreenSaverBlocker.exe'
+        [string]$localexe = (get-fullpath(join-path -path $global:sayedhaToolsFolderPath 'contrib/ScreenSaverBlocker.exe'))
     )
     process{
         'Copying ScreenSaverBlocker.exe to startup folder' | Write-Verbose
-        $localexe = (GetLocalFileFor -downloadUrl $screenSaverDownloadUrl -filename 'ScreenSaverBlocker.exe')
+        
+        if(-not (test-path -path $localexe)){
+            'screensaverblocker not found at "{0}"' -f $localexe | Write-Warning
+            return
+        }
+        
         [string]$destPath = ("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\ScreenSaverBlocker.exe")
         if(-not (test-path $destPath)){
             EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($destPath))
             Copy-Item -LiteralPath $localexe -Destination $destPath
-            start $localexe
+            start $destPath
         }
     }
 }
 
+# TODO: Copy these files the pcsettings\fonts folder and update this
 $global:machinesetupuserconfig = @{
     AddFontScriptUrl = 'powershell/Add-Font.ps1'
     Fonts = @(
@@ -925,8 +957,12 @@ function RunTask{
             try{
                 . $t
             }
-            catch{
+            catch {
                 'Error in task execution of [{0}]' -f $t | Write-Warning
+                Write-Host ("Exception: $($_.Exception.Message)") -ForegroundColor Red
+                if ($_.InvocationInfo) {
+                    Write-Host ("At: $($_.InvocationInfo.PositionMessage)") -ForegroundColor Yellow
+                }
             }
         }
     }
@@ -956,8 +992,8 @@ function ConfigureMachine{
             {ConfigureTaskBar},
 
             {ConfigureConsole},
-            {ConfigureGit},
-            {ConfigurePowershell},
+            #{ConfigureGit},
+            #{ConfigurePowershell},
 
             {EnsureBaseReposCloned},
             {LoadModules},
