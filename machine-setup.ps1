@@ -19,7 +19,7 @@ param(
 
 $global:pcSettingsDirPath = $pcSettingsDirPath
 $global:pathToSettingsVhdxFile = $pathToSettingsVhdxFile
-$global:settingsVhdxFilePassword = $settingsVhdxFilePassword
+[securestring]$global:settingsVhdxFilePassword = $settingsVhdxFilePassword
 $global:settingsVhdxDriveLetter = $settingsVhdxDriveLetter
 $global:tempdir = "C:\temp\machine-setup"
 
@@ -92,8 +92,6 @@ function New-ObjectFromProperties{
     }
 }
 
-
-
 set-alias -Name newobj -Value New-ObjectFromProperties   
 
 $global:machinesetupconfig = @{
@@ -143,14 +141,6 @@ function Install-WingetApps{
     }
 }
 
-function Install-PowerShellGet{
-    [cmdletbinding()]
-    param()
-    process{
-
-    }
-}
-
 function InstallPrompt{
     PowerShellGet\Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
     #PowerShellGet\Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force
@@ -159,6 +149,9 @@ function InstallPrompt{
 
     winget install JanDeDobbeleer.OhMyPosh -s winget
     winget update JanDeDobbeleer.OhMyPosh -s winget
+
+    'Installing meslo font with oh-my-posh.exe' | Write-Output
+    oh-my-posh.exe font install meslo
 }
 
 #// 'https://dl.dropboxusercontent.com/u/40134810/wallpaper/checking-out-the-view.jpg'
@@ -197,8 +190,6 @@ function Get-Fullpath{
         return $fullPath
     }
 }
-
-
 
 function Add-Path{
     [cmdletbinding()]
@@ -316,19 +307,6 @@ Restarting the script
 
         & $global:ps7Exepath -NoExit -ExecutionPolicy RemoteSigned -File $($MyInvocation.ScriptName) -initalizeScript:$false -pcSettingsDirPath:$global:pcSettingsDirPath -settingsVhdxFilePassword $global:settingsVhdxFilePassword -settingsVhdxDriveLetter:$global:settingsVhdxDriveLetter
         break
-    }
-}
-
-function InstallWithChoco{
-    [cmdletbinding()]
-    param(
-        [Parameter(Position=0,ValueFromPipeline=$true)]
-        [array]$packages
-    )
-    process{
-        foreach($pkg in $packages){
-            choco install $pkg -y
-        }
     }
 }
 
@@ -835,7 +813,7 @@ function ConfigureWindows{
         RunTask @(
             {Update-WindowsSettings},
 
-            #{AddFonts},
+            {AddFonts},
             {DisableScreenSaver},
             {
                 if(test-path ($global:machinesetupconfig.WallpaperFilepath)){
@@ -991,18 +969,17 @@ function ConfigureMachine{
         Install-WingetApps
         InstallPrompt
         RunTask @(
+            {ConfigureGit},
+            {ConfigurePowershell},    
+            
+            {EnsureBaseReposCloned},
             {EnsurePhotoViewerRegkeyAdded},
             {ConfigureTaskBar},
 
             {ConfigureConsole},
-            #{ConfigureGit},
-            #{ConfigurePowershell},
-
-            {EnsureBaseReposCloned},
+            
             {LoadModules},
-            # {InstallSecondaryApps},
 
-            {LoadModules}
             {ConfigureWindows},
             {ConfigureVisualStudio},
             {ConfigureApps}            
