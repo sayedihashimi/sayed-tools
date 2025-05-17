@@ -112,7 +112,7 @@ $global:machinesetupconfig = @{
         #         HTTPS = 'git@github.com:dahlbyk/posh-git.git' })
     )
     WallpaperUrl = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/powershell/checking-out-the-view.jpg'
-    WallpaperFilepath = (join-path -Path $Global:codehome 'sayed-tools/powershell/checking-out-the-view.jpg')
+    WallpaperFilepath = (join-path -Path $global:sayedhaToolsFolderPath 'powershell/checking-out-the-view.jpg')
 }
 
 function Install-WingetApps{
@@ -773,6 +773,7 @@ function Update-WindowsSettings{
             Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name HideFileExt -Value 0
         }
 
+        # TODO
         '** You may need to manually enable the following Windows settings:' | Write-Output
         '    Show mouse pointer when CTRL is clicked' | Write-Output
         '    Mouse movement speed' | Write-Output
@@ -837,7 +838,6 @@ function ConfigureWindows{
             #{AddFonts},
             {DisableScreenSaver},
             {
-                $wppath = (GetLocalFileFor -downloadUrl $global:machinesetupconfig.WallpaperUrl -filename 'wp-view.jpg')
                 if(test-path ($global:machinesetupconfig.WallpaperFilepath)){
                     'Setting wallpaper' | Write-Output
                     Update-wallpaper -path ($global:machinesetupconfig.WallpaperFilepath) -Style 'Fit' 
@@ -847,10 +847,6 @@ function ConfigureWindows{
                 }
             }
         )
-
-        # TODO: update mouse pointer speed
-
-        # TODO: update mouse pointer to show when CTRL is clicked
     }
 }
 
@@ -878,15 +874,16 @@ function DisableScreenSaver(){
 
 # TODO: Copy these files the pcsettings\fonts folder and update this
 $global:machinesetupuserconfig = @{
-    AddFontScriptUrl = 'powershell/Add-Font.ps1'
+    # TODO: Rename this variable
+    AddFontScriptUrl = join-path $global:sayedhaToolsFolderPath 'powershell/Add-Font.ps1'
     Fonts = @(
         @{
-            Filename = join-path -Path $scriptDir 'powershell/fonts/source-sans-pro-2.020R-ro-1.075R-it.zip'
+            Filename = join-path -Path $global:sayedhaToolsFolderPath 'powershell/fonts/source-sans-pro-2.020R-ro-1.075R-it.zip'
             #DownloadUrl = 'https://github.com/adobe-fonts/source-sans-pro/archive/2.020R-ro/1.075R-it.zip'
             RelpathToFontsFolder = 'source-sans-pro-2.020R-ro-1.075R-it/TTF'
         }
         @{
-            Filename = join-path -Path $scriptDir 'powershell/fonts/source-code-pro-2.030R-ro-1.050R-it.zip'
+            Filename = join-path -Path $global:sayedhaToolsFolderPath 'powershell/fonts/source-code-pro-2.030R-ro-1.050R-it.zip'
             #DownloadUrl = 'https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip'
             RelpathToFontsFolder = 'source-code-pro-2.030R-ro-1.050R-it/TTF'
         }
@@ -900,27 +897,30 @@ function AddFonts{
         [string]$addFonthasrunpath = (Join-Path $global:machinesetupconfig.MachineSetupConfigFolder 'addfonts.hasrun'),
 
         [Parameter(Position=2)]
-        [string]$addFontScriptUrl = ($global:machinesetupuserconfig.AddFontScriptUrl)
+        [string]$addFontScriptUrl = ($global:machinesetupuserconfig.AddFontScriptUrl)       
     )
     process{
         if(-not (test-path -path $addFonthasrunpath)){
-            # get the Add-Font script
-            $addFontScriptPath = (GetLocalFileFor -downloadUrl $addFontScriptUrl -filename 'add-font.ps1')
+            # see if the font is on disk
+            if(test-path $addFontScriptUrl){
+                foreach($font in $global:machinesetupuserconfig.Fonts){
+                    # extract it
+                    $extractfolder = ExtractLocalZip -filepath $font.Filename #ExtractRemoteZip -downloadUrl $font.Downloadurl -filename $font.Filename
+                    $pathtofiles = (join-path $extractfolder $font.RelpathToFontsFolder)
+                    if(test-path $pathtofiles){
+                        # call the Add-Font script
+                        Invoke-Expression "& `"$addFontScriptPath`" $pathtofiles"
+                    }
+                    else{
+                        'Font files folder [{0}] found in extracted zip [{1}]' -f $pathtofiles, $extractfolder | Write-Warning
+                    }
+                }
 
-            foreach($font in $global:machinesetupuserconfig.Fonts){
-                # extract it
-                $extractfolder = ExtractLocalZip -filepath $font.Filename #ExtractRemoteZip -downloadUrl $font.Downloadurl -filename $font.Filename
-                $pathtofiles = (join-path $extractfolder $font.RelpathToFontsFolder)
-                if(test-path $pathtofiles){
-                    # call the Add-Font script
-                    Invoke-Expression "& `"$addFontScriptPath`" $pathtofiles"
-                }
-                else{
-                    'Font files folder [{0}] found in extracted zip [{1}]' -f $pathtofiles, $extractfolder | Write-Warning
-                }
+                CreateDummyFile -filepath $addFonthasrunpath                
             }
-
-            CreateDummyFile -filepath $addFonthasrunpath
+            else{
+                'Add font ps1 file not found at "{0}"' -f $fonts | Write-Warning
+            }
         }
         else{
             'Skipping font additions because of file [{0}]' -f $addFonthasrunpath | Write-Verbose 
