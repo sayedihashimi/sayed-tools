@@ -9,7 +9,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-# RootModule = ''
+RootModule = 'sayed-tools.psm1'
 
 # Version number of this module.
 ModuleVersion = '0.0.1'
@@ -24,7 +24,7 @@ GUID = '5cb8c093-4089-4049-841d-25ca9e41117a'
 Author = 'Sayed I. Hashimi'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'sayedha'
 
 # Copyright statement for this module
 Copyright = 'Sayed I. Hashimi'

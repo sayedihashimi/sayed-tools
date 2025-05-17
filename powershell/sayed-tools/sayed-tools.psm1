@@ -1073,3 +1073,5 @@ function Check-MinecraftBackups {
 
 
 Start-CustomProfileBackgroundJob -asJob
+
+Export-ModuleMember -Function * -Alias *

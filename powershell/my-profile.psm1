@@ -7,6 +7,9 @@ $isLinuxOrMac = ($IsLinux -or $IsMacOS -or $IsOSX)
 set-alias buildAhk (Join-Path $codehome 'autohotkeyscripts\visual-studio\2024.04.16.build.demo.ahk')
 set-alias ps99Gui (Join-Path $codehome 'autohotkeyscripts\ps99\gui.ahk')
 
+$Env:PSModulePath+=";{0}\" -f "$global:codehome\sayed-tools\powershell"
+[Environment]::SetEnvironmentVariable("PSModulePath",$env:PSModulePath)
+
 function Get-FullPathNormalized{
     [cmdletbinding()]
     param (
@@ -26,7 +29,7 @@ $global:MyProfileSettings = New-Object PSObject -Property @{
     HomeDir = $env:HOME
     ModulesToLoad = @(
         (Get-FullPathNormalized (join-path -Path $global:codehome 'sayed-tools/powershell/github-ps.psm1' -ErrorAction SilentlyContinue))
-        (Get-FullPathNormalized (join-path -Path $global:codehome 'sayed-tools/powershell/sayed-tools.psm1' -ErrorAction SilentlyContinue))
+        #(Get-FullPathNormalized (join-path -Path $global:codehome 'sayed-tools/powershell/sayed-tools.psm1' -ErrorAction SilentlyContinue))
         (Get-FullPathNormalized (join-path $global:codehome 'sayed-tools/powershell/sayed-profile-xplat.psm1' -ErrorAction SilentlyContinue))
     )
 }
@@ -47,6 +50,9 @@ function Import-MyModules{
     param()
     process{
         'Importing modules...' | Write-Verbose
+
+        Import-Module -Name 'sayed-tools' -Global -DisableNameChecking
+
         [bool]$allImported = $true
         foreach ($modpath in $global:MyProfileSettings.ModulesToLoad) {
             if(Test-Path $modpath){
@@ -122,16 +128,18 @@ function ImportSayedTools{
         $toolsmodpath = (join-path $codehome 'sayed-tools\powershell\sayed-tools.psm1')
     )
     process{
-        if(test-path $toolsmodpath){
-            Import-Module $toolsmodpath -Global -DisableNameChecking | Write-Verbose
-            # return true to indicate success
-            $true
-        }
-        else{
-            'sayed-tools not found at [{0}]' -f $toolsmodpath | Write-Warning
-            # return false to indicate not-successful
-            $false
-        }
+        Import-Module -Name sayed-tools -Global -DisableNameChecking
+        return $true
+        # if(test-path $toolsmodpath){
+        #     Import-Module $toolsmodpath -Global -DisableNameChecking | Write-Verbose
+        #     # return true to indicate success
+        #     $true
+        # }
+        # else{
+        #     'sayed-tools not found at [{0}]' -f $toolsmodpath | Write-Warning
+        #     # return false to indicate not-successful
+        #     $false
+        # }
     }
 }
 
@@ -557,7 +565,7 @@ function InitalizeEnv{
     [cmdletbinding()]
     param()
     process{
-        Import-Module PSReadLine
+        Import-Module PSReadLine -Force
         Set-InitialPath
         if( (Import-MyModules) -eq $true){
             Ensure-GitConfigExists
