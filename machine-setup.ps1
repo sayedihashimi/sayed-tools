@@ -131,6 +131,7 @@ function Install-WingetApps{
     winget install -e --id=Microsoft.VisualStudioCode --source winget
     winget install -e --id=Winamp.Winamp --source winget
     winget install -e --id=OBSProject.OBSStudio --source winget
+    winget install JanDeDobbeleer.OhMyPosh -s winget
 
     # add git and p4merge to the path
     if(test-path($global:gitexepath)){
@@ -741,6 +742,7 @@ function Update-WindowsSettings{
     process{
         $showHiddenFiles = $true
         $showFileExtensions = $true
+        $turnOffSystemSounds = $true
 
         if($showHiddenFiles -eq $true){
             'Enabling show hidden files' | Write-Output
@@ -749,6 +751,10 @@ function Update-WindowsSettings{
         if($showFileExtensions -eq $true){
             'Enabling show file extensions' | Write-Output
             Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name HideFileExt -Value 0
+        }
+        if($turnOffSystemSounds -eq $true){
+            'Turning off system sounds' | Write-Output
+            Set-ItemProperty -Path "HKCU:\AppEvents\Schemes" -Name "Scheme" -Value ".None"
         }
 
         # TODO
@@ -982,7 +988,7 @@ function ConfigureMachine{
 
             {ConfigureWindows},
             {ConfigureVisualStudio},
-            {ConfigureApps}            
+            {ConfigureApps}
         )
     }
 }
