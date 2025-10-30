@@ -1071,6 +1071,20 @@ function Check-MinecraftBackups {
     }
 }
 
+function Fix-VSCodeInstaller{
+    # from: https://github.com/microsoft/vscode/issues/196344#issuecomment-2343135793
+    do {
+        $installerPIDs=$(Get-WmiObject -Class Win32_Process |
+            Where-Object { $_.CommandLine -match ('vscode(user|machine|system|)(setup|install)') } |
+            Select-Object -ExpandProperty ProcessId)
+        if ($null -ne $installerPIDs) {
+            $filter = "name = 'Powershell.exe' AND (parentProcessId = $($installerPIDs -join ' OR parentProcessId = '))"
+            Get-WmiObject -Class Win32_Process -Filter $filter |
+                ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
+        }
+    } while ( $null -ne $installerPIDs )
+}
+
 
 Start-CustomProfileBackgroundJob -asJob
 
