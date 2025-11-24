@@ -273,7 +273,8 @@ function ConfigurePowerShellConsoleWindow(){
 # Ensure that Meslo LGM NF Font is installed and the terminal is configured to use it.
 function Configure-Posh{
     oh-my-posh init pwsh | Invoke-Expression
-    oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/quick-term.omp.json" | Invoke-Expression
+    # oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/quick-term.omp.json" | Invoke-Expression
+    oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/1_shell.omp.json" | Invoke-Expression
 }
 
 function Configure-PoshSettingsForTheme{
