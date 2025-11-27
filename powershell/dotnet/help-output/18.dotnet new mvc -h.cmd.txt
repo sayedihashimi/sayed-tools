@@ -44,7 +44,7 @@ Options:
                                   string - Optional                                                                                                         
                                   Default: https://login.microsoftonline.com/                                                                               
 
-  --client-id                     The Client ID for this project (use with Single-org, Multi-org, or IndividualB2C auth types).                             
+  --client-id                     The Client ID for this project (use with individual and organizational auth types).                                       
                                   string - Optional                                                                                                         
                                   Default: 11111111-1111-1111-11111111111111111                                                                             
 
