@@ -455,35 +455,12 @@ function ConfigureConsole{
         else{
             'ConEmu config file not found at "{0}"' -f $conemuxmlSourceFile | Write-Output
         }
-    }
-}
 
-function ConfigureGit{
-    [cmdletbinding()]
-    param()
-    process{
-        $sshfolderpath = "$HOME\.ssh"
-        test-path -Path "$HOME\.ssh" -PathType Container
-        # check to see if the .gitconfig is already on disk, if so, skip all these steps
-        if(-not (test-path $sshfolderpath -PathType Container)){
-            Mount-SettingsVirtualHardDrive
-            'Copying .ssh folder to "{0}"' -f $sshfolderpath | Write-Output
-            Copy-Item -Path "X:\.ssh" -Destination $sshfolderpath -Recurse -Force
+        # Ensure Terminal-Icons module is installed before importing
+        if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
+            Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
         }
-        else{
-            '.ssh folder exists at "{0}", not copying' -f $sshfolderpath | Write-Output
-        }
-
-        if(-not  (Test-Path -Path "$HOME\.gitconfig")){
-            'Copying .gitconfig to "{0}"' -f "$HOME\.gitconfig" | Write-Output
-            Copy-Item -LiteralPath "X:\.gitconfig" -Destination "$HOME\.gitconfig" -Force
-        }
-        else{
-            '.gitconfig exists at "{0}", not copying' -f $sshfolderpath | Write-Output
-        }
-        # wait a bit to ensure the copy is complete
-        Start-Sleep -Seconds 2
-        Unmount-SettingsVirtualHardDrive
+        Import-Module -Name Terminal-Icons
     }
 }
 

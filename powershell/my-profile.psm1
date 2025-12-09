@@ -567,6 +567,8 @@ function InitalizeEnv{
     param()
     process{
         Import-Module PSReadLine -Force
+        Import-Module PSReadLine -Force
+        ConfigurePsReadline
         Set-InitialPath
         if( (Import-MyModules) -eq $true){
             Ensure-GitConfigExists
@@ -610,6 +612,147 @@ function Sayed-InitailizeProfile{
         #}
     }
 }
+
+##############################
+# functions below based on https://github.com/ChrisTitusTech/powershell-profile/blob/main/Microsoft.PowerShell_profile.ps1
+##############################
+function Update-PowerShell {    
+    try {
+        Write-Host "Checking for PowerShell updates..." -ForegroundColor Cyan
+        $updateNeeded = $false
+        $currentVersion = $PSVersionTable.PSVersion.ToString()
+        $gitHubApiUrl = "https://api.github.com/repos/PowerShell/PowerShell/releases/latest"
+        $latestReleaseInfo = Invoke-RestMethod -Uri $gitHubApiUrl
+        $latestVersion = $latestReleaseInfo.tag_name.Trim('v')
+        if ($currentVersion -lt $latestVersion) {
+            $updateNeeded = $true
+        }
+
+        if ($updateNeeded) {
+            Write-Host "Updating PowerShell..." -ForegroundColor Yellow
+            Start-Process powershell.exe -ArgumentList "-NoProfile -Command winget upgrade Microsoft.PowerShell --accept-source-agreements --accept-package-agreements" -Wait -NoNewWindow
+            Write-Host "PowerShell has been updated. Please restart your shell to reflect changes" -ForegroundColor Magenta
+        } else {
+            Write-Host "Your PowerShell is up to date." -ForegroundColor Green
+        }
+    } catch {
+        Write-Error "Failed to update PowerShell. Error: $_"
+    }
+}
+function Test-CommandExists {
+    param($command)
+    $exists = $null -ne (Get-Command $command -ErrorAction SilentlyContinue)
+    return $exists
+}
+# Network Utilities
+function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
+
+# Open WinUtil full-release
+function winutil {
+    irm https://christitus.com/win | iex
+}
+function reload-profile {
+    & $profile
+}
+function head {
+  param($Path, $n = 10)
+  Get-Content $Path -Head $n
+}
+
+function tail {
+  param($Path, $n = 10, [switch]$f = $false)
+  Get-Content $Path -Tail $n -Wait:$f
+}
+function ConfigurePsReadline(){
+    # Enhanced PowerShell Experience
+    # Enhanced PSReadLine Configuration
+    $PSReadLineOptions = @{
+        EditMode = 'Windows'
+        HistoryNoDuplicates = $true
+        HistorySearchCursorMovesToEnd = $true
+        Colors = @{
+            Command = '#87CEEB'  # SkyBlue (pastel)
+            Parameter = '#98FB98'  # PaleGreen (pastel)
+            Operator = '#FFB6C1'  # LightPink (pastel)
+            Variable = '#DDA0DD'  # Plum (pastel)
+            String = '#FFDAB9'  # PeachPuff (pastel)
+            Number = '#B0E0E6'  # PowderBlue (pastel)
+            Type = '#F0E68C'  # Khaki (pastel)
+            Comment = '#D3D3D3'  # LightGray (pastel)
+            Keyword = '#8367c7'  # Violet (pastel)
+            Error = '#FF6347'  # Tomato (keeping it close to red for visibility)
+        }
+        PredictionSource = 'History'
+        PredictionViewStyle = 'ListView'
+        BellStyle = 'None'
+    }
+    Set-PSReadLineOption @PSReadLineOptions
+
+    # Custom key handlers
+    Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+    Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+    Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+d' -Function DeleteChar
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+w' -Function BackwardDeleteWord
+    Set-PSReadLineKeyHandler -Chord 'Alt+d' -Function DeleteWord
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+LeftArrow' -Function BackwardWord
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+RightArrow' -Function ForwardWord
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+z' -Function Undo
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+y' -Function Redo
+
+    # Custom functions for PSReadLine
+    Set-PSReadLineOption -AddToHistoryHandler {
+        param($line)
+        $sensitive = @('password', 'secret', 'token', 'apikey', 'connectionstring')
+        $hasSensitive = $sensitive | Where-Object { $line -match $_ }
+        return ($null -eq $hasSensitive)
+    }
+
+    Set-PredictionSource
+}
+function Set-PredictionSource {
+    # If function "Set-PredictionSource_Override" is defined in profile.ps1 file
+    # then call it instead.
+    if (Get-Command -Name "Set-PredictionSource_Override" -ErrorAction SilentlyContinue) {
+        Set-PredictionSource_Override;
+    } else {
+	# Improved prediction settings
+	Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+	Set-PSReadLineOption -MaximumHistoryCount 10000
+    }
+}
+function ConfigureGit{
+    [cmdletbinding()]
+    param()
+    process{
+        $sshfolderpath = "$HOME\.ssh"
+        test-path -Path "$HOME\.ssh" -PathType Container
+        # check to see if the .gitconfig is already on disk, if so, skip all these steps
+        if(-not (test-path $sshfolderpath -PathType Container)){
+            Mount-SettingsVirtualHardDrive
+            'Copying .ssh folder to "{0}"' -f $sshfolderpath | Write-Output
+            Copy-Item -Path "X:\.ssh" -Destination $sshfolderpath -Recurse -Force
+        }
+        else{
+            '.ssh folder exists at "{0}", not copying' -f $sshfolderpath | Write-Output
+        }
+
+        if(-not  (Test-Path -Path "$HOME\.gitconfig")){
+            'Copying .gitconfig to "{0}"' -f "$HOME\.gitconfig" | Write-Output
+            Copy-Item -LiteralPath "X:\.gitconfig" -Destination "$HOME\.gitconfig" -Force
+        }
+        else{
+            '.gitconfig exists at "{0}", not copying' -f $sshfolderpath | Write-Output
+        }
+        # wait a bit to ensure the copy is complete
+        Start-Sleep -Seconds 2
+        Unmount-SettingsVirtualHardDrive
+    }
+}
+
+##############################
+# start script
+##############################
 push-location
 InitalizeEnv
 $machineProfilePath = (join-path $codehome machine-profile.ps1)
