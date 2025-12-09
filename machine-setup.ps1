@@ -103,6 +103,10 @@ $global:machinesetupconfig = @{
                 HTTPS = 'https://github.com/sayedihashimi/sayed-tools.git' })
 
         (newobj @{
+                SSH = 'git@github.com:sayedihashimi/sayedha.commands.git'
+                HTTPS = 'https://github.com/sayedihashimi/sayedha.commands.git' })
+
+        (newobj @{
                 SSH = 'git@github.com:sayedihashimi/pshelpers.git'
                 HTTPS = 'https://github.com/sayedihashimi/pshelpers.git' })
         # ,(newobj @{
