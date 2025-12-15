@@ -569,6 +569,8 @@ function InitalizeEnv{
         Import-Module PSReadLine -Force
         Import-Module PSReadLine -Force
         ConfigurePsReadline
+        Initalize-Zoxide
+        Initalize-DotnetCompletions
         Set-InitialPath
         if( (Import-MyModules) -eq $true){
             Ensure-GitConfigExists
@@ -611,6 +613,37 @@ function Sayed-InitailizeProfile{
         #    set-location $codeHome
         #}
     }
+}
+function ConfigureGit{
+    [cmdletbinding()]
+    param()
+    process{
+        $sshfolderpath = "$HOME\.ssh"
+        test-path -Path "$HOME\.ssh" -PathType Container
+        # check to see if the .gitconfig is already on disk, if so, skip all these steps
+        if(-not (test-path $sshfolderpath -PathType Container)){
+            Mount-SettingsVirtualHardDrive
+            'Copying .ssh folder to "{0}"' -f $sshfolderpath | Write-Output
+            Copy-Item -Path "X:\.ssh" -Destination $sshfolderpath -Recurse -Force
+        }
+        else{
+            '.ssh folder exists at "{0}", not copying' -f $sshfolderpath | Write-Output
+        }
+
+        if(-not  (Test-Path -Path "$HOME\.gitconfig")){
+            'Copying .gitconfig to "{0}"' -f "$HOME\.gitconfig" | Write-Output
+            Copy-Item -LiteralPath "X:\.gitconfig" -Destination "$HOME\.gitconfig" -Force
+        }
+        else{
+            '.gitconfig exists at "{0}", not copying' -f $sshfolderpath | Write-Output
+        }
+        # wait a bit to ensure the copy is complete
+        Start-Sleep -Seconds 2
+        Unmount-SettingsVirtualHardDrive
+    }
+}
+function Initalize-DotnetCompletions(){
+    dotnet completions script pwsh | Out-String | Invoke-Expression
 }
 
 ##############################
@@ -721,35 +754,83 @@ function Set-PredictionSource {
 	Set-PSReadLineOption -MaximumHistoryCount 10000
     }
 }
-function ConfigureGit{
-    [cmdletbinding()]
-    param()
-    process{
-        $sshfolderpath = "$HOME\.ssh"
-        test-path -Path "$HOME\.ssh" -PathType Container
-        # check to see if the .gitconfig is already on disk, if so, skip all these steps
-        if(-not (test-path $sshfolderpath -PathType Container)){
-            Mount-SettingsVirtualHardDrive
-            'Copying .ssh folder to "{0}"' -f $sshfolderpath | Write-Output
-            Copy-Item -Path "X:\.ssh" -Destination $sshfolderpath -Recurse -Force
-        }
-        else{
-            '.ssh folder exists at "{0}", not copying' -f $sshfolderpath | Write-Output
+function touch($file) { "" | Out-File $file -Encoding ASCII }
+function ff($name) {
+    Get-ChildItem -recurse -filter "*${name}*" -ErrorAction SilentlyContinue | ForEach-Object {
+        Write-Output "$($_.FullName)"
+    }
+}
+function uptime {
+    try {
+        # find date/time format
+        $dateFormat = [System.Globalization.CultureInfo]::CurrentCulture.DateTimeFormat.ShortDatePattern
+        $timeFormat = [System.Globalization.CultureInfo]::CurrentCulture.DateTimeFormat.LongTimePattern
+
+        # check powershell version
+        if ($PSVersionTable.PSVersion.Major -eq 5) {
+            $lastBoot = (Get-WmiObject win32_operatingsystem).LastBootUpTime
+            $bootTime = [System.Management.ManagementDateTimeConverter]::ToDateTime($lastBoot)
+
+            # reformat lastBoot
+            $lastBoot = $bootTime.ToString("$dateFormat $timeFormat")
+        } else {
+            # the Get-Uptime cmdlet was introduced in PowerShell 6.0
+            $lastBoot = (Get-Uptime -Since).ToString("$dateFormat $timeFormat")
+            $bootTime = [System.DateTime]::ParseExact($lastBoot, "$dateFormat $timeFormat", [System.Globalization.CultureInfo]::InvariantCulture)
         }
 
-        if(-not  (Test-Path -Path "$HOME\.gitconfig")){
-            'Copying .gitconfig to "{0}"' -f "$HOME\.gitconfig" | Write-Output
-            Copy-Item -LiteralPath "X:\.gitconfig" -Destination "$HOME\.gitconfig" -Force
+        # Format the start time
+        $formattedBootTime = $bootTime.ToString("dddd, MMMM dd, yyyy HH:mm:ss", [System.Globalization.CultureInfo]::InvariantCulture) + " [$lastBoot]"
+        Write-Host "System started on: $formattedBootTime" -ForegroundColor DarkGray
+
+        # calculate uptime
+        $uptime = (Get-Date) - $bootTime
+
+        # Uptime in days, hours, minutes, and seconds
+        $days = $uptime.Days
+        $hours = $uptime.Hours
+        $minutes = $uptime.Minutes
+        $seconds = $uptime.Seconds
+
+        # Uptime output
+        Write-Host ("Uptime: {0} days, {1} hours, {2} minutes, {3} seconds" -f $days, $hours, $minutes, $seconds) -ForegroundColor Blue
+
+    } catch {
+        Write-Error "An error occurred while retrieving system uptime."
+    }
+}
+function Initalize-Zoxide{
+    if (Get-Command zoxide -ErrorAction SilentlyContinue) {
+        Invoke-Expression (& { (zoxide init --cmd z powershell | Out-String) })
+    } else {
+        Write-Host "zoxide command not found. Attempting to install via winget..."
+        try {
+            winget install -e --id ajeetdsouza.zoxide
+            Write-Host "zoxide installed successfully. Initializing..."
+            Invoke-Expression (& { (zoxide init --cmd z powershell | Out-String) })
+        } catch {
+            Write-Error "Failed to install zoxide. Error: $_"
         }
-        else{
-            '.gitconfig exists at "{0}", not copying' -f $sshfolderpath | Write-Output
-        }
-        # wait a bit to ensure the copy is complete
-        Start-Sleep -Seconds 2
-        Unmount-SettingsVirtualHardDrive
     }
 }
 
+function IsAdmin{
+    ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+# Quick Access to System Information
+function sysinfo { Get-ComputerInfo }
+
+# Networking Utilities
+function flushdns {
+	Clear-DnsClientCache
+	Write-Host "DNS has been flushed"
+}
+
+# Clipboard Utilities
+function copy { Set-Clipboard $args[0] }
+
+function paste { Get-Clipboard }
 ##############################
 # start script
 ##############################
