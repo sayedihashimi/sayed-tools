@@ -1,18 +1,4 @@
-Template Instantiation Commands for .NET Core CLI
-
-Usage: new3 [options]
-
-Options:
-  -h, --help          Displays help for this command.
-  -l, --list          Lists templates containing the specified name. If no name is specified, lists all templates.
-  -n, --name          The name for the output being created. If no name is specified, the name of the current directory is used.
-  -o, --output        Location to place the generated output.
-  -i, --install       Installs a source or a template pack.
-  -u, --uninstall     Uninstalls a source or a template pack.
-  --type              Filters templates based on available types. Predefined values are "project", "item" or "other".
-  --force             Forces content to be generated even if it would change existing files.
-  -lang, --language   Specifies the language of the template to create.
-
+Templates found matching lang=F#
 
 Templates                 Short Name      Language      Tags          
 ----------------------------------------------------------------------
@@ -22,4 +8,3 @@ Unit Test Project         mstest          F#            Test/MSTest
 xUnit Test Project        xunit           F#            Test/xUnit    
 ASP.NET Core Empty        web             F#            Web/Empty     
 ASP.NET Core Web App      mvc             F#            Web/MVC       
-
