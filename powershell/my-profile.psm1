@@ -272,8 +272,8 @@ function ConfigurePowerShellConsoleWindow(){
 
 # Ensure that Meslo LGM NF Font is installed and the terminal is configured to use it.
 function Configure-Posh{
-    oh-my-posh init pwsh | Invoke-Expression
-    # oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/quick-term.omp.json" | Invoke-Expression
+    # disable oh-my-posh update notice to avoid network calls during startup
+    $env:POSH_UPDATE_NOTICE = 'false'
     oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/1_shell.omp.json" | Invoke-Expression
 }
 
@@ -601,7 +601,6 @@ function Sayed-InitailizeProfile{
             Load-CustomModules2
             Sayed-ConfigureTools
 
-            SayedConfigureSaveMachineInfoJob -asJob
         }
         else{
             'Not importing tools...' | Write-Output
@@ -655,7 +654,7 @@ function Update-PowerShell {
         $updateNeeded = $false
         $currentVersion = $PSVersionTable.PSVersion.ToString()
         $gitHubApiUrl = "https://api.github.com/repos/PowerShell/PowerShell/releases/latest"
-        $latestReleaseInfo = Invoke-RestMethod -Uri $gitHubApiUrl
+        $latestReleaseInfo = Invoke-RestMethod -Uri $gitHubApiUrl -TimeoutSec 15
         $latestVersion = $latestReleaseInfo.tag_name.Trim('v')
         if ($currentVersion -lt $latestVersion) {
             $updateNeeded = $true

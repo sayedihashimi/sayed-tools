@@ -378,7 +378,7 @@ function GetLocalFileFor{
         if(-not (test-path $expectedPath)){
             # download the file
             EnsureFolderExists -path ([System.IO.Path]::GetDirectoryName($expectedPath)) | out-null            
-            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath | out-null
+            Invoke-WebRequest -Uri $downloadUrl -OutFile $expectedPath -TimeoutSec 30 | out-null
         }
 
         if(-not (test-path $expectedPath)){
@@ -712,7 +712,7 @@ function Get-VisualStudioGitAttributes{
         $sourceUri = 'https://raw.githubusercontent.com/sayedihashimi/sayed-tools/master/.gitattributes'
     )
     process{
-        $webresult = (Invoke-WebRequest -Uri $sourceUri).Content
+        $webresult = (Invoke-WebRequest -Uri $sourceUri -TimeoutSec 30).Content
 
         if(-not [string]::IsNullOrEmpty($destination)){
             foreach($dest in $destination){
@@ -743,7 +743,7 @@ function Get-VisualStudioGitIgnore{
         
     )
     process{
-        $webresult = (Invoke-WebRequest -Uri $sourceUri).Content
+        $webresult = (Invoke-WebRequest -Uri $sourceUri -TimeoutSec 30).Content
 
         if(-not [string]::IsNullOrEmpty($destination)){
             foreach($dest in $destination){
@@ -805,7 +805,7 @@ function New-LoremIpsum{
         }
 
         $url = ('{0}&what={1}&amount={2}' -f $baseUrl,$what,$num)
-        [xml]$result = Invoke-WebRequest -uri $url
+        [xml]$result = Invoke-WebRequest -uri $url -TimeoutSec 30
         [string]$text = ($result.feed.lipsum.Trim("`n").Trim("`r").Trim())
 
         $text
@@ -1085,7 +1085,35 @@ function Fix-VSCodeInstaller{
     } while ( $null -ne $installerPIDs )
 }
 
+function Get-MinecraftServerJarUrl {
+    [CmdletBinding()]
+    param()
 
-Start-CustomProfileBackgroundJob -asJob
+    $manifestUrl = 'https://launchermeta.mojang.com/mc/game/version_manifest_v2.json'
+    $manifest = Invoke-RestMethod -Uri $manifestUrl -TimeoutSec 30
+
+    $latestVersion = $manifest.latest.release
+    Write-Verbose "Latest Minecraft release: $latestVersion"
+
+    $versionEntry = $manifest.versions | Where-Object { $_.id -eq $latestVersion } | Select-Object -First 1
+    if (-not $versionEntry) {
+        throw "Could not find version entry for '$latestVersion' in the version manifest."
+    }
+
+    $versionMeta = Invoke-RestMethod -Uri $versionEntry.url -TimeoutSec 30
+
+    $serverDownload = $versionMeta.downloads.server
+    if (-not $serverDownload) {
+        throw "No server download found for version '$latestVersion'."
+    }
+
+    [PSCustomObject]@{
+        Version = $latestVersion
+        Url     = $serverDownload.url
+        Sha1    = $serverDownload.sha1
+        Size    = $serverDownload.size
+    }
+}
+
 
 Export-ModuleMember -Function * -Alias *
