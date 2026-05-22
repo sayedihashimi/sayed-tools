@@ -1,34 +1,25 @@
-Template Instantiation Commands for .NET Core CLI
+Usage: dotnet new xunit [options] [template-options]
 
-Usage: new3 [options]
+xUnit Test Project
+Author: Microsoft
 
 Options:
-  -h, --help          Displays help for this command.
-  -l, --list          Lists templates containing the specified name. If no name is specified, lists all templates.
+  -h, --help          Show help information.
+  --force             Forces content to be generated even if it would change existing files.
+  -v, --verbosity     Enable verbose output.
+
+Template options:
   -n, --name          The name for the output being created. If no name is specified, the name of the current directory is used.
   -o, --output        Location to place the generated output.
-  -i, --install       Installs a source or a template pack.
-  -u, --uninstall     Uninstalls a source or a template pack.
-  --type              Filters templates based on available types. Predefined values are "project", "item" or "other".
-  --force             Forces content to be generated even if it would change existing files.
   -lang, --language   Specifies the language of the template to create.
-
-
-xUnit Test Project (C#)
-Author: Microsoft
-Options:                                                                                    
-  -f|--framework    The target framework for the project.                                   
-                        netcoreapp2.0    - Target netcoreapp2.0                             
-                        netcoreapp1.0    - Target netcoreapp1.0                             
-                        netcoreapp1.1    - Target netcoreapp1.1                             
+                          C#, F#, VB
+                      Default: C#
+  -f, --framework    The target framework for the project.                                   
+                        netcoreapp2.0, netcoreapp1.1, netcoreapp1.0
                     Default: netcoreapp2.0                                                  
-
-  -p|--enable-pack  Whether or not to enable packaging (via ("dotnet pack") for the project.
-                    bool - Optional                                                         
+  -p, --enable-pack  Whether or not to enable packaging using "dotnet pack" for the project.
+                    Type: bool (Optional)                                                         
                     Default: false                                                          
-
-  --no-restore      If specified, skips the automatic restore of the project on create.     
-                    bool - Optional                                                         
+  --no-restore      If specified, skips the automatic package restore of the project on create.     
+                    Type: bool (Optional)                                                         
                     Default: false                                                          
-
-

@@ -1,4 +1,4 @@
-.NET Command Line Tools (2.0.0-preview2-005905)
+.NET Command Line Tools (2.0.0-preview1-005977)
 Usage: dotnet [host-options] [command] [arguments] [common-options]
 
 Arguments:
