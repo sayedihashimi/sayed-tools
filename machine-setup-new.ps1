@@ -198,6 +198,10 @@ $global:wingetApps = [ordered]@{
     'Winamp.Winamp'              = 'Winamp'
     'OBSProject.OBSStudio'       = 'OBS Studio'
     'JanDeDobbeleer.OhMyPosh'    = 'Oh My Posh'
+    'OpenJS.NodeJS.LTS'          = 'Node.js LTS (includes npm)'
+    'SublimeHQ.SublimeText.4'   = 'Sublime Text'
+    'Microsoft.VisualStudioCode.Insiders' = 'VS Code Insiders'
+    'TechSmith.Snagit.2023'      = 'Snagit 2023'
 }
 
 $global:machinesetupuserconfig = @{
@@ -313,6 +317,35 @@ function Install-WingetApps {
         }
 
         Write-Host "=== Winget Apps Complete ===`n" -ForegroundColor Magenta
+    }
+}
+#endregion
+
+#region npm Global Packages
+function Install-NpmGlobalPackages {
+    [cmdletbinding()]
+    param()
+    process {
+        Write-Host "`n=== Installing npm Global Packages ===" -ForegroundColor Magenta
+
+        # Refresh PATH so npm is available after Node.js install
+        $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path', 'User')
+
+        if (IsCommandAvailable 'npm') {
+            Write-Host "Installing GitHub Copilot CLI..." -ForegroundColor Cyan
+            npm install -g @githubnext/github-copilot-cli
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "  ✓ GitHub Copilot CLI installed successfully" -ForegroundColor Green
+            }
+            else {
+                Write-Host "  ✗ GitHub Copilot CLI install failed" -ForegroundColor Yellow
+            }
+        }
+        else {
+            Write-Host "  npm not found in PATH, skipping npm global packages" -ForegroundColor Yellow
+        }
+
+        Write-Host "=== npm Global Packages Complete ===`n" -ForegroundColor Magenta
     }
 }
 #endregion
@@ -851,6 +884,7 @@ function ConfigureMachine {
         EnsureFolderExists ($global:machinesetupconfig.MachineSetupAppsFolder)
 
         Install-WingetApps
+        Install-NpmGlobalPackages
         Install-Prompt
 
         RunTask @(
