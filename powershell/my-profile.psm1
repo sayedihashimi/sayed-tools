@@ -284,7 +284,41 @@ function ConfigurePowerShellConsoleWindow(){
 function Configure-Posh{
     # disable oh-my-posh update notice to avoid network calls during startup
     $env:POSH_UPDATE_NOTICE = 'false'
-    #oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/1_shell.omp.json" | Invoke-Expression
+    try {
+        $ErrorActionPreference = 'Stop'
+        $posh = Get-Command oh-my-posh -CommandType Application -ErrorAction Stop
+        $themePaths = @()
+        if (-not [string]::IsNullOrWhiteSpace($env:POSH_THEMES_PATH)) {
+            $themePaths += Join-Path $env:POSH_THEMES_PATH '1_shell.omp.json'
+        }
+        # Ask Windows for the registered package location rather than embedding a version.
+        if (Get-Command Get-AppxPackage -ErrorAction SilentlyContinue) {
+            $packages = Get-AppxPackage -Name ohmyposh.cli -ErrorAction Stop |
+                Sort-Object { [version]$_.Version } -Descending
+            foreach ($package in $packages) {
+                $themePaths += Join-Path $package.InstallLocation 'themes\1_shell.omp.json'
+            }
+        }
+        $themePath = $themePaths | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } |
+            Select-Object -First 1
+        if (-not $themePath) {
+            throw 'The bundled 1_shell theme was not found. Check the Oh My Posh installation or set POSH_THEMES_PATH to its themes folder.'
+        }
+
+        $PSNativeCommandUseErrorActionPreference = $false
+        $initOutput = & $posh.Source init pwsh --config $themePath 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            throw "oh-my-posh exited with code ${LASTEXITCODE}: $($initOutput | Out-String)"
+        }
+        $initScript = $initOutput | Out-String
+        if ([string]::IsNullOrWhiteSpace($initScript)) {
+            throw 'oh-my-posh returned an empty initialization script.'
+        }
+        Invoke-Expression -Command $initScript -ErrorAction Stop
+    }
+    catch {
+        Write-Warning -Message "Could not initialize Oh My Posh: $($_.Exception.Message.Trim())" -WarningAction Continue
+    }
 }
 
 function Configure-PoshSettingsForTheme{
@@ -576,8 +610,7 @@ function InitalizeEnv{
     [cmdletbinding()]
     param()
     process{
-        Import-Module PSReadLine -Force
-        Import-Module PSReadLine -Force
+        Import-Module PSReadLine
         ConfigurePsReadline
         Initalize-Zoxide
         Initalize-DotnetCompletions
@@ -743,7 +776,8 @@ function ConfigurePsReadline(){
             Error = '#FF6347'  # Tomato (keeping it close to red for visibility)
         }
         PredictionSource = 'History'
-        PredictionViewStyle = 'ListView'
+        # Inline suggestions avoid list redraw artifacts with multiline prompts.
+        PredictionViewStyle = 'InlineView'
         BellStyle = 'None'
     }
     Set-PSReadLineOption @PSReadLineOptions
