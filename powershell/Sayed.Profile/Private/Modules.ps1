@@ -1,0 +1,39 @@
+function Import-SayedCustomModules {
+    $roots = @($script:Settings.CustomModulePaths) + @(
+        (Join-Path $script:Settings.DropboxHome 'Personal/PcSettings/Powershell/CustomModules')
+        (Join-Path $script:Settings.CodeHome 'pshelpers')
+        (Join-Path $script:Settings.CodeHome 'sayed-tools/powershell')
+        (Join-Path $script:Settings.CodeHome 'nuget-powershell')
+        $script:Settings.CodeHome
+    )
+    foreach ($name in $script:Settings.CustomModuleNames) {
+        $moduleName = $name
+        Invoke-SayedProfileStep "Module:$name" {
+            $candidate = $null
+            foreach ($root in $roots) {
+                $path = Join-Path $root "$moduleName.psm1"
+                if (Test-Path -LiteralPath $path -PathType Leaf) { $candidate = $path; break }
+            }
+            if (-not $candidate) { throw "Optional module '$moduleName' was not found." }
+            if (-not (Get-Module | Where-Object Path -EQ $candidate)) {
+                Import-Module -Name $candidate -Global -DisableNameChecking -ErrorAction Stop
+            }
+        }
+    }
+}
+
+function Initialize-SayedToolAliases {
+    if (-not $IsWindows) { return }
+    $code = $script:Settings.CodeHome
+    $kdiff = @((Get-Command kdiff3.exe -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source))
+    foreach ($root in @("$env:LOCALAPPDATA/Programs", "$env:USERPROFILE/AppData/Local/Programs", $env:ProgramFiles, ${env:ProgramFiles(x86)})) {
+        if ($root) { $kdiff += Join-Path $root 'KDiff3/bin/kdiff3.exe'; $kdiff += Join-Path $root 'KDiff3/kdiff3.exe' }
+    }
+    Add-AliasForTool @(
+        @{ alias = 'buildAhk'; path = @(Join-Path $code 'autohotkeyscripts/visual-studio/2024.04.16.build.demo.ahk') }
+        @{ alias = 'ps99Gui'; path = @(Join-Path $code 'autohotkeyscripts/ps99/gui.ahk') }
+        @{ alias = 'np'; path = @("$env:ProgramFiles/Notepad++/notepad++.exe") }
+        @{ alias = 'p4merge'; path = @("$env:ProgramFiles/Perforce/p4merge.exe") }
+        @{ alias = 'kdiff'; path = @($kdiff | Where-Object { $_ }) }
+    )
+}

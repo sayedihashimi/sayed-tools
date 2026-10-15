@@ -2,12 +2,13 @@
 param()
 
 $scriptDir = $PSScriptRoot
+. (Join-Path $PSScriptRoot '../shared/Paths.ps1')
 
 function Test-IsLinuxOrMac{
     [cmdletbinding()]
     param()
     process{
-        ($IsLinux -or $IsOSX)
+        ($IsLinux -or $IsMacOS -or $IsOSX)
     }
 }
 New-Alias -Name IsLinuxOrMac -Value Test-IsLinuxOrMac
@@ -54,21 +55,7 @@ function Test-Alias{
     }
 }
 
-function Resolve-FullPath{
-    [cmdletbinding()]
-    param
-    (
-        [Parameter(Position=0,ValueFromPipeline=$true)]
-        [string[]] $path
-    )
-    process{
-        foreach($p in $path){
-            if(-not ([string]::IsNullOrWhiteSpace($p))){
-                $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($path)
-            }
-        }
-    }
-}
+
 New-Alias -Name GetFullPath -Value Resolve-FullPath
 New-Alias -Name Get-NormalizedPath -Value Resolve-FullPath
 New-Alias -Name Get-FullPathNormalized -Value Resolve-FullPath
@@ -107,68 +94,7 @@ function Reset-Templates{
     }
 }
 
-function Add-Path{
-    [cmdletbinding()]
-    param(
-        [Parameter(Position=0,ValueFromPipeline=$true)]
-        [string[]]$pathToAdd,
 
-        [System.EnvironmentVariableTarget]$envTarget = [System.EnvironmentVariableTarget]::Process,
-
-        [bool]$alsoAddToProcess = $true,
-
-        [switch]$persist = $false
-    )
-    process{
-        [string]$existingPath = ([System.Environment]::GetEnvironmentVariable('path',$envTarget))
-        
-        [string]$existingPathLower = $existingPath.ToLowerInvariant()
-        
-        foreach($path in $pathToAdd){
-            if(-not ([string]::IsNullOrWhiteSpace($path))){
-                [string]$fullpath = (Get-Fullpath -path $path)
-                if(test-path -path $fullpath){
-                    $trimmed = $fullpath.TrimEnd('\')
-                    
-                    # don't add if it's already included
-                    if(-not ($existingPathLower.Contains($trimmed.ToLowerInvariant()))){
-                        $newPath = ('{0};{1}' -f $existingPath,$trimmed)
-                        [System.Environment]::SetEnvironmentVariable('path',$newPath,$envTarget)
-                    }
-
-                    if( ($alsoAddToProcess -eq $true) -and ($envTarget -ne [System.EnvironmentVariableTarget]::Process) ){
-                        [string]$oldprocesspath = [System.Environment]::GetEnvironmentVariable('path',[System.EnvironmentVariableTarget]::Process)
-                        $oldprocesspathlower = $oldprocesspath.ToLowerInvariant()
-                        if(-not $oldprocesspathlower.Contains($trimmed.ToLowerInvariant())){
-                            $newprocesspath = ('{0};{1}' -f $existingPath,$trimmed)
-                            [System.Environment]::SetEnvironmentVariable('path',$newprocesspath,[System.EnvironmentVariableTarget]::Process)
-                        }
-                    }
-
-                    if($persist){
-                        # need to add it to the registry
-                        if($IsWindows){
-                            $oldRegPath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
-                            $oldRegPathLower = $oldRegPath.ToLowerInvariant()
-                            # don't add if it's already included
-                            if(-not ($oldRegPathLower.Contains($trimmed.ToLowerInvariant()))){
-                                $newPath = ('{0};{1}' -f $oldRegPath,$trimmed)
-                                'Updating reg key from "{0}" to "{1}"' -f $oldRegPath, $newPath | Write-Output
-                                Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
-                            }
-                        }
-                        else{
-                            throw '$persist in Add-Path not supported outside of Windows OS.'
-                        }
-                    }
-                }
-                else{
-                    'Not adding to path because the path was not found [{0}], fullpath=[{1}]' -f $path,$fullpath | Write-Warning
-                }
-            }
-        }
-    }
-}
 
 function Get-MachineName{
     [cmdletbinding()]

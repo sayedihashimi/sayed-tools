@@ -54,53 +54,48 @@ function Get-Fullpath {
         $workingDir = ($pwd)
     )
     process {
-        $oldPwd = $pwd
+        $oldDirectory = [Environment]::CurrentDirectory
         Push-Location
-        Set-Location $workingDir
-        [Environment]::CurrentDirectory = $pwd
-        $fullPath = ([System.IO.Path]::GetFullPath($path))
-        Pop-Location
-        [Environment]::CurrentDirectory = $oldPwd
-        return $fullPath
+        try {
+            Set-Location -LiteralPath $workingDir -ErrorAction Stop
+            [Environment]::CurrentDirectory = $pwd.ProviderPath
+            [System.IO.Path]::GetFullPath($path)
+        }
+        finally {
+            Pop-Location
+            [Environment]::CurrentDirectory = $oldDirectory
+        }
     }
 }
 
 function Add-Path {
-    [cmdletbinding()]
+    [CmdletBinding()]
     param(
-        [Parameter(Position=0, ValueFromPipeline=$true)]
-        [string[]]$pathToAdd,
-
-        [System.EnvironmentVariableTarget]$envTarget = [System.EnvironmentVariableTarget]::Process,
-
-        [bool]$alsoAddToProcess = $true
+        [Parameter(Position=0, ValueFromPipeline=$true)][string[]]$pathToAdd,
+        [EnvironmentVariableTarget]$envTarget = [EnvironmentVariableTarget]::Process,
+        [bool]$alsoAddToProcess = $true,
+        [switch]$persist = $false
     )
     process {
-        [string]$existingPath = ([System.Environment]::GetEnvironmentVariable('path', $envTarget))
-        [string]$existingPathLower = $existingPath.ToLowerInvariant()
-
-        foreach ($path in $pathToAdd) {
-            if (-not ([string]::IsNullOrWhiteSpace($path))) {
-                [string]$fullpath = (Get-Fullpath -path $path)
-                if (Test-Path -path $fullpath) {
-                    $trimmed = $fullpath.TrimEnd('\')
-
-                    if (-not ($existingPathLower.Contains($trimmed.ToLowerInvariant()))) {
-                        $newPath = ('{0};{1}' -f $existingPath, $trimmed)
-                        [System.Environment]::SetEnvironmentVariable('path', $newPath, $envTarget)
-                    }
-
-                    if (($alsoAddToProcess -eq $true) -and ($envTarget -ne [System.EnvironmentVariableTarget]::Process)) {
-                        [string]$oldprocesspath = [System.Environment]::GetEnvironmentVariable('path', [System.EnvironmentVariableTarget]::Process)
-                        $oldprocesspathlower = $oldprocesspath.ToLowerInvariant()
-                        if (-not $oldprocesspathlower.Contains($trimmed.ToLowerInvariant())) {
-                            $newprocesspath = ('{0};{1}' -f $oldprocesspath, $trimmed)
-                            [System.Environment]::SetEnvironmentVariable('path', $newprocesspath, [System.EnvironmentVariableTarget]::Process)
-                        }
-                    }
+        if ($persist -and $env:OS -ne 'Windows_NT') { throw 'Persistent machine PATH changes require Windows.' }
+        $targets = @($envTarget)
+        if ($alsoAddToProcess) { $targets += [EnvironmentVariableTarget]::Process }
+        if ($persist) { $targets += [EnvironmentVariableTarget]::Machine }
+        foreach ($item in $pathToAdd) {
+            if ([string]::IsNullOrWhiteSpace($item)) { continue }
+            $directory = Get-Fullpath $item
+            if (-not (Test-Path -LiteralPath $directory -PathType Container)) { Write-Warning "PATH directory not found: $directory"; continue }
+            $separator = [IO.Path]::PathSeparator
+            $comparison = if ($env:OS -eq 'Windows_NT') { [StringComparison]::OrdinalIgnoreCase } else { [StringComparison]::Ordinal }
+            foreach ($target in ($targets | Select-Object -Unique)) {
+                $current = [Environment]::GetEnvironmentVariable('PATH', $target)
+                $entries = @($current -split [regex]::Escape([string]$separator) | Where-Object { $_ })
+                $found = $false
+                foreach ($entry in $entries) {
+                    if ([string]::Equals($entry.TrimEnd('\', '/'), $directory.TrimEnd('\', '/'), $comparison)) { $found = $true; break }
                 }
-                else {
-                    'Not adding to path because the path was not found [{0}], fullpath=[{1}]' -f $path, $fullpath | Write-Warning
+                if (-not $found) {
+                    [Environment]::SetEnvironmentVariable('PATH', ((@($entries) + $directory) -join $separator), $target)
                 }
             }
         }
@@ -198,6 +193,7 @@ $global:wingetApps = [ordered]@{
     'Winamp.Winamp'              = 'Winamp'
     'OBSProject.OBSStudio'       = 'OBS Studio'
     'JanDeDobbeleer.OhMyPosh'    = 'Oh My Posh'
+    'ajeetdsouza.zoxide'        = 'zoxide'
     'OpenJS.NodeJS.LTS'          = 'Node.js LTS (includes npm)'
     'SublimeHQ.SublimeText.4'   = 'Sublime Text'
     'Microsoft.VisualStudioCode.Insiders' = 'VS Code Insiders'
@@ -635,14 +631,25 @@ function ConfigurePowershell {
     [cmdletbinding()]
     param(
         [string]$psProfilePath = $profile,
-        [string]$sourceProfilePath = (Get-Fullpath (Join-Path $global:pcSettingsDirPath 'powershell\sayed-profile-script-current.ps1'))
+        [string]$sourceProfilePath
     )
     process {
         Write-Host "`n=== Configuring PowerShell Profile ===" -ForegroundColor Magenta
 
+        if ([string]::IsNullOrWhiteSpace($sourceProfilePath)) {
+            $sourceProfilePath = Join-Path $global:sayedhaToolsFolderPath 'powershell/profile.ps1'
+            if (-not (Test-Path -LiteralPath $sourceProfilePath -PathType Leaf) -and $global:pcSettingsDirPath) {
+                $sourceProfilePath = Join-Path $global:pcSettingsDirPath 'powershell/sayed-profile-script-current.ps1'
+            }
+        }
+
         if (-not (Test-Path $psProfilePath)) {
             if (Test-Path $sourceProfilePath) {
                 'Copying PowerShell profile to [{0}]' -f $psProfilePath | Write-Output
+                $profileDirectory = Split-Path -Parent $psProfilePath
+                if ($profileDirectory -and -not (Test-Path -LiteralPath $profileDirectory)) {
+                    New-Item -ItemType Directory -Path $profileDirectory -Force | Out-Null
+                }
                 Copy-Item -Path $sourceProfilePath -Destination $psProfilePath -Force
                 Write-Host "  ✓ Profile copied" -ForegroundColor Green
             }
@@ -781,7 +788,11 @@ function LoadModules {
     [cmdletbinding()]
     param()
     process {
-        $modstoload = @("$global:codeHome\sayed-tools\powershell\sayed-tools.psd1")
+        $modulePath = Join-Path $global:sayedhaToolsFolderPath 'powershell/sayed-tools/sayed-tools.psd1'
+        if (-not (Test-Path -LiteralPath $modulePath)) {
+            $modulePath = Join-Path $global:sayedhaToolsFolderPath 'powershell/sayed-tools.psd1'
+        }
+        $modstoload = @($modulePath)
         foreach ($mod in $modstoload) {
             if (Test-Path $mod -PathType Leaf) {
                 'Loading module from "{0}"' -f $mod | Write-Output
@@ -889,8 +900,8 @@ function ConfigureMachine {
 
         RunTask @(
             { ConfigureGit },
-            { ConfigurePowershell },
             { EnsureBaseReposCloned },
+            { ConfigurePowershell },
             { ConfigureConsole },
             { LoadModules },
             { ConfigureWindows }
