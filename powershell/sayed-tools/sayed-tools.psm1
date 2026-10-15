@@ -213,9 +213,8 @@ function Add-AliasForTool{
                 if(test-path $p){
                     $t.alias | % { Set-Alias -Name $_ -Value $p -Scope Global }
                     $found=$true
+                    break
                 }
-
-                break;
             }
 
             if(-not $found){

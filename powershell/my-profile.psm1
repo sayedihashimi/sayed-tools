@@ -249,7 +249,17 @@ function Sayed-ConfigureTools(){
             @{ "alias"="np";"path"="$env:ProgramFiles\Notepad++\notepad++.exe" },
             @{ "alias"="p4merge"; "path"="$env:ProgramFiles\Perforce\p4merge.exe","$env:ProgramFiles\Perforce\p4merge.exe" },
            # @{ "alias"="handle"; "path"="$dropBoxHome\Tools\SysinternalsSuite\handle.exe" },
-            @{ "alias"="kdiff"; "path"="$env:ProgramFiles\KDiff3\kdiff3.exe" }
+             @{ "alias"="kdiff"; "path"=@(
+                 (Get-Command kdiff3.exe -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source)
+                 "$env:LOCALAPPDATA\Programs\KDiff3\bin\kdiff3.exe"
+                 "$env:LOCALAPPDATA\Programs\KDiff3\kdiff3.exe"
+                 "$env:USERPROFILE\AppData\Local\Programs\KDiff3\bin\kdiff3.exe"
+                 "$env:USERPROFILE\AppData\Local\Programs\KDiff3\kdiff3.exe"
+                 "$env:ProgramFiles\KDiff3\bin\kdiff3.exe"
+                 "$env:ProgramFiles\KDiff3\kdiff3.exe"
+                 "${env:ProgramFiles(x86)}\KDiff3\bin\kdiff3.exe"
+                 "${env:ProgramFiles(x86)}\KDiff3\kdiff3.exe"
+             ) | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } }
            # @{ "alias"="code"; "path"="$env:ProgramFiles\Microsoft VS Code\Code.exe"}
         )
         Add-AliasForTool -tool $toolsToConfigure
@@ -642,7 +652,25 @@ function ConfigureGit{
     }
 }
 function Initalize-DotnetCompletions(){
-    dotnet completions script pwsh | Out-String | Invoke-Expression
+    try {
+        $dotnet = Get-Command dotnet -CommandType Application -ErrorAction Stop
+        # Capture diagnostics so a failed CLI invocation produces one useful warning.
+        $PSNativeCommandUseErrorActionPreference = $false
+        $completionOutput = & $dotnet.Source completions script pwsh 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            throw "dotnet exited with code ${LASTEXITCODE}: $($completionOutput | Out-String)"
+        }
+
+        $completionScript = $completionOutput | Out-String
+        if ([string]::IsNullOrWhiteSpace($completionScript)) {
+            throw 'dotnet returned an empty completion script.'
+        }
+
+        Invoke-Expression -Command $completionScript -ErrorAction Stop
+    }
+    catch {
+        Write-Warning -Message "Could not initialize .NET completions: $($_.Exception.Message.Trim())" -WarningAction Continue
+    }
 }
 
 ##############################
