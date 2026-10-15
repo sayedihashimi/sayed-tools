@@ -66,6 +66,17 @@ class FakeES {
     Assert-True ($arguments[4] -eq '1234') 'Timeout was not passed to ES.'
     Assert-True (-not (Test-Path -LiteralPath $arguments[1])) 'Temporary export was not removed.'
 
+    $results = @(& $wrapper -EverythingQuery $query -Extension .txt,json -EverythingCliPath $cli)
+    Assert-True ($results.Count -eq 3 -and $results[0] -eq $first -and $results[1] -eq $second -and $results[2] -eq $missing) 'Query-only mode must return raw Everything paths, including missing files.'
+    $arguments = [IO.File]::ReadAllLines((Join-Path $testRoot 'arguments.txt'))
+    Assert-True ($arguments[6] -eq "file: ext:txt;json <$query>") 'Query-only filters or quotes were lost.'
+    Assert-True (-not (Test-Path -LiteralPath $arguments[1])) 'Query-only temporary export was not removed.'
+    $results = @(& $wrapper -EverythingCliPath $cli -ShowMatches -Regex -CaseSensitive -WarnOnMissingFiles)
+    Assert-True ($results.Count -eq 3 -and $results[0] -is [string]) 'No-argument search must return paths; content switches must not change the result type.'
+    $arguments = [IO.File]::ReadAllLines((Join-Path $testRoot 'arguments.txt'))
+    Assert-True ($arguments[6] -eq 'file:') 'No-filter search must query all indexed files.'
+    Assert-Throws { & $wrapper -SearchText '' -EverythingCliPath $cli } '*SearchText*'
+
     $warnings = @()
     $matches = @(& $wrapper '^Needle' -EverythingCliPath $cli -Regex -CaseSensitive -ShowMatches -WarnOnMissingFiles -WarningVariable warnings -WarningAction SilentlyContinue)
     Assert-True ($matches.Count -eq 1 -and $matches[0].LineNumber -eq 2 -and $matches[0].PSTypeNames[0] -eq 'FileSearch.Match') 'Content switches or match objects failed.'
@@ -127,14 +138,15 @@ class FakeES {
 
     $env:FILE_SEARCH_TEST_MODE = 'empty'
     Assert-True (@(& $wrapper needle -EverythingCliPath $cli).Count -eq 0) 'Empty results must produce no objects.'
+    Assert-True (@(& $wrapper -Extension txt -EverythingCliPath $cli).Count -eq 0) 'Empty query-only results must produce no objects.'
     $env:FILE_SEARCH_TEST_MODE = 'failure'
     Assert-Throws { & $wrapper needle -EverythingCliPath $cli } '*exit code 8*Everything is running*mock IPC failure*'
     $arguments = [IO.File]::ReadAllLines((Join-Path $testRoot 'arguments.txt'))
     Assert-True (-not (Test-Path -LiteralPath $arguments[1])) 'Temporary export leaked after ES failed.'
     Assert-Throws { & $wrapper needle -EverythingCliPath $cli -Extension 'txt|exe' } '*Extension*'
     $help = Get-Help $wrapper -Full
-    Assert-True ($help.Synopsis -like 'Finds files with Everything*' -and $help.examples.example.Count -eq 4) 'Comment-based help was not discovered.'
-    'PASS: query/argument handling, content options, Unicode paths, config precedence, PATH/default discovery, missing CLI, automatic installation/reuse/failures, empty results, ES failure, cleanup, validation, and help.'
+    Assert-True ($help.Synopsis -like 'Finds files with Everything*' -and $help.examples.example.Count -eq 5) 'Comment-based help was not discovered.'
+    'PASS: optional content search, raw index results, query/argument handling, content options, Unicode paths, config precedence, PATH/default discovery, missing CLI, automatic installation/reuse/failures, empty results, ES failure, cleanup, validation, and help.'
 }
 finally {
     foreach ($name in $environmentNames) { [Environment]::SetEnvironmentVariable($name, $savedEnvironment[$name], 'Process') }

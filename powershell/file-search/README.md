@@ -14,6 +14,11 @@ This installs only ES; the Everything desktop application must already be instal
 The desktop application's Everything.exe is separate from es.exe.
 
 ```powershell
+# Return Everything file paths without searching their contents.
+./Search-EverythingFiles.ps1 -Extension md,txt
+./Search-EverythingFiles.ps1 -EverythingQuery '"C:\My Notes\" ext:md'
+
+# Find files whose contents contain the supplied text.
 ./Search-EverythingFiles.ps1 'license sales' -Extension md,txt
 ./Search-EverythingFiles.ps1 'Rider' '"C:\My Notes\" ext:md'
 ./Search-EverythingFiles.ps1 '^TODO:' -Extension cs,ps1 -Regex -ShowMatches
@@ -22,8 +27,12 @@ Get-Help ./Search-EverythingFiles.ps1 -Full
 
 `-EverythingQuery` accepts Everything search syntax. `-Extension` accepts multiple
 extensions, with or without leading dots. Omit both to search all indexed files.
-Content options match Search-Files.ps1. Results are paths by default, or objects
-with Path, LineNumber, and Line with `-ShowMatches`.
+Omit `-SearchText` to return indexed file paths directly, without opening the files
+or checking whether they still exist. Use named `-EverythingQuery` for query-only
+searches: the first positional argument still means SearchText. With SearchText,
+content options match Search-Files.ps1; results are matching paths, or objects with
+Path, LineNumber, and Line with `-ShowMatches`. Content switches are ignored when
+SearchText is omitted.
 
 Configure the CLI for one call:
 
@@ -44,8 +53,8 @@ Files (including x86) and LocalAppData (including Programs). An invalid configur
 path produces an error so a stale setting is visible.
 
 The wrapper uses ES `-export-txt` with a UTF-8 BOM, waits up to 10 seconds for the
-index (`-TimeoutMilliseconds` changes this), searches the temporary list using
-Search-Files.ps1, and deletes the list even on failure. It does not modify
+index (`-TimeoutMilliseconds` changes this), and returns the temporary list or
+searches its contents using Search-Files.ps1. It deletes the list even on failure. It does not modify
 file-list.txt. See the [official ES reference](https://www.voidtools.com/support/everything/command_line_interface/).
 
 ## Search an existing path list

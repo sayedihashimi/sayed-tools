@@ -3,15 +3,20 @@
 
 <#
 .SYNOPSIS
-    Finds files with Everything, then searches their text content.
+    Finds files with Everything and optionally searches their text content.
 .DESCRIPTION
     Exports a temporary file list using es.exe and delegates content searching to
-    Search-Files.ps1. Deletes the list afterward. Everything must be running.
+    Search-Files.ps1 when SearchText is supplied. Otherwise returns Everything's file
+    paths directly without reading file contents. Deletes the list afterward.
+    Everything must be running.
     Installs ES automatically from voidtools.com if it cannot be found, unless
     -NoAutoInstall is used. The Everything desktop application must already be running.
     Searches text regardless of extension; does not extract text from binary formats.
 .PARAMETER SearchText
-    Text to find inside files. Literal unless -Regex is used.
+    Optional text to find inside files. Literal unless -Regex is used.
+    When omitted, returns the Everything file paths without content filtering.
+    Use the named -EverythingQuery parameter for query-only searches; the first
+    positional argument remains SearchText for compatibility.
 .PARAMETER EverythingQuery
     Optional Everything query, such as 'ext:md;txt' or '"C:\My Notes\" ext:md'.
     Combined with -Extension when both are supplied. Defaults to all indexed files.
@@ -27,13 +32,15 @@
 .PARAMETER TimeoutMilliseconds
     Time to wait for Everything's database to load. Defaults to 10000 milliseconds.
 .PARAMETER CaseSensitive
-    Make the content match case-sensitive.
+    Make the content match case-sensitive. Only applies when SearchText is supplied.
 .PARAMETER Regex
-    Treat SearchText as a regular expression.
+    Treat SearchText as a regular expression. Only applies when SearchText is supplied.
 .PARAMETER ShowMatches
     Return Path, LineNumber, and Line objects for each matching line.
+    Only applies when SearchText is supplied.
 .PARAMETER WarnOnMissingFiles
-    Warn about indexed files that no longer exist.
+    Warn about indexed files that no longer exist during content searching.
+    Only applies when SearchText is supplied; query-only results reflect the index.
 .EXAMPLE
     ./Search-EverythingFiles.ps1 "license sales" -Extension md,txt
 .EXAMPLE
@@ -42,10 +49,12 @@
     ./Search-EverythingFiles.ps1 '^TODO:' -Extension cs,ps1 -Regex -ShowMatches
 .EXAMPLE
     ./Search-EverythingFiles.ps1 "Rider" -Extension md -EverythingCliPath C:\Tools\Everything\es.exe
+.EXAMPLE
+    ./Search-EverythingFiles.ps1 -EverythingQuery '"C:\My Notes\"' -Extension md,txt
 #>
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory, Position = 0)]
+    [Parameter(Position = 0)]
     [ValidateNotNullOrEmpty()]
     [string] $SearchText,
     [Parameter(Position = 1)]
@@ -208,6 +217,11 @@ try {
     if ((Get-Item -LiteralPath $listPath).Length -eq 0 -or
         -not (Get-Content -LiteralPath $listPath -TotalCount 1)) {
         Write-Verbose 'Everything returned no files.'
+        return
+    }
+    if (-not $PSBoundParameters.ContainsKey('SearchText')) {
+        # Return the index results as-is, including files that have since moved or disappeared.
+        Get-Content -LiteralPath $listPath -Encoding utf8
         return
     }
     $searchArgs = @{
