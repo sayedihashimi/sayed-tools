@@ -40,6 +40,11 @@ class FakeES {
         int index = Array.IndexOf(args, "-export-txt");
         if (index < 0 || index + 1 >= args.Length) return 4;
         string[] files = mode == "empty" ? new string[0] : File.ReadAllLines(Path.Combine(root, "fixture-list.txt"));
+        int pathIndex = Array.IndexOf(args, "-path");
+        if (pathIndex >= 0) {
+            string searchDirectory = args[pathIndex + 1];
+            files = Array.FindAll(files, file => file.StartsWith(searchDirectory, StringComparison.OrdinalIgnoreCase));
+        }
         File.WriteAllLines(args[index + 1], files, new UTF8Encoding(true));
         return 0;
     }
@@ -76,6 +81,40 @@ class FakeES {
     $arguments = [IO.File]::ReadAllLines((Join-Path $testRoot 'arguments.txt'))
     Assert-True ($arguments[6] -eq 'file:') 'No-filter search must query all indexed files.'
     Assert-Throws { & $wrapper -SearchText '' -EverythingCliPath $cli } '*SearchText*'
+
+    # Directory scope must include descendants but exclude lookalike sibling folders.
+    $scope = Join-Path $testRoot 'scoped café [notes]'
+    $nested = Join-Path $scope 'nested'
+    $sibling = $scope + '-old'
+    $null = New-Item -ItemType Directory -Path $nested, $sibling
+    $topFile = Join-Path $scope 'top.txt'
+    $nestedFile = Join-Path $nested 'child.txt'
+    $siblingFile = Join-Path $sibling 'outside.txt'
+    foreach ($file in @($topFile, $nestedFile, $siblingFile)) { [IO.File]::WriteAllText($file, 'Needle value') }
+    $fixtureList = Join-Path $testRoot 'fixture-list.txt'
+    [IO.File]::WriteAllLines($fixtureList, [string[]]@($topFile, $nestedFile, $siblingFile, $first))
+    try {
+        $results = @(& $wrapper -SearchDirectory $scope -Extension txt -EverythingQuery 'top | child' -EverythingCliPath $cli)
+        Assert-True ($results.Count -eq 2 -and $results[0] -eq $topFile -and $results[1] -eq $nestedFile) 'Directory scope must include children and exclude similarly named siblings.'
+        $arguments = [IO.File]::ReadAllLines((Join-Path $testRoot 'arguments.txt'))
+        $pathIndex = [Array]::IndexOf($arguments, '-path')
+        Assert-True ($pathIndex -ge 0 -and $arguments[$pathIndex + 1] -eq ($scope + '\')) 'Directory argument lost spaces, Unicode, brackets, or its trailing separator.'
+        Assert-True ($arguments[6] -eq 'file: ext:txt <top | child>') 'Directory filter must combine with extension and grouped query filters.'
+        Assert-True (-not (Test-Path -LiteralPath $arguments[1])) 'Scoped export was not removed.'
+        $relativeScope = [IO.Path]::GetRelativePath($PWD.Path, $scope)
+        $results = @(& $wrapper needle -SearchDirectory $relativeScope -EverythingCliPath $cli)
+        Assert-True ($results.Count -eq 2 -and $results[1] -eq $nestedFile) 'Relative directory or scoped content search failed.'
+        $driveRoot = [IO.Path]::GetPathRoot($scope)
+        $null = & $wrapper -SearchDirectory $driveRoot -EverythingCliPath $cli
+        $arguments = [IO.File]::ReadAllLines((Join-Path $testRoot 'arguments.txt'))
+        Assert-True ($arguments[[Array]::IndexOf($arguments, '-path') + 1] -eq $driveRoot) 'Drive root was incorrectly normalized.'
+        Assert-Throws { & $wrapper -SearchDirectory (Join-Path $testRoot 'no-such-directory') -EverythingCliPath (Join-Path $testRoot 'no-cli.exe') } '*Search directory was not found*SearchDirectory*'
+        Assert-Throws { & $wrapper -SearchDirectory $topFile -EverythingCliPath $cli } '*not a directory*'
+        Assert-Throws { & $wrapper -SearchDirectory '' -EverythingCliPath $cli } '*SearchDirectory*'
+    }
+    finally {
+        [IO.File]::WriteAllLines($fixtureList, [string[]]@($first, $second, $missing))
+    }
 
     $warnings = @()
     $matches = @(& $wrapper '^Needle' -EverythingCliPath $cli -Regex -CaseSensitive -ShowMatches -WarnOnMissingFiles -WarningVariable warnings -WarningAction SilentlyContinue)
@@ -145,8 +184,8 @@ class FakeES {
     Assert-True (-not (Test-Path -LiteralPath $arguments[1])) 'Temporary export leaked after ES failed.'
     Assert-Throws { & $wrapper needle -EverythingCliPath $cli -Extension 'txt|exe' } '*Extension*'
     $help = Get-Help $wrapper -Full
-    Assert-True ($help.Synopsis -like 'Finds files with Everything*' -and $help.examples.example.Count -eq 5) 'Comment-based help was not discovered.'
-    'PASS: optional content search, raw index results, query/argument handling, content options, Unicode paths, config precedence, PATH/default discovery, missing CLI, automatic installation/reuse/failures, empty results, ES failure, cleanup, validation, and help.'
+    Assert-True ($help.Synopsis -like 'Finds files with Everything*' -and $help.examples.example.Count -eq 7) 'Comment-based help was not discovered.'
+    'PASS: directory scope/validation, optional content search, raw index results, query/argument handling, content options, Unicode paths, config precedence, PATH/default discovery, missing CLI, automatic installation/reuse/failures, empty results, ES failure, cleanup, validation, and help.'
 }
 finally {
     foreach ($name in $environmentNames) { [Environment]::SetEnvironmentVariable($name, $savedEnvironment[$name], 'Process') }

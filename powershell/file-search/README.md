@@ -16,10 +16,12 @@ The desktop application's Everything.exe is separate from es.exe.
 ```powershell
 # Return Everything file paths without searching their contents.
 ./Search-EverythingFiles.ps1 -Extension md,txt
+./Search-EverythingFiles.ps1 -SearchDirectory 'C:\My Notes' -Extension md,txt
 ./Search-EverythingFiles.ps1 -EverythingQuery '"C:\My Notes\" ext:md'
 
 # Find files whose contents contain the supplied text.
 ./Search-EverythingFiles.ps1 'license sales' -Extension md,txt
+./Search-EverythingFiles.ps1 'Rider' -SearchDirectory 'C:\My Notes' -Extension md
 ./Search-EverythingFiles.ps1 'Rider' '"C:\My Notes\" ext:md'
 ./Search-EverythingFiles.ps1 '^TODO:' -Extension cs,ps1 -Regex -ShowMatches
 Get-Help ./Search-EverythingFiles.ps1 -Full
@@ -27,6 +29,10 @@ Get-Help ./Search-EverythingFiles.ps1 -Full
 
 `-EverythingQuery` accepts Everything search syntax. `-Extension` accepts multiple
 extensions, with or without leading dots. Omit both to search all indexed files.
+`-SearchDirectory` restricts results to an existing folder and all its subdirectories.
+It accepts absolute or relative paths and combines with the query and extension filters.
+Without it, all indexed directories are searched. The folder must be indexed by Everything.
+
 Omit `-SearchText` to return indexed file paths directly, without opening the files
 or checking whether they still exist. Use named `-EverythingQuery` for query-only
 searches: the first positional argument still means SearchText. With SearchText,

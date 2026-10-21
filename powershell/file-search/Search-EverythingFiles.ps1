@@ -22,6 +22,10 @@
     Combined with -Extension when both are supplied. Defaults to all indexed files.
 .PARAMETER Extension
     One or more extensions, with or without a leading dot, such as md,txt.
+.PARAMETER SearchDirectory
+    Existing top-level directory to search, including all subdirectories.
+    Accepts absolute or relative filesystem paths. Combined with Extension and
+    EverythingQuery. When omitted, searches all indexed directories.
 .PARAMETER EverythingCliPath
     Full path to es.exe. Defaults to EVERYTHING_CLI_PATH when set. Otherwise searches
     PATH, this script's directory, Program Files, and per-user Everything locations.
@@ -51,6 +55,10 @@
     ./Search-EverythingFiles.ps1 "Rider" -Extension md -EverythingCliPath C:\Tools\Everything\es.exe
 .EXAMPLE
     ./Search-EverythingFiles.ps1 -EverythingQuery '"C:\My Notes\"' -Extension md,txt
+.EXAMPLE
+    ./Search-EverythingFiles.ps1 -SearchDirectory 'C:\My Notes' -Extension md,txt
+.EXAMPLE
+    ./Search-EverythingFiles.ps1 'Rider' -SearchDirectory 'C:\My Notes' -Extension md
 #>
 [CmdletBinding()]
 param(
@@ -61,6 +69,8 @@ param(
     [string] $EverythingQuery = '',
     [ValidatePattern('^\.?[\p{L}\p{N}_+-]+$')]
     [string[]] $Extension,
+    [ValidateNotNullOrEmpty()]
+    [string] $SearchDirectory,
     [string] $EverythingCliPath = $env:EVERYTHING_CLI_PATH,
     [switch] $NoAutoInstall,
     [ValidateRange(1, 2147483647)]
@@ -173,6 +183,19 @@ function Resolve-EverythingCli {
     throw "Everything CLI (es.exe) was not found. $setup"
 }
 
+$resolvedSearchDirectory = $null
+if ($PSBoundParameters.ContainsKey('SearchDirectory')) {
+    if (-not (Test-Path -LiteralPath $SearchDirectory -PathType Container)) {
+        throw "Search directory was not found or is not a directory: '$SearchDirectory'. Provide an existing folder via -SearchDirectory."
+    }
+    $resolved = Resolve-Path -LiteralPath $SearchDirectory
+    if ($resolved.Provider.Name -ne 'FileSystem') {
+        throw "SearchDirectory must be a filesystem directory: '$SearchDirectory'."
+    }
+    # A trailing separator excludes similarly named sibling directories (Notes vs Notes-Old).
+    $resolvedSearchDirectory = $resolved.ProviderPath.TrimEnd('\', '/') + [IO.Path]::DirectorySeparatorChar
+}
+
 $cli = Resolve-EverythingCli $EverythingCliPath
 $queryParts = @('file:')
 if ($Extension) {
@@ -198,6 +221,10 @@ try {
     foreach ($argument in @('-export-txt', $listPath, '-utf8-bom', '-timeout',
             $TimeoutMilliseconds.ToString(), '-search', $query)) {
         $startInfo.ArgumentList.Add($argument)
+    }
+    if ($resolvedSearchDirectory) {
+        $startInfo.ArgumentList.Add('-path')
+        $startInfo.ArgumentList.Add($resolvedSearchDirectory)
     }
     try {
         $process = [Diagnostics.Process]::Start($startInfo)
