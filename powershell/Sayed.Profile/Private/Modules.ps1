@@ -30,6 +30,7 @@ function Initialize-SayedToolAliases {
         if ($root) { $kdiff += Join-Path $root 'KDiff3/bin/kdiff3.exe'; $kdiff += Join-Path $root 'KDiff3/kdiff3.exe' }
     }
     Add-AliasForTool @(
+        @{ alias = @('sef', 'Search-EverythingFiles'); path = @(Join-Path $script:ModuleRoot '../file-search/Search-EverythingFiles.ps1') }
         @{ alias = 'buildAhk'; path = @(Join-Path $code 'autohotkeyscripts/visual-studio/2024.04.16.build.demo.ahk') }
         @{ alias = 'ps99Gui'; path = @(Join-Path $code 'autohotkeyscripts/ps99/gui.ahk') }
         @{ alias = 'np'; path = @("$env:ProgramFiles/Notepad++/notepad++.exe") }
