@@ -59,6 +59,8 @@ system prompt. For paths under `features/`, the launcher also sends
 The `work-on-feature` skill must be available in Claude for that project.
 The caller's location is restored when Claude exits, including on errors.
 Use `Start-MyClaude -MarkerFile '.other-marker'` to select a different marker.
+Use `smc -Resume` (or `Start-MyClaude -Resume`) to pass `--resume` to Claude
+while retaining the project context and feature skill invocation.
 The `claude` command must already be installed and available in the shell.
 
 ## Diagnostics

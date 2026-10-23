@@ -41,7 +41,8 @@ function Start-MyClaude {
     [CmdletBinding()]
     param(
         [ValidateNotNullOrEmpty()]
-        [string]$MarkerFile = '.claude-project'
+        [string]$MarkerFile = '.claude-project',
+        [switch]$Resume
     )
 
     $currentLocation = Get-Location
@@ -91,13 +92,15 @@ Do not modify files during initialization.
 
     Push-Location -LiteralPath $projectRoot -ErrorAction Stop
     try {
+        $claudeArguments = @('--append-system-prompt', $prompt)
         if ($isFeature) {
             $initialPrompt = "/work-on-feature `"$relativePath`""
-            claude --append-system-prompt $prompt $initialPrompt
+            $claudeArguments += $initialPrompt
         }
-        else {
-            claude --append-system-prompt $prompt
+        if ($Resume) {
+            $claudeArguments += '--resume'
         }
+        claude @claudeArguments
     }
     finally {
         Pop-Location
