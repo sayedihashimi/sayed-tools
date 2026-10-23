@@ -93,7 +93,7 @@ Do not modify files during initialization.
     Push-Location -LiteralPath $projectRoot -ErrorAction Stop
     try {
         $claudeArguments = @('--append-system-prompt', $prompt)
-        if ($isFeature) {
+        if ($isFeature -and -not $Resume) {
             $initialPrompt = "/work-on-feature `"$relativePath`""
             $claudeArguments += $initialPrompt
         }

@@ -85,13 +85,10 @@ try {
             Assert ($arguments[1].Contains('work-on-feature') -eq $case.Feature) 'Claude selected the wrong prompt'
             Assert ((Get-Location).ProviderPath -eq $case.Directory) 'Claude launcher did not restore location'
             Assert ((Get-Location -Stack).Count -eq $stackBefore) 'Claude launcher leaked a location stack entry'
-            $normalArguments = $arguments
             Start-MyClaude -Resume
             $resumeArguments = $global:ClaudeFixtureCall.Arguments
-            Assert ($resumeArguments.Count -eq ($normalArguments.Count + 1) -and $resumeArguments[-1] -ceq '--resume') 'Claude resume switch was not forwarded'
-            for ($index = 0; $index -lt $normalArguments.Count; $index++) {
-                Assert ($resumeArguments[$index] -ceq $normalArguments[$index]) 'Resume changed the Claude context or feature prompt'
-            }
+            Assert ($resumeArguments.Count -eq 3 -and $resumeArguments[2] -ceq '--resume') 'Resume must forward --resume without an initial feature command'
+            Assert ($resumeArguments[0] -ceq '--append-system-prompt' -and $resumeArguments[1] -ceq $arguments[1]) 'Resume changed the Claude context'
             Assert ($global:ClaudeFixtureCall.Location -eq $claudeRoot) 'Resume launched outside the project root'
             Assert ((Get-Location).ProviderPath -eq $case.Directory) 'Resume did not restore location'
             Assert ((Get-Location -Stack).Count -eq $stackBefore) 'Resume leaked a location stack entry'
