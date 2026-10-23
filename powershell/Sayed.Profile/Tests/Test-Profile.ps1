@@ -34,9 +34,82 @@ try {
     Assert ($env:PATH -eq $originalPath) 'Import changed PATH'
     Assert (@(Get-SayedProfileStatus).Count -eq 0) 'Import initialized the profile'
     Assert (-not (Get-Command Get-SayedNativeScript -ErrorAction SilentlyContinue)) 'Private helper was exported'
+    # Stub Claude so launcher checks never start a real session.
+    Assert ((Get-Command Start-MyClaude).Name -ceq 'Start-MyClaude') 'Claude launcher export or casing is incorrect'
+    $claudeRoot = Join-Path $tempRoot 'claude project [fixture]'
+    $featureDir = Join-Path $claudeRoot 'features/my-feature/subdir'
+    $workstreamDir = Join-Path $claudeRoot 'docs'
+    New-Item -ItemType Directory -Path $featureDir, $workstreamDir -Force | Out-Null
+    Set-Content -LiteralPath (Join-Path $claudeRoot '.claude-project') ''
+    $initDir = Join-Path $tempRoot 'init project [fixture]'
+    New-Item -ItemType Directory -Path $initDir | Out-Null
+    $marker = Init-MyClaudeProject -Path $initDir
+    Assert ($marker.Name -eq '.claude-project') 'Claude initializer returned the wrong marker'
+    Assert ((Get-Content -LiteralPath $marker.FullName -Raw).Contains('Do not delete')) 'Claude marker reminder is missing'
+    Set-Content -LiteralPath $marker.FullName 'preserve existing marker'
+    Push-Location -LiteralPath $initDir
+    try {
+        $null = Init-MyClaudeProject
+        Assert ((Get-Content -LiteralPath $marker.FullName -Raw).Trim() -eq 'preserve existing marker') 'Claude initializer overwrote an existing marker'
+        Remove-Item -LiteralPath $marker.FullName
+        $null = Init-MyClaudeProject
+        Assert (Test-Path -LiteralPath $marker.FullName -PathType Leaf) 'Claude initializer did not use the current directory'
+        Remove-Item -LiteralPath $marker.FullName
+        New-Item -ItemType Directory -Path $marker.FullName | Out-Null
+        $failed = $false
+        try { Init-MyClaudeProject } catch { $failed = $true }
+        Assert $failed 'Claude initializer accepted a directory as the marker'
+    }
+    finally { Pop-Location }
+    function global:claude {
+        $global:ClaudeFixtureCall = @{ Arguments = @($args); Location = (Get-Location).ProviderPath }
+        if ($global:ClaudeFixtureThrow) { throw 'simulated Claude failure' }
+    }
+    try {
+        foreach ($case in @(
+            @{ Directory = $featureDir; Context = 'features/my-feature/subdir'; Feature = $true }
+            @{ Directory = $workstreamDir; Context = 'docs'; Feature = $false }
+            @{ Directory = $claudeRoot; Context = '.'; Feature = $false }
+        )) {
+            Set-Location -LiteralPath $case.Directory
+            $stackBefore = (Get-Location -Stack).Count
+            Start-MyClaude
+            Assert ($global:ClaudeFixtureCall.Location -eq $claudeRoot) 'Claude launched outside the project root'
+            $arguments = $global:ClaudeFixtureCall.Arguments
+            Assert ($arguments.Count -eq 2 -and $arguments[0] -eq '--append-system-prompt') 'Claude prompt argument was split or incorrect'
+            Assert ($arguments[1].Contains("'$($case.Context)'")) 'Claude relative context is incorrect'
+            Assert ($arguments[1].Contains('work-on-feature') -eq $case.Feature) 'Claude selected the wrong prompt'
+            Assert ((Get-Location).ProviderPath -eq $case.Directory) 'Claude launcher did not restore location'
+            Assert ((Get-Location -Stack).Count -eq $stackBefore) 'Claude launcher leaked a location stack entry'
+        }
+        $global:ClaudeFixtureThrow = $true
+        $failed = $false
+        try { Start-MyClaude } catch { $failed = $_.Exception.Message -eq 'simulated Claude failure' }
+        Assert $failed 'Claude failure was swallowed'
+        Assert ((Get-Location).ProviderPath -eq $claudeRoot) 'Claude failure did not restore location'
+        $global:ClaudeFixtureThrow = $false
+        Set-Content -LiteralPath (Join-Path $workstreamDir '.custom-marker') ''
+        Set-Location -LiteralPath $workstreamDir
+        Start-MyClaude -MarkerFile '.custom-marker'
+        Assert ($global:ClaudeFixtureCall.Location -eq $workstreamDir) 'Custom Claude marker was ignored'
+        Set-Content -LiteralPath (Join-Path $workstreamDir '.claude-project') ''
+        Start-MyClaude
+        Assert ($global:ClaudeFixtureCall.Location -eq $workstreamDir) 'Nearest Claude project root was ignored'
+        $global:ClaudeFixtureCall = $null
+        $failed = $false
+        try { Start-MyClaude -MarkerFile '.missing-marker' } catch { $failed = $_.Exception.Message -like 'Could not find a Claude project root.*' }
+        Assert ($failed -and $null -eq $global:ClaudeFixtureCall) 'Missing Claude marker did not prevent launch'
+    }
+    finally {
+        Set-Location -LiteralPath $originalLocation.Path
+        Remove-Item Function:\claude -ErrorAction SilentlyContinue
+        Remove-Variable ClaudeFixtureCall, ClaudeFixtureThrow -Scope Global -ErrorAction SilentlyContinue
+    }
     function global:git { throw 'Profile startup must not configure Git.' }
     function global:winget { throw 'Profile startup must not install software.' }
     Initialize-SayedProfile -Configuration @{ Interactive = $false; EnableCustomModules = $false }
+    Assert ((Get-Alias smc).Definition -ceq 'Start-MyClaude') 'Claude launcher alias is incorrect'
+    Assert ((Get-Alias imc).Definition -ceq 'Init-MyClaudeProject') 'Claude initializer alias is incorrect'
     Assert (-not (Get-SayedProfileStatus | Where-Object Status -EQ Failed)) 'Core initialization failed'
     $firstCount = @(Get-SayedProfileStatus).Count
     $firstModules = $env:PSModulePath

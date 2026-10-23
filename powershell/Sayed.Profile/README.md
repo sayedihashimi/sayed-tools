@@ -44,6 +44,21 @@ produce warnings and appear in the status report. KDiff3 aliases check PATH and
 per-user/system install folders. PATH changes are process-only during startup,
 deduplicated by directory, and use the platform's separator.
 
+## Claude launcher
+
+Run `Init-MyClaudeProject` (alias `imc`) to create `.claude-project` in the
+current directory, or use `imc -Path 'C:\path\to\project'` for another existing
+directory. The marker contains a reminder not to delete it. Existing marker
+contents are preserved, and the command returns the marker file.
+
+Run `Start-MyClaude` (alias `smc`) from a project directory containing `.claude-project`, or
+any of its descendants. The nearest ancestor with that marker file becomes
+Claude's working directory. The original relative directory is included in the
+system prompt; paths under `features/` use the work-on-feature instructions.
+The caller's location is restored when Claude exits, including on errors.
+Use `Start-MyClaude -MarkerFile '.other-marker'` to select a different marker.
+The `claude` command must already be installed and available in the shell.
+
 ## Diagnostics
 
 ```powershell

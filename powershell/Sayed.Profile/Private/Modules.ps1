@@ -23,6 +23,8 @@ function Import-SayedCustomModules {
 }
 
 function Initialize-SayedToolAliases {
+    Set-Alias -Name smc -Value Start-MyClaude -Scope Global
+    Set-Alias -Name imc -Value Init-MyClaudeProject -Scope Global
     if (-not $IsWindows) { return }
     $code = $script:Settings.CodeHome
     $kdiff = @((Get-Command kdiff3.exe -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source))
