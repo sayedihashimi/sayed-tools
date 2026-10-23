@@ -91,7 +91,13 @@ Do not modify files during initialization.
 
     Push-Location -LiteralPath $projectRoot -ErrorAction Stop
     try {
-        claude --append-system-prompt $prompt
+        if ($isFeature) {
+            $initialPrompt = "/work-on-feature `"$relativePath`""
+            claude --append-system-prompt $prompt $initialPrompt
+        }
+        else {
+            claude --append-system-prompt $prompt
+        }
     }
     finally {
         Pop-Location

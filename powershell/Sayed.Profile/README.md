@@ -54,7 +54,9 @@ contents are preserved, and the command returns the marker file.
 Run `Start-MyClaude` (alias `smc`) from a project directory containing `.claude-project`, or
 any of its descendants. The nearest ancestor with that marker file becomes
 Claude's working directory. The original relative directory is included in the
-system prompt; paths under `features/` use the work-on-feature instructions.
+system prompt. For paths under `features/`, the launcher also sends
+`/work-on-feature "<relative-path>"` as the initial message to invoke the skill.
+The `work-on-feature` skill must be available in Claude for that project.
 The caller's location is restored when Claude exits, including on errors.
 Use `Start-MyClaude -MarkerFile '.other-marker'` to select a different marker.
 The `claude` command must already be installed and available in the shell.
