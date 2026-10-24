@@ -75,13 +75,21 @@ The active feature for this session is '$relativePath'.
 
 Follow the instructions in the work-on-feature skill.
 Load relevant feature-level and project-level knowledge.
+Save feature knowledge in '$relativePath' and project-wide knowledge in 'memory/'.
 Do not modify files during initialization.
 "@
     }
     else {
+        $knowledgeRule = if ($relativePath -eq '.') {
+            "Save knowledge files in the project's 'memory/' directory."
+        }
+        else {
+            "This directory holds authored deliverables only. Save knowledge files in the project's 'memory/' directory, never in '$relativePath'."
+        }
         @"
 The current workstream for this session is '$relativePath'.
 Use this directory as the active workstream context.
+$knowledgeRule
 Load relevant project-level knowledge.
 Do not modify files during initialization.
 "@
