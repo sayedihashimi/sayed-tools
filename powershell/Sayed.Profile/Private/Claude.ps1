@@ -38,12 +38,20 @@ function Start-MyClaude {
     .SYNOPSIS
     Starts Claude at the nearest project root with the current directory as context.
     #>
-    [CmdletBinding()]
+    [CmdletBinding(PositionalBinding = $false)]
     param(
         [ValidateNotNullOrEmpty()]
         [string]$MarkerFile = '.claude-project',
-        [switch]$Resume
+        [switch]$Resume,
+        # Lets `smc -Resume <id>` bind the ID here instead of to MarkerFile.
+        [Parameter(Position = 0)]
+        [ValidateNotNullOrEmpty()]
+        [string]$SessionId
     )
+
+    if ($SessionId) {
+        $Resume = $true
+    }
 
     $currentLocation = Get-Location
     if ($currentLocation.Provider.Name -ne 'FileSystem') {
@@ -107,10 +115,25 @@ Do not modify files during initialization.
         }
         if ($Resume) {
             $claudeArguments += '--resume'
+            if ($SessionId) {
+                $claudeArguments += $SessionId
+            }
         }
         claude @claudeArguments
     }
     finally {
         Pop-Location
     }
+}
+
+function Enter-MyClaudeProjects {
+    <#
+    .SYNOPSIS
+    Changes to the Claude projects folder in Dropbox.
+    #>
+    [CmdletBinding()]
+    param()
+
+    $path = Join-Path $script:Settings.DropboxHome 'sayedha-notes/jetbrains/JetBrains/_claude-code-projects'
+    Set-Location -LiteralPath $path -ErrorAction Stop
 }

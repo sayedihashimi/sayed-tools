@@ -92,6 +92,10 @@ try {
             Assert ($global:ClaudeFixtureCall.Location -eq $claudeRoot) 'Resume launched outside the project root'
             Assert ((Get-Location).ProviderPath -eq $case.Directory) 'Resume did not restore location'
             Assert ((Get-Location -Stack).Count -eq $stackBefore) 'Resume leaked a location stack entry'
+            Start-MyClaude -Resume 'session-123'
+            $sessionArguments = $global:ClaudeFixtureCall.Arguments
+            Assert ($sessionArguments.Count -eq 4 -and $sessionArguments[2] -ceq '--resume' -and $sessionArguments[3] -ceq 'session-123') 'Resume must forward the session ID'
+            Assert ($global:ClaudeFixtureCall.Location -eq $claudeRoot) 'Resume with session ID launched outside the project root'
         }
         $global:ClaudeFixtureThrow = $true
         $failed = $false
@@ -121,6 +125,7 @@ try {
     Initialize-SayedProfile -Configuration @{ Interactive = $false; EnableCustomModules = $false }
     Assert ((Get-Alias smc).Definition -ceq 'Start-MyClaude') 'Claude launcher alias is incorrect'
     Assert ((Get-Alias imc).Definition -ceq 'Init-MyClaudeProject') 'Claude initializer alias is incorrect'
+    Assert ((Get-Alias cdcp).Definition -ceq 'Enter-MyClaudeProjects') 'Claude projects alias is incorrect'
     Assert (-not (Get-SayedProfileStatus | Where-Object Status -EQ Failed)) 'Core initialization failed'
     $firstCount = @(Get-SayedProfileStatus).Count
     $firstModules = $env:PSModulePath

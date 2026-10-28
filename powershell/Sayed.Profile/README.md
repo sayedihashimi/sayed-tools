@@ -62,6 +62,9 @@ Use `Start-MyClaude -MarkerFile '.other-marker'` to select a different marker.
 Use `smc -Resume` (or `Start-MyClaude -Resume`) to pass `--resume` to Claude
 while retaining the project context. Resuming skips the initial
 `/work-on-feature` command so feature initialization is not repeated.
+Use `smc -Resume <session-id>` to resume a specific session (`--resume <session-id>`).
+Run `Enter-MyClaudeProjects` (alias `cdcp`) to `cd` into
+`<DropboxHome>/sayedha-notes/jetbrains/JetBrains/_claude-code-projects`.
 The `claude` command must already be installed and available in the shell.
 
 ## Diagnostics

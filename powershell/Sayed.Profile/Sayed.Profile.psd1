@@ -10,6 +10,7 @@
         'ConfigureGit'
         'Convert-ClipboardToPlainText'
         'copy'
+        'Enter-MyClaudeProjects'
         'ff'
         'flushdns'
         'Get-FilesCreatedBetweenDates'
