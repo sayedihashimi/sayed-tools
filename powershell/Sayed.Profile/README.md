@@ -57,6 +57,8 @@ Claude's working directory. The original relative directory is included in the
 system prompt. For paths under `features/`, the launcher also sends
 `/work-on-feature "<relative-path>"` as the initial message to invoke the skill.
 The `work-on-feature` skill must be available in Claude for that project.
+New sessions are named after the folder `smc` was run in (`--name <folder>`),
+the same as running `/rename <folder>`.
 The caller's location is restored when Claude exits, including on errors.
 Use `Start-MyClaude -MarkerFile '.other-marker'` to select a different marker.
 Use `smc -Resume` (or `Start-MyClaude -Resume`) to pass `--resume` to Claude

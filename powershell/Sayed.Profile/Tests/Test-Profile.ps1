@@ -76,10 +76,11 @@ try {
             Start-MyClaude
             Assert ($global:ClaudeFixtureCall.Location -eq $claudeRoot) 'Claude launched outside the project root'
             $arguments = $global:ClaudeFixtureCall.Arguments
-            $expectedArgumentCount = if ($case.Feature) { 3 } else { 2 }
+            $expectedArgumentCount = if ($case.Feature) { 5 } else { 4 }
             Assert ($arguments.Count -eq $expectedArgumentCount -and $arguments[0] -eq '--append-system-prompt') 'Claude prompt argument was split or incorrect'
+            Assert ($arguments[2] -ceq '--name' -and $arguments[3] -ceq (Split-Path -Leaf $case.Directory)) 'Claude session was not named after the current folder'
             if ($case.Feature) {
-                Assert ($arguments[2] -ceq "/work-on-feature `"$($case.Context)`"") 'Claude feature skill was not passed as the initial message'
+                Assert ($arguments[4] -ceq "/work-on-feature `"$($case.Context)`"") 'Claude feature skill was not passed as the initial message'
             }
             Assert ($arguments[1].Contains("'$($case.Context)'")) 'Claude relative context is incorrect'
             Assert ($arguments[1].Contains('work-on-feature') -eq $case.Feature) 'Claude selected the wrong prompt'

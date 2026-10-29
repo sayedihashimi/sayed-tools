@@ -109,6 +109,10 @@ Do not modify files during initialization.
     Push-Location -LiteralPath $projectRoot -ErrorAction Stop
     try {
         $claudeArguments = @('--append-system-prompt', $prompt)
+        if (-not $Resume) {
+            # Resumed sessions keep their existing name.
+            $claudeArguments += '--name', (Split-Path -Leaf $currentDir)
+        }
         if ($isFeature -and -not $Resume) {
             $initialPrompt = "/work-on-feature `"$relativePath`""
             $claudeArguments += $initialPrompt
