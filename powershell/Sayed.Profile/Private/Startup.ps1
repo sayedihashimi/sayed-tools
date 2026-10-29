@@ -74,4 +74,10 @@ function Initialize-SayedProfile {
 # Compatibility entry points used by older Dropbox profiles.
 function Sayed-InitailizeProfile { [CmdletBinding()] param(); Initialize-SayedProfile }
 function InitalizeEnv { [CmdletBinding()] param(); Initialize-SayedProfile }
-function reload-profile { . $PROFILE; Initialize-SayedProfile -Force }
+function reload-profile {
+    . $PROFILE
+    # $PROFILE's Import-Module keeps the loaded copy, so load edits from disk and
+    # initialize through the new module; commands called here resolve to this old one.
+    $module = Import-Module (Join-Path $script:ModuleRoot 'Sayed.Profile.psd1') -Global -Force -DisableNameChecking -PassThru
+    & $module { Initialize-SayedProfile -Force }
+}
