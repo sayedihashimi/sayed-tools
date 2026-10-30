@@ -30,7 +30,49 @@ function Init-MyClaudeProject {
             $stream.Dispose()
         }
     }
+    Add-MyClaudeAdditionalDirectory -ProjectRoot $directory.FullName -Directory 'C:\data\Dropbox\sayedha-notes\jetbrains\JetBrains'
     Get-Item -LiteralPath $markerPath -ErrorAction Stop
+}
+
+function Add-MyClaudeAdditionalDirectory {
+    # Adds a directory to permissions.additionalDirectories in .claude/settings.local.json, keeping other settings.
+    param(
+        [Parameter(Mandatory)][string]$ProjectRoot,
+        [Parameter(Mandatory)][string]$Directory
+    )
+
+    $settingsDir = Join-Path $ProjectRoot '.claude'
+    $settingsPath = Join-Path $settingsDir 'settings.local.json'
+    if (Test-Path -LiteralPath $settingsPath -PathType Container) {
+        throw "The Claude local settings path is a directory: '$settingsPath'."
+    }
+
+    $settings = $null
+    if (Test-Path -LiteralPath $settingsPath -PathType Leaf) {
+        $json = Get-Content -LiteralPath $settingsPath -Raw
+        if (-not [string]::IsNullOrWhiteSpace($json)) {
+            $settings = ConvertFrom-Json -InputObject $json -AsHashtable -ErrorAction Stop
+        }
+    }
+    if ($null -eq $settings) { $settings = [ordered]@{} }
+    if ($settings -isnot [System.Collections.IDictionary]) {
+        throw "Claude local settings must be a JSON object: '$settingsPath'."
+    }
+
+    # Equivalent to ensuring $.permissions.additionalDirectories contains $Directory.
+    if ($null -eq $settings['permissions']) { $settings['permissions'] = [ordered]@{} }
+    $permissions = $settings['permissions']
+    if ($permissions -isnot [System.Collections.IDictionary]) {
+        throw "'permissions' in '$settingsPath' must be a JSON object."
+    }
+    $directories = @($permissions['additionalDirectories'] | Where-Object { $null -ne $_ })
+    if ($directories -contains $Directory) {
+        return
+    }
+    $permissions['additionalDirectories'] = @($directories) + $Directory
+
+    New-Item -ItemType Directory -Path $settingsDir -Force | Out-Null
+    Set-Content -LiteralPath $settingsPath -Value (ConvertTo-Json -InputObject $settings -Depth 100) -Encoding utf8NoBOM
 }
 
 function Start-MyClaude {

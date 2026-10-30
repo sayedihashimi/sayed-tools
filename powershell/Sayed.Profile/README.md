@@ -50,6 +50,10 @@ Run `Init-MyClaudeProject` (alias `imc`) to create `.claude-project` in the
 current directory, or use `imc -Path 'C:\path\to\project'` for another existing
 directory. The marker contains a reminder not to delete it. Existing marker
 contents are preserved, and the command returns the marker file.
+It also ensures `.claude/settings.local.json` lists
+`C:\data\Dropbox\sayedha-notes\jetbrains\JetBrains` in
+`permissions.additionalDirectories`. The file is created if missing; otherwise
+the directory is appended only when absent, and other settings are kept.
 
 Run `Start-MyClaude` (alias `smc`) from a project directory containing `.claude-project`, or
 any of its descendants. The nearest ancestor with that marker file becomes

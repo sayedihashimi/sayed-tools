@@ -46,6 +46,16 @@ try {
     $marker = Init-MyClaudeProject -Path $initDir
     Assert ($marker.Name -eq '.claude-project') 'Claude initializer returned the wrong marker'
     Assert ((Get-Content -LiteralPath $marker.FullName -Raw).Contains('Do not delete')) 'Claude marker reminder is missing'
+    $notesDir = 'C:\data\Dropbox\sayedha-notes\jetbrains\JetBrains'
+    $localSettingsPath = Join-Path $initDir '.claude/settings.local.json'
+    $localSettings = Get-Content -LiteralPath $localSettingsPath -Raw | ConvertFrom-Json -AsHashtable
+    Assert (@($localSettings.permissions.additionalDirectories) -ceq $notesDir) 'Claude initializer did not create local settings'
+    Set-Content -LiteralPath $localSettingsPath '{ "model": "keep", "permissions": { "allow": ["Read"], "additionalDirectories": ["C:\\other"] } }'
+    $null = Init-MyClaudeProject -Path $initDir
+    $null = Init-MyClaudeProject -Path $initDir
+    $localSettings = Get-Content -LiteralPath $localSettingsPath -Raw | ConvertFrom-Json -AsHashtable
+    Assert ($localSettings.model -eq 'keep' -and @($localSettings.permissions.allow) -ceq 'Read') 'Claude initializer lost existing local settings'
+    Assert ((@($localSettings.permissions.additionalDirectories) -join '|') -ceq "C:\other|$notesDir") 'Claude initializer did not add the notes directory exactly once'
     Set-Content -LiteralPath $marker.FullName 'preserve existing marker'
     Push-Location -LiteralPath $initDir
     try {
