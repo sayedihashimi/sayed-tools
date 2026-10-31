@@ -34,6 +34,34 @@ function Init-MyClaudeProject {
     Get-Item -LiteralPath $markerPath -ErrorAction Stop
 }
 
+function New-MyClaudeFeature {
+    <#
+    .SYNOPSIS
+    Creates features/<Name> and initializes it as a Claude project.
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name,
+        [ValidateNotNullOrEmpty()]
+        [string]$Path = '.'
+    )
+
+    if ($Name -in '.', '..' -or $Name.IndexOfAny([System.IO.Path]::GetInvalidFileNameChars()) -ge 0) {
+        throw "Invalid feature name: '$Name'."
+    }
+    $directory = Get-Item -LiteralPath $Path -ErrorAction Stop
+    if ($directory.PSProvider.Name -ne 'FileSystem' -or -not $directory.PSIsContainer) {
+        throw 'New-MyClaudeFeature requires an existing filesystem directory.'
+    }
+
+    # New-Item -Force creates missing parents and keeps existing folders.
+    $featureDir = New-Item -ItemType Directory -Path (Join-Path $directory.FullName "features/$Name") -Force -ErrorAction Stop
+    $null = Init-MyClaudeProject -Path $featureDir.FullName
+    $featureDir
+}
+
 function Add-MyClaudeAdditionalDirectory {
     # Adds a directory to permissions.additionalDirectories in .claude/settings.local.json, keeping other settings.
     param(

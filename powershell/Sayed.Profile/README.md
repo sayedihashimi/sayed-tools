@@ -55,6 +55,11 @@ It also ensures `.claude/settings.local.json` lists
 `permissions.additionalDirectories`. The file is created if missing; otherwise
 the directory is appended only when absent, and other settings are kept.
 
+Run `New-MyClaudeFeature <name>` (alias `nmf`) to create `features/<name>` in
+the current directory (or `-Path`), creating `features` if needed, and run
+`imc` on the new folder. Existing folders are reused, and the command returns
+the feature folder.
+
 Run `Start-MyClaude` (alias `smc`) from a project directory containing `.claude-project`, or
 any of its descendants. The nearest ancestor with that marker file becomes
 Claude's working directory. The original relative directory is included in the
@@ -74,6 +79,9 @@ Run `Enter-MyClaudeProjects` (alias `cdcp`) to `cd` into
 The `claude` command must already be installed and available in the shell.
 
 ## Diagnostics
+
+Run `Get-SayedProfileAlias` to show a table of the aliases defined by the
+profile, `sayed-tools`, and the configured custom modules.
 
 ```powershell
 Get-SayedProfileStatus | Format-Table Component, Status, DurationMs, Message

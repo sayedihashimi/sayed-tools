@@ -57,6 +57,14 @@ try {
     Assert ($localSettings.model -eq 'keep' -and @($localSettings.permissions.allow) -ceq 'Read') 'Claude initializer lost existing local settings'
     Assert ((@($localSettings.permissions.additionalDirectories) -join '|') -ceq "C:\other|$notesDir") 'Claude initializer did not add the notes directory exactly once'
     Set-Content -LiteralPath $marker.FullName 'preserve existing marker'
+    $feature = New-MyClaudeFeature 'my new feature' -Path $initDir
+    Assert ($feature.FullName -eq (Join-Path $initDir 'features/my new feature')) 'Feature initializer returned the wrong folder'
+    Assert (Test-Path -LiteralPath (Join-Path $feature.FullName '.claude-project') -PathType Leaf) 'Feature initializer did not run imc'
+    Assert (Test-Path -LiteralPath (Join-Path $feature.FullName '.claude/settings.local.json') -PathType Leaf) 'Feature initializer did not create local settings'
+    $null = New-MyClaudeFeature 'my new feature' -Path $initDir
+    $failed = $false
+    try { New-MyClaudeFeature '../escape' -Path $initDir } catch { $failed = $true }
+    Assert ($failed -and -not (Test-Path -LiteralPath (Join-Path $initDir 'escape'))) 'Feature initializer accepted a path as the name'
     Push-Location -LiteralPath $initDir
     try {
         $null = Init-MyClaudeProject
@@ -136,6 +144,9 @@ try {
     Initialize-SayedProfile -Configuration @{ Interactive = $false; EnableCustomModules = $false }
     Assert ((Get-Alias smc).Definition -ceq 'Start-MyClaude') 'Claude launcher alias is incorrect'
     Assert ((Get-Alias imc).Definition -ceq 'Init-MyClaudeProject') 'Claude initializer alias is incorrect'
+    Assert ((Get-Alias nmf).Definition -ceq 'New-MyClaudeFeature') 'Claude feature alias is incorrect'
+    $aliasTable = Get-SayedProfileAlias | Out-String -Width 300
+    Assert ($aliasTable -match '\bsmc\s+Start-MyClaude\s+Sayed\.Profile' -and $aliasTable -notmatch '\bgcb\b') 'Profile alias table is incorrect'
     Assert ((Get-Alias cdcp).Definition -ceq 'Enter-MyClaudeProjects') 'Claude projects alias is incorrect'
     Assert (-not (Get-SayedProfileStatus | Where-Object Status -EQ Failed)) 'Core initialization failed'
     $firstCount = @(Get-SayedProfileStatus).Count

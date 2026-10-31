@@ -22,9 +22,25 @@ function Import-SayedCustomModules {
     }
 }
 
+function Get-SayedProfileAlias {
+    <#
+    .SYNOPSIS
+    Shows the aliases defined by this profile and the modules it loads.
+    #>
+    [CmdletBinding()]
+    param()
+
+    $modules = @('Sayed.Profile', 'sayed-tools')
+    if ($script:Settings) { $modules += $script:Settings.CustomModuleNames }
+    Get-Alias | Where-Object ModuleName -In $modules | Sort-Object Name |
+        Select-Object Name, Definition, @{ Name = 'Module'; Expression = { $_.ModuleName } } |
+        Format-Table -AutoSize -Wrap
+}
+
 function Initialize-SayedToolAliases {
     Set-Alias -Name smc -Value Start-MyClaude -Scope Global
     Set-Alias -Name imc -Value Init-MyClaudeProject -Scope Global
+    Set-Alias -Name nmf -Value New-MyClaudeFeature -Scope Global
     Set-Alias -Name cdcp -Value Enter-MyClaudeProjects -Scope Global
     if (-not $IsWindows) { return }
     $code = $script:Settings.CodeHome
