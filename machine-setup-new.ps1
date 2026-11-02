@@ -198,6 +198,7 @@ $global:wingetApps = [ordered]@{
     'SublimeHQ.SublimeText.4'   = 'Sublime Text'
     'Microsoft.VisualStudioCode.Insiders' = 'VS Code Insiders'
     'TechSmith.Snagit.2023'      = 'Snagit 2023'
+    'wez.wezterm'                = 'WezTerm'
 }
 
 $global:machinesetupuserconfig = @{
@@ -592,7 +593,11 @@ function ConfigureConsole {
         [Parameter(Position=0)]
         [string]$conemuxmlSourceFile = (Get-Fullpath (Join-Path -path $global:sayedhaToolsFolderPath 'dotfiles/ConEmu.xml')),
         [Parameter(Position=1)]
-        [string]$conemulocalpath = (Join-Path $env:APPDATA 'conemu.xml')
+        [string]$conemulocalpath = (Join-Path $env:APPDATA 'conemu.xml'),
+        [Parameter(Position=2)]
+        [string]$weztermSourceFile = (Get-Fullpath (Join-Path -path $global:sayedhaToolsFolderPath 'dotfiles/wezterm.lua')),
+        [Parameter(Position=3)]
+        [string]$weztermLocalPath = (Join-Path $env:USERPROFILE '.wezterm.lua')
     )
     process {
         Write-Host "`n=== Configuring Console ===" -ForegroundColor Magenta
@@ -609,6 +614,19 @@ function ConfigureConsole {
         }
         else {
             'ConEmu config file not found at "{0}"' -f $conemuxmlSourceFile | Write-Warning
+        }
+
+        if (Test-Path $weztermSourceFile) {
+            if (-not (Test-Path $weztermLocalPath)) {
+                Copy-Item -LiteralPath $weztermSourceFile -Destination $weztermLocalPath -Force
+                Write-Host "  ✓ WezTerm config copied" -ForegroundColor Green
+            }
+            else {
+                Write-Host "  ✓ WezTerm config already exists" -ForegroundColor DarkGreen
+            }
+        }
+        else {
+            'WezTerm config file not found at "{0}"' -f $weztermSourceFile | Write-Warning
         }
 
         # Terminal-Icons module
