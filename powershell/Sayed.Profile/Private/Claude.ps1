@@ -37,7 +37,7 @@ function Init-MyClaudeProject {
 function New-MyClaudeFeature {
     <#
     .SYNOPSIS
-    Creates features/<Name> and initializes it as a Claude project.
+    Creates features/<Name> under the enclosing Claude project root.
     #>
     [CmdletBinding()]
     param(
@@ -56,10 +56,17 @@ function New-MyClaudeFeature {
         throw 'New-MyClaudeFeature requires an existing filesystem directory.'
     }
 
+    # Walk up to the nearest project root, the same way Start-MyClaude finds it.
+    $root = $directory
+    while ($null -ne $root -and -not (Test-Path -LiteralPath (Join-Path $root.FullName '.claude-project') -PathType Leaf)) {
+        $root = $root.Parent
+    }
+    if ($null -eq $root) {
+        throw "Could not find a Claude project root above '$($directory.FullName)'. Run Init-MyClaudeProject (imc) first."
+    }
+
     # New-Item -Force creates missing parents and keeps existing folders.
-    $featureDir = New-Item -ItemType Directory -Path (Join-Path $directory.FullName "features/$Name") -Force -ErrorAction Stop
-    $null = Init-MyClaudeProject -Path $featureDir.FullName
-    $featureDir
+    New-Item -ItemType Directory -Path (Join-Path $root.FullName "features/$Name") -Force -ErrorAction Stop
 }
 
 function Add-MyClaudeAdditionalDirectory {

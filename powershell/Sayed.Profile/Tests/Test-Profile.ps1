@@ -59,9 +59,18 @@ try {
     Set-Content -LiteralPath $marker.FullName 'preserve existing marker'
     $feature = New-MyClaudeFeature 'my new feature' -Path $initDir
     Assert ($feature.FullName -eq (Join-Path $initDir 'features/my new feature')) 'Feature initializer returned the wrong folder'
-    Assert (Test-Path -LiteralPath (Join-Path $feature.FullName '.claude-project') -PathType Leaf) 'Feature initializer did not run imc'
-    Assert (Test-Path -LiteralPath (Join-Path $feature.FullName '.claude/settings.local.json') -PathType Leaf) 'Feature initializer did not create local settings'
+    Assert (-not (Test-Path -LiteralPath (Join-Path $feature.FullName '.claude-project'))) 'Feature initializer ran imc on the feature'
+    Assert (-not (Test-Path -LiteralPath (Join-Path $feature.FullName '.claude'))) 'Feature initializer created feature-level Claude settings'
     $null = New-MyClaudeFeature 'my new feature' -Path $initDir
+    $fromFeatures = New-MyClaudeFeature 'from features' -Path (Join-Path $initDir 'features')
+    Assert ($fromFeatures.FullName -eq (Join-Path $initDir 'features/from features')) 'Feature initializer nested under the features folder'
+    $nestedDir = New-Item -ItemType Directory -Path (Join-Path $feature.FullName 'sub dir') -Force
+    $fromFeature = New-MyClaudeFeature 'from feature' -Path $nestedDir.FullName
+    Assert ($fromFeature.FullName -eq (Join-Path $initDir 'features/from feature')) 'Feature initializer nested under an existing feature'
+    $noRootDir = New-Item -ItemType Directory -Path (Join-Path $tempRoot 'no root') -Force
+    $failed = $false
+    try { New-MyClaudeFeature 'orphan' -Path $noRootDir.FullName } catch { $failed = $true }
+    Assert ($failed -and -not (Test-Path -LiteralPath (Join-Path $noRootDir.FullName 'features'))) 'Feature initializer ran without a project root'
     $failed = $false
     try { New-MyClaudeFeature '../escape' -Path $initDir } catch { $failed = $true }
     Assert ($failed -and -not (Test-Path -LiteralPath (Join-Path $initDir 'escape'))) 'Feature initializer accepted a path as the name'
