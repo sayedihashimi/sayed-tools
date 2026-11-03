@@ -122,9 +122,10 @@ function Get-SayedLuaTableEntry {
         if ($c -eq '-' -and $Text[$i + 1] -eq '-') {
             $end = Skip-SayedLuaToken -Text $Text -Index $i
             $comment = ($Text.Substring($i, $end - $i) -replace '^--(\[\[)?|\]\]$', '').Trim()
-            # A comment on the same line as an entry describes that entry.
+            # A comment on the same line as an entry describes that entry, and
+            # replaces a group comment above it.
             $sameLine = $last -and $Text.Substring($last.End, $i - $last.End) -notmatch "`n"
-            if ($sameLine -and -not $last.Comment) { $last.Comment = $comment }
+            if ($sameLine) { if ($comment) { $last.Comment = $comment } }
             elseif ($comment) { $comments.Add($comment) }
             $i = $end
             continue
@@ -195,7 +196,12 @@ function Format-SayedWezTermAction {
     param([string]$Entry)
     if ($Entry -match '\baction\s*=\s*wezterm\.action_callback') { return 'Callback' }
     if ($Entry -match "\baction\s*=\s*(?:wezterm\.action|act)\.(\w+)(?:\s*\(?\s*(['`"])(.*?)\2)?") {
-        return ($Matches[1], $Matches[3] | Where-Object { $_ }) -join ' '
+        $name = $Matches[1]; $argument = $Matches[3]
+        # A table of plain values, like AdjustPaneSize { 'Left', 5 }, is shown inline.
+        if (-not $argument -and $Entry -match "\baction\s*=\s*(?:wezterm\.action|act)\.$name\s*\{([^{}=]*)\}") {
+            $argument = (($Matches[1] -split ',') | ForEach-Object { $_.Trim().Trim("'", '"') } | Where-Object { $_ }) -join ' '
+        }
+        return ($name, $argument | Where-Object { $_ }) -join ' '
     }
     if ($Entry -match '\baction\s*=\s*([^,\r\n]+)') { return $Matches[1].Trim() }
 }
