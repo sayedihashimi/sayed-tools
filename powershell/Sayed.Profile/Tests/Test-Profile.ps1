@@ -157,6 +157,29 @@ try {
     $aliasTable = Get-SayedProfileAlias | Out-String -Width 300
     Assert ($aliasTable -match '\bsmc\s+Start-MyClaude\s+Sayed\.Profile' -and $aliasTable -notmatch '\bgcb\b') 'Profile alias table is incorrect'
     Assert ((Get-Alias cdcp).Definition -ceq 'Enter-MyClaudeProjects') 'Claude projects alias is incorrect'
+    Assert ((Get-Alias wezkeys).Definition -ceq 'Get-SayedWezTermKeys') 'WezTerm keys alias is incorrect'
+    $wezBindings = @(& $module { param($path) Get-SayedWezTermBinding -Text (Get-Content -LiteralPath $path -Raw) } (Join-Path $repo 'dotfiles/wezterm.lua'))
+    Assert ($wezBindings.Count -eq 2) 'WezTerm dotfile bindings were not all found'
+    Assert ($wezBindings[0].Type -eq 'Key' -and $wezBindings[0].Shortcut -eq 'Alt+S' -and $wezBindings[0].Action -eq 'SplitHorizontal' -and $wezBindings[0].Description -like 'Alt+S splits*') 'WezTerm key binding parsed incorrectly'
+    Assert ($wezBindings[1].Type -eq 'Mouse' -and $wezBindings[1].Shortcut -eq 'Right Click' -and $wezBindings[1].Action -eq 'PasteFrom Clipboard') 'WezTerm mouse binding parsed incorrectly'
+    $wezSample = @"
+config.leader = { key = 'a', mods = 'CTRL' }
+config.keys = {
+  -- Close { pane }
+  { key = 'w', mods = 'CTRL|SHIFT', action = act.CloseCurrentPane { confirm = true } },
+  { key = 'LeftArrow', mods = 'LEADER', action = act.ActivatePaneDirection 'Left' }, -- Move left
+  { key = "}", mods = 'ALT', action = wezterm.action_callback(function(w) w:toast_notification('x', '}') end) },
+}
+config.mouse_bindings = {
+  { event = { Up = { streak = 2, button = 'Left' } }, mods = 'NONE', action = act.OpenLinkAtMouseCursor },
+}
+"@
+    $wezRows = @(& $module { param($text) Get-SayedWezTermBinding -Text $text } $wezSample | ForEach-Object { "$($_.Type)|$($_.Shortcut)|$($_.Action)|$($_.Description)" })
+    $wezExpected = @('Leader|Ctrl+A|Leader|', 'Key|Ctrl+Shift+W|CloseCurrentPane|Close { pane }', 'Key|Leader+LeftArrow|ActivatePaneDirection Left|Move left', 'Key|Alt+}|Callback|', 'Mouse|Left Double-Click (release)|OpenLinkAtMouseCursor|')
+    Assert (($wezRows -join "`n") -ceq ($wezExpected -join "`n")) "WezTerm sample parsed incorrectly: $($wezRows -join '; ')"
+    $wezWarning = $null
+    Get-SayedWezTermKeys -Path (Join-Path $tempRoot 'missing.lua') -WarningVariable wezWarning -WarningAction SilentlyContinue
+    Assert ("$wezWarning" -like 'WezTerm config file not found*') 'Missing WezTerm config did not warn'
     Assert (-not (Get-SayedProfileStatus | Where-Object Status -EQ Failed)) 'Core initialization failed'
     $firstCount = @(Get-SayedProfileStatus).Count
     $firstModules = $env:PSModulePath

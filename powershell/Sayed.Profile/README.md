@@ -83,7 +83,14 @@ The `claude` command must already be installed and available in the shell.
 ## Diagnostics
 
 Run `Get-SayedProfileAlias` to show a table of the aliases defined by the
-profile, `sayed-tools`, and the configured custom modules.
+profile, `sayed-tools`, and the configured custom modules. The Description
+column shows the target command's help synopsis, or an exe's file description.
+
+Run `Get-SayedWezTermKeys` (alias `wezkeys`) to show a table of the custom
+key and mouse bindings in `~/.wezterm.lua`, plus the leader key if one is set.
+The description comes from the `--` comment above each binding (or the comment
+above the table when it has only one binding). Use `-Path` to read another
+file. WezTerm's built-in defaults are not listed; it warns if the file is missing.
 
 ```powershell
 Get-SayedProfileStatus | Format-Table Component, Status, DurationMs, Message

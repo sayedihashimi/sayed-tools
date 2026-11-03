@@ -17,6 +17,7 @@
         'Get-PubIP'
         'Get-SayedProfileAlias'
         'Get-SayedProfileStatus'
+        'Get-SayedWezTermKeys'
         'glog'
         'head'
         'InitalizeEnv'

@@ -32,9 +32,46 @@ function Get-SayedProfileAlias {
 
     $modules = @('Sayed.Profile', 'sayed-tools')
     if ($script:Settings) { $modules += $script:Settings.CustomModuleNames }
-    Get-Alias | Where-Object ModuleName -In $modules | Sort-Object Name |
-        Select-Object Name, Definition, @{ Name = 'Module'; Expression = { $_.ModuleName } } |
-        Format-Table -AutoSize -Wrap
+    Get-Alias | Where-Object ModuleName -In $modules | Sort-Object Name | ForEach-Object {
+        [pscustomobject]@{
+            Alias       = $_.Name
+            Command     = Format-SayedAliasTarget $_.Definition
+            Module      = $_.ModuleName
+            Description = $(if ($_.Description) { $_.Description } else { Get-SayedCommandDescription $_.Definition })
+        }
+    } | Format-Table -AutoSize -Wrap -Property @(
+        @{ Name = 'Alias'; Expression = { "$($PSStyle.Bold)$($PSStyle.Foreground.Cyan)$($_.Alias)$($PSStyle.Reset)" } }
+        'Command'
+        'Module'
+        'Description'
+    )
+}
+
+function Format-SayedAliasTarget {
+    # Shortens file paths: resolves '..', and shows the home folder as '~'.
+    param([string]$Definition)
+    if (-not [IO.Path]::IsPathRooted($Definition)) { return $Definition }
+    $path = [IO.Path]::GetFullPath($Definition)
+    $homePath = [IO.Path]::GetFullPath($HOME).TrimEnd([IO.Path]::DirectorySeparatorChar)
+    if ($path.StartsWith($homePath + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+        $path = '~' + $path.Substring($homePath.Length)
+    }
+    $path
+}
+
+function Get-SayedCommandDescription {
+    # Returns the help synopsis of a function or script, or an exe's file description.
+    param([string]$Definition)
+    $command = Get-Command -Name $Definition -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $command) { return }
+    if ($command.CommandType -eq 'Application') {
+        return (Get-Item -LiteralPath $command.Source -ErrorAction SilentlyContinue).VersionInfo.FileDescription
+    }
+    $ast = $command.ScriptBlock.Ast
+    if ($ast -is [Management.Automation.Language.ScriptBlockAst] -and $ast.Parent -is [Management.Automation.Language.FunctionDefinitionAst]) {
+        $ast = $ast.Parent
+    }
+    if ($ast) { $help = $ast.GetHelpContent(); if ($help -and $help.Synopsis) { $help.Synopsis.Trim() } }
 }
 
 function Initialize-SayedToolAliases {
@@ -42,6 +79,7 @@ function Initialize-SayedToolAliases {
     Set-Alias -Name imc -Value Init-MyClaudeProject -Scope Global
     Set-Alias -Name nmf -Value New-MyClaudeFeature -Scope Global
     Set-Alias -Name cdcp -Value Enter-MyClaudeProjects -Scope Global
+    Set-Alias -Name wezkeys -Value Get-SayedWezTermKeys -Scope Global
     if (-not $IsWindows) { return }
     $code = $script:Settings.CodeHome
     $kdiff = @((Get-Command kdiff3.exe -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source))
