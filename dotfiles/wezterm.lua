@@ -20,10 +20,11 @@ config.keys = {
     mods = 'ALT',
     action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
   },
-  -- Alt+D splits the current pane, opening the new pane below.
+  -- Alt+Shift+S splits the current pane, opening the new pane below.
+  -- (Alt+D is left free for PSReadLine's DeleteWord.)
   {
-    key = 'd',
-    mods = 'ALT',
+    key = 'S',
+    mods = 'ALT|SHIFT',
     action = act.SplitVertical { domain = 'CurrentPaneDomain' },
   },
 
