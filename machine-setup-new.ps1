@@ -587,6 +587,33 @@ function EnsureBaseReposCloned {
 #endregion
 
 #region Console Configuration
+function Install-WezTermConfig {
+    # The repo owns the WezTerm config, so an outdated copy is replaced.
+    # A copy that differs is backed up first so local edits aren't lost.
+    [cmdletbinding()]
+    param(
+        [Parameter(Mandatory)][string]$sourceFile,
+        [Parameter(Mandatory)][string]$localPath
+    )
+    if (-not (Test-Path -LiteralPath $sourceFile)) {
+        'WezTerm config file not found at "{0}"' -f $sourceFile | Write-Warning
+        return
+    }
+    if (-not (Test-Path -LiteralPath $localPath)) {
+        Copy-Item -LiteralPath $sourceFile -Destination $localPath -Force
+        Write-Host "  ✓ WezTerm config copied" -ForegroundColor Green
+    }
+    elseif ((Get-FileHash -LiteralPath $sourceFile).Hash -ne (Get-FileHash -LiteralPath $localPath).Hash) {
+        $backupPath = '{0}.bak-{1}' -f $localPath, (Get-Date -Format 'yyyyMMdd-HHmmss')
+        Copy-Item -LiteralPath $localPath -Destination $backupPath -Force
+        Copy-Item -LiteralPath $sourceFile -Destination $localPath -Force
+        Write-Host ("  ✓ WezTerm config updated (previous version saved to {0})" -f $backupPath) -ForegroundColor Green
+    }
+    else {
+        Write-Host "  ✓ WezTerm config is up to date" -ForegroundColor DarkGreen
+    }
+}
+
 function ConfigureConsole {
     [cmdletbinding()]
     param(
@@ -616,18 +643,7 @@ function ConfigureConsole {
             'ConEmu config file not found at "{0}"' -f $conemuxmlSourceFile | Write-Warning
         }
 
-        if (Test-Path $weztermSourceFile) {
-            if (-not (Test-Path $weztermLocalPath)) {
-                Copy-Item -LiteralPath $weztermSourceFile -Destination $weztermLocalPath -Force
-                Write-Host "  ✓ WezTerm config copied" -ForegroundColor Green
-            }
-            else {
-                Write-Host "  ✓ WezTerm config already exists" -ForegroundColor DarkGreen
-            }
-        }
-        else {
-            'WezTerm config file not found at "{0}"' -f $weztermSourceFile | Write-Warning
-        }
+        Install-WezTermConfig -sourceFile $weztermSourceFile -localPath $weztermLocalPath
 
         # Terminal-Icons module
         if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {

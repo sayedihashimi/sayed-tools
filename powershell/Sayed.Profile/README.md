@@ -119,6 +119,12 @@ sourceProfilePath is still honored, and older Dropbox profile sources remain a
 fallback. Setup's module loader uses the current sayed-tools manifest location.
 The setup script retains its standalone helpers so it can bootstrap a checkout.
 
+Setup installs WezTerm and copies `../../dotfiles/wezterm.lua` to
+`~/.wezterm.lua`. Unlike the PowerShell profile, the WezTerm config is kept in
+sync: if the installed copy differs from the repo, setup saves it as
+`.wezterm.lua.bak-<timestamp>` and replaces it. Edit the repo copy, not the
+installed one.
+
 `../my-profile.psm1` and `../sayed-profile-compat.psm1` import the new module for
 older callers. `Sayed-InitailizeProfile` and `InitalizeEnv` forward to the single
 initializer. The Dropbox shim can be replaced with `sayed-profile-compat.psm1`.

@@ -194,7 +194,8 @@ function Format-SayedWezTermMouse {
 
 function Format-SayedWezTermAction {
     param([string]$Entry)
-    if ($Entry -match '\baction\s*=\s*wezterm\.action_callback') { return 'Callback' }
+    # Only the first 'action =' counts; nested ones belong to the action's arguments.
+    if ($Entry -match '\baction\s*=\s*(\S+)' -and $Matches[1] -like 'wezterm.action_callback*') { return 'Callback' }
     if ($Entry -match "\baction\s*=\s*(?:wezterm\.action|act)\.(\w+)(?:\s*\(?\s*(['`"])(.*?)\2)?") {
         $name = $Matches[1]; $argument = $Matches[3]
         # A table of plain values, like AdjustPaneSize { 'Left', 5 }, is shown inline.

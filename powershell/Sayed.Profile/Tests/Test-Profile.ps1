@@ -269,7 +269,19 @@ config.mouse_bindings = {
 
     # Extract setup definitions only: never execute its provisioning entry point.
     $setup = Join-Path $repo 'machine-setup-new.ps1'
-    foreach ($name in @('Get-Fullpath', 'Add-Path', 'ConfigurePowershell', 'LoadModules')) { . ([scriptblock]::Create((Get-FunctionText $setup $name))) }
+    foreach ($name in @('Get-Fullpath', 'Add-Path', 'ConfigurePowershell', 'LoadModules', 'Install-WezTermConfig')) { . ([scriptblock]::Create((Get-FunctionText $setup $name))) }
+    $wezSource = Join-Path $repo 'dotfiles/wezterm.lua'
+    $wezLocal = Join-Path $tempRoot 'home/.wezterm.lua'
+    New-Item -ItemType Directory (Split-Path $wezLocal) | Out-Null
+    Install-WezTermConfig -sourceFile $wezSource -localPath $wezLocal 6>$null
+    Assert ((Get-FileHash $wezLocal).Hash -eq (Get-FileHash $wezSource).Hash) 'Setup did not copy the WezTerm config'
+    Install-WezTermConfig -sourceFile $wezSource -localPath $wezLocal 6>$null
+    Assert (-not (Get-ChildItem (Split-Path $wezLocal) -Filter '.wezterm.lua.bak-*')) 'Setup backed up an up-to-date WezTerm config'
+    Set-Content $wezLocal '-- old config'
+    Install-WezTermConfig -sourceFile $wezSource -localPath $wezLocal 6>$null
+    $wezBackup = @(Get-ChildItem (Split-Path $wezLocal) -Filter '.wezterm.lua.bak-*')
+    Assert ((Get-FileHash $wezLocal).Hash -eq (Get-FileHash $wezSource).Hash) 'Setup did not update an outdated WezTerm config'
+    Assert ($wezBackup.Count -eq 1 -and (Get-Content $wezBackup[0].FullName -Raw).Trim() -eq '-- old config') 'Setup did not back up the outdated WezTerm config'
     $global:sayedhaToolsFolderPath = $repo
     $global:pcSettingsDirPath = $null
     $destination = Join-Path $tempRoot 'profile-directory/profile.ps1'
