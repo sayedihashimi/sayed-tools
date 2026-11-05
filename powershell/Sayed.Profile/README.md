@@ -87,7 +87,8 @@ profile, `sayed-tools`, and the configured custom modules. The Description
 column shows the target command's help synopsis, or an exe's file description.
 
 Run `Get-SayedWezTermKeys` (alias `wezkeys`) to show a table of the custom
-key and mouse bindings in `~/.wezterm.lua`, plus the leader key if one is set.
+key and mouse bindings in the WezTerm config (`$env:WEZTERM_CONFIG_FILE`, or
+`~/.wezterm.lua` when that isn't set), plus the leader key if one is set.
 The description comes from the `--` comment above each binding (or the comment
 above the table when it has only one binding). Use `-Path` to read another
 file. WezTerm's built-in defaults are not listed; it warns if the file is missing.
@@ -119,10 +120,22 @@ sourceProfilePath is still honored, and older Dropbox profile sources remain a
 fallback. Setup's module loader uses the current sayed-tools manifest location.
 The setup script retains its standalone helpers so it can bootstrap a checkout.
 
-Setup installs WezTerm and copies `../../dotfiles/wezterm.lua` to
-`~/.wezterm.lua`. Unlike the PowerShell profile, the WezTerm config is kept in
-sync: if the installed copy differs from the repo, setup saves it as
-`.wezterm.lua.bak-<timestamp>` and replaces it. Edit the repo copy, not the
+## WezTerm config
+
+The repo's `../../dotfiles/wezterm.lua` is the source of truth. On Windows, the
+profile's `WezTermConfig` step sets the `WEZTERM_CONFIG_FILE` user environment
+variable to that file if the variable isn't saved yet, so WezTerm reads the repo
+file directly and reloads it when it changes. The step never changes a value
+that's already saved, so a machine can point elsewhere. Restart WezTerm after
+the first run. Set `EnableWezTermConfig = $false` in `profile.local.psd1` to
+skip the step, or `WezTermConfigPath` to use another file. WezTerm sets
+`WEZTERM_CONFIG_FILE` in the shells it starts, so the step only checks the saved
+user value.
+
+Setup installs WezTerm and copies the config to `~/.wezterm.lua`. That copy
+bootstraps a new machine: without a config, WezTerm starts `cmd.exe` and the
+PowerShell profile never runs. If the copy differs from the repo, setup saves it
+as `.wezterm.lua.bak-<timestamp>` and replaces it. Edit the repo copy, not the
 installed one.
 
 `../my-profile.psm1` and `../sayed-profile-compat.psm1` import the new module for

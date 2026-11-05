@@ -57,6 +57,13 @@ function Initialize-SayedProfile {
     }
     if ($script:Settings.EnableCustomModules) { Import-SayedCustomModules }
     Invoke-SayedProfileStep 'Aliases' { Initialize-SayedToolAliases }
+    if ($script:Settings.EnableWezTermConfig) {
+        Invoke-SayedProfileStep 'WezTermConfig' {
+            $path = $script:Settings.WezTermConfigPath
+            if (-not $path) { $path = Join-Path (Split-Path (Split-Path $script:ModuleRoot)) 'dotfiles/wezterm.lua' }
+            Initialize-SayedWezTermConfig -Path $path
+        }
+    }
     if ($script:Settings.Interactive) {
         Invoke-SayedProfileStep 'ReadLine' { Initialize-SayedReadLine }
         if ($script:Settings.EnableZoxide) { Invoke-SayedProfileStep 'Zoxide' { Initialize-SayedZoxide } }

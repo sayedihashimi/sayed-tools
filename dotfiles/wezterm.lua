@@ -1,4 +1,5 @@
--- WezTerm config. Machine setup copies this to ~/.wezterm.lua.
+-- WezTerm config. The PowerShell profile points WEZTERM_CONFIG_FILE at this
+-- file, and machine setup copies it to ~/.wezterm.lua for the first launch.
 local wezterm = require 'wezterm'
 local act = wezterm.action
 

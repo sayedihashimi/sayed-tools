@@ -7,11 +7,12 @@ function Get-SayedWezTermKeys {
     table of the shortcuts. The description comes from the '--' comment above
     each binding. WezTerm's built-in default bindings are not listed.
     .PARAMETER Path
-    The WezTerm config file to read. Defaults to ~/.wezterm.lua.
+    The WezTerm config file to read. Defaults to $env:WEZTERM_CONFIG_FILE, or
+    ~/.wezterm.lua when that isn't set.
     #>
     [CmdletBinding()]
     param(
-        [string]$Path = (Join-Path $HOME '.wezterm.lua')
+        [string]$Path = $(if ($env:WEZTERM_CONFIG_FILE) { $env:WEZTERM_CONFIG_FILE } else { Join-Path $HOME '.wezterm.lua' })
     )
 
     if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
@@ -29,6 +30,28 @@ function Get-SayedWezTermKeys {
         'Action'
         'Description'
     )
+}
+
+function Initialize-SayedWezTermConfig {
+    # Points WezTerm at the repo's config by setting WEZTERM_CONFIG_FILE once.
+    # An existing value is never changed, so a machine can override it.
+    # Only the saved value counts: WezTerm sets WEZTERM_CONFIG_FILE in every shell
+    # it starts (to the file it loaded), so the process value is no signal.
+    param(
+        [string]$Path,
+        [EnvironmentVariableTarget]$Target = $script:WezTermConfigTarget
+    )
+    if (-not $IsWindows) { return }
+    $name = 'WEZTERM_CONFIG_FILE'
+    $saved = [Environment]::GetEnvironmentVariable($name, $Target)
+    if (-not $saved) {
+        if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { throw "WezTerm config not found at '$Path'." }
+        $saved = (Resolve-Path -LiteralPath $Path).ProviderPath
+        [Environment]::SetEnvironmentVariable($name, $saved, $Target)
+        Write-Host "Set $name to '$saved'. Restart WezTerm to use it." -ForegroundColor DarkGray
+    }
+    # Keep WezTerm's value (the file it actually loaded) when it set one.
+    if (-not [Environment]::GetEnvironmentVariable($name)) { [Environment]::SetEnvironmentVariable($name, $saved) }
 }
 
 function Get-SayedWezTermBinding {

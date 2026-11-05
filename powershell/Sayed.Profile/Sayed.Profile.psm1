@@ -1,6 +1,8 @@
 $script:ModuleRoot = $PSScriptRoot
 $script:Initialized = $false
-$script:StartupStatus = [Collections.Generic.List[object]]::new()
+# Tests set this to 'Process' so they never write the user environment.
+$script:WezTermConfigTarget = [EnvironmentVariableTarget]::User
+$script:StartupStatus =[Collections.Generic.List[object]]::new()
 foreach ($file in @('Configuration', 'Utilities', 'Modules', 'ReadLine', 'Integrations', 'Startup', 'Claude', 'WezTerm')) {
     . (Join-Path $PSScriptRoot "Private/$file.ps1")
 }

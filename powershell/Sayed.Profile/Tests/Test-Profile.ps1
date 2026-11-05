@@ -6,6 +6,10 @@ $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ('sayed-profile-test-' + [guid]
 $originalPath = $env:PATH
 $originalModules = $env:PSModulePath
 $originalLocation = Get-Location
+# The module is switched to the Process target after import, so tests never
+# write the real user environment; this defined value makes the step a no-op.
+$originalWezConfig = $env:WEZTERM_CONFIG_FILE
+$env:WEZTERM_CONFIG_FILE = 'profile-test-fixture.lua'
 function Assert($Condition, $Message) { if (-not $Condition) { throw $Message } }
 function Get-FunctionText($File, $Name) {
     $tokens = $null; $errors = $null
@@ -30,6 +34,7 @@ try {
     }
     Import-Module $modulePath -DisableNameChecking
     $module = Get-Module Sayed.Profile
+    & $module { $script:WezTermConfigTarget = [EnvironmentVariableTarget]::Process }
     Assert ($env:PSModulePath -eq $originalModules) 'Import changed PSModulePath'
     Assert ($env:PATH -eq $originalPath) 'Import changed PATH'
     Assert (@(Get-SayedProfileStatus).Count -eq 0) 'Import initialized the profile'
@@ -184,6 +189,25 @@ config.mouse_bindings = {
     $wezWarning = $null
     Get-SayedWezTermKeys -Path (Join-Path $tempRoot 'missing.lua') -WarningVariable wezWarning -WarningAction SilentlyContinue
     Assert ("$wezWarning" -like 'WezTerm config file not found*') 'Missing WezTerm config did not warn'
+    Assert ($env:WEZTERM_CONFIG_FILE -eq 'profile-test-fixture.lua') 'Profile changed an existing WEZTERM_CONFIG_FILE'
+    Assert ((Get-SayedProfileStatus | Where-Object Component -EQ 'WezTermConfig').Status -eq 'Ready') 'WezTermConfig step did not run'
+    if ($IsWindows) {
+        $wezDotfile = Join-Path $repo 'dotfiles/wezterm.lua'
+        $setWez = { param($path) Initialize-SayedWezTermConfig -Path $path 6>$null }
+        try {
+            $env:WEZTERM_CONFIG_FILE = $null
+            $failed = $false
+            try { & $module $setWez (Join-Path $tempRoot 'missing.lua') } catch { $failed = $true }
+            Assert ($failed -and -not $env:WEZTERM_CONFIG_FILE) 'WEZTERM_CONFIG_FILE was set to a missing file'
+            & $module $setWez $wezDotfile
+            Assert ($env:WEZTERM_CONFIG_FILE -eq (Resolve-Path $wezDotfile).ProviderPath) 'WEZTERM_CONFIG_FILE was not set'
+            Assert ((Get-SayedWezTermKeys | Out-String -Width 300) -match 'Alt\+Shift\+S') 'wezkeys did not default to WEZTERM_CONFIG_FILE'
+            $env:WEZTERM_CONFIG_FILE = 'custom.lua'
+            & $module $setWez $wezDotfile
+            Assert ($env:WEZTERM_CONFIG_FILE -eq 'custom.lua') 'Existing WEZTERM_CONFIG_FILE was overwritten'
+        }
+        finally { $env:WEZTERM_CONFIG_FILE = 'profile-test-fixture.lua' }
+    }
     Assert (-not (Get-SayedProfileStatus | Where-Object Status -EQ Failed)) 'Core initialization failed'
     $firstCount = @(Get-SayedProfileStatus).Count
     $firstModules = $env:PSModulePath
@@ -324,6 +348,7 @@ config.mouse_bindings = {
 }
 finally {
     Remove-Item Function:\git, Function:\winget -ErrorAction SilentlyContinue
+    $env:WEZTERM_CONFIG_FILE = $originalWezConfig
     $env:PATH = $originalPath
     $env:PSModulePath = $originalModules
     Set-Location -LiteralPath $originalLocation.Path
