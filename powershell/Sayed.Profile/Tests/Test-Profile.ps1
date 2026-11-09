@@ -165,7 +165,13 @@ try {
     Assert ((Get-Alias wezkeys).Definition -ceq 'Get-SayedWezTermKeys') 'WezTerm keys alias is incorrect'
     $wezBindings = @(& $module { param($path) Get-SayedWezTermBinding -Text (Get-Content -LiteralPath $path -Raw) } (Join-Path $repo 'dotfiles/wezterm.lua'))
     $wezKey = $wezBindings | Where-Object Shortcut -EQ 'Alt+S'
-    Assert ($wezKey.Type -eq 'Key' -and $wezKey.Action -eq 'SplitHorizontal' -and $wezKey.Description -like 'Alt+S splits*') 'WezTerm key binding parsed incorrectly'
+    Assert ($wezKey.Type -eq 'Key' -and $wezKey.Action -eq 'SplitVertical' -and $wezKey.Description -like 'Alt+S splits*') 'WezTerm key binding parsed incorrectly'
+    Assert (($wezBindings | Where-Object Shortcut -EQ 'Alt+D').Action -eq 'SplitHorizontal') 'WezTerm Alt+D split binding is missing'
+    $wezShortcuts = @($wezBindings | Where-Object Type -EQ 'Key' | ForEach-Object Shortcut)
+    Assert ($wezShortcuts.Count -eq @($wezShortcuts | Sort-Object -Unique).Count) "WezTerm dotfile has duplicate shortcuts: $($wezShortcuts -join ', ')"
+    foreach ($shortcut in @('Ctrl+Shift+K', 'Ctrl+Shift+W', 'Ctrl+Shift+Z', 'Ctrl+Alt+1', 'Ctrl+Alt+4', 'Ctrl+Alt+LeftArrow', 'Alt+UpArrow')) {
+        Assert ($wezShortcuts -contains $shortcut) "WezTerm dotfile is missing $shortcut"
+    }
     $wezMouse = @($wezBindings | Where-Object Type -EQ 'Mouse')
     Assert ($wezMouse.Count -eq 1 -and $wezMouse[0].Shortcut -eq 'Right Click' -and $wezMouse[0].Action -eq 'PasteFrom Clipboard') 'WezTerm mouse binding parsed incorrectly'
     Assert (-not ($wezBindings | Where-Object { -not $_.Description })) 'WezTerm dotfile binding is missing a description'
@@ -190,6 +196,41 @@ config.mouse_bindings = {
     Get-SayedWezTermKeys -Path (Join-Path $tempRoot 'missing.lua') -WarningVariable wezWarning -WarningAction SilentlyContinue
     Assert ("$wezWarning" -like 'WezTerm config file not found*') 'Missing WezTerm config did not warn'
     Assert ($env:WEZTERM_CONFIG_FILE -eq 'profile-test-fixture.lua') 'Profile changed an existing WEZTERM_CONFIG_FILE'
+    # WezTerm helpers warn outside WezTerm, and pass the right CLI arguments inside.
+    # Set-TabColor is only tested outside WezTerm: inside, it would color the real tab.
+    $originalPane = $env:WEZTERM_PANE
+    try {
+        $env:WEZTERM_PANE = $null
+        foreach ($call in @({ Set-TabTitle 'x' }, { Split-Terminal }, { Set-TabColor Red })) {
+            $output = @(& $call 3>&1)
+            Assert ($output.Count -eq 1 -and $output[0] -is [Management.Automation.WarningRecord]) "WezTerm helper did not warn outside WezTerm: $call"
+        }
+        $global:WezFixtureCalls = [Collections.Generic.List[string]]::new()
+        $global:WezFixtureExit = 0
+        function global:wezterm {
+            $global:WezFixtureCalls.Add($args -join ' ')
+            $global:LASTEXITCODE = $global:WezFixtureExit
+            if ($args -contains 'split-pane') { '7' }
+            if ($args -contains 'list') { '[{"workspace":"rider","window_id":0,"tab_id":3,"pane_id":42,"title":"pwsh","tab_title":"","cwd":"file:///C:/Users/x/","size":{"rows":10,"cols":20},"is_active":true,"is_zoomed":false}]' }
+        }
+        $env:WEZTERM_PANE = '42'
+        Set-TabTitle '-Rider'
+        Assert ($WezFixtureCalls[0] -ceq 'cli --no-auto-start set-tab-title --pane-id 42 -- -Rider') "Set-TabTitle passed the wrong arguments: $($WezFixtureCalls[0])"
+        $newPane = Split-Terminal -Direction Bottom
+        Assert ($newPane -is [int] -and $newPane -eq 7) 'Split-Terminal did not return the new pane id'
+        Assert ($WezFixtureCalls[1] -clike 'cli --no-auto-start split-pane --pane-id 42 --bottom --cwd *') "Split-Terminal passed the wrong arguments: $($WezFixtureCalls[1])"
+        $panes = @(Get-TerminalPanes)
+        Assert ($panes.Count -eq 1 -and $panes[0].IsCurrent -and $panes[0].PaneId -eq 42 -and $panes[0].Cwd -eq 'C:\Users\x\' -and $panes[0].Workspace -eq 'rider') 'Get-TerminalPanes parsed the pane list incorrectly'
+        $global:WezFixtureExit = 1
+        $wezError = $null
+        Set-TabTitle 'x' -ErrorVariable wezError -ErrorAction SilentlyContinue
+        Assert ("$wezError" -like 'wezterm cli set-tab-title failed*') 'A failed wezterm call was not reported'
+    }
+    finally {
+        $env:WEZTERM_PANE = $originalPane
+        Remove-Item Function:\wezterm -ErrorAction SilentlyContinue
+        Remove-Variable WezFixtureCalls, WezFixtureExit -Scope Global -ErrorAction SilentlyContinue
+    }
     Assert ((Get-SayedProfileStatus | Where-Object Component -EQ 'WezTermConfig').Status -eq 'Ready') 'WezTermConfig step did not run'
     if ($IsWindows) {
         $wezDotfile = Join-Path $repo 'dotfiles/wezterm.lua'

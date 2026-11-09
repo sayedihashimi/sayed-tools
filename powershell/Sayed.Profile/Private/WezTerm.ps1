@@ -32,6 +32,149 @@ function Get-SayedWezTermKeys {
     )
 }
 
+function Set-TabTitle {
+    <#
+    .SYNOPSIS
+    Sets the title of the current WezTerm tab.
+    .DESCRIPTION
+    Uses `wezterm cli set-tab-title`. The title stays until it's changed again,
+    even when the shell or a program sets its own title. An empty title
+    restores the default (the active pane's title).
+    .EXAMPLE
+    Set-TabTitle Rider
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [AllowEmptyString()]
+        [string]$Title
+    )
+    if (-not (Test-SayedWezTermPane)) { return }
+    $null = Invoke-SayedWezTermCli 'set-tab-title' '--pane-id' $env:WEZTERM_PANE '--' $Title
+}
+
+function Split-Terminal {
+    <#
+    .SYNOPSIS
+    Splits the current WezTerm pane and returns the new pane's id.
+    .DESCRIPTION
+    Uses `wezterm cli split-pane`. The new pane runs the default shell, in the
+    current directory when it's a file system location.
+    .EXAMPLE
+    Split-Terminal -Direction Bottom
+    #>
+    [CmdletBinding()]
+    [OutputType([int])]
+    param(
+        [Parameter(Position = 0)]
+        [ValidateSet('Right', 'Left', 'Bottom', 'Top')]
+        [string]$Direction = 'Right'
+    )
+    if (-not (Test-SayedWezTermPane)) { return }
+    $arguments = @('split-pane', '--pane-id', $env:WEZTERM_PANE, "--$($Direction.ToLowerInvariant())")
+    $location = Get-Location
+    if ($location.Provider.Name -eq 'FileSystem') { $arguments += '--cwd', $location.ProviderPath }
+    $paneId = Invoke-SayedWezTermCli @arguments
+    if ($null -ne $paneId) { [int]"$paneId".Trim() }
+}
+
+function Get-TerminalPanes {
+    <#
+    .SYNOPSIS
+    Lists the panes in the running WezTerm instance.
+    .DESCRIPTION
+    Uses `wezterm cli list`. IsCurrent marks the pane this shell runs in.
+    Use Select-Object * to see every property.
+    .EXAMPLE
+    Get-TerminalPanes | Where-Object Workspace -eq rider
+    #>
+    [CmdletBinding()]
+    param()
+    if (-not (Test-SayedWezTermPane -AllowOutside)) { return }
+    $json = Invoke-SayedWezTermCli 'list' '--format' 'json'
+    if (-not $json) { return }
+    $display = [Management.Automation.PSPropertySet]::new('DefaultDisplayPropertySet', [string[]]@('Workspace', 'TabId', 'PaneId', 'Title', 'Cwd', 'IsActive', 'IsCurrent'))
+    foreach ($pane in (($json -join "`n") | ConvertFrom-Json)) {
+        $cwd = $pane.cwd
+        if ($cwd -and [uri]::IsWellFormedUriString($cwd, 'Absolute')) { $cwd = ([uri]$cwd).LocalPath }
+        $result = [pscustomobject]@{
+            Workspace = $pane.workspace
+            WindowId  = $pane.window_id
+            TabId     = $pane.tab_id
+            PaneId    = $pane.pane_id
+            Title     = $pane.title
+            TabTitle  = $pane.tab_title
+            Cwd       = $cwd
+            Rows      = $pane.size.rows
+            Columns   = $pane.size.cols
+            IsActive  = $pane.is_active
+            IsZoomed  = $pane.is_zoomed
+            IsCurrent = "$($pane.pane_id)" -eq $env:WEZTERM_PANE
+        }
+        $result | Add-Member -MemberType MemberSet -Name PSStandardMembers -Value ([Management.Automation.PSMemberInfo[]]@($display))
+        $result
+    }
+}
+
+function Set-TabColor {
+    <#
+    .SYNOPSIS
+    Sets the background color of the current WezTerm tab, or resets it.
+    .DESCRIPTION
+    Sends an OSC 1337 SetUserVar escape sequence that sets the TAB_COLOR user
+    variable. The WezTerm config's user-var-changed handler colors the tab, the
+    same as choosing a color with Ctrl+Shift+K. The color lasts until WezTerm
+    restarts.
+    .EXAMPLE
+    Set-TabColor Red
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [ValidateSet('Red', 'Green', 'Blue', 'Yellow', 'Purple', 'Orange', 'Reset')]
+        [string]$Color
+    )
+    if (-not (Test-SayedWezTermPane)) { return }
+    if ([Console]::IsOutputRedirected) {
+        Write-Warning 'Output is redirected, so the tab color cannot be sent to WezTerm.'
+        return
+    }
+    $value = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Color))
+    [Console]::Write("`e]1337;SetUserVar=TAB_COLOR=$value`a")
+}
+
+function Test-SayedWezTermPane {
+    # Returns $true when the wezterm CLI can be used. Warns and returns $false
+    # otherwise. -AllowOutside skips the check for a WezTerm pane.
+    param([switch]$AllowOutside)
+    if (-not $AllowOutside -and -not $env:WEZTERM_PANE) {
+        Write-Warning 'This shell is not running in a WezTerm pane.'
+        return $false
+    }
+    if (-not (Get-Command wezterm -ErrorAction SilentlyContinue)) {
+        Write-Warning 'The wezterm command was not found.'
+        return $false
+    }
+    $true
+}
+
+function Invoke-SayedWezTermCli {
+    # Runs `wezterm cli <args>` and returns its output. A failure is reported
+    # as a non-terminating error. The output is read as UTF-8, as WezTerm writes it.
+    $encoding = [Console]::OutputEncoding
+    try {
+        [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
+        $output = wezterm cli --no-auto-start @args
+        $exitCode = $LASTEXITCODE
+    }
+    finally { [Console]::OutputEncoding = $encoding }
+    if ($exitCode -ne 0) {
+        Write-Error "wezterm cli $($args[0]) failed with exit code $exitCode."
+        return
+    }
+    $output
+}
+
 function Initialize-SayedWezTermConfig {
     # Points WezTerm at the repo's config by setting WEZTERM_CONFIG_FILE once.
     # An existing value is never changed, so a machine can override it.

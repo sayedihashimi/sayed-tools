@@ -138,6 +138,25 @@ PowerShell profile never runs. If the copy differs from the repo, setup saves it
 as `.wezterm.lua.bak-<timestamp>` and replaces it. Edit the repo copy, not the
 installed one.
 
+### WezTerm commands
+
+These run in a WezTerm pane and warn (without failing) anywhere else.
+They use `wezterm cli`, except `Set-TabColor`.
+
+```powershell
+Set-TabTitle 'Rider'                 # empty string restores the default title
+Split-Terminal -Direction Right      # or Left, Bottom, Top; returns the new pane id
+Get-TerminalPanes                    # every pane; IsCurrent marks this one
+Set-TabColor Red                     # Red, Green, Blue, Yellow, Purple, Orange, Reset
+```
+
+WezTerm has no per-tab color setting, so the config's `format-tab-title`
+handler draws colored tabs. Ctrl+Shift+K picks a color from a menu.
+`Set-TabColor` sends an OSC 1337 `SetUserVar` sequence for the `TAB_COLOR`
+user variable, and the config's `user-var-changed` handler applies it. Colors
+are kept in `wezterm.GLOBAL` by tab id: they survive a config reload, but not
+a WezTerm restart, or detaching from and reattaching to the `unix` domain.
+
 `../my-profile.psm1` and `../sayed-profile-compat.psm1` import the new module for
 older callers. `Sayed-InitailizeProfile` and `InitalizeEnv` forward to the single
 initializer. The Dropbox shim can be replaced with `sayed-profile-compat.psm1`.
