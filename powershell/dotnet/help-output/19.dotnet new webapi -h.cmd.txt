@@ -20,6 +20,7 @@ This template contains technologies from parties other than Microsoft, see https
 Options:                                                                                                                                    
   -au|--auth                        The type of authentication to use                                                                       
                                         None             - No authentication                                                                
+                                        Individual       - Individual authentication                                                        
                                         IndividualB2C    - Individual authentication with Azure AD B2C                                      
                                         SingleOrg        - Organizational authentication for a single tenant                                
                                         Windows          - Windows authentication                                                           
@@ -32,7 +33,7 @@ Options:
   -ssp|--susi-policy-id             The sign-in and sign-up policy ID for this project (use with IndividualB2C auth type).                  
                                     string - Optional                                                                                       
 
-  -s|--aad-instance                 The Azure Active Directory instance to connect to (use with Single-org auth type).                      
+  --aad-instance                    The Azure Active Directory instance to connect to (use with Single-org auth type).                      
                                     string - Optional                                                                                       
                                     Default: https://login.microsoftonline.com/                                                             
 
@@ -44,15 +45,19 @@ Options:
                                     string - Optional                                                                                       
                                     Default: 11111111-1111-1111-11111111111111111                                                           
 
-  --domain                          The domain owning the directory (use with Single-org or IndividualB2C auth types).                      
+  --domain                          The domain for the directory tenant (use with Single-org or IndividualB2C auth types).                  
                                     string - Optional                                                                                       
                                     Default: qualified.domain.name                                                                          
 
-  --tenant-id                       The TenantId ID of the directory to connect to (use with Single-org auth).                              
+  --tenant-id                       The TenantId ID of the directory to connect to (use with Single-org auth types).                        
                                     string - Optional                                                                                       
                                     Default: 22222222-2222-2222-2222-222222222222                                                           
 
   -r|--org-read-access              Whether or not to allow this application read access to the directory (only applies to Single-org auth).
+                                    bool - Optional                                                                                         
+                                    Default: false                                                                                          
+
+  -uld|--use-local-db               Whether or not to use LocalDB instead of SQLite                                                         
                                     bool - Optional                                                                                         
                                     Default: false                                                                                          
 
