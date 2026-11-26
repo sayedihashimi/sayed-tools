@@ -1,5 +1,5 @@
 @{
-    ThemeName = '1_shell'
+    ThemeName = 'chips'
     # ThemePath = 'C:\path\to\custom.omp.json'
     PredictionViewStyle = 'InlineView'
     EnableDotnetCompletions = $true

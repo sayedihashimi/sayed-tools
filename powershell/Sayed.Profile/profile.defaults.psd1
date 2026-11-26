@@ -1,5 +1,5 @@
 @{
-    ThemeName = '1_shell'
+    ThemeName = 'chips'
     ThemePath = ''
     PredictionSource = 'HistoryAndPlugin'
     PredictionViewStyle = 'InlineView'

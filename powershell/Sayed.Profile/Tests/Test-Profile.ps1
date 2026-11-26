@@ -310,12 +310,12 @@ config.mouse_bindings = {
     $foundTheme = & $module { param($theme) $script:Settings.ThemePath = $theme; Find-SayedTheme } $theme
     Assert ($foundTheme -eq $theme) 'Explicit theme lookup failed'
     $themeFolder = Join-Path $tempRoot 'themes'; New-Item -ItemType Directory $themeFolder | Out-Null
-    Set-Content (Join-Path $themeFolder '1_shell.omp.json') '{}'
+    Set-Content (Join-Path $themeFolder 'chips.omp.json') '{}'
     $previousThemes = $env:POSH_THEMES_PATH
     try {
         $env:POSH_THEMES_PATH = $themeFolder
         $foundTheme = & $module { $script:Settings.ThemePath = ''; Find-SayedTheme }
-        Assert ($foundTheme -eq (Join-Path $themeFolder '1_shell.omp.json')) 'Theme environment fallback failed'
+        Assert ($foundTheme -eq (Join-Path $themeFolder 'chips.omp.json')) 'Theme environment fallback failed'
     }
     finally { $env:POSH_THEMES_PATH = $previousThemes }
 
